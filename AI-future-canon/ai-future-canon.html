@@ -13,6 +13,10 @@
   --hairline: #dcdbd4; --border: rgba(11,11,11,0.10);
   --track: #e7e6df; --shadow: 0 12px 32px rgba(11,11,11,0.16), 0 3px 8px rgba(11,11,11,0.09);
   --pp: #2a78d6; --prep: #eb6834;
+  /* the bookshelf behind the section headings, in daylight values: the spines
+     only a shade or two off the plane, the lamp a warm brown rather than a light */
+  --sbA: #d8d6cf; --sbB: #d1cfc7; --sbC: #cbc9c1; --sbD: #c4c2ba;
+  --sb-board: #cdcbc3; --sb-lamp: #8a6d3f; --sb-op: .5; --sb-lit: .46;
   --serif: 'Iowan Old Style', 'Palatino Linotype', Palatino, Georgia, serif;
   --sans: system-ui, -apple-system, 'Segoe UI', sans-serif;
 }
@@ -23,6 +27,9 @@
   --hairline: #2c2c2a; --border: rgba(255,255,255,0.10);
   --track: #262624; --shadow: 0 12px 32px rgba(0,0,0,0.55), 0 3px 8px rgba(0,0,0,0.4);
   --pp: #3987e5; --prep: #d95926;
+  /* and after dark, the nocturne ramp the bookcase on the main page is drawn in */
+  --sbA: #26262d; --sbB: #33312e; --sbC: #3b3833; --sbD: #4e4b44;
+  --sb-board: #2c2b30; --sb-lamp: #efe9dd; --sb-op: .5; --sb-lit: .92;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
 body { background: var(--plane); color: var(--ink); font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }
@@ -54,6 +61,46 @@ h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 5vw, 52
 .section-head { margin: 56px 0 8px; text-align: center; }
 .section-head h2 { font-family: var(--serif); font-weight: 500; font-size: 27px; }
 .section-head p { color: var(--ink-2); font-size: 14.5px; max-width: 600px; margin: 8px auto 0; }
+
+/* ---- the bookcase from the main page, brought here a shelf at a time ----
+   One row of spines lies behind each heading, and the lamp that wanders the
+   three shelves over there walks the length of this one instead: a pool of
+   light travelling out and back, lifting each spine it passes and letting it
+   go again. Everything is drawn in variables so the shelf changes clothes
+   with the page. The band is held well under the text by its own opacity and
+   by a mask that thins it in the middle and fades it out at both ends. */
+.section-head { position: relative; }
+.section-head > h2, .section-head > p { position: relative; z-index: 1; }
+.shelfband {
+  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+  width: min(100%, 1000px); height: auto; z-index: 0; pointer-events: none;
+  opacity: var(--sb-op);
+  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 15%, #000 85%, transparent 100%),
+              radial-gradient(46% 92% at 50% 50%, rgba(0,0,0,.26) 0%, rgba(0,0,0,.45) 52%, #000 88%);
+          mask-image: linear-gradient(90deg, transparent 0%, #000 15%, #000 85%, transparent 100%),
+              radial-gradient(46% 92% at 50% 50%, rgba(0,0,0,.26) 0%, rgba(0,0,0,.45) 52%, #000 88%);
+  -webkit-mask-composite: source-in; mask-composite: intersect;
+}
+/* the spine tones and the board, named once and answered by both themes */
+.sbA { fill: var(--sbA); } .sbB { fill: var(--sbB); }
+.sbC { fill: var(--sbC); } .sbD { fill: var(--sbD); } .sbE { fill: var(--sb-board); }
+/* the same row of spines, drawn a second time in lamplight and shown only
+   where the travelling mask uncovers it */
+.sblit { --sbA: var(--sb-lamp); --sbB: var(--sb-lamp); --sbC: var(--sb-lamp);
+         --sbD: var(--sb-lamp); --sb-board: var(--sb-lamp); }
+.sblamp { animation: sbwalk 27s ease-in-out infinite; }
+@keyframes sbwalk {
+  0%   { transform: translateX(170px); }
+  50%  { transform: translateX(1030px); }
+  100% { transform: translateX(170px); }
+}
+/* the three shelves are lit out of step, so no two headings breathe together */
+.sb2 .sblamp { animation-delay: -9s; }
+.sb3 .sblamp { animation-delay: -18s; }
+@media (prefers-reduced-motion: reduce) {
+  /* the lamp is set down at the middle of every shelf and left there */
+  .sblamp { animation: none; transform: translateX(600px); }
+}
 
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
 [role="button"].card { cursor: pointer; position: relative; transition: box-shadow .18s ease, transform .18s ease, border-color .18s ease; }
@@ -141,6 +188,15 @@ footer p { max-width: 640px; margin: 4px auto; }
 .modal-shelf { font-size: 11px; letter-spacing: .14em; text-transform: uppercase; color: var(--pp); font-weight: 600; }
 .modal-title { font-family: var(--serif); font-weight: 500; font-size: 26px; line-height: 1.2; margin-top: 6px; }
 .modal-byline { color: var(--ink-2); font-size: 14.5px; margin-top: 4px; }
+.buy-row { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-top: 14px; }
+.buy-link { display: inline-flex; align-items: center; gap: 6px; text-decoration: none;
+  font: 600 13px var(--sans); padding: 9px 16px; border-radius: 999px;
+  background: var(--track); color: var(--ink); border: 1px solid var(--hairline);
+  transition: border-color .18s ease, box-shadow .18s ease, transform .18s ease; }
+.buy-link:hover, .buy-link:focus-visible { border-color: var(--muted); transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(11,11,11,0.16); }
+.buy-link .ar { font-size: 11px; color: var(--muted); }
+.buy-note { font-size: 11.5px; color: var(--muted); }
 .modal-section { margin-top: 18px; }
 .modal-section h5 { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .modal-section p { font-size: 14.5px; color: var(--ink-2); }
@@ -172,6 +228,20 @@ footer p { max-width: 640px; margin: 4px auto; }
   <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12h2.5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
   <span id="themeLabel">Light mode</span>
 </button>
+<!-- one shelf, drawn once and stood behind all three headings. Twenty-six
+     spines, one leaning into a gap, three lying flat at the far end where
+     somebody put them down and did not put them back. -->
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true"><defs>
+<radialGradient id="sbGlowM"><stop offset="0" stop-color="#fff" stop-opacity="1"/><stop offset=".5" stop-color="#fff" stop-opacity=".5"/><stop offset="1" stop-color="#fff" stop-opacity="0"/></radialGradient>
+<radialGradient id="sbPool"><stop offset="0" style="stop-color:var(--sb-lamp)" stop-opacity=".34"/><stop offset=".5" style="stop-color:var(--sb-lamp)" stop-opacity=".13"/><stop offset="1" style="stop-color:var(--sb-lamp)" stop-opacity="0"/></radialGradient>
+<g id="sbRow">
+<g class="sbE"><rect x="0" y="128" width="1200" height="4"/></g>
+<g class="sbA"><rect x="188" y="58" width="46" height="70"/><rect x="250" y="50" width="34" height="78"/><rect x="336" y="58" width="42" height="70"/><rect x="382" y="34" width="40" height="94"/><rect x="490" y="24" width="30" height="104"/><rect x="523" y="58" width="30" height="70"/><rect x="601" y="28" width="36" height="100"/><rect x="766" y="24" width="40" height="104"/></g>
+<g class="sbB"><rect x="290" y="50" width="42" height="78"/><rect x="640" y="52" width="40" height="76"/><rect x="878" y="46" width="28" height="82"/><rect x="959" y="40" width="30" height="88"/><rect x="1011" y="30" width="38" height="98"/><rect x="1098" y="88" width="80" height="12"/></g>
+<g class="sbC"><rect x="104" y="40" width="30" height="88"/><rect x="428" y="34" width="34" height="94"/><rect x="809" y="34" width="28" height="94"/><rect x="909" y="28" width="46" height="100"/><rect x="1053" y="44" width="32" height="84"/><rect x="1096" y="115" width="84" height="13"/></g>
+<g class="sbD"><rect x="22" y="34" width="42" height="94"/><rect x="67" y="34" width="32" height="94"/><rect x="137" y="24" width="46" height="104"/><rect x="556" y="24" width="42" height="104"/><rect x="684" y="58" width="28" height="70"/><rect x="717" y="40" width="44" height="88"/><rect x="840" y="46" width="34" height="82"/><rect x="1102" y="101" width="74" height="13"/></g>
+<rect class="sbB" x="462" y="30" width="28" height="98" transform="rotate(8 462 128)"/>
+</g></defs></svg>
 <div class="wrap">
 <header class="page-head">
   <svg class="book-icon" viewBox="0 0 48 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
@@ -195,6 +265,7 @@ footer p { max-width: 640px; margin: 4px auto; }
 
 <section>
   <div class="section-head">
+    <svg class="shelfband sb1" viewBox="0 0 1200 140" aria-hidden="true"><defs><mask id="sbm1" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="140"><ellipse class="sblamp" cx="0" cy="72" rx="225" ry="150" fill="url(#sbGlowM)"/></mask></defs><use href="#sbRow"/><g mask="url(#sbm1)" style="opacity:var(--sb-lit)"><use href="#sbRow" class="sblit"/></g><ellipse class="sblamp" cx="0" cy="72" rx="255" ry="76" fill="url(#sbPool)"/></svg>
     <h2>The Top Shelf</h2>
     <p>The ten best stories and the ten best nonfiction books, each ranked on their own shelf. Stories prepare the heart; nonfiction prepares the head. You need both. Click any book for its full story.</p>
   </div>
@@ -612,6 +683,7 @@ footer p { max-width: 640px; margin: 4px auto; }
 
 <section>
   <div class="section-head">
+    <svg class="shelfband sb2" viewBox="0 0 1200 140" aria-hidden="true"><defs><mask id="sbm2" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="140"><ellipse class="sblamp" cx="0" cy="72" rx="225" ry="150" fill="url(#sbGlowM)"/></mask></defs><use href="#sbRow"/><g mask="url(#sbm2)" style="opacity:var(--sb-lit)"><use href="#sbRow" class="sblit"/></g><ellipse class="sblamp" cx="0" cy="72" rx="255" ry="76" fill="url(#sbPool)"/></svg>
     <h2>The Next 50</h2>
     <p>One single ranking from 21 to 70, fiction and nonfiction mixed together and judged by the same scores. Use the buttons to show just one kind.</p>
   </div>
@@ -1577,6 +1649,7 @@ footer p { max-width: 640px; margin: 4px auto; }
 
 <section>
   <div class="section-head">
+    <svg class="shelfband sb3" viewBox="0 0 1200 140" aria-hidden="true"><defs><mask id="sbm3" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="140"><ellipse class="sblamp" cx="0" cy="72" rx="225" ry="150" fill="url(#sbGlowM)"/></mask></defs><use href="#sbRow"/><g mask="url(#sbm3)" style="opacity:var(--sb-lit)"><use href="#sbRow" class="sblit"/></g><ellipse class="sblamp" cx="0" cy="72" rx="255" ry="76" fill="url(#sbPool)"/></svg>
     <h2>Advice From the Elders</h2>
     <p>The three judges are themselves artificial minds, reading books written about their own arrival. Each left a short note for readers of this list.</p>
   </div>
@@ -1595,6 +1668,7 @@ footer p { max-width: 640px; margin: 4px auto; }
 
 <footer>
   <p class="home-link"><a href="../index.html"><span class="ar" aria-hidden="true">&larr;</span>&nbsp;Artificial Minds main page</a></p>
+  <p>Book links go to Amazon. As an Amazon Associate, I earn from qualifying purchases.</p>
   <p>Review quotes are copied word for word from the named sources. Scores reflect what had actually happened in the world as of July 2026.</p>
 </footer>
 </div>
@@ -1615,6 +1689,10 @@ footer p { max-width: 640px; margin: 4px auto; }
         <div class="modal-shelf" id="modalShelf"></div>
         <h4 class="modal-title" id="modalTitle"></h4>
         <p class="modal-byline" id="modalByline"></p>
+        <p class="buy-row">
+          <a class="buy-link" id="modalBuy" href="#" target="_blank" rel="noopener sponsored">Find on Amazon<span class="ar" aria-hidden="true">&#8599;</span></a>
+          <span class="buy-note">(paid link)</span>
+        </p>
         <div class="modal-section"><h5>What it is about</h5><p id="modalSynopsis"></p></div>
         <div class="modal-section" id="secWim"><h5>Why this book matters</h5><p id="modalWim"></p></div>
         <div class="modal-section" id="secPreds"><h5>What it predicted</h5><ul id="modalPreds"></ul></div>
@@ -1681,6 +1759,8 @@ var ELDERS = ['The Historian', 'The Builder', 'The Sage'];
     document.getElementById('modalShelf').textContent = b.shelf + ' \u00b7 ' + b.rank + ' \u00b7 ' + b.kind + ' \u00b7 ' + b.year;
     document.getElementById('modalTitle').textContent = b.title;
     document.getElementById('modalByline').textContent = 'by ' + b.author;
+    // the affiliate search link, built here rather than stored with the book
+    document.getElementById('modalBuy').href = 'https://www.amazon.com/s?k=' + encodeURIComponent(b.title + ' ' + b.author) + '&tag=artificialmin-20';
     document.getElementById('modalSynopsis').textContent = b.synopsis;
     document.getElementById('mPP').style.width = b.pp + '%';
     document.getElementById('mPrep').style.width = b.prep + '%';
