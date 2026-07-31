@@ -32,22 +32,26 @@
   --sb-board: #2c2b30; --sb-lamp: #efe9dd; --sb-op: .5; --sb-lit: .92;
 }
 * { box-sizing: border-box; margin: 0; padding: 0; }
-body { background: var(--plane); color: var(--ink); font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased; }
-.wrap { max-width: 1240px; margin: 0 auto; padding: 56px 28px 80px; }
+body { background: var(--plane); color: var(--ink); font-family: var(--sans); line-height: 1.55; -webkit-font-smoothing: antialiased; position: relative; overflow-x: hidden; }
+.wrap { max-width: 1240px; margin: 0 auto; padding: 56px 28px 132px; position: relative; z-index: 1; }
 
-header.page-head { text-align: center; margin-bottom: 40px; }
-.book-icon { width: 44px; height: 37px; color: var(--muted); margin-bottom: 10px; }
+header.page-head { text-align: center; margin-bottom: 30px; padding-top: 88px; }
 .overline { font-size: 12px; letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
 h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 5vw, 52px); letter-spacing: -0.01em; }
-.sub { max-width: 640px; margin: 14px auto 0; color: var(--ink-2); font-size: 16px; }
-.howto { max-width: 700px; margin: 22px auto 0; padding: 16px 22px; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; text-align: left; }
+.sub { max-width: 1020px; margin: 14px auto 0; color: var(--ink-2); font-size: 16px; }
+/* the note on how the list was made, with the counts standing beside it in a
+   narrow column rather than lying across the page under it */
+.headgrid { display: grid; grid-template-columns: 1fr 200px; gap: 26px; align-items: stretch;
+  max-width: 940px; margin: 20px auto 0; text-align: left; }
+.howto { margin: 0; padding: 18px 22px; display: flex; flex-direction: column; justify-content: center; background: var(--surface); border: 1px solid var(--border); border-radius: 10px; text-align: left; }
 .howto p { font-size: 14px; color: var(--ink-2); }
 .howto p + p { margin-top: 8px; }
 .howto strong { color: var(--ink); font-weight: 600; }
-.statline { display: flex; justify-content: center; gap: 28px; flex-wrap: wrap; margin-top: 28px; padding: 16px 0; border-top: 1px solid var(--hairline); border-bottom: 1px solid var(--hairline); }
-.stat { text-align: center; }
-.stat b { display: block; font-size: 22px; font-weight: 600; }
-.stat span { font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.statline { display: flex; flex-direction: column; justify-content: space-between; gap: 4px;
+  margin: 0; padding: 2px 0 2px 22px; border: 0; border-left: 1px solid var(--hairline); }
+.stat { text-align: left; }
+.stat b { display: block; font-size: 19px; font-weight: 600; line-height: 1.15; }
+.stat span { display: block; font-size: 10.5px; letter-spacing: .08em; line-height: 1.2; text-transform: uppercase; color: var(--muted); }
 
 .chip { font: 13px var(--sans); padding: 6px 14px; border-radius: 999px; border: 1px solid var(--hairline); background: transparent; color: var(--ink-2); cursor: pointer; }
 .chip[aria-pressed="true"] { background: var(--ink); color: var(--plane); border-color: var(--ink); }
@@ -58,29 +62,25 @@ h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 5vw, 52
 .theme-toggle:hover { box-shadow: 0 6px 18px rgba(11,11,11,0.2); }
 .theme-toggle svg { width: 15px; height: 15px; }
 
-.section-head { margin: 56px 0 8px; text-align: center; }
+.section-head { margin: 40px 0 12px; text-align: center; }
 .section-head h2 { font-family: var(--serif); font-weight: 500; font-size: 27px; }
-.section-head p { color: var(--ink-2); font-size: 14.5px; max-width: 600px; margin: 8px auto 0; }
+.section-head p { color: var(--ink-2); font-size: 14.5px; max-width: 940px; margin: 8px auto 0; }
 
-/* ---- the bookcase from the main page, brought here a shelf at a time ----
-   One row of spines lies behind each heading, and the lamp that wanders the
-   three shelves over there walks the length of this one instead: a pool of
-   light travelling out and back, lifting each spine it passes and letting it
-   go again. Everything is drawn in variables so the shelf changes clothes
-   with the page. The band is held well under the text by its own opacity and
-   by a mask that thins it in the middle and fades it out at both ends. */
-.section-head { position: relative; }
-.section-head > h2, .section-head > p { position: relative; z-index: 1; }
-.shelfband {
-  position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
-  width: min(100%, 1000px); height: auto; z-index: 0; pointer-events: none;
-  opacity: var(--sb-op);
-  -webkit-mask-image: linear-gradient(90deg, transparent 0%, #000 15%, #000 85%, transparent 100%),
-              radial-gradient(46% 92% at 50% 50%, rgba(0,0,0,.26) 0%, rgba(0,0,0,.45) 52%, #000 88%);
-          mask-image: linear-gradient(90deg, transparent 0%, #000 15%, #000 85%, transparent 100%),
-              radial-gradient(46% 92% at 50% 50%, rgba(0,0,0,.26) 0%, rgba(0,0,0,.45) 52%, #000 88%);
-  -webkit-mask-composite: source-in; mask-composite: intersect;
-}
+/* ---- the bookcase from the main page, opening and closing the page ----
+   Two full-bleed bands, one at either end. The top one is the same shelf
+   turned over: the board is above and the spines hang down from it, fading
+   into the plane before they reach the title. The bottom one is the right
+   way up and fades upward. A pool of light walks the length of each, out of
+   step with the other, lifting every spine it passes and letting it go. */
+.pageband { position: absolute; left: 0; width: 100%; height: 190px; overflow: hidden;
+  pointer-events: none; z-index: 0; opacity: var(--sb-op); }
+.pageband .bandsvg { display: block; width: 100%; height: 100%; }
+.topband { top: 0;
+  -webkit-mask-image: linear-gradient(180deg, #000 0%, #000 30%, rgba(0,0,0,.42) 58%, transparent 86%);
+          mask-image: linear-gradient(180deg, #000 0%, #000 30%, rgba(0,0,0,.42) 58%, transparent 86%); }
+.botband { bottom: 0;
+  -webkit-mask-image: linear-gradient(0deg, #000 0%, #000 30%, rgba(0,0,0,.42) 58%, transparent 86%);
+          mask-image: linear-gradient(0deg, #000 0%, #000 30%, rgba(0,0,0,.42) 58%, transparent 86%); }
 /* the spine tones and the board, named once and answered by both themes */
 .sbA { fill: var(--sbA); } .sbB { fill: var(--sbB); }
 .sbC { fill: var(--sbC); } .sbD { fill: var(--sbD); } .sbE { fill: var(--sb-board); }
@@ -90,16 +90,15 @@ h1 { font-family: var(--serif); font-weight: 500; font-size: clamp(34px, 5vw, 52
          --sbD: var(--sb-lamp); --sb-board: var(--sb-lamp); }
 .sblamp { animation: sbwalk 27s ease-in-out infinite; }
 @keyframes sbwalk {
-  0%   { transform: translateX(170px); }
-  50%  { transform: translateX(1030px); }
-  100% { transform: translateX(170px); }
+  0%   { transform: translateX(420px); }
+  50%  { transform: translateX(1980px); }
+  100% { transform: translateX(420px); }
 }
-/* the three shelves are lit out of step, so no two headings breathe together */
-.sb2 .sblamp { animation-delay: -9s; }
-.sb3 .sblamp { animation-delay: -18s; }
+/* the foot of the page is lit half a cycle behind the head of it */
+.botband .sblamp { animation-delay: -13.5s; }
 @media (prefers-reduced-motion: reduce) {
   /* the lamp is set down at the middle of every shelf and left there */
-  .sblamp { animation: none; transform: translateX(600px); }
+  .sblamp { animation: none; transform: translateX(1200px); }
 }
 
 .card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; }
@@ -196,7 +195,6 @@ footer p { max-width: 640px; margin: 4px auto; }
 .buy-link:hover, .buy-link:focus-visible { border-color: var(--muted); transform: translateY(-1px);
   box-shadow: 0 4px 14px rgba(11,11,11,0.16); }
 .buy-link .ar { font-size: 11px; color: var(--muted); }
-.buy-note { font-size: 11.5px; color: var(--muted); }
 .modal-section { margin-top: 18px; }
 .modal-section h5 { font-size: 11px; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .modal-section p { font-size: 14.5px; color: var(--ink-2); }
@@ -211,6 +209,17 @@ footer p { max-width: 640px; margin: 4px auto; }
 .review p { font-family: var(--serif); font-style: italic; color: var(--ink); }
 .review cite { display: block; margin-top: 4px; font-style: normal; font-size: 12px; color: var(--muted); }
 
+/* narrow enough and the counts lie back down under the box, and each heading
+   goes back over its own description */
+@media (max-width: 760px) {
+  .headgrid { grid-template-columns: 1fr; gap: 18px; }
+  .statline { flex-direction: row; flex-wrap: wrap; justify-content: center; gap: 12px 26px;
+    border-left: 0; padding: 0; }
+  .stat { text-align: center; }
+  .section-head { margin: 34px 0 10px; }
+  .pageband { height: 150px; }
+  header.page-head { padding-top: 68px; }
+}
 @media (max-width: 1100px) { .grid { grid-template-columns: repeat(3, 1fr); } }
 @media (max-width: 900px) { .shelves { grid-template-columns: 1fr; } }
 @media (max-width: 680px) {
@@ -242,18 +251,38 @@ footer p { max-width: 640px; margin: 4px auto; }
 <g class="sbD"><rect x="22" y="34" width="42" height="94"/><rect x="67" y="34" width="32" height="94"/><rect x="137" y="24" width="46" height="104"/><rect x="556" y="24" width="42" height="104"/><rect x="684" y="58" width="28" height="70"/><rect x="717" y="40" width="44" height="88"/><rect x="840" y="46" width="34" height="82"/><rect x="1102" y="101" width="74" height="13"/></g>
 <rect class="sbB" x="462" y="30" width="28" height="98" transform="rotate(8 462 128)"/>
 </g></defs></svg>
+
+<!-- the page opens and closes on the same shelf. At the top the board is
+     overhead and the spines hang down out of it, dissolving into the plane
+     before they reach the title; at the foot the shelf is the right way up
+     and dissolves upward. A lamp walks the length of each, out of step. -->
+<div class="pageband topband" aria-hidden="true">
+  <svg class="bandsvg" viewBox="0 0 2400 190" preserveAspectRatio="xMidYMid slice">
+    <defs><mask id="bmT" maskUnits="userSpaceOnUse" x="0" y="0" width="2400" height="190"><ellipse class="sblamp" cx="0" cy="120" rx="300" ry="200" fill="url(#sbGlowM)"/></mask></defs>
+    <g transform="translate(0,190) scale(1,-1)">
+      <g><use href="#sbRow" transform="translate(1180,0) scale(-1,1.44)"/><use href="#sbRow" transform="translate(1136,0) scale(1,1.44)"/></g>
+      <g mask="url(#bmT)" style="opacity:var(--sb-lit)"><use href="#sbRow" class="sblit" transform="translate(1180,0) scale(-1,1.44)"/><use href="#sbRow" class="sblit" transform="translate(1136,0) scale(1,1.44)"/></g>
+      <ellipse class="sblamp" cx="0" cy="120" rx="330" ry="105" fill="url(#sbPool)"/>
+    </g>
+  </svg>
+</div>
+<div class="pageband botband" aria-hidden="true">
+  <svg class="bandsvg" viewBox="0 0 2400 190" preserveAspectRatio="xMidYMid slice">
+    <defs><mask id="bmB" maskUnits="userSpaceOnUse" x="0" y="0" width="2400" height="190"><ellipse class="sblamp" cx="0" cy="120" rx="300" ry="200" fill="url(#sbGlowM)"/></mask></defs>
+    <g><use href="#sbRow" transform="translate(1180,0) scale(-1,1.44)"/><use href="#sbRow" transform="translate(1136,0) scale(1,1.44)"/></g>
+    <g mask="url(#bmB)" style="opacity:var(--sb-lit)"><use href="#sbRow" class="sblit" transform="translate(1180,0) scale(-1,1.44)"/><use href="#sbRow" class="sblit" transform="translate(1136,0) scale(1,1.44)"/></g>
+    <ellipse class="sblamp" cx="0" cy="120" rx="330" ry="105" fill="url(#sbPool)"/>
+  </svg>
+</div>
+
 <div class="wrap">
 <header class="page-head">
-  <svg class="book-icon" viewBox="0 0 48 40" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
-<path d="M24 8 C20 4.5 14 3.5 8 3.5 C6 3.5 4.5 3.7 3 4 L3 32 C4.5 31.7 6 31.5 8 31.5 C14 31.5 20 32.5 24 36 C28 32.5 34 31.5 40 31.5 C42 31.5 43.5 31.7 45 32 L45 4 C43.5 3.7 42 3.5 40 3.5 C34 3.5 28 4.5 24 8 Z"/>
-<path d="M24 8 L24 36"/>
-</svg>
   <div class="overline">A reading list for the age of AI</div>
   <h1>The AI-Future Canon</h1>
   <p class="sub">In a few years, people and AI will live and work side by side everywhere. These 70 books, some stories and some serious forecasts, saw parts of that world before it arrived. Read even a few and you will be far better prepared than most.</p>
+  <div class="headgrid">
   <div class="howto">
     <p><strong>How the books were chosen.</strong> Every book was put before a council of three elders, each of them an artificial mind: a historian who checks each prediction against what really happened, a builder who works on AI systems today, and a sage who studies how people and societies handle big change. Chosen from 156 books considered.</p>
-    <p><strong>How to read the scores.</strong> <strong>Predictive power</strong> means how much of what the book guessed has actually come true so far. <strong>Preparation</strong> means how much wiser the book leaves you about the world that is coming. Both are averages of the three elders' scores.</p>
   </div>
   <div class="statline">
     <div class="stat"><b>70</b><span>books</span></div>
@@ -261,11 +290,11 @@ footer p { max-width: 640px; margin: 4px auto; }
     <div class="stat"><b>1909&ndash;2025</b><span>years covered</span></div>
     <div class="stat"><b>14&thinsp;/&thinsp;56</b><span>fiction / nonfiction</span></div>
   </div>
+  </div>
 </header>
 
 <section>
   <div class="section-head">
-    <svg class="shelfband sb1" viewBox="0 0 1200 140" aria-hidden="true"><defs><mask id="sbm1" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="140"><ellipse class="sblamp" cx="0" cy="72" rx="225" ry="150" fill="url(#sbGlowM)"/></mask></defs><use href="#sbRow"/><g mask="url(#sbm1)" style="opacity:var(--sb-lit)"><use href="#sbRow" class="sblit"/></g><ellipse class="sblamp" cx="0" cy="72" rx="255" ry="76" fill="url(#sbPool)"/></svg>
     <h2>The Top Shelf</h2>
     <p>The ten best stories and the ten best nonfiction books, each ranked on their own shelf. Stories prepare the heart; nonfiction prepares the head. You need both. Click any book for its full story.</p>
   </div>
@@ -683,7 +712,6 @@ footer p { max-width: 640px; margin: 4px auto; }
 
 <section>
   <div class="section-head">
-    <svg class="shelfband sb2" viewBox="0 0 1200 140" aria-hidden="true"><defs><mask id="sbm2" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="140"><ellipse class="sblamp" cx="0" cy="72" rx="225" ry="150" fill="url(#sbGlowM)"/></mask></defs><use href="#sbRow"/><g mask="url(#sbm2)" style="opacity:var(--sb-lit)"><use href="#sbRow" class="sblit"/></g><ellipse class="sblamp" cx="0" cy="72" rx="255" ry="76" fill="url(#sbPool)"/></svg>
     <h2>The Next 50</h2>
     <p>One single ranking from 21 to 70, fiction and nonfiction mixed together and judged by the same scores. Use the buttons to show just one kind.</p>
   </div>
@@ -1649,7 +1677,6 @@ footer p { max-width: 640px; margin: 4px auto; }
 
 <section>
   <div class="section-head">
-    <svg class="shelfband sb3" viewBox="0 0 1200 140" aria-hidden="true"><defs><mask id="sbm3" maskUnits="userSpaceOnUse" x="0" y="0" width="1200" height="140"><ellipse class="sblamp" cx="0" cy="72" rx="225" ry="150" fill="url(#sbGlowM)"/></mask></defs><use href="#sbRow"/><g mask="url(#sbm3)" style="opacity:var(--sb-lit)"><use href="#sbRow" class="sblit"/></g><ellipse class="sblamp" cx="0" cy="72" rx="255" ry="76" fill="url(#sbPool)"/></svg>
     <h2>Advice From the Elders</h2>
     <p>The three judges are themselves artificial minds, reading books written about their own arrival. Each left a short note for readers of this list.</p>
   </div>
@@ -1691,7 +1718,6 @@ footer p { max-width: 640px; margin: 4px auto; }
         <p class="modal-byline" id="modalByline"></p>
         <p class="buy-row">
           <a class="buy-link" id="modalBuy" href="#" target="_blank" rel="noopener sponsored">Find on Amazon<span class="ar" aria-hidden="true">&#8599;</span></a>
-          <span class="buy-note">(paid link)</span>
         </p>
         <div class="modal-section"><h5>What it is about</h5><p id="modalSynopsis"></p></div>
         <div class="modal-section" id="secWim"><h5>Why this book matters</h5><p id="modalWim"></p></div>
