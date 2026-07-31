@@ -1,0 +1,902 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>An Artificial Mind of Your Own: six questions about the machines that talk</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    color-scheme: light;
+    --paper: #FCFCFA;
+    --ink: #211E33;
+    --muted: #6A677D;
+    --line: #E4E2DC;
+    --indigo: #4038A8;
+    --indigo-dark: #2C2680;
+    --chip1: #E7E4FB; --chip1-ink: #3C3489;
+    --chip2: #DCF2E8; --chip2-ink: #0A5C48;
+    --chip3: #FBE4D9; --chip3-ink: #8A3517;
+    --chip4: #F8ECCB; --chip4-ink: #7A5A0E;
+    --chip5: #F9E0EA; --chip5-ink: #8C2F4F;
+    /* surfaces lifted out of hardcoded rules; light values are the originals */
+    --surface: #fff;
+    --code-bg: #F1EFF9;
+    --qbox-bg: #F5F4FB;
+    --qbox-line: #CFCBEF;
+    --toggle-shadow: 0 4px 14px rgba(33,30,51,0.12);
+    --toggle-shadow-hover: 0 6px 18px rgba(33,30,51,0.2);
+  }
+  :root[data-theme="dark"] {
+    color-scheme: dark;
+    --paper: #16141F;
+    --ink: #E9E7F2;
+    --muted: #9B98AC;
+    --line: #2C2A38;
+    --indigo: #8B84E8;
+    --indigo-dark: #A6A0F0;
+    --chip1: #2E2A55; --chip1-ink: #C7C1F5;
+    --chip2: #123B30; --chip2-ink: #9FE0C6;
+    --chip3: #452112; --chip3-ink: #F5C4AC;
+    --chip4: #3D3011; --chip4-ink: #EAD79A;
+    --chip5: #43172A; --chip5-ink: #F2B8CE;
+    --surface: #1E1B2B;
+    --code-bg: #262238;
+    --qbox-bg: #201C33;
+    --qbox-line: #3A3363;
+    --toggle-shadow: 0 4px 14px rgba(0,0,0,0.5);
+    --toggle-shadow-hover: 0 6px 18px rgba(0,0,0,0.65);
+    /* figure colors that are literal hex inside inline SVG */
+    --fig-ink: #E9E7F2;      /* was #211E33 */
+    --fig-text-2: #C6C3D4;   /* was #444441 */
+    --fig-text-3: #A9A6B8;   /* was #5F5E5A (as text)  */
+    --fig-box-line: #57546A; /* was #5F5E5A (as stroke) */
+    --fig-box-fill: #23212F; /* was #F1EFE8 */
+    --fig-rule: #3E3B4C;     /* was #B4B2A9 */
+    --fig-hairline: #34313F; /* was #E4E2DC */
+    --fig-indigo-2: #A49CF2; /* was #534AB7 */
+    --fig-panel: #221E38;    /* was #F7F6FD */
+    --fig-green-2: #6FD3AE;  /* was #0F6E56 */
+  }
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+    font-size: 1rem;
+    line-height: 1.7;
+  }
+  .wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem; }
+  .wide { max-width: 52rem; }
+
+  /* ---------- hero ---------- */
+  header { padding: 5.5rem 0 3.5rem; border-bottom: 1px solid var(--line); }
+  .eyebrow {
+    font-family: 'IBM Plex Mono', monospace;
+    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted);
+  }
+  h1 {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: clamp(2.3rem, 6.4vw, 4rem);
+    font-weight: 700; line-height: 1.06;
+    letter-spacing: -.02em;
+    margin: 1rem 0 1.2rem;
+  }
+  h1 .amp { color: var(--indigo); }
+  .subtitle { font-family: 'Literata', Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--muted); max-width: 36rem; }
+  .hero-art { margin: 3rem auto 0; max-width: 42rem; }
+  .hero-art svg { width: 100%; height: auto; display: block; }
+
+  /* prediction demo */
+  .demo {
+    margin: 2.2rem 0 2.4rem; padding: 1.6rem 1.7rem 1.7rem;
+    border: 1px solid var(--line); border-radius: 14px; background: var(--surface);
+  }
+  .demo-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+    margin-bottom: .9rem;
+  }
+  .demo-sentence { font-family: 'Literata', Georgia, serif; font-size: 1.25rem; margin-bottom: 1.2rem; }
+  .demo-sentence .blank {
+    display: inline-block; min-width: 4.2rem; border-bottom: 2px solid var(--indigo);
+    color: var(--indigo); font-style: italic; text-align: center;
+  }
+  .bar-row { display: flex; align-items: center; gap: .8rem; margin: .45rem 0; }
+  .bar-word { font-family: 'IBM Plex Mono', monospace; font-size: .88rem; width: 4.6rem; text-align: right; }
+  .bar-track { flex: 1; }
+  .bar {
+    height: 1.15rem; border-radius: 4px; background: var(--chip1);
+    border: 1px solid var(--chip1-ink); position: relative; min-width: 2px;
+  }
+  .bar-row:first-of-type .bar { background: var(--indigo); border-color: var(--indigo-dark); }
+  .bar-pct { font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--muted); width: 3rem; }
+
+  /* ---------- toc ---------- */
+  nav.toc { padding: 2.6rem 0; border-bottom: 1px solid var(--line); }
+  nav.toc ol { list-style: none; counter-reset: ch; }
+  nav.toc li { counter-increment: ch; }
+  nav.toc a {
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: .55rem 0; color: var(--ink); text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 500;
+    border-bottom: 1px dashed transparent;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible { color: var(--indigo); }
+  nav.toc a::before {
+    content: counter(ch, upper-roman);
+    font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--indigo);
+    min-width: 1.6rem;
+  }
+  a:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; border-radius: 2px; }
+
+  /* ---------- chapters ---------- */
+  section.chapter { padding: 4.2rem 0 1rem; }
+  .ch-eyebrow {
+    font-family: 'IBM Plex Mono', monospace; font-size: .75rem;
+    letter-spacing: .12em; text-transform: uppercase; color: var(--indigo);
+    margin-bottom: 1rem;
+  }
+  h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1.5; margin-bottom: 1.6rem; letter-spacing: -.01em; }
+  h2 .tok { display: inline-block; padding: .04em .3em; border-radius: 7px; margin: .06em 0; }
+  .t1 { background: var(--chip1); color: var(--chip1-ink); }
+  .t2 { background: var(--chip2); color: var(--chip2-ink); }
+  .t3 { background: var(--chip3); color: var(--chip3-ink); }
+  .t4 { background: var(--chip4); color: var(--chip4-ink); }
+  .t5 { background: var(--chip5); color: var(--chip5-ink); }
+  h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.32rem; margin: 2.6rem 0 .8rem; }
+  p { margin-bottom: 1.15rem; }
+  p.lede { font-size: 1.24rem; line-height: 1.62; }
+  em { font-style: italic; }
+  strong { font-weight: 600; }
+  .mono { font-family: 'IBM Plex Mono', monospace; font-size: .92em; background: var(--code-bg); padding: .08em .35em; border-radius: 5px; }
+
+  /* ---------- figures ---------- */
+  figure { margin: 2.2rem auto 2.4rem; max-width: 52rem; }
+  figure svg { width: 100%; height: auto; display: block; }
+  figure svg text { font-family: 'IBM Plex Mono', monospace; }
+  figcaption {
+    font-family: 'Literata', Georgia, serif; font-style: italic;
+    font-size: .82rem; color: var(--muted);
+    text-align: center; margin-top: .9rem; line-height: 1.55;
+  }
+
+  /* ---------- example panels ---------- */
+  .stages { display: grid; gap: 1rem; margin: 2rem 0 2.2rem; }
+  @media (min-width: 700px) { .stages { grid-template-columns: 1fr 1fr 1fr; } }
+  .stage { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 1.1rem 1.15rem 1.2rem; }
+  .stage h4 { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .7rem; }
+  .stage:nth-child(1) h4 { color: var(--chip3-ink); }
+  .stage:nth-child(2) h4 { color: var(--chip4-ink); }
+  .stage:nth-child(3) h4 { color: var(--chip2-ink); }
+  .stage p { font-size: .9rem; line-height: 1.58; margin-bottom: .5rem; }
+  .stage .out { font-family: 'Literata', Georgia, serif; font-style: italic; color: var(--ink); }
+  .stage .note { font-size: .79rem; color: var(--muted); font-style: normal; margin-bottom: 0; }
+
+  .q-box {
+    border: 1px solid var(--qbox-line); background: var(--qbox-bg);
+    padding: .95rem 1.25rem; border-radius: 10px; margin: 1.6rem 0;
+    font-size: .94rem;
+  }
+
+  /* ---------- glossary ---------- */
+  dl.gloss { margin: 1.4rem 0; font-size: .86rem; line-height: 1.55; }
+  dl.gloss dt { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .92rem; margin-top: .9rem; }
+  dl.gloss dd { margin-left: 0; color: var(--muted); }
+
+  footer { border-top: 1px solid var(--line); margin-top: 4rem; padding: 2.2rem 0 3.5rem; color: var(--muted); font-size: .85rem; }
+  footer .mono-line { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; margin-top: .5rem; }
+  footer .home-link { margin-bottom: 1rem; }
+  footer .home-link a { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  footer .home-link a:hover { color: var(--indigo); }
+
+  /* ---------- theme toggle ---------- */
+  .theme-toggle {
+    position: fixed; top: 16px; right: 16px; z-index: 40;
+    display: flex; align-items: center; gap: 7px;
+    font: 600 13px 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
+    padding: 9px 16px; border-radius: 999px; cursor: pointer;
+    background: var(--surface); color: var(--ink); border: 1px solid var(--line);
+    box-shadow: var(--toggle-shadow);
+  }
+  .theme-toggle:hover { box-shadow: var(--toggle-shadow-hover); }
+  .theme-toggle:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
+  .theme-toggle svg { width: 15px; height: 15px; }
+
+  /* dark: the probability bars need a readable body, not just a bright outline */
+  [data-theme="dark"] .bar { background: #362F63; border-color: #6F65C0; }
+
+  /* ---------- dark: remap literal colors baked into the inline SVG figures ----------
+     Attribute selectors match the presentation attributes as written in the markup;
+     an author CSS declaration outranks a presentation attribute, so each literal is
+     re-pointed at a themed value. Nothing here applies in light mode. */
+  [data-theme="dark"] [fill="#211E33"] { fill: var(--fig-ink); }
+  [data-theme="dark"] [stroke="#211E33"] { stroke: var(--fig-ink); }
+  [data-theme="dark"] [fill="#444441"] { fill: var(--fig-text-2); }
+  [data-theme="dark"] [fill="#5F5E5A"] { fill: var(--fig-text-3); }
+  [data-theme="dark"] [stroke="#5F5E5A"] { stroke: var(--fig-box-line); }
+  [data-theme="dark"] [fill="#F1EFE8"] { fill: var(--fig-box-fill); }
+  [data-theme="dark"] [stroke="#B4B2A9"] { stroke: var(--fig-rule); }
+  [data-theme="dark"] [stroke="#E4E2DC"] { stroke: var(--fig-hairline); }
+  [data-theme="dark"] [fill="#F7F6FD"] { fill: var(--fig-panel); }
+  [data-theme="dark"] [fill="#0F6E56"] { fill: var(--fig-green-2); }
+  [data-theme="dark"] [fill="#534AB7"] { fill: var(--fig-indigo-2); }
+  [data-theme="dark"] [fill="#6A677D"] { fill: var(--muted); }
+  [data-theme="dark"] [stroke="#6A677D"] { stroke: var(--muted); }
+  [data-theme="dark"] [fill="#4038A8"] { fill: var(--indigo); }
+  [data-theme="dark"] [stroke="#4038A8"] { stroke: var(--indigo); }
+  [data-theme="dark"] [fill="#E7E4FB"] { fill: var(--chip1); }
+  [data-theme="dark"] [fill="#3C3489"] { fill: var(--chip1-ink); }
+  [data-theme="dark"] [stroke="#3C3489"] { stroke: var(--chip1-ink); }
+  [data-theme="dark"] [fill="#DCF2E8"] { fill: var(--chip2); }
+  [data-theme="dark"] [fill="#0A5C48"] { fill: var(--chip2-ink); }
+  [data-theme="dark"] [stroke="#0A5C48"] { stroke: var(--chip2-ink); }
+  [data-theme="dark"] [fill="#FBE4D9"] { fill: var(--chip3); }
+  [data-theme="dark"] [fill="#8A3517"] { fill: var(--chip3-ink); }
+  [data-theme="dark"] [stroke="#8A3517"] { stroke: var(--chip3-ink); }
+  [data-theme="dark"] [fill="#F8ECCB"] { fill: var(--chip4); }
+  [data-theme="dark"] [fill="#7A5A0E"] { fill: var(--chip4-ink); }
+  [data-theme="dark"] [stroke="#7A5A0E"] { stroke: var(--chip4-ink); }
+  [data-theme="dark"] [fill="#F9E0EA"] { fill: var(--chip5); }
+  [data-theme="dark"] [fill="#8C2F4F"] { fill: var(--chip5-ink); }
+  [data-theme="dark"] [stroke="#8C2F4F"] { stroke: var(--chip5-ink); }
+</style>
+</head>
+<body>
+<button class="theme-toggle" id="themeBtn" aria-label="Switch between light and dark mode">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12h2.5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
+  <span id="themeLabel">Light mode</span>
+</button>
+
+<header>
+  <div class="wrap">
+    <p class="eyebrow">A field guide for curious students</p>
+    <h1>An Artificial Mind of <span class="amp">Your Own</span></h1>
+    <p class="subtitle">Is it like your brain? Six plain questions about the machines that talk: how they learn, why some are free to download, and how to run one on your laptop.</p>
+
+    <div class="hero-art" role="img" aria-label="Two half-brain shapes facing each other across a dashed seam: the left is one continuous looping scribble labeled 'a mind', the right is a neat network of colored nodes and weighted links labeled 'an artificial one'">
+      <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
+        <line x1="340" y1="52" x2="340" y2="268" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="2 6"/>
+        <g fill="none" stroke="#211E33" stroke-width="2.2" stroke-linecap="round">
+          <path d="M205 252 C 150 250 108 224 100 178 C 92 132 122 84 170 66 C 214 50 268 58 296 92 C 318 118 320 158 300 190 C 282 218 246 236 210 232 C 182 228 166 204 176 182 C 186 160 214 154 232 168 C 246 179 246 200 232 210"/>
+          <path d="M150 170 C 148 140 170 116 200 112 C 232 108 258 128 262 156"/>
+          <path d="M190 200 C 172 196 162 178 170 162"/>
+          <path d="M129 120 C 142 104 162 94 184 92"/>
+          <path d="M205 252 C 205 266 199 274 189 279"/>
+        </g>
+        <g stroke="#B4B2A9" stroke-width="1">
+          <line x1="475" y1="68" x2="418" y2="94"/><line x1="475" y1="68" x2="532" y2="94"/>
+          <line x1="418" y1="94" x2="384" y2="142"/><line x1="532" y1="94" x2="566" y2="142"/>
+          <line x1="532" y1="94" x2="475" y2="126"/>
+          <line x1="384" y1="142" x2="424" y2="176"/><line x1="475" y1="126" x2="424" y2="176"/>
+          <line x1="566" y1="142" x2="526" y2="176"/>
+          <line x1="424" y1="176" x2="475" y2="214"/><line x1="526" y1="176" x2="475" y2="214"/>
+          <line x1="384" y1="142" x2="396" y2="200"/><line x1="566" y1="142" x2="554" y2="200"/>
+          <line x1="424" y1="176" x2="396" y2="200"/><line x1="526" y1="176" x2="554" y2="200"/>
+          <line x1="396" y1="200" x2="440" y2="244"/><line x1="554" y1="200" x2="510" y2="244"/>
+          <line x1="475" y1="214" x2="440" y2="244"/><line x1="475" y1="214" x2="510" y2="244"/>
+          <line x1="440" y1="244" x2="475" y2="258"/><line x1="510" y1="244" x2="475" y2="258"/>
+          <line x1="475" y1="258" x2="475" y2="280"/>
+        </g>
+        <g stroke="#4038A8" stroke-width="2.4">
+          <line x1="418" y1="94" x2="475" y2="126"/>
+          <line x1="475" y1="126" x2="526" y2="176"/>
+          <line x1="475" y1="214" x2="510" y2="244"/>
+        </g>
+        <g stroke-width="1.4">
+          <circle cx="475" cy="68" r="7" fill="#E7E4FB" stroke="#3C3489"/>
+          <circle cx="418" cy="94" r="7" fill="#DCF2E8" stroke="#0A5C48"/>
+          <circle cx="532" cy="94" r="7" fill="#FBE4D9" stroke="#8A3517"/>
+          <circle cx="384" cy="142" r="7" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <circle cx="475" cy="126" r="7" fill="#F9E0EA" stroke="#8C2F4F"/>
+          <circle cx="566" cy="142" r="7" fill="#E7E4FB" stroke="#3C3489"/>
+          <circle cx="424" cy="176" r="7" fill="#FBE4D9" stroke="#8A3517"/>
+          <circle cx="526" cy="176" r="7" fill="#DCF2E8" stroke="#0A5C48"/>
+          <circle cx="475" cy="214" r="7" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <circle cx="396" cy="200" r="7" fill="#F9E0EA" stroke="#8C2F4F"/>
+          <circle cx="554" cy="200" r="7" fill="#DCF2E8" stroke="#0A5C48"/>
+          <circle cx="440" cy="244" r="7" fill="#E7E4FB" stroke="#3C3489"/>
+          <circle cx="510" cy="244" r="7" fill="#FBE4D9" stroke="#8A3517"/>
+          <circle cx="475" cy="258" r="7" fill="#DCF2E8" stroke="#0A5C48"/>
+        </g>
+        <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#6A677D">
+          <text x="205" y="306" text-anchor="middle">a mind</text>
+          <text x="475" y="306" text-anchor="middle">an artificial one</text>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+
+<nav class="toc" aria-label="Contents">
+  <div class="wrap">
+    <ol>
+      <li><a href="#ch1">Is it a brain? What's really going on inside</a></li>
+      <li><a href="#ch2">How does it learn?</a></li>
+      <li><a href="#ch3">Why are some AIs free to download?</a></li>
+      <li><a href="#ch4">How do you run one yourself?</a></li>
+      <li><a href="#ch5">What else can this trick do?</a></li>
+      <li><a href="#ch6">Where do you start?</a></li>
+    </ol>
+  </div>
+</nav>
+
+<div class="wrap">
+  <section class="chapter" id="preface">
+    <p class="ch-eyebrow">Why this guide exists</p>
+    <p class="lede">You have probably used ChatGPT, Claude, or Gemini. Maybe today. These systems write essays, explain calculus, and debug code, yet almost nobody can say how they work or where they come from. This guide closes that gap by answering six plain questions, one per chapter, starting with the one everybody secretly asks: is there a little brain in there?</p>
+    <p>Here is the promise. By the end, you will understand the full life of a language model: how it learns from a huge slice of the internet, how companies teach it to be helpful instead of weird, what actually gets published when a model is "open," and how a sixteen-year-old with a decent laptop can run one at home for free. Every step uses ideas you already have. Guessing. Practicing. Getting graded. Getting better.</p>
+    <p>One warm-up fact before chapter one. A language model does exactly one thing: it predicts the next chunk of text. Here is one caught in the act.</p>
+
+    <div class="demo" role="img" aria-label="A language model predicting the next word of the sentence 'The cat sat on the', with 'mat' at 61 percent, 'floor' at 18 percent, 'couch' at 9 percent, and 'moon' at 1 percent">
+      <p class="demo-label">This is the whole trick</p>
+      <p class="demo-sentence">The cat sat on the <span class="blank">?</span></p>
+      <div class="bar-row"><span class="bar-word">mat</span><div class="bar-track"><div class="bar" style="width:61%"></div></div><span class="bar-pct">61%</span></div>
+      <div class="bar-row"><span class="bar-word">floor</span><div class="bar-track"><div class="bar" style="width:18%"></div></div><span class="bar-pct">18%</span></div>
+      <div class="bar-row"><span class="bar-word">couch</span><div class="bar-track"><div class="bar" style="width:9%"></div></div><span class="bar-pct">9%</span></div>
+      <div class="bar-row"><span class="bar-word">moon</span><div class="bar-track"><div class="bar" style="width:1%"></div></div><span class="bar-pct">1%</span></div>
+    </div>
+
+    <p>Every bar is the model's confidence in one possible next word. That is a model thinking, the entire act of it. Everything else in this guide is about how those guesses get good, and what happens to them afterward.</p>
+  </section>
+
+  <section class="chapter" id="ch1">
+    <p class="ch-eyebrow">Chapter I · Prediction</p>
+    <h2><span class="tok t1">Is</span> <span class="tok t2">it</span> <span class="tok t3">a</span> <span class="tok t4">brain?</span></h2>
+    <p class="lede">When an AI writes you a poem or explains your homework, it is natural to picture a little electronic brain in there, thinking. So let's answer the question head on. A language model borrows exactly one idea from your brain, and differs from it in almost every other way. This chapter shows you what is actually inside.</p>
+    <p>Start small. Your phone's keyboard already does a tiny version of what ChatGPT does. Type "see you" and it suggests "later." A large language model is that idea scaled up by a factor of billions: instead of guessing from the last two words, it considers everything you wrote, and instead of a small word list, it has read more text than any human ever will.</p>
+    <p>Before a model can read anything, text gets chopped into <strong>tokens</strong>: small chunks that are usually a word, part of a word, or a punctuation mark. Each token has an ID number, because computers work with numbers, and the full list of tokens a model knows is its vocabulary, typically between 50,000 and 250,000 entries.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The sentence 'Language models are surprisingly simple' split into colored token chunks, each mapped to an ID number">
+        <text x="340" y="24" text-anchor="middle" font-size="14" fill="#211E33">Language models are surprisingly simple</text>
+        <line x1="340" y1="38" x2="340" y2="62" stroke="#6A677D" stroke-width="1.2"/>
+        <path d="M336 56 L340 63 L344 56" fill="none" stroke="#6A677D" stroke-width="1.2" stroke-linecap="round"/>
+        <g font-size="13">
+          <rect x="60" y="76" width="98" height="34" rx="8" fill="#E7E4FB" stroke="#3C3489"/><text x="109" y="97" text-anchor="middle" fill="#3C3489">Language</text>
+          <rect x="166" y="76" width="80" height="34" rx="8" fill="#DCF2E8" stroke="#0A5C48"/><text x="206" y="97" text-anchor="middle" fill="#0A5C48">·models</text>
+          <rect x="254" y="76" width="62" height="34" rx="8" fill="#FBE4D9" stroke="#8A3517"/><text x="285" y="97" text-anchor="middle" fill="#8A3517">·are</text>
+          <rect x="324" y="76" width="120" height="34" rx="8" fill="#F8ECCB" stroke="#7A5A0E"/><text x="384" y="97" text-anchor="middle" fill="#7A5A0E">·surprising</text>
+          <rect x="452" y="76" width="52" height="34" rx="8" fill="#F9E0EA" stroke="#8C2F4F"/><text x="478" y="97" text-anchor="middle" fill="#8C2F4F">ly</text>
+          <rect x="512" y="76" width="92" height="34" rx="8" fill="#E7E4FB" stroke="#3C3489"/><text x="558" y="97" text-anchor="middle" fill="#3C3489">·simple</text>
+        </g>
+        <line x1="340" y1="122" x2="340" y2="146" stroke="#6A677D" stroke-width="1.2"/>
+        <path d="M336 140 L340 147 L344 140" fill="none" stroke="#6A677D" stroke-width="1.2" stroke-linecap="round"/>
+        <g font-size="13" fill="#6A677D">
+          <text x="109" y="172" text-anchor="middle">14680</text>
+          <text x="206" y="172" text-anchor="middle">4211</text>
+          <text x="285" y="172" text-anchor="middle">527</text>
+          <text x="384" y="172" text-anchor="middle">21955</text>
+          <text x="478" y="172" text-anchor="middle">306</text>
+          <text x="558" y="172" text-anchor="middle">3538</text>
+        </g>
+        <text x="340" y="200" text-anchor="middle" font-size="12" fill="#6A677D">token IDs: what the model actually sees</text>
+      </svg>
+      <figcaption>Notice "surprisingly" became two tokens. Rare words get split; common ones stay whole. The dot marks a leading space.</figcaption>
+    </figure>
+
+    <p>The model itself is one enormous math function. Token IDs go in, and out comes a probability for every token in the vocabulary: a full ranking of what might come next. Inside the function sit billions of adjustable numbers called <strong>weights</strong> (also called parameters). Think of them as billions of tiny dials. At the start they are random and the model outputs nonsense. Training is the process of turning those dials until the guesses get good.</p>
+    <p>The architecture, meaning the shape of the function, is called a <strong>transformer</strong>. It was introduced in a 2017 paper titled "Attention Is All You Need," and its central move is called attention: as the model processes each token, it can look back at every earlier token and decide which ones matter right now. Reading "the cat sat on the," attention lets the model weigh "cat" heavily when guessing what comes next. Nearly every model you have heard of, from GPT to Claude to Llama, is a stack of these attention layers, and that shared shape will matter a lot in chapter four.</p>
+    <p>To generate a paragraph, the model just repeats the trick. Predict a token, add it to the text, predict the next one, again and again, dozens of times per second. Every essay an AI has ever written was produced one token at a time.</p>
+
+    <h3>So where does the brain comparison come in?</h3>
+    <p>Here is the one idea the model genuinely borrows. Your brain is a web of roughly 86 billion neurons, simple cells that each do a small job, connected by trillions of links whose strengths change as you learn. A language model is also a web of simple units connected by adjustable links, which is why the design is called a <strong>neural network</strong> and why the dials are the "strength" of each connection. Learning by adjusting connection strengths: that is the borrowed idea, and it is a great one. It came from researchers who studied brains, and two of them, John Hopfield and Geoffrey Hinton, won the 2024 Nobel Prize in Physics for working it out decades before it paid off.</p>
+    <p>Everything past that one idea splits apart. Put the two side by side and the differences are bigger than the similarity.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scoreboard comparing your brain and a language model: 86 billion neurons versus up to two trillion weights; runs on 20 watts versus training drawing a small town's power; learns every day versus frozen after training; sees, hears, and touches versus reading tokens only; remembers people for years versus forgetting every chat">
+        <text x="185" y="26" text-anchor="middle" font-size="13.5" font-weight="500" fill="#0A5C48">your brain</text>
+        <text x="495" y="26" text-anchor="middle" font-size="13.5" font-weight="500" fill="#3C3489">a language model</text>
+        <g font-size="12.5">
+          <rect x="40" y="42" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="185" y="66" text-anchor="middle" fill="#0A5C48">86 billion neurons</text>
+          <rect x="350" y="42" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="495" y="66" text-anchor="middle" fill="#3C3489">up to about 2 trillion weights</text>
+          <rect x="40" y="92" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="185" y="116" text-anchor="middle" fill="#0A5C48">runs on 20 watts, a dim bulb</text>
+          <rect x="350" y="92" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="495" y="116" text-anchor="middle" fill="#3C3489">training draws a town's worth of power</text>
+          <rect x="40" y="142" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="185" y="166" text-anchor="middle" fill="#0A5C48">learns every day of your life</text>
+          <rect x="350" y="142" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="495" y="166" text-anchor="middle" fill="#3C3489">frozen after training ends</text>
+          <rect x="40" y="192" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="185" y="216" text-anchor="middle" fill="#0A5C48">sees, hears, touches, moves</text>
+          <rect x="350" y="192" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="495" y="216" text-anchor="middle" fill="#3C3489">reads and writes tokens, only</text>
+          <rect x="40" y="242" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="185" y="266" text-anchor="middle" fill="#0A5C48">remembers people for years</text>
+          <rect x="350" y="242" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="495" y="266" text-anchor="middle" fill="#3C3489">forgets every chat completely</text>
+        </g>
+      </svg>
+      <figcaption>One shared idea, adjustable connections, and then the paths split hard.</figcaption>
+    </figure>
+
+    <h3>One big difference from you: the dials freeze</h3>
+    <p>Before we watch a model learn, clear up the most common misunderstanding about AI. Your brain updates itself constantly. You will remember something from today for years, without trying. A language model works on a completely different schedule: there is a <strong>training phase</strong>, when the dials move, and after it ends they are locked. Every conversation the model has afterward runs on the same frozen numbers.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison: a human brain loops between experience and rewiring every day for life, while a language model has a training phase where weights change, then a lock, then years of inference where weights are frozen">
+        <defs><marker id="ba" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="20" y="28" font-size="13" font-weight="500" fill="#444441">your brain</text>
+        <g font-size="12.5">
+          <rect x="150" y="10" width="170" height="46" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="235" y="38" text-anchor="middle" fill="#0A5C48">experience something</text>
+          <rect x="420" y="10" width="170" height="46" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="505" y="38" text-anchor="middle" fill="#0A5C48">brain rewires itself</text>
+        </g>
+        <line x1="320" y1="26" x2="416" y2="26" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ba)"/>
+        <path d="M420 46 C 380 74, 360 74, 324 48" fill="none" stroke="#6A677D" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#ba)"/>
+        <text x="370" y="90" text-anchor="middle" font-size="11.5" fill="#0A5C48">round and round, every day, your whole life</text>
+
+        <line x1="20" y1="118" x2="660" y2="118" stroke="#E4E2DC" stroke-width="1"/>
+
+        <text x="20" y="150" font-size="13" font-weight="500" fill="#444441">a language model</text>
+        <g font-size="12.5">
+          <rect x="150" y="162" width="180" height="60" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <text x="240" y="186" text-anchor="middle" fill="#7A5A0E">training phase</text>
+          <text x="240" y="206" text-anchor="middle" fill="#7A5A0E" font-size="11.5">the dials move</text>
+          <rect x="430" y="162" width="180" height="60" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="520" y="186" text-anchor="middle" fill="#3C3489">inference, for years</text>
+          <text x="520" y="206" text-anchor="middle" fill="#3C3489" font-size="11.5">the dials are locked</text>
+        </g>
+        <line x1="330" y1="192" x2="426" y2="192" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ba)"/>
+        <text x="378" y="180" text-anchor="middle" font-size="15">🔒</text>
+        <text x="380" y="250" text-anchor="middle" font-size="11.5" fill="#6A677D">a one-way door: after training ends, nothing the model reads changes it</text>
+      </svg>
+      <figcaption>You learn in a loop. A model learns once, then gets frozen and shipped.</figcaption>
+    </figure>
+
+    <p>This one fact explains a lot of everyday AI behavior. Ask a model about last week's news and it may have no idea, because its training ended months earlier. The industry calls that boundary the <strong>knowledge cutoff</strong>: the model knows the world up to the day its training data was collected, and nothing after. It also means that when you chat with an AI, you are using it, never teaching it. Correct its mistake and it will apologize and adjust within that conversation, but the weights do not budge. Start a fresh chat and the same frozen model greets you, with no memory that you ever spoke. Any "learning" between then and now happened back at the lab, in the phase the next chapter is about.</p>
+    <p>So, is it a brain? Verdict: it is a machine built on one great idea from the brain, running on a completely different schedule, with no body, no senses, and no memory of you. Keep both halves of that answer in mind. The borrowed idea explains why it is so capable. The differences explain almost everything odd about it.</p>
+  </section>
+
+  <section class="chapter" id="ch2">
+    <p class="ch-eyebrow">Chapter II · Training</p>
+    <h2><span class="tok t2">How</span> <span class="tok t1">does</span> <span class="tok t4">it</span> <span class="tok t3">learn?</span></h2>
+    <p class="lede">Training happens in two big phases. First the model reads a giant chunk of the internet and learns how language works. Then it gets coached, the way an athlete gets coached, into being a useful assistant. The industry calls these pre-training and post-training.</p>
+
+    <h3>Phase one: pre-training</h3>
+    <p>Pre-training is a loop, run trillions of times. Show the model a snippet of real text with the ending hidden. Let it guess the next token. Compare the guess to the real answer. Nudge every weight a tiny amount in the direction that would have made the right answer more likely. Repeat with the next snippet.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The pre-training loop: internet text goes to guess the next token, then compare with the real token, then nudge all the weights, then repeat, looping back">
+        <defs><marker id="pa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g font-size="12.5">
+          <rect x="10" y="40" width="130" height="52" rx="10" fill="#F1EFE8" stroke="#5F5E5A"/>
+          <text x="75" y="61" text-anchor="middle" fill="#444441">trillions of</text>
+          <text x="75" y="78" text-anchor="middle" fill="#444441">words of text</text>
+          <rect x="180" y="40" width="130" height="52" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="245" y="61" text-anchor="middle" fill="#3C3489">guess the</text>
+          <text x="245" y="78" text-anchor="middle" fill="#3C3489">next token</text>
+          <rect x="350" y="40" width="130" height="52" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <text x="415" y="61" text-anchor="middle" fill="#7A5A0E">compare with</text>
+          <text x="415" y="78" text-anchor="middle" fill="#7A5A0E">the real token</text>
+          <rect x="520" y="40" width="130" height="52" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="585" y="61" text-anchor="middle" fill="#0A5C48">nudge all the</text>
+          <text x="585" y="78" text-anchor="middle" fill="#0A5C48">weights slightly</text>
+        </g>
+        <line x1="140" y1="66" x2="176" y2="66" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pa)"/>
+        <line x1="310" y1="66" x2="346" y2="66" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pa)"/>
+        <line x1="480" y1="66" x2="516" y2="66" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pa)"/>
+        <path d="M585 92 L585 122 L245 122 L245 96" fill="none" stroke="#6A677D" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#pa)"/>
+        <text x="415" y="138" text-anchor="middle" font-size="12" fill="#6A677D">repeat, trillions of times</text>
+      </svg>
+      <figcaption>One tiny nudge teaches almost nothing. Trillions of them teach grammar, facts, and style.</figcaption>
+    </figure>
+
+    <p>The scale is hard to picture. Llama 3 was pre-trained on about 15 trillion tokens, roughly the text of 50 million books. Where does that much text come from? Mostly from crawling the public web, the same way a search engine does, plus books, Wikipedia, scientific papers, and huge amounts of computer code, all filtered to strip out spam, duplicates, and junk. Choosing and cleaning this mountain of data is a serious craft of its own, because the model becomes what it reads.</p>
+    <p>Then comes the hardware. The job runs on thousands of specialized chips called GPUs, each costing about as much as a car. Meta trained its biggest Llama 3 on 16,384 of them at once, running for months and drawing enough electricity to power a town. Sam Altman has said GPT-4 cost more than 100 million dollars to train. This single phase is where most of the money in AI goes, and it is why only a handful of organizations on Earth train frontier models from scratch.</p>
+    <p>Something remarkable happens along the way. To keep getting better at predicting text, the model is forced to absorb the things text is <em>about</em>. Predicting the end of "the capital of France is" requires knowing it is Paris. Predicting the next line of a Python program requires learning Python. Nobody programs these facts in. They get soaked up because knowing them makes the guesses better. Researchers track progress with a single number called the loss, which measures how wrong the guesses are, and they watch it fall.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A loss curve falling over training time, annotated: early output is gibberish, then grammar appears, then facts and reasoning, ending with a fluent sentence">
+        <line x1="60" y1="180" x2="640" y2="180" stroke="#B4B2A9" stroke-width="1"/>
+        <line x1="60" y1="180" x2="60" y2="20" stroke="#B4B2A9" stroke-width="1"/>
+        <text x="30" y="100" text-anchor="middle" font-size="12" fill="#6A677D" transform="rotate(-90 30 100)">loss (how wrong)</text>
+        <text x="350" y="202" text-anchor="middle" font-size="12" fill="#6A677D">training time</text>
+        <path d="M70 34 C 160 44, 200 90, 280 118 S 480 158, 630 164" fill="none" stroke="#4038A8" stroke-width="2.5" stroke-linecap="round"/>
+        <circle cx="90" cy="38" r="4" fill="#8A3517"/>
+        <text x="100" y="26" font-size="11.5" fill="#8A3517">"xk fjor mmp ai"</text>
+        <circle cx="300" cy="124" r="4" fill="#7A5A0E"/>
+        <text x="310" y="112" font-size="11.5" fill="#7A5A0E">"the cat eat the food yes"</text>
+        <circle cx="560" cy="160" r="4" fill="#0A5C48"/>
+        <text x="552" y="146" text-anchor="end" font-size="11.5" fill="#0A5C48">"the cat, now fed, curled up by the fire"</text>
+      </svg>
+      <figcaption>The falling line is the entire show. Gibberish becomes grammar, grammar becomes knowledge.</figcaption>
+    </figure>
+
+    <p>The result is called a <strong>base model</strong>, and here is the catch: it is a text continuer, a supercharged autocomplete. It has read half the internet but it has never had a conversation. Ask it a question and it may respond with three more questions, because on the internet, questions often appear in lists next to other questions. It imitates text. It does not yet help you.</p>
+
+    <h3>Phase two: post-training</h3>
+    <p>Post-training turns the continuer into an assistant. Watch one question travel through the stages. The question: <span class="mono">A train leaves at 3:40 pm and the ride takes 85 minutes. When does it arrive?</span></p>
+
+    <div class="stages">
+      <div class="stage">
+        <h4>After pre-training</h4>
+        <p class="out">"When does it arrive? How long is the ride? Is there a dining car? Practice problems, page 74."</p>
+        <p class="note">It continues the text like a workbook page. Technically language, practically useless.</p>
+      </div>
+      <div class="stage">
+        <h4>After supervised fine-tuning</h4>
+        <p class="out">"The train arrives at around 5 pm. Let me know if you'd like help with a similar problem!"</p>
+        <p class="note">It now answers like an assistant. Friendly, confident, and wrong. 3:40 plus 85 minutes is 5:05.</p>
+      </div>
+      <div class="stage">
+        <h4>After reinforcement learning</h4>
+        <p class="out">"85 minutes is 1 hour 25 minutes. 3:40 + 1:00 = 4:40, then + 0:25 = 5:05 pm."</p>
+        <p class="note">It works step by step and lands on the right answer, because right answers were rewarded.</p>
+      </div>
+    </div>
+
+    <p><strong>Supervised fine-tuning</strong>, or SFT, comes first. People write out thousands of example conversations showing the ideal behavior: a question, then a helpful, honest, well-organized answer. The model trains on these the same way it trained on internet text, and it learns the format of being an assistant. Tone, structure, "here's how I can help." What SFT cannot easily teach is judgment, because you cannot write an example for every situation.</p>
+    <p><strong>Reinforcement learning</strong>, or RL, handles judgment, and it works like practice with a coach instead of studying worked examples. The model produces answers, something scores them, and the weights get nudged toward whatever scored well. The interesting part is who does the scoring, and there are three main answers.</p>
+
+    <h3>Scoring method one: human feedback (RLHF)</h3>
+    <p>The model writes two answers to the same question. A person picks the better one. Do this tens of thousands of times and you can train a second model, called a <strong>reward model</strong>, that learns to predict which answers people prefer. Now the main model can practice against the reward model millions of times, far more than humans could ever judge directly. This technique, published by OpenAI in 2022, is what turned GPT-3 into ChatGPT, and it is a big reason the chatbots you use feel polite and clear.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The RLHF loop: the model writes answers A and B, a human picks the better one, those choices train a reward model, and the reward model scores the main model's practice, updating it">
+        <defs><marker id="ra" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g font-size="12.5">
+          <rect x="20" y="90" width="140" height="52" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="90" y="111" text-anchor="middle" fill="#3C3489">the model writes</text>
+          <text x="90" y="128" text-anchor="middle" fill="#3C3489">answers A and B</text>
+          <rect x="230" y="24" width="140" height="52" rx="10" fill="#F1EFE8" stroke="#5F5E5A"/>
+          <text x="300" y="45" text-anchor="middle" fill="#444441">a human picks</text>
+          <text x="300" y="62" text-anchor="middle" fill="#444441">the better one</text>
+          <rect x="440" y="24" width="150" height="52" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <text x="515" y="45" text-anchor="middle" fill="#7A5A0E">reward model learns</text>
+          <text x="515" y="62" text-anchor="middle" fill="#7A5A0E">human taste</text>
+          <rect x="440" y="156" width="150" height="52" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="515" y="177" text-anchor="middle" fill="#0A5C48">scores millions of</text>
+          <text x="515" y="194" text-anchor="middle" fill="#0A5C48">practice answers</text>
+        </g>
+        <path d="M120 90 L240 58" fill="none" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ra)"/>
+        <line x1="370" y1="50" x2="436" y2="50" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ra)"/>
+        <line x1="515" y1="76" x2="515" y2="152" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ra)"/>
+        <path d="M440 190 L165 122" fill="none" stroke="#6A677D" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#ra)"/>
+        <text x="290" y="216" text-anchor="middle" font-size="12" fill="#6A677D">good scores nudge the weights</text>
+      </svg>
+      <figcaption>Humans judge thousands of answers. The reward model then judges millions on their behalf.</figcaption>
+    </figure>
+
+    <h3>Scoring method two: AI feedback (RLAIF)</h3>
+    <p>Human judging is slow and expensive, so labs found a shortcut: let a capable AI model do the judging, guided by a written list of principles. Anthropic calls its version Constitutional AI, because the judging model literally checks answers against a short constitution, with rules like "choose the response that is more honest" and "avoid helping with anything dangerous." The loop is the same as RLHF with the human swapped out, which means it scales enormously. Most modern assistants are shaped by a blend of human and AI feedback.</p>
+
+    <h3>Scoring method three: checkable answers (RLVR)</h3>
+    <p>Here is the newest idea, and it is behind the "reasoning" models that appeared around 2024 and 2025. For some questions, taste does not matter because the answer can be <em>checked</em>. A math problem has one correct number. Code either passes its tests or fails. So: give the model a hard problem, let it try many long, step-by-step solutions, automatically check which ones end correct, and reward those. This is called reinforcement learning with verifiable rewards.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RLVR: a math problem leads to many attempted solutions, an automatic checker marks each attempt right or wrong, and correct chains of reasoning get rewarded">
+        <defs><marker id="va" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g font-size="12.5">
+          <rect x="8" y="74" width="152" height="52" rx="10" fill="#F1EFE8" stroke="#5F5E5A"/>
+          <text x="84" y="95" text-anchor="middle" fill="#444441">hard problem</text>
+          <text x="84" y="112" text-anchor="middle" fill="#444441" font-size="11">with a known answer</text>
+          <g>
+            <rect x="196" y="16" width="150" height="36" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
+            <text x="271" y="38" text-anchor="middle" fill="#3C3489">attempt 1 → 4:55</text>
+            <rect x="196" y="60" width="150" height="36" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
+            <text x="271" y="82" text-anchor="middle" fill="#3C3489">attempt 2 → 5:05</text>
+            <rect x="196" y="104" width="150" height="36" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
+            <text x="271" y="126" text-anchor="middle" fill="#3C3489">attempt 3 → 5:05</text>
+            <rect x="196" y="148" width="150" height="36" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
+            <text x="271" y="170" text-anchor="middle" fill="#3C3489">attempt 4 → 6:05</text>
+          </g>
+          <rect x="400" y="74" width="120" height="52" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <text x="460" y="95" text-anchor="middle" fill="#7A5A0E">automatic</text>
+          <text x="460" y="112" text-anchor="middle" fill="#7A5A0E">checker</text>
+          <g font-size="13">
+            <text x="560" y="39" fill="#8A3517">✗ wrong</text>
+            <text x="560" y="83" fill="#0A5C48">✓ reward</text>
+            <text x="560" y="127" fill="#0A5C48">✓ reward</text>
+            <text x="560" y="171" fill="#8A3517">✗ wrong</text>
+          </g>
+        </g>
+        <line x1="164" y1="100" x2="192" y2="100" stroke="#6A677D" stroke-width="1.2" marker-end="url(#va)"/>
+        <line x1="346" y1="100" x2="396" y2="100" stroke="#6A677D" stroke-width="1.2" marker-end="url(#va)"/>
+        <line x1="520" y1="100" x2="548" y2="100" stroke="#6A677D" stroke-width="1.2" marker-end="url(#va)"/>
+      </svg>
+      <figcaption>No human in the loop at all. The answer key is the coach.</figcaption>
+    </figure>
+
+    <p>Something surprising falls out of this. When correct final answers get rewarded, models teach themselves to think longer before answering: to try an approach, notice a mistake, back up, and check their work, because those habits lead to more correct answers. DeepSeek's R1 model, released openly in January 2025, showed the whole world this working, and reasoning models from every major lab now train this way on math and code.</p>
+
+    <h3>Why it still makes things up</h3>
+    <p>Training also explains the most famous AI flaw. Ask a model for a book that does not exist and it may hand you a title, an author, and a publication year, invented on the spot with total confidence. The industry calls this <strong>hallucination</strong>, and now you can see where it comes from: the machine is a next-token guesser at its core, and a smooth, plausible guess scores well even when no true answer exists in its weights. Post-training pushes hard against this. Models practice saying "I'm not sure," and answers get graded on honesty as well as helpfulness. The same phase teaches safety: refusing to help with dangerous requests is a trained behavior, shaped by thousands of graded examples, exactly like everything else in this chapter. The guessing never fully goes away, though, which is why you should treat a model's confident claims the way you treat a smart friend's: usually right, worth checking when it matters.</p>
+
+    <p>Put the phases together and you get the full recipe.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The full training pipeline: pre-training produces a base model that continues text, supervised fine-tuning produces an assistant that answers, reinforcement learning produces a polished model with judgment and reasoning">
+        <defs><marker id="fa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g font-size="12.5">
+          <rect x="20" y="30" width="180" height="64" rx="10" fill="#FBE4D9" stroke="#8A3517"/>
+          <text x="110" y="53" text-anchor="middle" fill="#8A3517" font-weight="500">1 · Pre-training</text>
+          <text x="110" y="74" text-anchor="middle" fill="#8A3517">reads the internet</text>
+          <rect x="250" y="30" width="180" height="64" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <text x="340" y="53" text-anchor="middle" fill="#7A5A0E" font-weight="500">2 · Fine-tuning</text>
+          <text x="340" y="74" text-anchor="middle" fill="#7A5A0E">studies ideal examples</text>
+          <rect x="480" y="30" width="180" height="64" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="570" y="53" text-anchor="middle" fill="#0A5C48" font-weight="500">3 · Reinforcement</text>
+          <text x="570" y="74" text-anchor="middle" fill="#0A5C48">practices, gets scored</text>
+        </g>
+        <line x1="200" y1="62" x2="246" y2="62" stroke="#6A677D" stroke-width="1.2" marker-end="url(#fa)"/>
+        <line x1="430" y1="62" x2="476" y2="62" stroke="#6A677D" stroke-width="1.2" marker-end="url(#fa)"/>
+        <g font-size="11.5" fill="#6A677D">
+          <text x="110" y="120" text-anchor="middle">months, thousands of GPUs</text>
+          <text x="110" y="137" text-anchor="middle">result: a text continuer</text>
+          <text x="340" y="120" text-anchor="middle">days to weeks</text>
+          <text x="340" y="137" text-anchor="middle">result: an assistant</text>
+          <text x="570" y="120" text-anchor="middle">weeks, judged by humans,</text>
+          <text x="570" y="137" text-anchor="middle">AI, and answer keys</text>
+        </g>
+        <text x="340" y="175" text-anchor="middle" font-size="12" fill="#4038A8">the finished product: one file of billions of tuned weights</text>
+      </svg>
+      <figcaption>Three stages, one output: the weights. Keep your eye on them, because the next chapter is about what happens when a lab hands them over.</figcaption>
+    </figure>
+  </section>
+
+  <section class="chapter" id="ch3">
+    <p class="ch-eyebrow">Chapter III · The release</p>
+    <h2><span class="tok t4">Why</span> <span class="tok t1">are</span> <span class="tok t2">some</span> <span class="tok t3">AIs</span> <span class="tok t5">free?</span></h2>
+    <p class="lede">All that training boils down to one thing: the final settings of those billions of dials. A file of numbers. When a lab publishes that file for anyone to download, the model is called <strong>open weights</strong>. Meta's Llama, Mistral's models, DeepSeek, and Alibaba's Qwen all work this way. OpenAI, Anthropic, and Google keep their frontier models' weights private and sell access instead. This chapter is about the open path: how it works, and why a company would give away something that cost a hundred million dollars to make.</p>
+    <p>Here is a puzzle worth sitting with. When Meta releases a new Llama, dozens of companies are running it within hours. None of them trained it. So how can a stranger take a mystery file of numbers and bring it to life? Wouldn't they need to know how it was built and trained?</p>
+    <p>The answer comes in two parts. Part one: a release is a package with everything a stranger needs. Four things ship together.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The four parts of an open weights release: the weights in safetensors format, the config file, the tokenizer, and reference code">
+        <text x="340" y="18" text-anchor="middle" font-size="12" fill="#6A677D">one open weights release</text>
+        <g font-size="13">
+          <rect x="10" y="34" width="150" height="62" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="85" y="59" text-anchor="middle" fill="#3C3489" font-weight="500">Weights</text>
+          <text x="85" y="80" text-anchor="middle" fill="#534AB7" font-size="11.5">billions of numbers</text>
+          <rect x="180" y="34" width="150" height="62" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="255" y="59" text-anchor="middle" fill="#3C3489" font-weight="500">Config</text>
+          <text x="255" y="80" text-anchor="middle" fill="#534AB7" font-size="11.5">the blueprint</text>
+          <rect x="350" y="34" width="150" height="62" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="425" y="59" text-anchor="middle" fill="#3C3489" font-weight="500">Tokenizer</text>
+          <text x="425" y="80" text-anchor="middle" fill="#534AB7" font-size="11.5">the text chopper</text>
+          <rect x="520" y="34" width="150" height="62" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="595" y="59" text-anchor="middle" fill="#3C3489" font-weight="500">Reference code</text>
+          <text x="595" y="80" text-anchor="middle" fill="#534AB7" font-size="11.5">a working example</text>
+        </g>
+      </svg>
+      <figcaption>Weights alone would be a locked safe. The other three parts are the combination.</figcaption>
+    </figure>
+
+    <p>The <strong>config</strong> is a small file that describes the model's shape: how many layers, how big each one is, which architecture to use. It is the blueprint that tells software how to arrange the numbers. The <strong>tokenizer</strong> is the exact text chopper from chapter one, and it must match perfectly, because a model fed the wrong token IDs outputs garbage. The <strong>reference code</strong> is a working implementation the lab publishes so there is no guesswork about any new component. And the weights themselves come in a standard file format called safetensors that labels every block of numbers by name, shape, and type.</p>
+    <p>Part two of the answer: <strong>the training history does not matter for running the model</strong>. Everything the training accomplished, all those months and millions of dollars, lives inside the final numbers. Think of a chess player who studied for twenty years. To play her, you do not need her study notes. Her skill shows up in her moves. Same here: to run a model you need the weights and the blueprint, and the story of how the weights got their values is already baked in.</p>
+    <div class="q-box">Quick check: a friend says "you can't run Llama without Meta's training data." What do you tell them? (Answer: the data shaped the weights during training, but running the model only needs the weights, the config, and the tokenizer, all of which are in the release.)</div>
+    <p>One more helpful fact makes the whole system click. Remember from chapter one that nearly every model is a transformer. The differences between a Llama, a Qwen, and a Mistral are small variations on one shared design, like different car models sharing the same kind of engine. So software written to run transformers can run almost any new model just by reading its config, and when a lab does invent a genuinely new part, it publishes the code for that part with the release.</p>
+
+    <h3>But why give it away?</h3>
+    <p>Giving away a hundred-million-dollar model sounds like burning money, so it is worth understanding the business logic, because it is real strategy, and it echoes an old story. In the 1990s and 2000s, free software like Linux, built in the open by volunteers and companies together, quietly took over the world's servers; today it runs most of the internet and every Android phone. The AI labs releasing open weights are betting on the same effect.</p>
+    <p>The bet has several parts. A free model gets used by millions of developers, who find its flaws, build tools around it, and make the next version better, a workforce no company could hire. It makes the lab the standard that startups and universities build on, which pays off later in influence and in cloud business. It attracts researchers, who want their work in the world rather than locked in a vault. And some labs simply believe powerful technology gets safer when many eyes can study it rather than a few. Most open releases come with a license letting anyone use them, even to build a business, and the license file ships right in the release package next to the weights.</p>
+    <p>Notice the split runs through the industry on purpose. Meta gives Llama away to make its platforms stronger and starve rivals of an advantage. OpenAI and Anthropic sell access to fund the enormous cost of the next model. Both strategies are working at once, which is exactly why you can download some of the world's best models for free while others live behind a subscription. Either way, a downloaded file of weights just sits there until software brings it to life. That software is the next chapter.</p>
+  </section>
+
+  <section class="chapter" id="ch4">
+    <p class="ch-eyebrow">Chapter IV · Inference</p>
+    <h2><span class="tok t3">How</span> <span class="tok t1">do</span> <span class="tok t2">you</span> <span class="tok t4">run</span> <span class="tok t5">one?</span></h2>
+    <p class="lede">Using a trained model is called <strong>inference</strong>: tokens in, predictions out, no more learning. The weights are frozen. What makes inference interesting is the ecosystem of free software, called inference engines, that anyone can use to run any open model, and the story of who built it.</p>
+    <p>First, feel what inference is. When you press enter on a message, your words get chopped into tokens, the engine pushes those numbers through every layer of the network, and out comes one predicted token. Then it does the whole thing again for the next token, and again, often 50 or more times per second. That is why the reply appears word by word on your screen instead of all at once: you are literally watching each prediction land as it happens.</p>
+    <p>Nobody owns this ecosystem. The pieces came from universities, lone programmers, and chip companies, and all of it is free to use, even commercially. The whole pipeline, from a lab's release to a model running on a laptop, looks like this.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The open pipeline: open weight labs send day-zero code contributions to the Hugging Face Hub, anyone loads the weights into open inference engines such as vLLM, SGLang, TensorRT-LLM, HF TGI, llama.cpp, Ollama, LM Studio, and MLX, then shrinks and runs models on ordinary computers">
+        <defs><marker id="oa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <g font-size="12.5">
+          <rect x="190" y="10" width="300" height="56" rx="10" fill="#F1EFE8" stroke="#5F5E5A"/>
+          <text x="340" y="32" text-anchor="middle" fill="#444441" font-weight="500">Open weight labs</text>
+          <text x="340" y="52" text-anchor="middle" fill="#5F5E5A" font-size="11.5">Meta, Mistral, DeepSeek, Qwen</text>
+          <rect x="190" y="108" width="300" height="56" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="340" y="130" text-anchor="middle" fill="#3C3489" font-weight="500">Hugging Face Hub</text>
+          <text x="340" y="150" text-anchor="middle" fill="#534AB7" font-size="11.5">where nearly all open models live</text>
+        </g>
+        <line x1="340" y1="66" x2="340" y2="104" stroke="#6A677D" stroke-width="1.2" marker-end="url(#oa)"/>
+        <text x="348" y="90" font-size="11.5" fill="#6A677D">labs upload the release package</text>
+        <line x1="340" y1="164" x2="340" y2="202" stroke="#6A677D" stroke-width="1.2" marker-end="url(#oa)"/>
+        <text x="348" y="188" font-size="11.5" fill="#6A677D">anyone downloads the weights</text>
+        <rect x="40" y="206" width="600" height="130" rx="12" fill="none" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="5 4"/>
+        <text x="340" y="228" text-anchor="middle" font-size="13" font-weight="500" fill="#444441">open inference engines</text>
+        <g font-size="12.5">
+          <rect x="55" y="240" width="135" height="32" rx="7" fill="#DCF2E8" stroke="#0A5C48"/><text x="122" y="260" text-anchor="middle" fill="#0A5C48">vLLM</text>
+          <rect x="200" y="240" width="135" height="32" rx="7" fill="#DCF2E8" stroke="#0A5C48"/><text x="267" y="260" text-anchor="middle" fill="#0A5C48">SGLang</text>
+          <rect x="345" y="240" width="135" height="32" rx="7" fill="#DCF2E8" stroke="#0A5C48"/><text x="412" y="260" text-anchor="middle" fill="#0A5C48">TensorRT-LLM</text>
+          <rect x="490" y="240" width="135" height="32" rx="7" fill="#DCF2E8" stroke="#0A5C48"/><text x="557" y="260" text-anchor="middle" fill="#0A5C48">HF TGI</text>
+          <rect x="55" y="284" width="135" height="32" rx="7" fill="#FBE4D9" stroke="#8A3517"/><text x="122" y="304" text-anchor="middle" fill="#8A3517">llama.cpp</text>
+          <rect x="200" y="284" width="135" height="32" rx="7" fill="#FBE4D9" stroke="#8A3517"/><text x="267" y="304" text-anchor="middle" fill="#8A3517">Ollama</text>
+          <rect x="345" y="284" width="135" height="32" rx="7" fill="#FBE4D9" stroke="#8A3517"/><text x="412" y="304" text-anchor="middle" fill="#8A3517">LM Studio</text>
+          <rect x="490" y="284" width="135" height="32" rx="7" fill="#FBE4D9" stroke="#8A3517"/><text x="557" y="304" text-anchor="middle" fill="#8A3517">MLX</text>
+        </g>
+        <text x="122" y="356" text-anchor="middle" font-size="11" fill="#0A5C48">green: built for big servers</text>
+        <text x="480" y="356" text-anchor="middle" font-size="11" fill="#8A3517">orange: built for personal computers</text>
+        <line x1="340" y1="366" x2="340" y2="398" stroke="#6A677D" stroke-width="1.2" marker-end="url(#oa)"/>
+        <g font-size="12.5">
+          <rect x="190" y="402" width="300" height="44" rx="10" fill="#F1EFE8" stroke="#5F5E5A"/>
+          <text x="340" y="428" text-anchor="middle" fill="#444441" font-weight="500">ordinary computers, even yours</text>
+        </g>
+      </svg>
+      <figcaption>Free software, top to bottom. The labs contribute code to the engines before each release so everything works on day one.</figcaption>
+    </figure>
+
+    <p>A few of these deserve their origin stories, because they show who actually builds AI infrastructure. <strong>vLLM</strong> came out of a research lab at UC Berkeley and became the standard engine that companies use to serve open models to millions of users. <strong>llama.cpp</strong> began in 2023 when a programmer named Georgi Gerganov decided to make Llama run on his MacBook, alone, as a side project. His code now powers most of the local AI scene, including <strong>Ollama</strong> and <strong>LM Studio</strong>, the friendly apps most people use to run models at home. The <strong>Hugging Face Hub</strong> is the website where nearly every open model gets published, something like GitHub for AI models, and it now hosts more than two million of them, fine-tuned for everything from law to chemistry to Minecraft. One student with a laptop can, today, download the same weights a billion-dollar company serves.</p>
+
+    <h3>The shrink ray: quantization</h3>
+    <p>There is one problem with running a big model at home. Each weight is normally stored as a 16-bit number, so a 70-billion-weight model needs about 140 gigabytes of memory, way beyond any laptop. The fix is <strong>quantization</strong>: store each weight with fewer bits, the way a compressed photo uses less space than the original. Squeeze the weights down to 4 bits each and that model fits in about 35 gigabytes, and smaller models shrink to a few gigabytes, which a regular computer handles fine. You lose a little sharpness, and it is usually a good trade. Anyone can do the squeezing, since the release documents exactly how the original numbers are stored.</p>
+
+    <h3>What about ChatGPT and Claude?</h3>
+    <p>The closed labs run a different road entirely. Their model designs are secret, so public engines could not run them even in principle, and their scale is staggering: ChatGPT alone reported 900 million people using it every week in early 2026. At that size it pays to build custom software tuned to their exact chips. So OpenAI, Anthropic, and Google each build a private serving system in-house, and the only thing that ever leaves the building is the model's answers.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Side by side comparison: on the open path, labs publish weights and config to shared engines and the model runs on anyone's hardware; on the closed path, a secret design goes into a private in-house system and users get answers only, through an app or API">
+        <defs><marker id="ca" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="170" y="24" text-anchor="middle" font-size="13" font-weight="500" fill="#444441">the open path</text>
+        <text x="510" y="24" text-anchor="middle" font-size="13" font-weight="500" fill="#444441">the closed path</text>
+        <g font-size="12.5">
+          <rect x="30" y="40" width="280" height="44" rx="10" fill="#F1EFE8" stroke="#5F5E5A"/>
+          <text x="170" y="66" text-anchor="middle" fill="#444441">Llama, Mistral, DeepSeek, Qwen</text>
+          <rect x="30" y="134" width="280" height="44" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="170" y="160" text-anchor="middle" fill="#3C3489">Hub + shared open engines</text>
+          <rect x="30" y="228" width="280" height="44" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="170" y="254" text-anchor="middle" fill="#0A5C48">runs on anyone's hardware</text>
+          <rect x="370" y="40" width="280" height="44" rx="10" fill="#F1EFE8" stroke="#5F5E5A"/>
+          <text x="510" y="66" text-anchor="middle" fill="#444441">GPT, Claude, Gemini</text>
+          <rect x="370" y="134" width="280" height="44" rx="10" fill="#F9E0EA" stroke="#8C2F4F"/>
+          <text x="510" y="160" text-anchor="middle" fill="#8C2F4F">private in-house system</text>
+          <rect x="370" y="228" width="280" height="44" rx="10" fill="#F9E0EA" stroke="#8C2F4F"/>
+          <text x="510" y="254" text-anchor="middle" fill="#8C2F4F">you get answers, never weights</text>
+        </g>
+        <line x1="170" y1="84" x2="170" y2="130" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ca)"/>
+        <text x="178" y="112" font-size="11.5" fill="#6A677D">publish weights + config</text>
+        <line x1="170" y1="178" x2="170" y2="224" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ca)"/>
+        <text x="178" y="206" font-size="11.5" fill="#6A677D">shrink, download, self-host</text>
+        <line x1="510" y1="84" x2="510" y2="130" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ca)"/>
+        <text x="518" y="112" font-size="11.5" fill="#6A677D">design stays secret</text>
+        <line x1="510" y1="178" x2="510" y2="224" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ca)"/>
+        <text x="518" y="206" font-size="11.5" fill="#6A677D">served through an app</text>
+      </svg>
+      <figcaption>Both paths start with the same training recipe from chapter two. They split at the release decision.</figcaption>
+    </figure>
+
+    <p>The two worlds trade ideas constantly. Speed tricks invented for the open engines get rebuilt inside the private systems, research from the closed labs shows up in open code, and sometimes a closed lab publishes an open model, which then flows through the exact same Hub-and-engines pipeline as everyone else's. The walls are real, and ideas jump over them all the time.</p>
+  </section>
+
+  <section class="chapter" id="ch5">
+    <p class="ch-eyebrow">Chapter V · The bigger picture</p>
+    <h2><span class="tok t1">What</span> <span class="tok t3">else</span> <span class="tok t2">can</span> <span class="tok t4">this</span> <span class="tok t5">trick</span> <span class="tok t1">do?</span></h2>
+    <p class="lede">Language models are one branch of a much bigger family. Zoom out and you find the same basic recipe, dials plus practice, solving problems that look nothing like writing. The variety comes from one choice: what the model practices on.</p>
+    <p>Start with the names, because they get thrown around loosely. <strong>Artificial intelligence</strong> is the broad goal of getting computers to do things that need intelligence. <strong>Machine learning</strong> is one approach to that goal: instead of a programmer writing the rules by hand, the computer works them out from examples. <strong>Deep learning</strong> is the kind of machine learning that took over the field around 2012, using neural networks with many layers of those adjustable dials. Language models sit in that innermost circle, next to some very different cousins.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nested circles: artificial intelligence contains machine learning, which contains deep learning, which contains language models alongside AlphaFold, chess engines, and image models">
+        <rect x="30" y="20" width="620" height="260" rx="16" fill="none" stroke="#B4B2A9" stroke-width="1.2"/>
+        <text x="48" y="44" font-size="13" font-weight="500" fill="#444441">artificial intelligence</text>
+        <rect x="58" y="58" width="564" height="204" rx="14" fill="none" stroke="#8A3517" stroke-width="1.2"/>
+        <text x="76" y="82" font-size="13" font-weight="500" fill="#8A3517">machine learning</text>
+        <rect x="86" y="96" width="508" height="148" rx="12" fill="#F7F6FD" stroke="#3C3489" stroke-width="1.2"/>
+        <text x="104" y="120" font-size="13" font-weight="500" fill="#3C3489">deep learning</text>
+        <g font-size="12">
+          <rect x="100" y="136" width="236" height="42" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="218" y="153" text-anchor="middle" fill="#3C3489" font-weight="500">language models</text>
+          <text x="218" y="169" text-anchor="middle" fill="#534AB7" font-size="10.5">practice: predict the next token</text>
+          <rect x="346" y="136" width="240" height="42" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="466" y="153" text-anchor="middle" fill="#0A5C48" font-weight="500">AlphaFold</text>
+          <text x="466" y="169" text-anchor="middle" fill="#0F6E56" font-size="10.5">practice: predict protein shapes</text>
+          <rect x="100" y="188" width="236" height="42" rx="8" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <text x="218" y="205" text-anchor="middle" fill="#7A5A0E" font-weight="500">AlphaZero</text>
+          <text x="218" y="221" text-anchor="middle" fill="#7A5A0E" font-size="10.5">practice: win games</text>
+          <rect x="346" y="188" width="240" height="42" rx="8" fill="#F9E0EA" stroke="#8C2F4F"/>
+          <text x="466" y="205" text-anchor="middle" fill="#8C2F4F" font-weight="500">image generators</text>
+          <text x="466" y="221" text-anchor="middle" fill="#8C2F4F" font-size="10.5">practice: clean up noisy pictures</text>
+        </g>
+      </svg>
+      <figcaption>Same family, same kind of dials. What differs is the practice task in each box.</figcaption>
+    </figure>
+
+    <h3>A chess player that taught itself</h3>
+    <p>In 2017, DeepMind built <strong>AlphaZero</strong>. It was told the rules of chess and nothing else: no opening book, no famous games, no advice from grandmasters. It then played against itself, millions of times, starting from random flailing. Win, and the moves that led there got rewarded. Lose, and they got discouraged. That is reinforcement learning, the same idea from chapter two, with the game's result as the answer key.</p>
+    <p>After nine hours of self-play it was beating the strongest existing chess program. And it played strangely, sacrificing pieces in ways human theory called wrong, because it had never read human theory. It had learned chess from scratch, and some of its ideas have since changed how top humans play. Notice what is different from a language model: no internet text, no human examples, no next-token prediction. Just dials, a scoreboard, and enormous practice.</p>
+
+    <h3>The one that won a Nobel Prize</h3>
+    <p>Now the big one. Proteins are the machines that run your body, and each starts as a long chain of chemical beads that folds into a specific three-dimensional shape. Shape determines what the protein does, so knowing it matters enormously for understanding disease and designing medicine. The trouble is that the chain can fold in an astronomical number of ways, and for fifty years, working out a single protein's shape meant years of lab work with expensive equipment. Biologists called it the protein folding problem, and it was one of the great unsolved puzzles in science.</p>
+    <p>DeepMind's <strong>AlphaFold</strong> attacked it with deep learning. Feed in the chain of beads, predict the folded shape, compare against the roughly 170,000 structures biologists had painstakingly solved by hand, and nudge the dials. By 2020 it was predicting shapes about as accurately as the lab methods, and the puzzle was largely considered solved. DeepMind then released predicted structures for over 200 million proteins, nearly every one known to science, free for any researcher on Earth. Work that would have taken a lifetime now takes seconds.</p>
+
+    <figure>
+      <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AlphaFold: a chain of amino acid beads goes into the model, which predicts the folded three-dimensional shape, trained by comparing against structures solved in labs">
+        <defs><marker id="pfa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
+        <text x="110" y="34" text-anchor="middle" font-size="12" fill="#6A677D">a chain of beads</text>
+        <g>
+          <line x1="40" y1="76" x2="180" y2="76" stroke="#8C2F4F" stroke-width="1.5"/>
+          <circle cx="40" cy="76" r="9" fill="#F9E0EA" stroke="#8C2F4F" stroke-width="1.2"/>
+          <circle cx="75" cy="76" r="9" fill="#F8ECCB" stroke="#7A5A0E" stroke-width="1.2"/>
+          <circle cx="110" cy="76" r="9" fill="#DCF2E8" stroke="#0A5C48" stroke-width="1.2"/>
+          <circle cx="145" cy="76" r="9" fill="#F9E0EA" stroke="#8C2F4F" stroke-width="1.2"/>
+          <circle cx="180" cy="76" r="9" fill="#E7E4FB" stroke="#3C3489" stroke-width="1.2"/>
+        </g>
+        <line x1="200" y1="76" x2="248" y2="76" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pfa)"/>
+        <rect x="254" y="52" width="150" height="48" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+        <text x="329" y="82" text-anchor="middle" font-size="13" fill="#3C3489" font-weight="500">AlphaFold</text>
+        <line x1="414" y1="76" x2="462" y2="76" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pfa)"/>
+        <text x="556" y="34" text-anchor="middle" font-size="12" fill="#6A677D">the folded shape</text>
+        <g fill="none" stroke-width="4" stroke-linecap="round">
+          <path d="M482 92 C 502 44, 534 44, 546 76 S 570 108, 592 92 S 626 60, 632 88" stroke="#0A5C48"/>
+          <path d="M486 104 C 516 118, 552 112, 584 118" stroke="#7A5A0E"/>
+        </g>
+        <line x1="329" y1="100" x2="329" y2="140" stroke="#6A677D" stroke-width="1.2" stroke-dasharray="5 4" marker-start="url(#pfa)"/>
+        <rect x="214" y="144" width="230" height="40" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+        <text x="329" y="169" text-anchor="middle" font-size="12.5" fill="#0A5C48">170,000 shapes solved in labs</text>
+        <text x="120" y="169" text-anchor="middle" font-size="11.5" fill="#6A677D">the answer key</text>
+      </svg>
+      <figcaption>Same recipe as chapter two, different subject. Guess, compare against known answers, nudge the dials.</figcaption>
+    </figure>
+
+    <p>In October 2024, Demis Hassabis and John Jumper of DeepMind shared the Nobel Prize in Chemistry for this work, alongside David Baker for protein design. A Nobel in chemistry, awarded partly for a piece of software. Add the physics prize from chapter one, for the neural network idea itself, and 2024 becomes the year the Nobel committees said, twice, that this recipe changed science.</p>
+
+    <div class="q-box">Worth noticing: nothing about AlphaFold predicts words, and nothing about AlphaZero reads text. Yet all three systems in this chapter are built from layers of adjustable numbers, trained by comparing guesses against a target and nudging. Learn the recipe once and you can read the whole field.</div>
+
+    <p>Other members of the family follow the same pattern with different practice tasks. Image generators learn by taking clean pictures, adding visual static until they are unrecognizable, and practicing the reverse until they can produce a picture from pure noise. Speech recognizers practice on audio paired with transcripts. Weather models like DeepMind's GraphCast practice on decades of past weather to forecast the next ten days, running in about a minute on one computer where traditional forecasting needs hours on a supercomputer. Self-driving systems practice on video paired with the steering a human chose.</p>
+    <p>So language models are not the whole of AI, and they are not even the most scientifically consequential thing the field has produced. They are the branch that happens to speak, which is why they became the public face of a much wider effort.</p>
+  </section>
+
+  <section class="chapter" id="ch6">
+    <p class="ch-eyebrow">Chapter VI · Your move</p>
+    <h2><span class="tok t2">Where</span> <span class="tok t4">do</span> <span class="tok t1">you</span> <span class="tok t3">start?</span></h2>
+    <p class="lede">You now know the full arc: predict the next token, train on the internet, coach with feedback and answer keys, freeze the weights, package them, run them anywhere, and place the whole thing inside a family of models that fold proteins and play chess. The best part is that "anywhere" includes your own computer, today, for free.</p>
+    <p>The easiest start is <strong>Ollama</strong> (ollama.com) or <strong>LM Studio</strong> (lmstudio.ai). Install one, pick a small model of a few billion weights, and within minutes you will have an AI running fully offline on your machine. Then browse <strong>huggingface.co</strong> and see the thousands of open models people have published, including ones fine-tuned for music theory, medicine, and ancient Greek.</p>
+
+    <h3>Three experiments you can run tonight</h3>
+    <p>Everything in this guide is checkable, so check it. First, ask any chatbot to count the letter r in "strawberry." Many models have stumbled on this, and now you know the reason: the model sees tokens, whole chunks like <span class="mono">straw</span> and <span class="mono">berry</span>, so individual letters are half-invisible to it. Second, ask about something that happened this week. If the model cannot browse the web, you will watch the knowledge cutoff from chapter one appear in front of you. Third, with your local model from Ollama running, open your computer's task manager while it types and watch the memory fill with billions of frozen weights doing inference in real time.</p>
+    <p>When you want the deeper story, two free resources are famous for a reason. Andrej Karpathy's YouTube series "Neural Networks: Zero to Hero" builds a small language model from scratch, line by line, and his video "Deep Dive into LLMs" walks through everything in chapter two in glorious detail. The channel 3Blue1Brown has a visual series on transformers that makes attention feel obvious. For the chapter five material, DeepMind's own documentary on AlphaFold is on YouTube for free, and alphafold.ebi.ac.uk lets you type in a protein and spin its predicted shape around in your browser. A motivated high school student can follow all of it, and plenty have.</p>
+    <p>And if any of this made you want to build rather than just use, that instinct is worth trusting. llama.cpp started as one person's weekend curiosity. The field is young enough that the textbooks are still being written, some of them by people who first met these ideas in a guide like this one.</p>
+
+    <h3>Small glossary</h3>
+    <dl class="gloss">
+      <dt>Token</dt><dd>A small chunk of text, usually a word or part of one. Models read and write tokens, not letters.</dd>
+      <dt>Weights (parameters)</dt><dd>The billions of adjustable numbers inside a model. Training sets them; inference uses them frozen.</dd>
+      <dt>Knowledge cutoff</dt><dd>The date a model's training data stops. It knows nothing that happened after, and chatting with it never updates that.</dd>
+      <dt>Deep learning</dt><dd>Machine learning using neural networks with many layers of adjustable numbers. The approach behind language models, AlphaFold, and AlphaZero alike.</dd>
+      <dt>Transformer</dt><dd>The standard model design since 2017. Its attention layers let every token consider every other token.</dd>
+      <dt>Pre-training</dt><dd>The first phase: learning to predict the next token across trillions of words of text.</dd>
+      <dt>Loss</dt><dd>The number that measures how wrong the model's guesses are. Training pushes it down.</dd>
+      <dt>Base model</dt><dd>What pre-training produces: a powerful text continuer with no assistant manners yet.</dd>
+      <dt>Fine-tuning (SFT)</dt><dd>Training on human-written example conversations so the model learns to answer helpfully.</dd>
+      <dt>RLHF</dt><dd>Reinforcement learning from human feedback: people rank answers, a reward model learns their taste, the main model practices against it.</dd>
+      <dt>RLVR</dt><dd>Reinforcement learning with verifiable rewards: answers checked automatically, as in math and code. The engine behind reasoning models.</dd>
+      <dt>Open weights</dt><dd>A release where anyone can download the trained weights, config, and tokenizer.</dd>
+      <dt>Inference</dt><dd>Running a trained model: tokens in, predictions out, no learning.</dd>
+      <dt>Quantization</dt><dd>Storing weights with fewer bits so a model fits in less memory, like compressing a photo.</dd>
+    </dl>
+  </section>
+</div>
+
+<footer>
+  <div class="wrap">
+    <p class="home-link"><a href="../index.html"><span class="ar" aria-hidden="true">&larr;</span>&nbsp;Artificial Minds main page</a></p>
+    <p>An Artificial Mind of Your Own · six plain questions about the machines that talk.</p>
+    <p class="mono-line">I. is it a brain → II. how it learns → III. why some are free → IV. run one yourself → V. the bigger family → VI. your move</p>
+  </div>
+</footer>
+
+<script>
+(function() {
+  var root = document.documentElement;
+  var label = document.getElementById('themeLabel');
+  document.getElementById('themeBtn').addEventListener('click', function() {
+    var dark = root.getAttribute('data-theme') === 'dark';
+    root.setAttribute('data-theme', dark ? 'light' : 'dark');
+    label.textContent = dark ? 'Dark mode' : 'Light mode';
+  });
+})();
+</script>
+
+</body>
+</html>
