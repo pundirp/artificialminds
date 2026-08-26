@@ -453,7 +453,7 @@
           <rect x="800" y="322" width="26" height="42" rx="2"/>
         </g>
 
-        <!-- THE lit study window — its light (glow + pane + cast) breathes slowly -->
+        <!-- THE lit study window, its light (glow + pane + cast) breathes slowly -->
         <g class="lamp">
           <circle cx="600" cy="380" r="70" fill="url(#glow)"/>
           <!-- a tighter core, so the peak blazes at the pane instead of spreading -->
@@ -584,10 +584,11 @@
 
   <script>
   // The mosaic's slow life is the only motion on this page.
-  // Nine artworks rotate through five slots. Every 14–18s each on-stage image
-  // advances one slot via the FLIP technique (measure, reassign, invert, then
-  // release over ~2s). An image arriving from offstage fades in over ~1.2s and
-  // the one leaving fades out — so the four offstage pieces take their turns.
+  // Nine artworks rotate through five slots. The first turn comes about 5s
+  // after load; from then on, every 14-18s each on-stage image advances one
+  // slot via the FLIP technique (measure, reassign, invert, then release
+  // over ~2s). An image arriving from offstage fades in over ~1.2s and
+  // the one leaving fades out, so the four offstage pieces take their turns.
   (function(){
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     var mosaic = document.getElementById('mosaic');
@@ -611,7 +612,36 @@
     imgs.forEach(function(im,i){ if(pos[i]<5) show(im,slots[pos[i]]); else hide(im); });
     if(reduce) return;                         // static first five, no timers
 
+    var timer = null;                          // at most one pending turn
+    var dueAt = 0;                             // wall-clock time the next turn is owed
+    var busy  = false;                         // true while a turn is mid-flight
+    var gen   = 0;                             // bumped by settle, retires stale callbacks
+
+    // Put every image exactly where its station says it belongs, with no
+    // leftover transform or transition. Whatever a half-finished turn left
+    // behind is erased here, so no broken state can outlive a single cycle.
+    function settle(){
+      gen++; busy = false;
+      imgs.forEach(function(im,i){
+        im.style.transition='none'; im.style.transform='';
+        if(pos[i]<5) show(im,slots[pos[i]]); else hide(im);
+      });
+      mosaic.getBoundingClientRect();          // commit it before anything else
+    }
+
     function reshuffle(){
+      timer = null;
+      // A hidden tab still runs timers but not animation frames, so a turn
+      // started now would stop half way and never release. Sit this one out,
+      // the visibility handler starts the cadence again.
+      if(document.hidden) return;
+      // Never re-enter a turn already in flight. Clear it, take the next one.
+      if(busy){ settle(); schedule(); return; }
+
+      settle();                                // begin from a known-good state
+      var myGen = gen;
+      busy = true;
+
       var mr = mosaic.getBoundingClientRect();
       var first = {};
       imgs.forEach(function(im,i){ if(pos[i]<5) first[i]=im.getBoundingClientRect(); });
@@ -653,15 +683,37 @@
 
       mosaic.getBoundingClientRect();             // flush the inverted state
       requestAnimationFrame(function(){
+        if(myGen !== gen) return;                // a settle overtook this turn
         gliding.forEach(function(im){ im.style.transition='transform 2s cubic-bezier(0.4,0,0.2,1)'; im.style.transform=''; });
         entering.forEach(function(im){ im.style.transition='opacity 1.2s ease'; im.style.opacity='1'; });
         exiting.forEach(function(im){ im.style.transition='opacity 1.2s ease'; im.style.opacity='0'; });
-        setTimeout(function(){ exiting.forEach(function(im){ im.style.transition='none'; hide(im); }); }, 1300);
+        setTimeout(function(){
+          if(myGen !== gen) return;
+          exiting.forEach(function(im){ im.style.transition='none'; hide(im); });
+          busy = false;
+        }, 1300);
       });
       schedule();
     }
-    function schedule(){ setTimeout(reshuffle, 14000 + Math.random()*4000); }
-    schedule();
+    function schedule(ms){
+      if(timer) clearTimeout(timer);
+      dueAt = Date.now() + (ms || 14000 + Math.random()*4000);
+      timer = setTimeout(reshuffle, dueAt - Date.now());
+    }
+    // Coming back to a visible tab must not restart the countdown, or someone
+    // who switches tabs often would never see the mosaic move. Serve the time
+    // still owed, and if it ran out while hidden, take the turn shortly.
+    function resume(){
+      if(timer) clearTimeout(timer);
+      var wait = dueAt - Date.now();
+      timer = setTimeout(reshuffle, wait > 2500 ? wait : 2500);
+    }
+    document.addEventListener('visibilitychange', function(){
+      if(document.hidden) return;
+      settle();
+      resume();
+    });
+    schedule(5000);                            // first turn comes quickly, then the slow cadence
   })();
   </script>
 </body>
