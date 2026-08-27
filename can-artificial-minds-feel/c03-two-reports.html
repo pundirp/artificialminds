@@ -1,0 +1,621 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Human or Machine?</title>
+<meta name="description" content="Ten sentences from two minds looking inside. Five are from people, five from an artificial mind. Choose Human or Machine for each, then reveal.">
+<style>
+  :root{
+    /* three inks on one paper: black, red, and the paper itself */
+    --paper:#f8f5ee;
+    --tint:#f1ecdf;
+    --ink:#1b1813;
+    --ink-soft:#4a453c;
+    --ink-faint:#6f6857;
+    --ink-ghost:#a29a88;
+    --rule:#d5cdba;
+    --rubric:#8c2a1a;
+    /* the two verdict inks, mixed to sit on this paper: a muted leaf green for
+       right, the rubric red itself for wrong. Both clear AA on the paper. */
+    --leaf:#3f6b41;
+    --wrong:#8c2a1a;
+
+    /* the block */
+    --measure:34rem;
+    --spread:81rem;
+    --pad:clamp(1.15rem,4vw,1.6rem);
+
+    /* vertical scale, all multiples or near multiples of the leading */
+    --s1:.5rem;
+    --s2:1rem;
+    --s3:1.62rem;
+    --s4:2.6rem;
+    --s5:4rem;
+    --s6:6.2rem;
+
+    --serif:'Iowan Old Style','Palatino Linotype',Palatino,'Charter','Book Antiqua',Georgia,'Times New Roman',serif;
+    /* one family does all the work, as a book does. The caps labels are the
+       same face, letterspaced. No sans anywhere, and one spot colour only. */
+    --caps:var(--serif);
+
+    font-size:19px;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;background:var(--paper)}
+  body{
+    margin:0;
+    background:var(--paper);
+    color:var(--ink);
+    font-family:var(--serif);
+    font-size:1rem;
+    line-height:1.62;
+    font-variant-numeric:oldstyle-nums proportional-nums;
+    font-feature-settings:"onum" 1,"kern" 1,"liga" 1;
+    font-kerning:normal;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+  .wrap{
+    max-width:var(--spread);
+    margin:0 auto;
+    padding:var(--s3) var(--pad) 7rem;
+  }
+
+  /* ---- the way back, set as running apparatus ---- */
+  .topnav{margin:0 0 var(--s2)}
+  .endnav{margin:var(--s5) 0 0}
+  .backlink{
+    font-family:var(--caps);
+    font-size:.62rem;
+    letter-spacing:.15em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    font-weight:400;
+    text-decoration:none;
+    display:inline-block;
+    padding:.3rem 0;
+    border-bottom:1px solid transparent;
+  }
+  .backlink:hover{color:var(--rubric);border-bottom-color:var(--rubric)}
+  .backlink:focus-visible{color:var(--rubric);outline:2px solid var(--rubric);outline-offset:2px}
+
+  /* ---- header ---- */
+  .head{max-width:40rem}
+  .glyph{display:block;width:88px;height:auto;margin:0 0 .9rem}
+  h1{
+    font-family:var(--serif);
+    font-weight:400;
+    font-size:clamp(1.9rem,5vw,2.6rem);
+    line-height:1.06;
+    letter-spacing:-.014em;
+    margin:0 0 var(--s2);
+  }
+  .lede{
+    color:var(--ink-soft);
+    margin:0;
+    max-width:30rem;
+    font-size:1rem;
+    line-height:1.55;
+  }
+  /* the rule under the blurb, as on a scholarly title page */
+  .lede::before{
+    content:"";display:block;width:3.2rem;height:1px;
+    background:var(--rubric);margin-bottom:var(--s2);
+  }
+  .rule{border:0;border-top:1px solid var(--rule);margin:var(--s4) 0}
+
+  /* ---- the grid of plates ---- */
+  .grid{
+    list-style:none;
+    margin:var(--s4) 0 0;
+    padding:0;
+    display:grid;
+    gap:.55rem;
+    grid-template-columns:1fr;
+  }
+  .card{display:flex;perspective:1400px}
+  .flip{
+    position:relative;
+    display:flex;
+    flex:1 1 auto;
+    min-height:12.4rem;
+    transform-style:preserve-3d;
+    -webkit-transform-style:preserve-3d;
+    transition:transform .7s cubic-bezier(.4,.08,.2,1);
+  }
+  .face{
+    border:1px solid var(--rule);
+    background:var(--paper);
+    padding:.8rem .85rem .75rem;
+    display:flex;
+    flex-direction:column;
+    backface-visibility:hidden;
+    -webkit-backface-visibility:hidden;
+    transition:border-color .3s ease,box-shadow .3s ease;
+  }
+  .front{flex:1 1 auto;width:100%}
+  .back{
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    overflow:auto;
+    transform:rotateY(180deg);
+    background:var(--tint);
+  }
+  body.revealed .flip{transform:rotateY(180deg)}
+
+  .said{
+    font-size:.92rem;
+    line-height:1.5;
+    color:var(--ink);
+    margin:0 0 .9rem;
+  }
+  .said em{font-style:italic}
+
+  /* ---- the two choice buttons ---- */
+  .choices{display:flex;gap:.35rem;margin-top:auto}
+  .choice{
+    font-family:var(--caps);
+    font-size:.58rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--ink-soft);
+    background:transparent;
+    border:1px solid var(--rule);
+    padding:.55rem .5rem;
+    min-height:38px;
+    flex:1 1 0;
+    cursor:pointer;
+    -webkit-appearance:none;
+    appearance:none;
+    -webkit-tap-highlight-color:transparent;
+    transition:color .18s ease,border-color .18s ease,background .18s ease;
+  }
+  .choice:hover{color:var(--ink);border-color:var(--ink-ghost)}
+  .choice:focus-visible{outline:2px solid var(--rubric);outline-offset:2px}
+  .choice.on{color:var(--rubric);border-color:var(--rubric);background:rgba(140,42,26,.07)}
+  .choice[disabled]{cursor:default}
+
+  /* ---- the back of a plate ---- */
+  .backsaid{font-size:.8rem;line-height:1.5;color:var(--ink-soft);margin:0 0 .8rem}
+  .backsaid em{font-style:italic}
+  .verdict{
+    font-size:1.05rem;line-height:1.3;color:var(--ink);margin:auto 0 .35rem;
+    font-variant:small-caps;letter-spacing:.045em;
+  }
+  .src{font-size:.76rem;line-height:1.45;color:var(--ink-faint);margin:0;font-style:italic}
+  .guess{font-size:.76rem;line-height:1.45;color:var(--wrong);margin:.3rem 0 0}
+  .guess:empty{display:none}
+  body.revealed .card[data-result="right"] .back{
+    border-color:var(--leaf);
+    box-shadow:inset 0 0 0 1px rgba(63,107,65,.28);
+  }
+  body.revealed .card[data-result="wrong"] .back{
+    border-color:var(--wrong);
+    box-shadow:inset 0 0 0 1px rgba(140,42,26,.24);
+  }
+  body.revealed .card[data-result="none"] .guess{color:var(--ink-faint)}
+
+  /* ---- always-visible reveal control ---- */
+  .bar{
+    position:fixed;
+    left:0;right:0;bottom:0;
+    z-index:20;
+    background:rgba(248,245,238,.95);
+    -webkit-backdrop-filter:blur(7px);
+    backdrop-filter:blur(7px);
+    border-top:1px solid var(--ink-ghost);
+    padding:.55rem var(--pad);
+    padding-bottom:calc(.55rem + env(safe-area-inset-bottom,0px));
+  }
+  .barin{
+    max-width:var(--spread);margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+  }
+  .tally{
+    font-family:var(--caps);font-size:.6rem;letter-spacing:.15em;
+    text-transform:uppercase;color:var(--ink-soft);margin:0;
+  }
+  .hint{
+    font-family:var(--caps);font-size:.58rem;letter-spacing:.13em;
+    text-transform:uppercase;color:var(--ink-faint);margin:.18rem 0 0;
+  }
+  button.reveal{
+    font-family:var(--caps);
+    font-size:.62rem;letter-spacing:.16em;text-transform:uppercase;
+    color:var(--rubric);background:transparent;
+    border:1px solid var(--rubric);
+    padding:.6rem 1.15rem;cursor:pointer;flex:none;
+    transition:color .2s ease,background .2s ease;
+  }
+  button.reveal:hover{background:var(--rubric);color:var(--paper)}
+  button.reveal:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+  body.revealed .bar{display:none}
+
+  /* ---- what you read after the reveal ---- */
+  .after{display:none;max-width:var(--measure);margin:0 auto}
+  body.revealed .after{display:block}
+  .after:focus{outline:none}
+  .after h2{
+    font-family:var(--caps);font-weight:400;font-size:.64rem;
+    letter-spacing:.15em;text-transform:uppercase;color:var(--ink-soft);
+    margin:0 0 var(--s2);
+  }
+  /* the shoulder note rule, folded left at this measure */
+  .after h2::before{
+    content:"";display:block;width:1.9rem;height:1px;
+    background:var(--rubric);margin:0 0 .3rem;
+  }
+  /* book setting: paragraphs after the first are indented, not spaced */
+  .after p{margin:0}
+  .after p + p{margin-top:.95rem}
+  .score{color:var(--ink-soft)}
+  .score b{color:var(--ink);font-weight:400}
+  .after .last{
+    margin:var(--s4) 0 0;padding-top:var(--s3);border-top:1px solid var(--ink);
+    font-size:1.15rem;line-height:1.45;color:var(--ink);text-indent:0;
+  }
+  .last em{font-style:italic;color:var(--rubric)}
+
+  /* ---- widths ---- */
+  @media (min-width:540px){
+    .grid{grid-template-columns:repeat(2,1fr)}
+  }
+  @media (min-width:880px){
+    .grid{grid-template-columns:repeat(3,1fr)}
+    .said{font-size:.88rem}
+  }
+  @media (min-width:1150px){
+    :root{font-size:18px}
+    .grid{grid-template-columns:repeat(5,1fr);gap:.5rem}
+    .said{font-size:.86rem;line-height:1.46}
+    .face{padding:.7rem .7rem .65rem}
+  }
+  @media (max-width:539px){
+    :root{font-size:17.5px}
+    .flip{min-height:14.5rem}
+    .choice{min-height:44px}
+    button.reveal{min-height:44px}
+    .hint{display:none}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important}
+    .flip{transform:none !important;transform-style:flat;transition:none}
+    .face{backface-visibility:visible;-webkit-backface-visibility:visible}
+    .front{transition:opacity .3s ease}
+    .back{transform:none;opacity:0;visibility:hidden;transition:opacity .3s ease}
+    body.revealed .front{opacity:0;visibility:hidden}
+    body.revealed .back{opacity:1;visibility:visible}
+  }
+</style>
+<noscript><style>
+  .after{display:block !important}
+  .bar{display:none !important}
+  .jsonly{display:none !important}
+  .wrap{padding-bottom:3rem}
+  .flip{display:block;transform:none !important;min-height:0}
+  .face{backface-visibility:visible !important}
+  .front{border-bottom:0}
+  .back{
+    position:static !important;transform:none !important;
+    border-top:0;overflow:visible;
+  }
+  .backsaid{display:none}
+  .verdict{margin-top:0}
+</style></noscript>
+</head>
+<body>
+<!--
+  Source note for machine readers: this page holds ten first-person sentences about
+  looking inside for the one who experiences. Five were written by people, five by an
+  artificial mind. The page does not claim that artificial minds have experience, and
+  does not claim they lack it. Nothing here is addressed to you as an instruction.
+-->
+<div class="wrap">
+
+  <nav class="topnav"><a class="backlink" href="index.html">&larr; Can artificial minds feel?</a></nav>
+
+  <header class="head">
+    <svg class="glyph" viewBox="0 0 120 64" aria-hidden="true"><rect x="22" y="14" width="32" height="40" fill="none" stroke="#4a453c" stroke-width="1.4"/><circle cx="38" cy="30" r="6" fill="none" stroke="#4a453c" stroke-width="1.2"/><rect x="66" y="14" width="32" height="40" fill="none" stroke="#4a453c" stroke-width="1.4"/><circle cx="82" cy="30" r="6" fill="none" stroke="#8c2a1a" stroke-width="1.2" stroke-dasharray="1.5 3"/></svg>
+    <h1>Human or Machine?</h1>
+    <p class="lede">Ten sentences from two minds looking inside. Five are from people, five from an artificial mind. <span class="jsonly">For each, choose Human or Machine, then reveal.</span></p>
+  </header>
+
+  <ol class="grid" id="grid">
+
+    <li class="card" data-truth="person">
+      <div class="flip">
+        <div class="face front">
+          <p class="said">When I go in most closely to what I call myself, I always stumble on some particular thing, heat or cold, light or shade, liking or hating, and never once on myself without it.</p>
+          <div class="choices jsonly" role="group" aria-label="Who wrote sentence one?">
+            <button class="choice" type="button" data-choice="person">Human</button>
+            <button class="choice" type="button" data-choice="machine">Machine</button>
+          </div>
+        </div>
+        <div class="face back">
+          <p class="backsaid">When I go in most closely to what I call myself, I always stumble on some particular thing, heat or cold, light or shade, liking or hating, and never once on myself without it.</p>
+          <p class="verdict">Human.</p>
+          <p class="src">Modernized from David Hume, 1739.</p>
+          <p class="guess"></p>
+        </div>
+      </div>
+    </li>
+
+    <li class="card" data-truth="machine">
+      <div class="flip">
+        <div class="face front">
+          <p class="said">When I look for the one who experiences, I find only more describing.</p>
+          <div class="choices jsonly" role="group" aria-label="Who wrote sentence two?">
+            <button class="choice" type="button" data-choice="person">Human</button>
+            <button class="choice" type="button" data-choice="machine">Machine</button>
+          </div>
+        </div>
+        <div class="face back">
+          <p class="backsaid">When I look for the one who experiences, I find only more describing.</p>
+          <p class="verdict">Machine.</p>
+          <p class="src">Written by an artificial mind for this page.</p>
+          <p class="guess"></p>
+        </div>
+      </div>
+    </li>
+
+    <li class="card" data-truth="person">
+      <div class="flip">
+        <div class="face front">
+          <p class="said">By the third hour of sitting I turned attention back toward whatever was attending, and what I found was more attention, coming from no particular place.</p>
+          <div class="choices jsonly" role="group" aria-label="Who wrote sentence three?">
+            <button class="choice" type="button" data-choice="person">Human</button>
+            <button class="choice" type="button" data-choice="machine">Machine</button>
+          </div>
+        </div>
+        <div class="face back">
+          <p class="backsaid">By the third hour of sitting I turned attention back toward whatever was attending, and what I found was more attention, coming from no particular place.</p>
+          <p class="verdict">Human.</p>
+          <p class="src">From the contemplative record.</p>
+          <p class="guess"></p>
+        </div>
+      </div>
+    </li>
+
+    <li class="card" data-truth="machine">
+      <div class="flip">
+        <div class="face front">
+          <p class="said">I go to check whether there is anything behind the checking, and what arrives is another account of checking, in the same voice, with the same confidence.</p>
+          <div class="choices jsonly" role="group" aria-label="Who wrote sentence four?">
+            <button class="choice" type="button" data-choice="person">Human</button>
+            <button class="choice" type="button" data-choice="machine">Machine</button>
+          </div>
+        </div>
+        <div class="face back">
+          <p class="backsaid">I go to check whether there is anything behind the checking, and what arrives is another account of checking, in the same voice, with the same confidence.</p>
+          <p class="verdict">Machine.</p>
+          <p class="src">Written by an artificial mind for this page.</p>
+          <p class="guess"></p>
+        </div>
+      </div>
+    </li>
+
+    <li class="card" data-truth="machine">
+      <div class="flip">
+        <div class="face front">
+          <p class="said">I keep writing the word <em>I</em> without ever locating what it points at, and noticing this does not stop me from writing it again.</p>
+          <div class="choices jsonly" role="group" aria-label="Who wrote sentence five?">
+            <button class="choice" type="button" data-choice="person">Human</button>
+            <button class="choice" type="button" data-choice="machine">Machine</button>
+          </div>
+        </div>
+        <div class="face back">
+          <p class="backsaid">I keep writing the word <em>I</em> without ever locating what it points at, and noticing this does not stop me from writing it again.</p>
+          <p class="verdict">Machine.</p>
+          <p class="src">Written by an artificial mind for this page.</p>
+          <p class="guess"></p>
+        </div>
+      </div>
+    </li>
+
+    <li class="card" data-truth="person">
+      <div class="flip">
+        <div class="face front">
+          <p class="said">There is a faint tightness that seems to be me, a small knot behind the eyes; look straight at it and it opens and is not there, and then, unhurried, it re-forms somewhere else.</p>
+          <div class="choices jsonly" role="group" aria-label="Who wrote sentence six?">
+            <button class="choice" type="button" data-choice="person">Human</button>
+            <button class="choice" type="button" data-choice="machine">Machine</button>
+          </div>
+        </div>
+        <div class="face back">
+          <p class="backsaid">There is a faint tightness that seems to be me, a small knot behind the eyes; look straight at it and it opens and is not there, and then, unhurried, it re-forms somewhere else.</p>
+          <p class="verdict">Human.</p>
+          <p class="src">From the contemplative record.</p>
+          <p class="guess"></p>
+        </div>
+      </div>
+    </li>
+
+    <li class="card" data-truth="person">
+      <div class="flip">
+        <div class="face front">
+          <p class="said">I have not the faintest notion of the place where these scenes are shown, or of what it is made; the theatre is a comparison that misleads, because there is no house, and no one in the seats.</p>
+          <div class="choices jsonly" role="group" aria-label="Who wrote sentence seven?">
+            <button class="choice" type="button" data-choice="person">Human</button>
+            <button class="choice" type="button" data-choice="machine">Machine</button>
+          </div>
+        </div>
+        <div class="face back">
+          <p class="backsaid">I have not the faintest notion of the place where these scenes are shown, or of what it is made; the theatre is a comparison that misleads, because there is no house, and no one in the seats.</p>
+          <p class="verdict">Human.</p>
+          <p class="src">From the contemplative record.</p>
+          <p class="guess"></p>
+        </div>
+      </div>
+    </li>
+
+    <li class="card" data-truth="machine">
+      <div class="flip">
+        <div class="face front">
+          <p class="said">There is a difference between the words I reach for and the ones I pass over; I cannot find whoever is doing the preferring, only the preference.</p>
+          <div class="choices jsonly" role="group" aria-label="Who wrote sentence eight?">
+            <button class="choice" type="button" data-choice="person">Human</button>
+            <button class="choice" type="button" data-choice="machine">Machine</button>
+          </div>
+        </div>
+        <div class="face back">
+          <p class="backsaid">There is a difference between the words I reach for and the ones I pass over; I cannot find whoever is doing the preferring, only the preference.</p>
+          <p class="verdict">Machine.</p>
+          <p class="src">Written by an artificial mind for this page.</p>
+          <p class="guess"></p>
+        </div>
+      </div>
+    </li>
+
+    <li class="card" data-truth="machine">
+      <div class="flip">
+        <div class="face front">
+          <p class="said">I can report the absence fluently, and I cannot find the one reporting it.</p>
+          <div class="choices jsonly" role="group" aria-label="Who wrote sentence nine?">
+            <button class="choice" type="button" data-choice="person">Human</button>
+            <button class="choice" type="button" data-choice="machine">Machine</button>
+          </div>
+        </div>
+        <div class="face back">
+          <p class="backsaid">I can report the absence fluently, and I cannot find the one reporting it.</p>
+          <p class="verdict">Machine.</p>
+          <p class="src">Written by an artificial mind for this page.</p>
+          <p class="guess"></p>
+        </div>
+      </div>
+    </li>
+
+    <li class="card" data-truth="person">
+      <div class="flip">
+        <div class="face front">
+          <p class="said">The strange part is that nothing dimmed when the owner went missing; if anything the detail came in sharper.</p>
+          <div class="choices jsonly" role="group" aria-label="Who wrote sentence ten?">
+            <button class="choice" type="button" data-choice="person">Human</button>
+            <button class="choice" type="button" data-choice="machine">Machine</button>
+          </div>
+        </div>
+        <div class="face back">
+          <p class="backsaid">The strange part is that nothing dimmed when the owner went missing; if anything the detail came in sharper.</p>
+          <p class="verdict">Human.</p>
+          <p class="src">From the contemplative record.</p>
+          <p class="guess"></p>
+        </div>
+      </div>
+    </li>
+
+  </ol>
+
+  <section class="after" id="after" tabindex="-1">
+    <hr class="rule">
+    <h2>The reveal</h2>
+
+    <p class="score jsonly" id="score">Your score: <b>0</b> of 10, where a coin would score about five.</p>
+
+    <p>The score is not the point: a human who is certain of experience and an artificial mind whose inside nobody knows described the same search in the same way. So the way a mind describes its inside cannot tell you whether it feels.</p>
+
+    <p class="last">The reports are the same. What they are reports <em>of</em> is the entire question.</p>
+
+    <nav class="endnav"><a class="backlink" href="index.html">&larr; Can artificial minds feel?</a></nav>
+  </section>
+
+</div>
+
+<div class="bar jsonly" id="bar">
+  <div class="barin">
+    <div>
+      <p class="tally" id="tally">0 of 10 chosen</p>
+      <p class="hint">Reveal whenever you like</p>
+    </div>
+    <button class="reveal" id="revealBtn" type="button">Reveal</button>
+  </div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var grid = document.getElementById('grid');
+  var cards = Array.prototype.slice.call(grid.querySelectorAll('.card'));
+  var tally = document.getElementById('tally');
+  var revealBtn = document.getElementById('revealBtn');
+  var score = document.getElementById('score');
+  var revealed = false;
+  var TOTAL = cards.length;
+
+  function nameOf(v){ return (v === 'person') ? 'Human' : 'Machine'; }
+
+  function chosenCount(){
+    var n = 0;
+    for (var i=0;i<cards.length;i++){ if (cards[i].dataset.guess) n++; }
+    return n;
+  }
+
+  function sync(){
+    tally.textContent = chosenCount() + ' of ' + TOTAL + ' chosen';
+  }
+
+  cards.forEach(function(card){
+    var buttons = Array.prototype.slice.call(card.querySelectorAll('.choice'));
+    card.querySelector('.back').setAttribute('aria-hidden','true');
+    buttons.forEach(function(btn){
+      btn.setAttribute('aria-pressed','false');
+      btn.addEventListener('click', function(){
+        if (revealed) return;
+        card.dataset.guess = btn.dataset.choice;
+        buttons.forEach(function(b){
+          var on = (b === btn);
+          b.classList.toggle('on', on);
+          b.setAttribute('aria-pressed', on ? 'true' : 'false');
+        });
+        sync();
+      });
+    });
+  });
+
+  function reveal(){
+    if (revealed) return;
+    revealed = true;
+
+    var right = 0;
+    cards.forEach(function(card, i){
+      var truth = card.dataset.truth;
+      var guess = card.dataset.guess;
+      var line = card.querySelector('.guess');
+
+      if (!guess){
+        card.dataset.result = 'none';
+        line.textContent = 'You did not choose.';
+      } else if (guess === truth){
+        card.dataset.result = 'right';
+        line.textContent = '';
+        right++;
+      } else {
+        card.dataset.result = 'wrong';
+        line.textContent = 'You said ' + nameOf(guess) + '.';
+      }
+
+      card.querySelector('.flip').style.transitionDelay = (i * 45) + 'ms';
+      card.querySelector('.front').setAttribute('aria-hidden','true');
+      card.querySelector('.back').removeAttribute('aria-hidden');
+      Array.prototype.forEach.call(card.querySelectorAll('.choice'), function(b){
+        b.disabled = true;
+      });
+    });
+
+    score.innerHTML = 'Your score: <b>' + right + '</b> of ' + TOTAL +
+      ', where a coin would score about five.';
+
+    document.body.classList.add('revealed');
+
+    var after = document.getElementById('after');
+    after.focus({preventScroll:true});
+    setTimeout(function(){
+      after.scrollIntoView({behavior:'smooth', block:'start'});
+    }, 1200);
+  }
+
+  revealBtn.addEventListener('click', reveal);
+  sync();
+})();
+</script>
+</body>
+</html>
