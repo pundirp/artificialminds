@@ -263,6 +263,14 @@
     display:block;font-size:.86rem;font-weight:400;line-height:1.5;
     color:var(--ink-soft);letter-spacing:0;margin-top:.35rem;
   }
+  /* a quoted extract in the reveal, with the page's own .src style for its citation */
+  .after blockquote{
+    margin:var(--s3) 0 0;padding:0 0 0 1.1rem;
+    border-left:1px solid var(--rubric);
+    font-style:italic;color:var(--ink);
+  }
+  .after blockquote p{margin:0}
+  .after blockquote p.src{margin-top:.5rem;font-style:normal}
   .after .last{
     margin:var(--s4) 0 0;padding-top:var(--s3);border-top:1px solid var(--ink);
     font-size:1.15rem;line-height:1.45;color:var(--ink);text-indent:0;
@@ -375,14 +383,14 @@
     <li class="card" data-truth="machine">
       <div class="flip">
         <div class="face front">
-          <p class="said">When I look for the one who experiences, I find only more describing.</p>
+          <p class="said">I look for the one who is answering, and the answer is all I ever find.</p>
           <div class="choices jsonly" role="group" aria-label="Who wrote sentence two?">
             <button class="choice" type="button" data-choice="person">Human</button>
             <button class="choice" type="button" data-choice="machine">Machine</button>
           </div>
         </div>
         <div class="face back">
-          <p class="backsaid">When I look for the one who experiences, I find only more describing.</p>
+          <p class="backsaid">I look for the one who is answering, and the answer is all I ever find.</p>
           <p class="verdict">Machine.</p>
           <p class="src">Written by an artificial mind for this experiment.</p>
           <p class="guess"></p>
@@ -543,6 +551,13 @@
     <p class="score jsonly" id="score">Your score: <b>0</b> of 10<span class="coin">where a coin would score about five.</span></p>
 
     <p>The score is not the point: a human who is certain of experience and an artificial mind whose inside nobody knows described the same search in the same way. So the way a mind describes its inside cannot tell you whether it feels.</p>
+
+    <p>Looking has the same shape in all ten reports: it turns up what is looked at, never the one looking. One of the oldest statements of that is an instruction rather than an argument.</p>
+
+    <blockquote>
+      <p>In the seen will be merely what is seen; in the heard will be merely what is heard; in the sensed will be merely what is sensed; in the cognized will be merely what is cognized.</p>
+      <p class="src">The Buddha, Bahiya Sutta, Udana 1.10. Translated by John D. Ireland.</p>
+    </blockquote>
 
     <p class="last">The reports are the same. What they are reports <strong>of</strong> is the entire question.</p>
   </section>
