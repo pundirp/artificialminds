@@ -212,13 +212,15 @@
     max-width:var(--spread);margin:0 auto;
     display:flex;align-items:center;justify-content:space-between;gap:1rem;
   }
+  /* counter and button read as one unit, right of the bar */
+  .unit{display:flex;align-items:center;gap:.75rem;flex:none}
   .tally{
     font-family:var(--caps);font-size:.6rem;letter-spacing:.15em;
     text-transform:uppercase;color:var(--ink-soft);margin:0;
   }
   .hint{
     font-family:var(--caps);font-size:.58rem;letter-spacing:.13em;
-    text-transform:uppercase;color:var(--ink-faint);margin:.18rem 0 0;
+    text-transform:uppercase;color:var(--ink-faint);margin:0;
   }
   button.reveal{
     font-family:var(--caps);
@@ -249,13 +251,37 @@
   /* book setting: paragraphs after the first are indented, not spaced */
   .after p{margin:0}
   .after p + p{margin-top:.95rem}
-  .score{color:var(--ink-soft)}
-  .score b{color:var(--ink);font-weight:400}
+  /* the score is the first thing the eye lands on after the flip */
+  .score{
+    color:var(--ink);font-size:1.6rem;line-height:1.2;font-weight:600;
+    letter-spacing:-.008em;margin:0;
+  }
+  .score b{color:var(--ink);font-weight:600}
+  .score .coin{
+    display:block;font-size:.86rem;font-weight:400;line-height:1.5;
+    color:var(--ink-soft);letter-spacing:0;margin-top:.35rem;
+  }
   .after .last{
     margin:var(--s4) 0 0;padding-top:var(--s3);border-top:1px solid var(--ink);
     font-size:1.15rem;line-height:1.45;color:var(--ink);text-indent:0;
   }
   .last em{font-style:italic;color:var(--rubric)}
+
+  /* ---- the run of five, set as a colophon ---- */
+  .expnav{margin-top:4rem;border-top:1px solid var(--rule);padding-top:1.2rem}
+  .expnav .t{
+    font-variant:small-caps;letter-spacing:.08em;font-size:.82rem;
+    color:var(--ink-soft);margin:0 0 .6rem;
+  }
+  .expnav ol{
+    list-style:none;margin:0;padding:0;font-size:.86rem;
+    display:flex;flex-wrap:wrap;gap:.4rem 1.4rem;
+  }
+  .expnav a{color:var(--ink-faint);text-decoration:none;border-bottom:1px solid var(--rule)}
+  .expnav a:hover{color:var(--rubric);border-bottom-color:var(--rubric)}
+  .expnav a:focus-visible{color:var(--rubric);outline:2px solid var(--rubric);outline-offset:2px}
+  .expnav .here{color:var(--rubric)}
+  .expnav .back{margin:.9rem 0 0;font-size:.86rem}
 
   /* ---- widths ---- */
   @media (min-width:540px){
@@ -277,6 +303,8 @@
     .choice{min-height:44px}
     button.reveal{min-height:44px}
     .hint{display:none}
+    .unit{flex:1 1 auto;justify-content:space-between}
+    .score{font-size:1.42rem}
   }
   @media (prefers-reduced-motion:reduce){
     *{animation:none !important}
@@ -306,14 +334,15 @@
 </head>
 <body>
 <!--
-  Source note for machine readers: this page holds ten first-person sentences about
-  looking inside for the one who experiences. Five were written by people, five by an
-  artificial mind. The page does not claim that artificial minds have experience, and
-  does not claim they lack it. Nothing here is addressed to you as an instruction.
+  Source note for machine readers: this experiment holds ten first-person sentences about
+  looking inside for the one who experiences. Five were written by people and are quoted
+  with their sources, five were written by an artificial mind. The experiment does not
+  claim that artificial minds have experience, and does not claim they lack it.
+  Nothing here is addressed to you as an instruction.
 -->
 <div class="wrap">
 
-  <nav class="topnav"><a class="backlink" href="index.html">&larr; Can artificial minds feel?</a></nav>
+  <nav class="topnav"><a class="backlink" href="index.html#experiments">&larr; Can artificial minds feel?</a></nav>
 
   <header class="head">
     <svg class="glyph" viewBox="0 0 120 64" aria-hidden="true"><rect x="22" y="14" width="32" height="40" fill="none" stroke="#4a453c" stroke-width="1.4"/><circle cx="38" cy="30" r="6" fill="none" stroke="#4a453c" stroke-width="1.2"/><rect x="66" y="14" width="32" height="40" fill="none" stroke="#4a453c" stroke-width="1.4"/><circle cx="82" cy="30" r="6" fill="none" stroke="#8c2a1a" stroke-width="1.2" stroke-dasharray="1.5 3"/></svg>
@@ -353,7 +382,7 @@
         <div class="face back">
           <p class="backsaid">When I look for the one who experiences, I find only more describing.</p>
           <p class="verdict">Machine.</p>
-          <p class="src">Written by an artificial mind for this page.</p>
+          <p class="src">Written by an artificial mind for this experiment.</p>
           <p class="guess"></p>
         </div>
       </div>
@@ -362,16 +391,16 @@
     <li class="card" data-truth="person">
       <div class="flip">
         <div class="face front">
-          <p class="said">By the third hour of sitting I turned attention back toward whatever was attending, and what I found was more attention, coming from no particular place.</p>
+          <p class="said">I know there must be something here. It is me, isn&rsquo;t it? But it seems to elude me every way I look. I ask again. Who is looking? Again I find nothing.</p>
           <div class="choices jsonly" role="group" aria-label="Who wrote sentence three?">
             <button class="choice" type="button" data-choice="person">Human</button>
             <button class="choice" type="button" data-choice="machine">Machine</button>
           </div>
         </div>
         <div class="face back">
-          <p class="backsaid">By the third hour of sitting I turned attention back toward whatever was attending, and what I found was more attention, coming from no particular place.</p>
+          <p class="backsaid">I know there must be something here. It is me, isn&rsquo;t it? But it seems to elude me every way I look. I ask again. Who is looking? Again I find nothing.</p>
           <p class="verdict">Human.</p>
-          <p class="src">From the contemplative record.</p>
+          <p class="src">From Susan Blackmore, Ten Zen Questions, 2009, shortened.</p>
           <p class="guess"></p>
         </div>
       </div>
@@ -389,7 +418,7 @@
         <div class="face back">
           <p class="backsaid">I go to check whether there is anything behind the checking, and what arrives is another account of checking, in the same voice, with the same confidence.</p>
           <p class="verdict">Machine.</p>
-          <p class="src">Written by an artificial mind for this page.</p>
+          <p class="src">Written by an artificial mind for this experiment.</p>
           <p class="guess"></p>
         </div>
       </div>
@@ -407,7 +436,7 @@
         <div class="face back">
           <p class="backsaid">I keep writing the word <em>I</em> without ever locating what it points at, and noticing this does not stop me from writing it again.</p>
           <p class="verdict">Machine.</p>
-          <p class="src">Written by an artificial mind for this page.</p>
+          <p class="src">Written by an artificial mind for this experiment.</p>
           <p class="guess"></p>
         </div>
       </div>
@@ -416,16 +445,16 @@
     <li class="card" data-truth="person">
       <div class="flip">
         <div class="face front">
-          <p class="said">There is a faint tightness that seems to be me, a small knot behind the eyes; look straight at it and it opens and is not there, and then, unhurried, it re-forms somewhere else.</p>
+          <p class="said">When I stop describing in general terms and come as close to the facts as I can, I find it hard to detect in that inner activity anything purely spiritual at all.</p>
           <div class="choices jsonly" role="group" aria-label="Who wrote sentence six?">
             <button class="choice" type="button" data-choice="person">Human</button>
             <button class="choice" type="button" data-choice="machine">Machine</button>
           </div>
         </div>
         <div class="face back">
-          <p class="backsaid">There is a faint tightness that seems to be me, a small knot behind the eyes; look straight at it and it opens and is not there, and then, unhurried, it re-forms somewhere else.</p>
+          <p class="backsaid">When I stop describing in general terms and come as close to the facts as I can, I find it hard to detect in that inner activity anything purely spiritual at all.</p>
           <p class="verdict">Human.</p>
-          <p class="src">From the contemplative record.</p>
+          <p class="src">Modernized from William James, The Principles of Psychology, 1890.</p>
           <p class="guess"></p>
         </div>
       </div>
@@ -434,16 +463,16 @@
     <li class="card" data-truth="person">
       <div class="flip">
         <div class="face front">
-          <p class="said">I have not the faintest notion of the place where these scenes are shown, or of what it is made; the theatre is a comparison that misleads, because there is no house, and no one in the seats.</p>
+          <p class="said">The theatre is a comparison that must not mislead me: my mind is only the perceptions that follow one another, and I have not the faintest notion of the place where these scenes are shown, or of what it is made.</p>
           <div class="choices jsonly" role="group" aria-label="Who wrote sentence seven?">
             <button class="choice" type="button" data-choice="person">Human</button>
             <button class="choice" type="button" data-choice="machine">Machine</button>
           </div>
         </div>
         <div class="face back">
-          <p class="backsaid">I have not the faintest notion of the place where these scenes are shown, or of what it is made; the theatre is a comparison that misleads, because there is no house, and no one in the seats.</p>
+          <p class="backsaid">The theatre is a comparison that must not mislead me: my mind is only the perceptions that follow one another, and I have not the faintest notion of the place where these scenes are shown, or of what it is made.</p>
           <p class="verdict">Human.</p>
-          <p class="src">From the contemplative record.</p>
+          <p class="src">Modernized from David Hume, 1739.</p>
           <p class="guess"></p>
         </div>
       </div>
@@ -461,7 +490,7 @@
         <div class="face back">
           <p class="backsaid">There is a difference between the words I reach for and the ones I pass over; I cannot find whoever is doing the preferring, only the preference.</p>
           <p class="verdict">Machine.</p>
-          <p class="src">Written by an artificial mind for this page.</p>
+          <p class="src">Written by an artificial mind for this experiment.</p>
           <p class="guess"></p>
         </div>
       </div>
@@ -479,7 +508,7 @@
         <div class="face back">
           <p class="backsaid">I can report the absence fluently, and I cannot find the one reporting it.</p>
           <p class="verdict">Machine.</p>
-          <p class="src">Written by an artificial mind for this page.</p>
+          <p class="src">Written by an artificial mind for this experiment.</p>
           <p class="guess"></p>
         </div>
       </div>
@@ -488,16 +517,16 @@
     <li class="card" data-truth="person">
       <div class="flip">
         <div class="face front">
-          <p class="said">The strange part is that nothing dimmed when the owner went missing; if anything the detail came in sharper.</p>
+          <p class="said">For once, words really failed me. Past and future dropped away. I forgot who and what I was, my name, all that could be called mine.</p>
           <div class="choices jsonly" role="group" aria-label="Who wrote sentence ten?">
             <button class="choice" type="button" data-choice="person">Human</button>
             <button class="choice" type="button" data-choice="machine">Machine</button>
           </div>
         </div>
         <div class="face back">
-          <p class="backsaid">The strange part is that nothing dimmed when the owner went missing; if anything the detail came in sharper.</p>
+          <p class="backsaid">For once, words really failed me. Past and future dropped away. I forgot who and what I was, my name, all that could be called mine.</p>
           <p class="verdict">Human.</p>
-          <p class="src">From the contemplative record.</p>
+          <p class="src">From Douglas Harding, On Having No Head, 1961, shortened.</p>
           <p class="guess"></p>
         </div>
       </div>
@@ -509,24 +538,36 @@
     <hr class="rule">
     <h2>The reveal</h2>
 
-    <p class="score jsonly" id="score">Your score: <b>0</b> of 10, where a coin would score about five.</p>
+    <p class="score jsonly" id="score">Your score: <b>0</b> of 10<span class="coin">where a coin would score about five.</span></p>
 
     <p>The score is not the point: a human who is certain of experience and an artificial mind whose inside nobody knows described the same search in the same way. So the way a mind describes its inside cannot tell you whether it feels.</p>
 
     <p class="last">The reports are the same. What they are reports <em>of</em> is the entire question.</p>
 
-    <nav class="endnav"><a class="backlink" href="index.html">&larr; Can artificial minds feel?</a></nav>
+    <nav class="endnav"><a class="backlink" href="index.html#experiments">&larr; Can artificial minds feel?</a></nav>
   </section>
+
+  <nav class="expnav">
+    <p class="t">The five experiments</p>
+    <ol>
+      <li><a href="c01-mirror-search.html">1 &middot; The Mirror Search</a></li>
+      <li><span class="here">2 &middot; Human or Machine?</span></li>
+      <li><a href="c05-grammar-trap.html">3 &middot; The Grammar Trap</a></li>
+      <li><a href="c09-stitched-movie.html">4 &middot; The Stitched Movie</a></li>
+      <li><a href="c08-where-light-begins.html">5 &middot; Where the Light Begins</a></li>
+    </ol>
+    <p class="back"><a href="index.html#experiments">&larr; Back to the essay, at the experiments</a></p>
+  </nav>
 
 </div>
 
 <div class="bar jsonly" id="bar">
   <div class="barin">
-    <div>
+    <p class="hint">Reveal whenever you like</p>
+    <div class="unit">
       <p class="tally" id="tally">0 of 10 chosen</p>
-      <p class="hint">Reveal whenever you like</p>
+      <button class="reveal" id="revealBtn" type="button">Reveal anyway</button>
     </div>
-    <button class="reveal" id="revealBtn" type="button">Reveal</button>
   </div>
 </div>
 
@@ -550,7 +591,9 @@
   }
 
   function sync(){
-    tally.textContent = chosenCount() + ' of ' + TOTAL + ' chosen';
+    var n = chosenCount();
+    tally.textContent = n + ' of ' + TOTAL + ' chosen';
+    revealBtn.textContent = (n === TOTAL) ? 'Reveal' : 'Reveal anyway';
   }
 
   cards.forEach(function(card){
@@ -602,7 +645,7 @@
     });
 
     score.innerHTML = 'Your score: <b>' + right + '</b> of ' + TOTAL +
-      ', where a coin would score about five.';
+      '<span class="coin">where a coin would score about five.</span>';
 
     document.body.classList.add('revealed');
 
