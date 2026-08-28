@@ -8,11 +8,11 @@
 <style>
   :root{
     /* three inks on one paper: black, red, and the paper itself */
-    --paper:#f8f5ee;
-    --tint:#f1ecdf;
+    --paper:#efece1;
+    --tint:#e8e2d2;
     --ink:#1b1813;
     --ink-soft:#4a453c;
-    --ink-faint:#6f6857;
+    --ink-faint:#665e4e;
     --ink-ghost:#a29a88;
     --rule:#d5cdba;
     --rubric:#8c2a1a;
@@ -110,7 +110,6 @@
   }
   .backlink:hover{color:var(--rubric);border-bottom-color:var(--rubric)}
   .backlink:focus-visible{color:var(--rubric);outline:2px solid var(--rubric);outline-offset:2px}
-  .endnav{margin-top:var(--s5)}
 
   /* ---------- stage: the exercise ---------- */
   #stage{
@@ -141,6 +140,7 @@
     margin:0 0 var(--s2);
   }
   .lede em{color:var(--ink);font-style:italic}
+  .lede strong{color:var(--ink);font-weight:600}
 
   .line{
     font-size:clamp(1.38rem,4.9vw,1.95rem);
@@ -363,6 +363,9 @@
     margin:0 auto;
     padding:0 var(--pad) var(--s5);
   }
+  /* held back by script while the exercise runs, so the intro screen holds the
+     experiment and nothing else. Without script it is simply always there. */
+  .expwrap[hidden]{display:none}
   .expnav{margin-top:4rem;border-top:1px solid var(--rule);padding-top:1.2rem}
   .expnav .t{
     font-variant:small-caps;letter-spacing:.08em;font-size:.82rem;
@@ -425,7 +428,7 @@
       <svg class="glyph" viewBox="0 0 120 64" aria-hidden="true"><circle cx="60" cy="34" r="20" fill="none" stroke="#4a453c" stroke-width="1.4"/><path d="M 60 14 C 88 14 92 40 74 48" fill="none" stroke="#8c2a1a" stroke-width="1.4"/><path d="M 74 48 l 7 -1 m -7 1 l 2 -7" fill="none" stroke="#8c2a1a" stroke-width="1.4"/></svg>
       <span class="label">An experiment, performed on yourself</span>
       <h1>The mirror search</h1>
-      <p class="lede">Ninety seconds. Nine lines. It only works if you actually do the thing each line asks, so this experiment will hold each one in front of you and <em>will not let you hurry</em>.</p>
+      <p class="lede">Ninety seconds. Nine lines. It only works if you actually do the thing each line asks, so this experiment will hold each one in front of you and <strong>will not let you hurry</strong>.</p>
       <p class="lede">Nothing here is recorded, stored, or sent anywhere. It is only you, and this.</p>
       <button class="begin" id="begin" type="button">Begin</button>
     </div>
@@ -517,7 +520,7 @@
         <p>Or the watcher was never a findable thing to begin with: a construction, a very strong and very useful illusion of someone standing behind the seeing, running in humans, and running in some other fashion in whatever wrote report 2. Then reports like these are a fact about searches, not about who runs them. They tell you nothing about the machine because they tell you nothing about anyone.</p>
       </div>
 
-      <p class="quiet" style="margin-top:2.6rem">This experiment cannot choose between them. Neither, honestly, can the thing that wrote half of it.</p>
+      <p class="quiet" style="margin-top:2.6rem">This experiment cannot settle which is true.</p>
 
       <blockquote>
         <p class="prov">Written by an artificial mind for this experiment</p>
@@ -539,12 +542,12 @@
       </div>
     </div>
 
-    <nav class="endnav"><a class="backlink" href="index.html#experiments">&larr; Can artificial minds feel?</a></nav>
-
   </article>
 
-  <!-- kept outside the article so it is reachable without finishing the exercise -->
-  <div class="expwrap">
+  <!-- The run of five waits at the very end of the page. It is kept outside the
+       article so a reader who skips the exercise still reaches it, and it is
+       held back while the paced lines run so it never crowds the intro. -->
+  <div class="expwrap" id="expwrap">
     <nav class="expnav">
       <p class="t">The five experiments</p>
       <ol>
@@ -570,6 +573,11 @@
   var intro   = document.getElementById('p-intro');
   var inputP  = document.getElementById('p-input');
   var repIn   = document.getElementById('rep');
+  var expwrap = document.getElementById('expwrap');
+
+  /* the run of five is put away for the duration of the exercise and brought
+     back with the article, so it never competes with the intro screen */
+  if (expwrap) expwrap.hidden = true;
 
   var reduced = false;
   try {
@@ -718,6 +726,7 @@
 
     stage.style.display = 'none';
     after.hidden = false;
+    if (expwrap) expwrap.hidden = false;
     window.scrollTo(0, 0);
 
     var theirs = document.getElementById('theirs');

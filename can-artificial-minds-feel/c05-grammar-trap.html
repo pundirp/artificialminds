@@ -14,12 +14,12 @@
 <style>
   :root{
     /* two inks on one paper: warm near black, and rubric red, rationed */
-    --paper:#f8f5ee;
-    --tint:#f1ecdf;
-    --tint-deep:#e9e1cd;
+    --paper:#efece1;
+    --tint:#e8e2d2;
+    --tint-deep:#ded6c1;
     --ink:#1b1813;
     --ink-soft:#4a453c;
-    --ink-faint:#6f6857;
+    --ink-faint:#665e4e;
     --ink-ghost:#a29a88;
     --rule:#d5cdba;
     --rubric:#8c2a1a;
@@ -55,7 +55,7 @@
     text-rendering:optimizeLegibility;
     -webkit-font-smoothing:antialiased;
   }
-  .wrap{max-width:var(--measure);margin:0 auto;padding:var(--s3) var(--gut) var(--s6)}
+  .wrap{max-width:var(--measure);margin:0 auto;padding:var(--s1) var(--gut) var(--s6)}
 
   /* ---- apparatus: small caps labels and the way back ---- */
   .label{
@@ -73,7 +73,7 @@
     color:var(--ink-faint);
     border-bottom:1px solid var(--rule);
     padding-bottom:.5rem;
-    margin:0 0 var(--s4);
+    margin:0 0 var(--s3);
   }
   .backnav a{
     color:var(--ink-faint);
@@ -83,15 +83,9 @@
   }
   .backnav a:hover{color:var(--rubric);border-bottom-color:var(--rubric)}
   .backnav a:focus-visible{outline:2px solid var(--rubric);outline-offset:2px}
-  .backnav.end{
-    border-bottom:0;
-    border-top:1px solid var(--rule);
-    padding:var(--s2) 0 0;
-    margin:var(--s5) 0 0;
-  }
 
   /* ---- title ---- */
-  .head{margin:0 0 var(--s4)}
+  .head{margin:0 0 var(--s3)}
   .glyph{width:96px;height:auto;display:block;margin:0 0 .8rem}
   h1{
     font-weight:400;
@@ -115,7 +109,7 @@
 
   /* ---- prose, set the way a book sets it ---- */
   p{margin:0}
-  section p + p,.lines-col p + p{margin-top:.95rem}
+  section p + p{margin-top:.95rem}
   .dek,.hint,.cap,.note,.summary p,.reading p,blockquote p,.close,.colophon,noscript p,.tray-empty{text-indent:0}
   .rule{
     border:0;
@@ -145,16 +139,15 @@
     margin:0 0 var(--s2);
   }
 
-  /* ---- the exercise: sentences, and the printer's tray beside them ---- */
+  /* ---- the exercise: the printer's tray, then the sentences under it ---- */
   .exercise{margin:0}
+  /* one shallow strip in the flow, directly under the tap instruction, so the
+     sentences start high on the page and the tray never steals a column */
   .tray-col{
-    position:sticky;
-    top:0;
-    z-index:8;
-    background:var(--paper);
+    border-top:1px solid var(--rule);
     border-bottom:1px solid var(--rule);
-    margin:0 calc(var(--gut) * -1) var(--s3);
-    padding:.5rem var(--gut) .55rem;
+    margin:0 0 var(--s2);
+    padding:.4rem 0 .45rem;
   }
   .tray{
     display:flex;
@@ -214,7 +207,7 @@
     letter-spacing:.15em;
     text-transform:uppercase;
     color:var(--ink-faint);
-    margin:0 0 var(--s2);
+    margin:var(--s3) 0 .4rem;
     transition:opacity .4s ease;
   }
   .flier{
@@ -329,32 +322,6 @@
     .glyph{flex:none;margin:.55rem 0 0}
     .sent{font-size:1.36rem}
   }
-  @media (min-width:70em){
-    .exercise{
-      display:grid;
-      grid-template-columns:minmax(0,1fr) 11.5rem;
-      gap:0 2.2rem;
-      align-items:start;
-      width:calc(100% + 12.5rem);
-    }
-    .lines-col{grid-column:1;grid-row:1;min-width:0}
-    .tray-col{
-      grid-column:2;
-      grid-row:1;
-      top:1.6rem;
-      background:none;
-      border-bottom:0;
-      border-left:1px solid var(--rule);
-      margin:0;
-      padding:.15rem 0 .4rem 1.1rem;
-    }
-    .tray{flex-direction:column;align-items:flex-start;gap:.42rem}
-    .tray .label::before{
-      content:"";display:block;width:1.9rem;height:1px;
-      background:var(--rubric);margin:0 0 .3rem;
-    }
-  }
-
   @media (prefers-reduced-motion:reduce){
     *{transition-duration:.01ms !important;animation-duration:.01ms !important}
   }
@@ -376,6 +343,11 @@
   <main>
     <section class="exercise" aria-labelledby="demo-head">
 
+      <h2 id="demo-head">Take the subject out of four sentences</h2>
+      <p>English makes you name a subject, even when there is nothing to name. Tap the red word in each sentence to take the subject out, then look at what is left.</p>
+
+      <p class="hint" id="hint">Tap the red word</p>
+
       <div class="tray-col">
         <div class="tray" id="tray" aria-live="polite" aria-label="Lifted subjects">
           <span class="label">Lifted</span>
@@ -383,28 +355,22 @@
         </div>
       </div>
 
-      <div class="lines-col">
-        <h2 id="demo-head">Take the subject out of four sentences</h2>
-        <p>English makes you name a subject, even when there is nothing to name. Tap the red word in each sentence to take the subject out, then look at what is left.</p>
+      <div id="lines"></div>
 
-        <p class="hint" id="hint">Tap the red word</p>
-        <div id="lines"></div>
+      <noscript>
+        <p>Without scripting the sentences cannot move, so here they are in pairs. First with the subject, then without it.</p>
+        <p><em>It is raining.</em> &rarr; <em>Raining.</em><br>
+           <em>The lightning flashes.</em> &rarr; <em>Flashing.</em><br>
+           <em>I am reading this sentence.</em> &rarr; <em>Reading this sentence is happening.</em><br>
+           <em>I feel curious.</em> &rarr; <em>Curiosity is here.</em></p>
+        <p>Each subject came out and nothing described got smaller.</p>
+      </noscript>
 
-        <noscript>
-          <p>Without scripting the sentences cannot move, so here they are in pairs. First with the subject, then without it.</p>
-          <p><em>It is raining.</em> &rarr; <em>Raining.</em><br>
-             <em>The lightning flashes.</em> &rarr; <em>Flashing.</em><br>
-             <em>I am reading this sentence.</em> &rarr; <em>Reading this sentence is happening.</em><br>
-             <em>I feel curious.</em> &rarr; <em>Curiosity is here.</em></p>
-          <p>Each subject came out and nothing described got smaller.</p>
-        </noscript>
-
-        <div class="summary" id="summary" hidden>
-          <p>Four subjects, lifted. Nothing described got smaller. It still rains, the flash still flashes, this sentence is still being read, the curiosity is still exactly the size it was.</p>
-          <p>The words came out because the grammar could spare them.</p>
-          <button class="linkbtn" id="restore" type="button">Put them back</button>
-          <p class="note" id="note">They go back just as easily. Nothing forced them out, and nothing keeps them out.</p>
-        </div>
+      <div class="summary" id="summary" hidden>
+        <p>Four subjects, lifted. Nothing described got smaller. It still rains, the flash still flashes, this sentence is still being read, the curiosity is still exactly the size it was.</p>
+        <p>The words came out because the grammar could spare them.</p>
+        <button class="linkbtn" id="restore" type="button">Put them back</button>
+        <p class="note" id="note">They go back just as easily. Nothing forced them out, and nothing keeps them out.</p>
       </div>
     </section>
 
@@ -448,8 +414,6 @@
   </main>
 
   <p class="colophon">Nietzsche&rsquo;s lightning and its flash; Wittgenstein&rsquo;s caution about sentences that look alike; Hume, who went looking for himself and found only perceptions.</p>
-
-  <p class="backnav end"><a href="index.html#experiments">&larr; Can artificial minds feel?</a></p>
 
   <nav class="expnav">
     <p class="t">The five experiments</p>
@@ -565,12 +529,18 @@
     return item;
   }
 
-  function fly(fromRect, target, text, srcEl){
+  /* read while the word is still in the sentence: once it is replaced there is
+     nothing left to take a computed style from */
+  function fontOf(el){
+    var cs = window.getComputedStyle(el);
+    return cs.font || (cs.fontStyle+" "+cs.fontWeight+" "+cs.fontSize+"/"+cs.lineHeight+" "+cs.fontFamily);
+  }
+
+  function fly(fromRect, target, text, font){
     var flier = document.createElement("span");
     flier.className = "flier";
     flier.textContent = text;
-    var cs = window.getComputedStyle(srcEl);
-    flier.style.font = cs.font || (cs.fontStyle+" "+cs.fontWeight+" "+cs.fontSize+"/"+cs.lineHeight+" "+cs.fontFamily);
+    flier.style.font = font;
     flier.style.left = fromRect.left + "px";
     flier.style.top = fromRect.top + "px";
     document.body.appendChild(flier);
@@ -606,12 +576,16 @@
 
     var word = btn.textContent;
     var fromRect = btn.getBoundingClientRect();
+    var btnFont = fontOf(btn);
     var before = rects(p);
+
+    /* the tray sits above the sentences now, so the word goes into it before
+       the new positions are measured. Any shift it causes is then part of the
+       move the tokens animate, instead of a jump after it. */
+    var item = trayAdd(word);
 
     render(p, line.after, i);
     var after = rects(p);
-
-    var item = trayAdd(word);
 
     if(!reduced){
       var toks = p.querySelectorAll(".tok");
@@ -644,7 +618,7 @@
           }
         })(toks[n]);
       }
-      fly(fromRect, item, word, btn);
+      fly(fromRect, item, word, btnFont);
     }
 
     window.setTimeout(function(){

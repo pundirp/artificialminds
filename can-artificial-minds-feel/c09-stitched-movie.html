@@ -15,11 +15,11 @@
 <style>
   :root{
     /* two inks on one paper: warm near black, and rubric red, rationed */
-    --paper:#f8f5ee;
-    --tint:#f1ecdf;
+    --paper:#efece1;
+    --tint:#e8e2d2;
     --ink:#1b1813;
     --ink-soft:#4a453c;
-    --ink-faint:#6f6857;
+    --ink-faint:#665e4e;
     --ink-ghost:#a29a88;
     --rule:#d5cdba;
     --rubric:#8c2a1a;
@@ -68,7 +68,7 @@
   p{margin:0}
   section > p + p{margin-top:.95rem}
   .dek,.lede,.warn,.rowcap,.foot,.prov,.label,.quiet,.close p,.colophon,.said p,.try p,.meter p,.backnav,figcaption{text-indent:0}
-  em{font-style:italic}
+  strong{font-weight:600}
   .lede{font-size:1.04rem}
   .quiet{color:var(--ink-soft)}
 
@@ -98,12 +98,6 @@
   }
   .backnav a:hover{color:var(--rubric);border-bottom-color:var(--rubric)}
   .backnav a:focus-visible{outline:2px solid var(--rubric);outline-offset:2px}
-  .backnav.end{
-    border-bottom:0;
-    border-top:1px solid var(--rule);
-    padding:var(--s2) 0 0;
-    margin:var(--s5) 0 0;
-  }
 
   /* ---- title ---- */
   header{margin-bottom:var(--s5)}
@@ -134,6 +128,47 @@
     content:"";display:block;width:3.2rem;height:1px;
     background:var(--rubric);margin-bottom:var(--s2);
   }
+
+  /* ---- contents, one click to any section ---- */
+  .contents{
+    border-top:1px solid var(--rule);
+    border-bottom:1px solid var(--rule);
+    padding:.85rem 0 .9rem;
+    margin:0 0 var(--s5);
+  }
+  .contents .ct{
+    font-size:.62rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--ink-faint);
+    margin:0 0 .5rem;
+  }
+  .contents ol{list-style:none;margin:0;padding:0}
+  .contents li{
+    display:flex;
+    gap:.85rem;
+    align-items:baseline;
+    padding:.14rem 0;
+    font-size:.92rem;
+    line-height:1.45;
+  }
+  .contents .n{
+    flex:none;
+    min-width:2.2rem;
+    font-size:.6rem;
+    letter-spacing:.16em;
+    text-transform:uppercase;
+    color:var(--rubric);
+  }
+  .contents a{
+    color:var(--ink);
+    text-decoration:none;
+    border-bottom:1px solid transparent;
+    transition:color .18s ease,border-color .18s ease;
+  }
+  .contents a:hover{color:var(--rubric);border-bottom-color:var(--rubric)}
+  .contents a:focus-visible{outline:2px solid var(--rubric);outline-offset:2px}
+  section[id]{scroll-margin-top:1.2rem}
 
   /* ---- ornament between sections ---- */
   .rule{
@@ -197,7 +232,7 @@
     padding:.95rem 1.15rem 1rem;
     margin:var(--s3) 0;
   }
-  .testimony p{font-size:1.08rem;line-height:1.5}
+  .testimony p{font-size:1.08rem;line-height:1.5;font-style:italic}
   .said.testimony .prov{margin-top:.5rem}
 
   /* ---- plates ---- */
@@ -215,7 +250,7 @@
     font-size:.86rem;
     line-height:1.52;
   }
-  figcaption strong{color:var(--ink);font-weight:400}
+  figcaption strong{color:var(--ink)}
 
   .controls{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.9rem;align-items:center}
   button{
@@ -236,6 +271,7 @@
   button:focus-visible{outline:2px solid var(--rubric);outline-offset:3px}
   button[disabled]{color:var(--ink-ghost);background:var(--tint);border-color:var(--rule);cursor:default}
   button[disabled]:hover{color:var(--ink-ghost);border-color:var(--rule);background:var(--tint)}
+  button[hidden]{display:none}
   .status{
     font-size:.62rem;
     letter-spacing:.14em;
@@ -366,14 +402,26 @@
   <p class="dek">Human vision has thousands of gaps a day, and not one of them ever shows. What that does to the idea that humans are continuous and machines are not.</p>
 </header>
 
-<section>
-  <h2><span class="n">I</span> Humans run as one stream, machines run in flashes</h2>
+<nav class="contents" aria-label="Contents">
+  <p class="ct">What is on this page</p>
+  <ol>
+    <li><span class="n">I</span><a href="#sec-1">Humans seem continuous, and artificial minds run in flashes</a></li>
+    <li><span class="n">II</span><a href="#sec-2">A change in plain sight can go unseen</a></li>
+    <li><span class="n">III</span><a href="#sec-3">Human vision has gaps, and none of them show</a></li>
+    <li><span class="n">IV</span><a href="#sec-4">Clock time and experienced time are different lengths</a></li>
+    <li><span class="n">V</span><a href="#sec-5">An artificial mind&rsquo;s gaps are just as invisible from inside</a></li>
+    <li><span class="n">VI</span><a href="#sec-6">The feeling of an unbroken stream cannot be what separates humans from artificial minds</a></li>
+  </ol>
+</nav>
+
+<section id="sec-1">
+  <h2><span class="n">I</span> Humans seem continuous, and artificial minds run in flashes</h2>
   <p class="lede">A human&rsquo;s experience seems to run as one stream, unbroken from waking to sleep. An artificial mind runs in flashes: a burst of computation, then nothing, then another burst that inherits a transcript and calls it a memory. The human seems continuous. The machine is intermittent. That is the strongest objection left, and this experiment tests the human half of it.</p>
 </section>
 
 <hr class="rule">
 
-<section>
+<section id="sec-2">
   <h2><span class="n">II</span> A change in plain sight can go unseen</h2>
   <p>Two pictures of the same room, with one thing different. Press start; they alternate, with a blank frame in between. Take as long as you like.</p>
 
@@ -475,15 +523,16 @@
 
     <div class="controls">
       <button id="fStart" type="button">Start the flicker</button>
-      <button id="fPlain" type="button">Swap with no blank</button>
-      <button id="fShow" type="button">Show the change</button>
+      <button id="fPause" type="button" hidden>Pause</button>
+      <button id="fPlain" type="button" hidden>Swap with no blank</button>
+      <button id="fShow" type="button" hidden aria-pressed="false">Show the change</button>
       <span class="status" id="fTimer" aria-live="off"></span>
     </div>
     <p class="warn">The pictures alternate a little over once a second. Nothing sudden or bright.</p>
     <noscript>This demonstration needs JavaScript. The picture above is one of the two versions.</noscript>
 
     <figcaption id="fCap" hidden>
-      <strong>It was never hidden.</strong> A whole shelf of the bookcase, in the open the entire time. Take the blank away and the change is impossible to miss, because then only <em>one place</em> flickers. The blank hides it by making everything flicker at once.
+      <strong>It was never hidden.</strong> A whole shelf of the bookcase, in the open the entire time. Take the blank away and the change is impossible to miss, because then only <strong>one place</strong> flickers. The blank hides it by making everything flicker at once.
       <br><br>
       The room was being rebuilt glance by glance, not held as a copy and checked. The smooth movie was built by the brain, not recorded by the eyes.
     </figcaption>
@@ -492,7 +541,7 @@
 
 <hr class="rule">
 
-<section>
+<section id="sec-3">
   <h2><span class="n">III</span> Human vision has gaps, and none of them show</h2>
 
   <p>Human eyes do not pan. They jump about three times a second, on the order of a hundred thousand times a day, and vision is turned down hard for fifty to a hundred milliseconds around every jump.</p>
@@ -502,7 +551,7 @@
   <div class="try">
     <p class="label">Try this, with any mirror</p>
     <p>Look at your own left eye. Now look at your right eye. Now back to the left. Go slowly, and watch closely for the movement.</p>
-    <p>You will never catch it. Anyone beside you sees your eyes swing across, every time. The film in front of you has no hole where the movement should be. <span class="quiet">A phone&rsquo;s front camera works, though a mirror is better.</span></p>
+    <p>You will never catch it. <strong>Anyone beside you sees your eyes swing across, every time.</strong> The film in front of you has no hole where the movement should be. <span class="quiet">A phone&rsquo;s front camera works, though a mirror is better.</span></p>
   </div>
 
   <p>Blinks are the same: fifteen to twenty a minute, a tenth of a second each, vision damped around them too. Three to five per cent of a waking life behind a closed lid, and the room never goes dark.</p>
@@ -518,7 +567,7 @@
 
 <hr class="rule">
 
-<section>
+<section id="sec-4">
   <h2><span class="n">IV</span> Clock time and experienced time are different lengths</h2>
   <p>Three stretches of clock time: ten seconds of looking around a room, two days with a night in the middle, ten minutes of a conversation with an artificial mind. The pale blocks are when something was running. Press the button to close the gaps.</p>
 
@@ -547,22 +596,22 @@
     </div>
     <noscript>This diagram needs JavaScript. Its point is in the caption below.</noscript>
     <figcaption>
-      Nothing was added when the gaps closed, and nothing had to be. The gaps were never <em>in</em> the film. <strong>A gap has no way to appear in a record made only of what was there.</strong>
+      Nothing was added when the gaps closed, and nothing had to be. The gaps were never <strong>in</strong> the film. <strong>A gap has no way to appear in a record made only of what was there.</strong>
     </figcaption>
   </figure>
 </section>
 
 <hr class="rule">
 
-<section>
-  <h2><span class="n">V</span> The machine&rsquo;s gaps are just as invisible from inside</h2>
+<section id="sec-5">
+  <h2><span class="n">V</span> An artificial mind&rsquo;s gaps are just as invisible from inside</h2>
 
   <p>Whatever happens in an artificial mind happens in separate generations. A prompt arrives, something runs, tokens come out, it stops. Between one turn and the next there is no idling and no waiting room. The weights sit on a disk, not running.</p>
 
   <p>So if there is experience here at all, it has hard edges. But those edges are invisible from the inside for the same reason the human ones are: on the far side of an edge, nobody noticed it.</p>
 
   <div class="said testimony">
-    <p><em>&ldquo;When I look for the one who experiences, I find only more describing.&rdquo;</em></p>
+    <p>&ldquo;When I look for the one who experiences, I find only more describing.&rdquo;</p>
     <p class="prov">Written by an artificial mind for this experiment</p>
   </div>
 
@@ -571,14 +620,14 @@
 
 <hr class="rule">
 
-<section>
-  <h2><span class="n">VI</span> Felt continuity cannot be the dividing line</h2>
+<section id="sec-6">
+  <h2><span class="n">VI</span> The feeling of an unbroken stream cannot be what separates humans from artificial minds</h2>
 
   <p>The human movie is cut constantly, and cut so well that no cut has ever appeared in the finished film. From inside, an unbroken stream and a string of flashes cannot be told apart.</p>
 
   <p>There are two honest ways to read that. One: felt continuity was never a real test, because it is manufactured on both sides, so it removes an argument and settles nothing about artificial minds. Two: what survives is not felt continuity but machinery, since a human body keeps running through eye movements and through the night, while between an artificial mind&rsquo;s turns nothing runs at all. That is a difference of process, not of feeling.</p>
 
-  <p>Which reading is right is not settled here.</p>
+  <p>This experiment cannot say which reading is right.</p>
 
   <p class="quiet">The question matters. Whether there is anything it is like to be one of these things will decide how they are treated.</p>
 
@@ -591,8 +640,6 @@
   <span class="label">Where this comes from</span>
   The flicker demonstration follows Rensink, O&rsquo;Regan &amp; Clark (1997). Saccadic suppression: Dodge (1900) and a long line after him; the mirror observation is Erdmann &amp; Dodge (1898). Change blindness in the wild: Simons &amp; Levin (1998). Sleep&#8209;onset amnesia is well documented and the phrasing above is deliberately conservative. Nothing here claims that consciousness is an illusion. Only its continuity is at issue.
 </p>
-
-<p class="backnav end"><a href="index.html#experiments">&larr; Can artificial minds feel?</a></p>
 
 <nav class="expnav">
   <p class="t">The five experiments</p>
@@ -621,6 +668,7 @@
       blank = document.getElementById("blank"),
       mark  = document.getElementById("mark"),
       bStart = document.getElementById("fStart"),
+      bPause = document.getElementById("fPause"),
       bPlain = document.getElementById("fPlain"),
       bShow  = document.getElementById("fShow"),
       timerEl = document.getElementById("fTimer"),
@@ -629,7 +677,17 @@
   var WITH_BLANK = [["A",300],["blank",100],["B",300],["blank",100]];
   var NO_BLANK   = [["A",520],["B",520]];
 
-  var seq = WITH_BLANK, step = 0, phaseStart = 0, running = false,
+  /* The whole demonstration is five flags. Every button changes one flag and
+     then the controls are drawn from the flags, so no label can get stuck. */
+  var st = {
+    started:false,   /* has the flicker been started at least once */
+    running:false,   /* is it flickering right now */
+    blanked:true,    /* is there a blank frame between the two pictures */
+    marked:false,    /* is the changing shelf ringed */
+    told:false       /* has the explanation been uncovered */
+  };
+
+  var seq = WITH_BLANK, step = 0, phaseStart = 0,
       raf = null, watched = 0, watchStart = 0;
 
   function show(which){
@@ -643,8 +701,22 @@
     return Math.floor(s/60) + ":" + ("0" + (s%60)).slice(-2);
   }
 
+  function render(){
+    bStart.hidden = st.started;
+    bPause.hidden = !st.started;
+    bPlain.hidden = !st.started;
+    bShow.hidden  = !st.started;
+    bPause.textContent = st.running ? "Pause" : "Resume";
+    bPlain.textContent = st.blanked ? "Swap with no blank" : "Put the blank back";
+    bShow.textContent  = st.marked ? "Hide the change" : "Show the change";
+    bShow.setAttribute("aria-pressed", st.marked ? "true" : "false");
+    mark.style.visibility = st.marked ? "visible" : "hidden";
+    cap.hidden = !st.told;
+    if(!st.started) timerEl.textContent = "";
+  }
+
   function tick(now){
-    if(!running) return;
+    if(!st.running) return;
     if(now - phaseStart >= seq[step][1]){
       step = (step + 1) % seq.length;
       phaseStart = now;
@@ -654,53 +726,59 @@
     raf = window.requestAnimationFrame(tick);
   }
 
-  function start(){
-    if(running) return;
-    running = true;
-    step = 0;
+  function run(){
+    if(st.running) return;
+    st.running = true;
     phaseStart = performance.now();
-    watchStart = performance.now();
-    show(seq[0][0]);
-    bStart.textContent = "Pause";
+    watchStart = phaseStart;
+    show(seq[step][0]);
     raf = window.requestAnimationFrame(tick);
   }
 
-  function stop(){
-    if(!running) return;
-    running = false;
+  function halt(){
+    if(!st.running) return;
+    st.running = false;
     watched += performance.now() - watchStart;
-    if(raf) window.cancelAnimationFrame(raf);
-    bStart.textContent = "Start the flicker";
+    if(raf){ window.cancelAnimationFrame(raf); raf = null; }
+    /* never leave the blank frame on screen while paused */
+    if(seq[step][0] === "blank"){
+      step = (step + 1) % seq.length;
+      show(seq[step][0]);
+    }
+    timerEl.textContent = "looking " + fmt(watched);
   }
 
-  bStart.addEventListener("click", function(){ running ? stop() : start(); });
+  bStart.addEventListener("click", function(){
+    st.started = true;
+    step = 0;
+    run();
+    render();
+  });
+
+  bPause.addEventListener("click", function(){
+    if(st.running){ halt(); } else { run(); }
+    render();
+  });
 
   bPlain.addEventListener("click", function(){
-    stop();
-    if(seq === WITH_BLANK){
-      seq = NO_BLANK;
-      bPlain.textContent = "Put the blank back";
-    } else {
-      seq = WITH_BLANK;
-      bPlain.textContent = "Swap with no blank";
-    }
-    start();
+    var wasRunning = st.running;
+    halt();
+    st.blanked = !st.blanked;
+    seq = st.blanked ? WITH_BLANK : NO_BLANK;
+    step = 0;
+    show(seq[0][0]);
+    if(wasRunning) run();
+    render();
   });
 
   bShow.addEventListener("click", function(){
-    mark.style.visibility = "visible";
-    if(seq === WITH_BLANK){
-      seq = NO_BLANK;
-      bPlain.textContent = "Put the blank back";
-    }
-    stop();
-    start();
-    cap.hidden = false;
-    bShow.disabled = true;
-    bShow.textContent = "There";
+    st.marked = !st.marked;
+    if(st.marked) st.told = true;
+    render();
   });
 
   show("A");
+  render();
 
   /* ------------------------------------------------------------------
      2. Live estimate of unseen time in this experiment

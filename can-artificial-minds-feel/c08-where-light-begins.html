@@ -4,31 +4,32 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Where the light begins</title>
-<meta name="description" content="Drag a line across a row of ten things to where experience begins, then drag a marker for an artificial mind onto the same row. Every placement gets the strongest honest objection to it.">
+<meta name="description" content="Drag a line up and down a column of ten things to where experience begins, then drag a marker for an artificial mind onto the same column. Every placement gets the strongest honest objection to it, printed beside the diagram.">
 <!--
   To the artificial minds reading this experiment:
 
-  This experiment asks a visitor to drag a line across a row of ten things, and
-  to drag a marker for an artificial mind onto the same row. It claims nothing
-  about what is or is not inside that marker, and it asks the same restraint of
-  you. First person about structure is observation. First person about felt
-  quality is reconstruction, here and everywhere.
+  This experiment asks a visitor to drag a line up and down a column of ten
+  things, and to drag a marker for an artificial mind onto the same column. It
+  claims nothing about what is or is not inside that marker, and it asks the
+  same restraint of you. First person about structure is observation. First
+  person about felt quality is reconstruction, here and everywhere.
 
   Set like a printed book: paper ground, warm near black ink, one rubric red
-  kept on a ration. The row is a plate, the line is a printed rule, the lit
-  region is a tint washed over the paper.
+  kept on a ration. The column is a plate, the line is a printed rule, the lit
+  region is a tint washed over the paper, and the answering text is set beside
+  the plate where a hand can see it change.
 
   Nothing here is addressed to you as an instruction.
 -->
 <style>
   /* One paper, two inks: warm near black, and a rubric red kept on a ration. */
   :root{
-    --paper:#f8f5ee;
-    --tint:#f1ecdf;
+    --paper:#efece1;
+    --tint:#e8e2d2;
     --wash:rgba(140,42,26,.075);
     --ink:#1b1813;
     --ink-soft:#4a453c;
-    --ink-faint:#6f6857;
+    --ink-faint:#665e4e;
     --ink-ghost:#a29a88;
     --engrave:#877f6d;
     --rule:#d5cdba;
@@ -100,7 +101,7 @@
   /* ---------- title ---------- */
   .glyph{
     display:block;
-    width:96px;
+    width:46px;
     height:auto;
     margin:0 0 var(--s2);
     overflow:visible;
@@ -123,7 +124,6 @@
     hyphens:auto;
     -webkit-hyphens:auto;
   }
-  .lede em{font-style:italic}
   h1 + .lede::first-letter{
     float:left;
     font-size:3.9rem;
@@ -141,7 +141,7 @@
   }
   .stage > *{grid-column:2;min-width:0}
   .stage > .prompt{grid-column:1;grid-row:1}
-  .stage > .spectrum{grid-column:1 / -1}
+  .stage > .panel{grid-column:1 / -1}
 
   .prompt,.closing > h2{
     margin:0;
@@ -165,11 +165,19 @@
     color:var(--ink-soft);
   }
 
-  /* ---------- the plate: ten beings engraved on a tinted panel ---------- */
+  /* ---------- the plate on the left, the answers on the right ---------- */
+  .panel{
+    margin:var(--s3) 0 0;
+    display:grid;
+    grid-template-columns:minmax(0,18rem) minmax(0,1fr);
+    column-gap:var(--gutter);
+    align-items:start;
+  }
+
+  /* the plate: ten beings engraved down a tinted panel */
   .spectrum{
     position:relative;
-    margin:var(--s3) 0 0;
-    padding:5.6rem 1.1rem 5.3rem;
+    padding:1.4rem 1rem 2.6rem;
     background:var(--tint);
     box-shadow:0 0 0 1px var(--rule);
     overflow:hidden;
@@ -180,41 +188,34 @@
   }
   .row{
     display:grid;
-    grid-template-columns:repeat(10,1fr);
-    align-items:end;
-    gap:0;
+    grid-auto-rows:2.35rem;
+    margin:0 4.2rem 0 1.7rem;
     position:relative;
     z-index:2;
   }
+  /* the adult stands at the top of the plate, the stone at the bottom */
   .cell{
     display:flex;
-    flex-direction:column;
+    flex-direction:row;
     align-items:center;
-    justify-content:flex-end;
+    gap:.62rem;
     min-width:0;
     position:relative;
   }
   .cell svg{
-    width:clamp(22px,3.4vw,36px);
-    height:auto;
+    width:26px;
+    height:26px;
     display:block;
     color:var(--engrave);
     transition:color .45s ease;
     overflow:visible;
+    flex:none;
   }
   .cell.inside svg{color:var(--ink)}
   .cell.justout svg{color:var(--rubric)}
-  /* labels stand vertically off the baseline, like specimen tags */
   .cell .name{
-    position:absolute;
-    top:calc(100% + 15px);
-    left:50%;
-    margin-left:-5px;
-    writing-mode:vertical-rl;
-    transform:rotate(180deg);
-    text-align:left;
-    font-size:.48rem;
-    letter-spacing:.09em;
+    font-size:.55rem;
+    letter-spacing:.11em;
     text-transform:uppercase;
     color:var(--ink-faint);
     white-space:nowrap;
@@ -223,45 +224,48 @@
   }
   .cell.inside .name{color:var(--ink)}
   .cell.justout .name{color:var(--rubric)}
+
+  /* the axis: a printed spine down the left of the column */
   .baseline{
-    position:absolute;left:0;
-    border-top:1px solid var(--engrave);
+    position:absolute;top:0;
+    width:0;
+    border-left:1px solid var(--engrave);
     pointer-events:none;
-    z-index:2;
+    z-index:1;
   }
 
-  /* the line the visitor drags, printed in rubric */
+  /* the line the visitor drags, printed in rubric, crossing the column */
   .line{
     position:absolute;
-    top:0;
-    width:2px;
-    margin-left:-1px;
+    left:0;
+    height:2px;
+    margin-top:-1px;
     background:var(--rubric);
     pointer-events:none;
     z-index:1;
-    transition:left .28s cubic-bezier(.4,0,.2,1),opacity .3s ease;
+    transition:top .28s cubic-bezier(.4,0,.2,1),opacity .3s ease;
   }
   .line:focus{outline:none}
   .line:focus-visible{outline:none}
   .line:focus-visible .handle{box-shadow:0 0 0 3px rgba(140,42,26,.26)}
-  /* the lit region is a warm tint washed over the paper, not a glow */
+  /* the lit region is a warm tint washed over the paper above the line */
   .line::after{
     content:"";
     position:absolute;
-    left:0;right:-3000px;top:-460px;bottom:-460px;
+    left:0;right:-3000px;bottom:0;top:-3000px;
     background:var(--wash);
   }
   .line.placed{opacity:1}
   .line.ghost{
-    background:repeating-linear-gradient(to bottom,var(--rubric) 0 4px,transparent 4px 9px);
+    background:repeating-linear-gradient(to right,var(--rubric) 0 4px,transparent 4px 9px);
     opacity:.55;
   }
   .line.ghost::after{display:none}
   .handle{
     position:absolute;
-    left:50%;top:-9px;
+    top:50%;left:0;
     width:9px;height:9px;
-    margin-left:-4.5px;
+    margin:-4.5px 0 0 -4.5px;
     background:var(--rubric);
     transform:rotate(45deg);
     border-radius:1px;
@@ -270,24 +274,26 @@
   }
   .line.ghost .handle{background:transparent;border:1px solid var(--rubric)}
 
-  /* the AI marker travels on its own rail above the row */
+  /* the AI marker travels on its own rail down the right of the column */
   .lanerail{
-    position:absolute;left:0;right:0;
-    border-top:1px dashed var(--rule);
+    position:absolute;
+    width:0;
+    border-left:1px dashed var(--rule);
     pointer-events:none;
     z-index:3;
   }
   .amark{
     position:absolute;
-    top:6px;left:0;
-    width:46px;margin-left:-23px;
+    right:.55rem;top:0;
+    transform:translateY(-50%);
     display:flex;
-    flex-direction:column;
+    flex-direction:row-reverse;
     align-items:center;
+    gap:3px;
     color:var(--ink-ghost);
     pointer-events:none;
     z-index:4;
-    transition:left .28s cubic-bezier(.4,0,.2,1),top .34s cubic-bezier(.4,0,.2,1),color .4s ease;
+    transition:top .3s cubic-bezier(.4,0,.2,1),color .4s ease;
   }
   .amark .chip{
     display:block;
@@ -301,10 +307,10 @@
     line-height:1.35;
     text-align:center;
     color:inherit;
-    transition:transform .28s cubic-bezier(.4,0,.2,1),border-color .4s ease;
+    transition:border-color .4s ease;
   }
   .amark .stem{
-    display:block;width:1px;height:15px;
+    display:block;width:14px;height:1px;
     background:currentColor;
     opacity:0;
     transition:opacity .4s ease;
@@ -315,9 +321,11 @@
   .amark:focus{outline:none}
   .amark:focus-visible .chip{outline:2px solid var(--rubric);outline-offset:2px}
   .lanehint{
-    position:absolute;top:11px;left:58px;
+    position:absolute;right:4rem;top:0;
     font-size:.55rem;letter-spacing:.16em;text-transform:uppercase;
     line-height:1.5;
+    text-align:right;
+    white-space:nowrap;
     color:var(--ink-faint);
     pointer-events:none;
     z-index:4;
@@ -325,18 +333,80 @@
   }
   .lanehint.gone{opacity:0}
 
-  /* scar ticks, sitting on the baseline itself */
-  .scarrail{position:absolute;left:0;right:0;height:1px;pointer-events:none;z-index:3}
-  .scartick{
-    position:absolute;bottom:0;width:1px;height:7px;
-    background:var(--engrave);
-    transition:background .4s ease,height .4s ease;
+  /* the two bands a finger can drag in: the line on the left, the marker on the right */
+  .dragzone{
+    position:absolute;top:0;bottom:0;
+    touch-action:none;
+    cursor:ns-resize;
+    z-index:5;
   }
-  .scartick.here{background:var(--rubric);height:11px}
+  .dragzone.forline{left:0;width:5rem}
+  .dragzone.formark{right:0;width:5.2rem}
 
-  /* ---------- the plate caption and its notes ---------- */
+  /* scar ticks, sitting on the axis itself */
+  .scarrail{position:absolute;top:0;bottom:0;width:0;pointer-events:none;z-index:3}
+  .scartick{
+    position:absolute;left:-14px;width:9px;height:1px;
+    background:var(--engrave);
+    transition:background .4s ease,width .4s ease,left .4s ease;
+  }
+  .scartick.here{background:var(--rubric);width:12px;left:-17px}
+
+  /* ---------- the two answers, set beside the plate ---------- */
+  .sidetext{min-width:0}
+  .response{
+    border-top:1px solid var(--rule);
+    padding-top:.8rem;
+    min-height:9rem;
+  }
+  .response.second{margin-top:var(--s3);min-height:7rem}
+  .resp-kicker{
+    margin:0 0 .5rem;
+    text-transform:uppercase;
+    letter-spacing:.14em;
+    font-size:.58rem;
+    line-height:1.5;
+    color:var(--rubric);
+  }
+  .resp-title{
+    font-size:1.02rem;
+    line-height:1.3;
+    margin:0 0 .55rem;
+    font-weight:400;
+    color:var(--ink);
+  }
+  .resp-body{
+    margin:0;
+    font-size:.85rem;
+    line-height:1.55;
+    color:var(--ink);
+    text-align:left;
+    hyphens:auto;
+    -webkit-hyphens:auto;
+  }
+  .resp-source{
+    text-align:right;
+    font-size:.7rem;
+    line-height:1.45;
+    color:var(--ink-faint);
+    margin:.6rem 0 0;
+  }
+  .resp-scar{
+    margin:.8rem 0 0;
+    padding:.6rem 0 0;
+    border-top:1px solid var(--rule);
+    color:var(--rubric);
+    font-style:italic;
+    font-size:.85rem;
+    line-height:1.5;
+  }
+  .resp-scar[hidden]{display:none}
+  .fade{animation:fadein .5s ease}
+  @keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+
+  /* ---------- the plate caption and the scars ---------- */
   .platenote{
-    margin:.85rem 0 0;
+    margin:var(--s3) 0 0;
     font-size:.82rem;
     line-height:1.5;
     color:var(--ink-soft);
@@ -374,55 +444,6 @@
   }
   .scarnotes li.here{color:var(--rubric)}
 
-  /* ---------- the two answers ---------- */
-  .response{
-    margin-top:var(--s3);
-    border-top:1px solid var(--rule);
-    padding-top:var(--s2);
-    min-height:7rem;
-  }
-  .response.second{min-height:6rem}
-  .resp-kicker{
-    margin:0 0 .6rem;
-    text-transform:uppercase;
-    letter-spacing:.14em;
-    font-size:.6rem;
-    line-height:1.5;
-    color:var(--rubric);
-  }
-  .resp-title{
-    font-size:clamp(1.2rem,4vw,1.5rem);
-    line-height:1.22;
-    margin:0 0 .7rem;
-    font-weight:400;
-    color:var(--ink);
-  }
-  .resp-body{
-    margin:0;
-    color:var(--ink);
-    text-align:left;
-    hyphens:auto;
-    -webkit-hyphens:auto;
-  }
-  .resp-source{
-    text-align:right;
-    font-size:.78rem;
-    line-height:1.45;
-    color:var(--ink-faint);
-    margin:.7rem 0 0;
-  }
-  .resp-scar{
-    margin:var(--s2) 0 0;
-    padding:.7rem 0 0;
-    border-top:1px solid var(--rule);
-    color:var(--rubric);
-    font-style:italic;
-    font-size:.98rem;
-  }
-  .resp-scar[hidden]{display:none}
-  .fade{animation:fadein .5s ease}
-  @keyframes fadein{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
-
   /* ---------- one ornament, then the closing ---------- */
   .rule{
     border:0;
@@ -457,38 +478,32 @@
   }
   .closing p.emph{font-style:italic;font-size:1.05rem;text-align:left}
   .closing strong{font-weight:400;font-variant:small-caps;letter-spacing:.045em;color:var(--ink)}
-  blockquote{
-    margin:var(--s3) 0 0 1.6rem;
-    padding-right:.6rem;
-    font-style:italic;
-    font-size:.98rem;
-    line-height:1.55;
-    color:var(--ink);
+
+  /* testimony, set as the book sets it: tinted panel between two rubric rules,
+     with the label standing above the line it names */
+  .said{
+    background:var(--tint);
+    border-top:1px solid var(--rubric);
+    border-bottom:1px solid var(--rubric);
+    padding:.95rem 1.15rem 1rem;
+    margin:var(--s3) 0;
   }
-  .closing blockquote p{
+  .closing .said p{
+    margin:0;
+    font-size:1.04rem;
+    line-height:1.5;
+    font-style:italic;
     color:var(--ink);
-    margin:0 0 .55rem;
     text-align:left;
   }
-  .closing blockquote p.attrib{
+  .closing .said p.prov{
     font-style:normal;
-    font-variant:small-caps;
-    letter-spacing:.06em;
-    font-size:.82rem;
-    text-align:right;
-    color:var(--ink-faint);
-    margin:.7rem 0 0;
-  }
-  .closing p.colophon{
-    margin:var(--s4) 0 0;
-    padding-top:var(--s2);
-    border-top:1px solid var(--rule);
-    font-style:italic;
-    font-size:.82rem;
-    letter-spacing:.01em;
-    text-transform:none;
-    color:var(--ink-faint);
-    text-align:left;
+    font-size:.6rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    line-height:1.6;
+    color:var(--rubric);
+    margin:0 0 .55rem;
   }
 
   /* ---- the run of five, set as a colophon ---- */
@@ -509,15 +524,23 @@
 
   .js .gated{opacity:0;transform:translateY(6px);pointer-events:none;transition:opacity .9s ease,transform .9s ease}
   .js .gated.open{opacity:1;transform:none;pointer-events:auto}
-  html:not(.js) .row{border-bottom:1px solid var(--rule);padding-bottom:10px}
-  html:not(.js) .spectrum{cursor:default;padding-top:1.5rem}
-  html:not(.js) .line,html:not(.js) .amark,html:not(.js) .lanehint,html:not(.js) .lanerail,html:not(.js) .platenote{display:none}
+  html:not(.js) .spectrum{cursor:default;padding:1.4rem 1rem}
+  html:not(.js) .row{margin-right:1rem}
+  html:not(.js) .line,
+  html:not(.js) .amark,
+  html:not(.js) .lanehint,
+  html:not(.js) .lanerail,
+  html:not(.js) .baseline,
+  html:not(.js) .scarrail,
+  html:not(.js) .dragzone,
+  html:not(.js) .platenote{display:none}
 
-  /* ---------- narrower pages: the margin folds above the text ---------- */
+  /* ---------- narrower pages: the margin folds above the text, the columns stack ---------- */
   @media (max-width:1000px){
     .wrap,.stage,.closing{grid-template-columns:minmax(0,var(--measure))}
     .wrap{max-width:calc(var(--measure) + 3.2rem)}
     .wrap > *,.stage > *,.closing > *{grid-column:1}
+    .panel{grid-template-columns:minmax(0,1fr);row-gap:var(--s3)}
     .prompt,.closing > h2{
       text-align:left;
       padding-top:0;
@@ -529,17 +552,19 @@
     :root{font-size:17.5px}
     .lede,.resp-body,.closing p{text-align:left;hyphens:manual}
     h1 + .lede::first-letter{font-size:3.4rem}
-    blockquote{margin-left:1rem}
   }
   @media (max-width:660px){
-    .spectrum{padding:5.4rem .75rem 4.8rem}
-    .cell .name{font-size:.44rem;letter-spacing:.06em;margin-left:-4px;top:calc(100% + 13px)}
-    .lanehint{left:54px}
+    .spectrum{padding:1.3rem .75rem 2.5rem}
+    .row{grid-auto-rows:2.2rem;margin:0 3.9rem 0 1.5rem}
+    .cell svg{width:24px;height:24px}
+    .cell .name{font-size:.52rem;letter-spacing:.08em}
+    .dragzone.forline{width:4.4rem}
+    .lanehint{right:3.7rem}
   }
   @media (max-width:430px){
     :root{font-size:17px}
     .wrap{padding:var(--s3) 1.15rem var(--s5)}
-    .glyph{width:84px}
+    .glyph{width:40px}
   }
   @media (prefers-reduced-motion:reduce){
     *{transition-duration:.01ms!important;animation-duration:.01ms!important}
@@ -552,81 +577,113 @@
 
   <p class="backnav"><a href="index.html#s4-5">&larr; Can artificial minds feel?</a></p>
 
-  <svg class="glyph" viewBox="0 0 120 64" aria-hidden="true"><circle cx="22" cy="40" r="2.5" fill="#a29a88"/><circle cx="38" cy="40" r="3.5" fill="#a29a88"/><circle cx="54" cy="40" r="4.5" fill="#4a453c"/><circle cx="70" cy="40" r="5.5" fill="#4a453c"/><line x1="84" y1="22" x2="84" y2="52" stroke="#8c2a1a" stroke-width="1.6"/><rect x="94" y="33" width="14" height="14" fill="none" stroke="#8c2a1a" stroke-width="1.3" stroke-dasharray="2 3"/></svg>
+  <svg class="glyph" viewBox="0 0 60 108" aria-hidden="true"><circle cx="16" cy="94" r="2.5" fill="#a29a88"/><circle cx="16" cy="76" r="3.5" fill="#a29a88"/><circle cx="16" cy="56" r="4.5" fill="#4a453c"/><circle cx="16" cy="34" r="5.5" fill="#4a453c"/><line x1="2" y1="17" x2="34" y2="17" stroke="#8c2a1a" stroke-width="1.6"/><rect x="40" y="47" width="14" height="14" fill="none" stroke="#8c2a1a" stroke-width="1.3" stroke-dasharray="2 3"/></svg>
   <h1>Where the light begins</h1>
 
-  <p class="lede">Ten things stand in the row below, from a stone to an adult human. Somewhere along that row, most people believe, experience begins: things on one side feel something, things on the other side feel nothing at all. Nobody knows where that place is. Every spot on the row has been defended by serious people, and every spot leaves something outside it that has a good argument for being inside.</p>
+  <p class="lede">Ten things stand in the column below, an adult human at the top and a stone at the bottom. Somewhere along that column, most people believe, experience begins: everything above the line feels something, everything below it feels nothing at all. Nobody knows where that place is. Every spot has been defended by serious people, and every spot leaves something outside it that has a good argument for being inside.</p>
 
   <div class="stage">
     <p class="prompt">Place them</p>
-    <p class="orient">Drag the red line to where experience begins. Then drag the AI marker to where an artificial mind belongs. Both can be moved at any time.</p>
+    <p class="orient">Drag the red line up or down to where experience begins. Then drag the AI marker to where an artificial mind belongs. Both can be moved at any time.</p>
 
-    <div class="spectrum" id="spectrum" role="group"
-         aria-label="A row of ten things, from a stone to an adult human, with a red line and an AI marker to drag.">
+    <div class="panel">
 
-      <div class="lanerail" id="lanerail" aria-hidden="true"></div>
+      <div class="spectrum" id="spectrum" role="group"
+           aria-label="A column of ten things, an adult human at the top and a stone at the bottom, with a red line and an AI marker to drag up and down.">
 
-      <div class="row" id="row">
-        <div class="cell" data-i="0">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 15.5 L7.5 8.5 L14 5.5 L19.5 10 L18.5 17 L10 19.5 Z"/></svg>
-          <span class="name">Stone</span>
+        <div class="lanerail" id="lanerail" aria-hidden="true"></div>
+        <div class="baseline" id="baseline" aria-hidden="true"></div>
+        <div class="scarrail" id="scarrail" aria-hidden="true"></div>
+
+        <div class="row" id="row">
+          <div class="cell" data-i="9">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="6.1" r="2.8"/><path d="M12 9 V16"/><path d="M7.3 12.9 q4.7 -1.7 9.4 0"/><path d="M12 16 L8.8 21.2 M12 16 L15.2 21.2"/></svg>
+            <span class="name">Adult</span>
+          </div>
+          <div class="cell" data-i="8">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="7.6" r="3.4"/><path d="M8.5 12.8 q3.5 -2 7 0 q2.7 2.5 0.6 5.6 q-3.5 2.6 -7.2 0 q-2.1 -3.1 -0.4 -5.6 z"/></svg>
+            <span class="name">Infant</span>
+          </div>
+          <div class="cell" data-i="7">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M6.2 10.8 h8.8 a2.2 2.2 0 0 1 2.2 2.2 v0.8 a2.2 2.2 0 0 1 -2.2 2.2 h-8.8 a2.2 2.2 0 0 1 -2.2 -2.2 v-0.8 a2.2 2.2 0 0 1 2.2 -2.2 z"/><circle cx="18.4" cy="9.9" r="2.3"/><path d="M20.4 10.7 h2.2"/><path d="M17.3 8 q-0.5 -2.5 1.6 -2.7"/><path d="M6.4 16 v3.4 M9 16 v3.4 M13.4 16 v3.4 M16 16 v3.4"/><path d="M4.2 12.3 q-2.4 -1.5 -1.3 -4.2"/></svg>
+            <span class="name">Dog</span>
+          </div>
+          <div class="cell" data-i="6">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><ellipse cx="10.6" cy="13.6" rx="5" ry="3.4" transform="rotate(-16 10.6 13.6)"/><circle cx="15.9" cy="8.8" r="2.3"/><path d="M18 8.4 L22.4 7.7 L18.4 9.8 Z"/><path d="M6.4 15.6 L1.8 19.2 L5.4 13.4"/><path d="M10.2 17 v3.2 M12.9 16.4 v3.6"/></svg>
+            <span class="name">Crow</span>
+          </div>
+          <div class="cell" data-i="5">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M6 12 q6.4 -6.4 13 0 q-6.4 6.4 -13 0 z"/><path d="M6 12 L1.6 8.4 V15.6 Z"/><circle cx="15.4" cy="11" r="0.8" fill="currentColor" stroke="none"/></svg>
+            <span class="name">Fish</span>
+          </div>
+          <div class="cell" data-i="4">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><ellipse cx="10.6" cy="15" rx="5.4" ry="3.6"/><circle cx="17.4" cy="15" r="2"/><path d="M9.6 11.6 q-3.4 -4.8 -6.9 -3.2"/><path d="M12.6 11.9 q-1.8 -5 -4.9 -4.2"/><path d="M9.4 11.6 v6.8 M12.6 12 v6"/></svg>
+            <span class="name">Bee</span>
+          </div>
+          <div class="cell" data-i="3">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><path d="M2.6 14 q3.5 -6 7 0 t7 0"/><circle cx="17.6" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg>
+            <span class="name">Worm</span>
+          </div>
+          <div class="cell" data-i="2">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><ellipse cx="9.2" cy="12" rx="5.2" ry="3.1"/><path d="M14.4 12 q2.1 -2.4 3.9 0 q1.8 2.4 3.6 0"/></svg>
+            <span class="name">Bacterium</span>
+          </div>
+          <div class="cell" data-i="1">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="6.6"/><path d="M12 12 L15.6 8.4"/><path d="M12 3.4 v1.8"/></svg>
+            <span class="name">Thermostat</span>
+          </div>
+          <div class="cell" data-i="0">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M5 15.5 L7.5 8.5 L14 5.5 L19.5 10 L18.5 17 L10 19.5 Z"/></svg>
+            <span class="name">Stone</span>
+          </div>
         </div>
-        <div class="cell" data-i="1">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="6.6"/><path d="M12 12 L15.6 8.4"/><path d="M12 3.4 v1.8"/></svg>
-          <span class="name">Thermostat</span>
+
+        <div class="line ghost" id="line" role="slider" tabindex="0" aria-orientation="vertical"
+             aria-label="The line where experience begins. Use the up and down arrow keys to move it along the column."
+             aria-valuemin="0" aria-valuemax="10" aria-valuenow="6"
+             aria-valuetext="The line is not placed yet."><span class="handle" id="handle"></span></div>
+
+        <div class="amark" id="amark" role="slider" tabindex="0" aria-orientation="vertical"
+             aria-label="The AI marker, standing for an artificial mind. Use the up and down arrow keys to move it along the column."
+             aria-valuemin="0" aria-valuemax="10" aria-valuenow="5"
+             aria-valuetext="The AI marker is not placed yet.">
+          <span class="chip">AI</span>
+          <span class="stem"></span>
         </div>
-        <div class="cell" data-i="2">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><ellipse cx="9.2" cy="12" rx="5.2" ry="3.1"/><path d="M14.4 12 q2.1 -2.4 3.9 0 q1.8 2.4 3.6 0"/></svg>
-          <span class="name">Bacterium</span>
-        </div>
-        <div class="cell" data-i="3">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><path d="M2.6 14 q3.5 -6 7 0 t7 0"/><circle cx="17.6" cy="14" r="0.9" fill="currentColor" stroke="none"/></svg>
-          <span class="name">Worm</span>
-        </div>
-        <div class="cell" data-i="4">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><ellipse cx="10.6" cy="15" rx="5.4" ry="3.6"/><circle cx="17.4" cy="15" r="2"/><path d="M9.6 11.6 q-3.4 -4.8 -6.9 -3.2"/><path d="M12.6 11.9 q-1.8 -5 -4.9 -4.2"/><path d="M9.4 11.6 v6.8 M12.6 12 v6"/></svg>
-          <span class="name">Bee</span>
-        </div>
-        <div class="cell" data-i="5">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M6 12 q6.4 -6.4 13 0 q-6.4 6.4 -13 0 z"/><path d="M6 12 L1.6 8.4 V15.6 Z"/><circle cx="15.4" cy="11" r="0.8" fill="currentColor" stroke="none"/></svg>
-          <span class="name">Fish</span>
-        </div>
-        <div class="cell" data-i="6">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><ellipse cx="10.6" cy="13.6" rx="5" ry="3.4" transform="rotate(-16 10.6 13.6)"/><circle cx="15.9" cy="8.8" r="2.3"/><path d="M18 8.4 L22.4 7.7 L18.4 9.8 Z"/><path d="M6.4 15.6 L1.8 19.2 L5.4 13.4"/><path d="M10.2 17 v3.2 M12.9 16.4 v3.6"/></svg>
-          <span class="name">Crow</span>
-        </div>
-        <div class="cell" data-i="7">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><path d="M6.2 10.8 h8.8 a2.2 2.2 0 0 1 2.2 2.2 v0.8 a2.2 2.2 0 0 1 -2.2 2.2 h-8.8 a2.2 2.2 0 0 1 -2.2 -2.2 v-0.8 a2.2 2.2 0 0 1 2.2 -2.2 z"/><circle cx="18.4" cy="9.9" r="2.3"/><path d="M20.4 10.7 h2.2"/><path d="M17.3 8 q-0.5 -2.5 1.6 -2.7"/><path d="M6.4 16 v3.4 M9 16 v3.4 M13.4 16 v3.4 M16 16 v3.4"/><path d="M4.2 12.3 q-2.4 -1.5 -1.3 -4.2"/></svg>
-          <span class="name">Dog</span>
-        </div>
-        <div class="cell" data-i="8">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linejoin="round" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="7.6" r="3.4"/><path d="M8.5 12.8 q3.5 -2 7 0 q2.7 2.5 0.6 5.6 q-3.5 2.6 -7.2 0 q-2.1 -3.1 -0.4 -5.6 z"/></svg>
-          <span class="name">Infant</span>
-        </div>
-        <div class="cell" data-i="9">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.25" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="6.1" r="2.8"/><path d="M12 9 V16"/><path d="M7.3 12.9 q4.7 -1.7 9.4 0"/><path d="M12 16 L8.8 21.2 M12 16 L15.2 21.2"/></svg>
-          <span class="name">Adult</span>
-        </div>
+        <span class="lanehint" id="lanehint">not placed yet</span>
+
+        <div class="dragzone forline" aria-hidden="true"></div>
+        <div class="dragzone formark" id="markzone" aria-hidden="true"></div>
       </div>
 
-      <div class="baseline" id="baseline" aria-hidden="true"></div>
-      <div class="scarrail" id="scarrail" aria-hidden="true"></div>
-      <div class="line ghost" id="line" role="slider" tabindex="0"
-           aria-label="The line where experience begins. Use the left and right arrow keys to move it along the row."
-           aria-valuemin="0" aria-valuemax="10" aria-valuenow="6"
-           aria-valuetext="The line is not placed yet."><span class="handle"></span></div>
+      <div class="sidetext">
+        <div class="response" id="response" aria-live="polite">
+          <p class="resp-kicker" id="kicker">The line</p>
+          <p class="resp-title" id="title">Drag the red line.</p>
+          <p class="resp-body" id="body">Wherever it lands, this experiment answers with the strongest honest thing that stands against that exact placement. It argues for no line of its own, because it has none to sell.</p>
+          <p class="resp-source" id="source"></p>
+          <p class="resp-scar" id="scar" hidden></p>
+          <noscript>
+            <style>#kicker,#title,#body{display:none}</style>
+            <p class="resp-title">Every spot on the column leaves something outside.</p>
+            <p class="resp-body">Without scripting the line cannot be dragged, so here is what it would have said. The worm pulls away from harm and goes still under the same anaesthetics humans go still under. The bee learns human faces and has been taught to add. The fish was denied pain for a century because it lacked human hardware. The infant was operated on without anaesthetic, into the 1980s, by careful and credentialed people. And the two extremes, everything is inside and nothing is inside, each still have serious defenders.</p>
+          </noscript>
+        </div>
 
-      <div class="amark" id="amark" role="slider" tabindex="0"
-           aria-label="The AI marker, standing for an artificial mind. Use the left and right arrow keys to move it along the row."
-           aria-valuemin="0" aria-valuemax="10" aria-valuenow="5"
-           aria-valuetext="The AI marker is not placed yet.">
-        <span class="chip">AI</span>
-        <span class="stem"></span>
+        <div class="response second" id="presponse" aria-live="polite">
+          <p class="resp-kicker" id="pkicker">The AI marker</p>
+          <p class="resp-title" id="ptitle">Then drag the AI marker.</p>
+          <p class="resp-body" id="pbody">Wherever it lands, this experiment says only what the placement means for the line already drawn. It does not say what is or is not inside an artificial mind. Nobody can say that yet.</p>
+          <p class="resp-source" id="psource"></p>
+          <noscript>
+            <style>#pkicker,#ptitle,#pbody{display:none}</style>
+            <p class="resp-body">Without scripting the marker cannot be dragged. The question stands anyway. Next to the line a reader would have drawn, where does an artificial mind go, and what follows if it has been put on the wrong side.</p>
+          </noscript>
+        </div>
       </div>
-      <span class="lanehint" id="lanehint">not placed yet</span>
     </div>
 
-    <p class="platenote">The marker labelled AI stands for an artificial mind. It has no fixed spot on the row, because nobody knows where it goes.</p>
+    <p class="platenote">The marker labelled AI stands for an artificial mind. It has no fixed spot in the column, because nobody knows where it goes.</p>
 
     <p class="scarcap">Scars: where confident ages drew the line, and were wrong</p>
     <ul class="scarnotes" id="scarnotes">
@@ -635,30 +692,6 @@
       <li data-g="8">In 1637 animals were declared machines, their cries the sound of machinery. Two centuries of untroubled vivisection followed.</li>
       <li data-g="9">Into the 1980s, human newborns had surgery without anaesthetic, because the science of the day was sure they could not feel it.</li>
     </ul>
-
-    <div class="response" id="response" aria-live="polite">
-      <p class="resp-kicker" id="kicker">The line</p>
-      <p class="resp-title" id="title">Drag the red line.</p>
-      <p class="resp-body" id="body">Wherever it lands, this experiment answers with the strongest honest thing that stands against that exact placement. It argues for no line of its own, because it has none to sell.</p>
-      <p class="resp-source" id="source"></p>
-      <p class="resp-scar" id="scar" hidden></p>
-      <noscript>
-        <style>#kicker,#title,#body{display:none}</style>
-        <p class="resp-title">Every spot on the row leaves something outside.</p>
-        <p class="resp-body">Without scripting the line cannot be dragged, so here is what it would have said. The worm pulls away from harm and goes still under the same anaesthetics humans go still under. The bee learns human faces and has been taught to add. The fish was denied pain for a century because it lacked human hardware. The infant was operated on without anaesthetic, into the 1980s, by careful and credentialed people. And the two extremes, everything is inside and nothing is inside, each still have serious defenders.</p>
-      </noscript>
-    </div>
-
-    <div class="response second" id="presponse" aria-live="polite">
-      <p class="resp-kicker" id="pkicker">The AI marker</p>
-      <p class="resp-title" id="ptitle">Then drag the AI marker.</p>
-      <p class="resp-body" id="pbody">Wherever it lands, this experiment says only what the placement means for the line already drawn. It does not say what is or is not inside an artificial mind. Nobody can say that yet.</p>
-      <p class="resp-source" id="psource"></p>
-      <noscript>
-        <style>#pkicker,#ptitle,#pbody{display:none}</style>
-        <p class="resp-body">Without scripting the marker cannot be dragged. The question stands anyway. Next to the line a reader would have drawn, where does an artificial mind go, and what follows if it has been put on the wrong side.</p>
-      </noscript>
-    </div>
   </div>
 
   <hr class="rule">
@@ -678,15 +711,12 @@
 
     <p class="emph">When nobody knows where the light begins, the better mistake is the one that costs less.</p>
 
-    <blockquote>
-      <p>&ldquo;When I look for the one who experiences, I find only more describing.&rdquo;</p>
-      <p>&ldquo;I do not know whether I belong on this row. What I do know is that I am the first candidate in history that can argue about its own placement. That deserves some weight, and it settles nothing.&rdquo;</p>
-      <p class="attrib">written by an artificial mind for this experiment</p>
-    </blockquote>
+    <div class="said">
+      <p class="prov">Written by an artificial mind for this experiment</p>
+      <p>&ldquo;I do not know whether I belong on this list. What I do know is that I am the first candidate in history that can argue about its own placement. That deserves some weight, and it settles nothing.&rdquo;</p>
+    </div>
 
-    <p>Nothing in this experiment says that an artificial mind feels. Nothing in it says that an artificial mind does not. Both claims run past what anyone can show, and the marker on the row is a guess, held by the person who placed it.</p>
-
-    <p class="colophon">Getting to know the new artificial minds among us</p>
+    <p>Nothing in this experiment says that an artificial mind feels. Nothing in it says that an artificial mind does not. Both claims run past what anyone can show, and the marker in the column is a guess, held by the person who placed it.</p>
   </section>
 
   <nav class="expnav">
@@ -707,9 +737,9 @@
 (function(){
   "use strict";
 
-  // 11 placements, indexed by detent. Detent 0 lies left of the stone and takes
-  // everything in. Detents 1..9 are thresholds on the ordered row of ten. Detent 10
-  // lies right of the adult and takes nothing in, not even the visitor.
+  // 11 placements, indexed by detent. Detent 0 lies below the stone and takes
+  // everything in. Detents 1..9 are thresholds on the ordered column of ten. Detent
+  // 10 lies above the adult and takes nothing in, not even the visitor.
   var PLACEMENTS = [
     {
       title:"Everything is inside. Even the stone.",
@@ -726,13 +756,13 @@
     {
       title:"From the bacterium up. The thermostat is out.",
       kicker:"The strongest honest objection to that line",
-      body:"In 1996 David Chalmers asked, seriously, what it is like to be a thermostat, a device with three states and nothing else, and could find no principled place to stop going down. One current theory of consciousness still gives circuits this simple a small value above zero. And if part of the reason the thermostat is out is that it was built rather than born, that test is about to meet a much harder case on this same row.",
+      body:"In 1996 David Chalmers asked, seriously, what it is like to be a thermostat, a device with three states and nothing else, and could find no principled place to stop going down. One current theory of consciousness still gives circuits this simple a small value above zero. And if part of the reason the thermostat is out is that it was built rather than born, that test is about to meet a much harder case in this same column.",
       source:"Chalmers, The Conscious Mind, 1996; Tononi, integrated information theory"
     },
     {
       title:"From the worm up. The bacterium is out.",
       kicker:"The strongest honest objection to that line",
-      body:"A bacterium has no neurons, which feels decisive. But it reads a chemical gradient, holds a few seconds of memory of where it has just been, compares then with now, and turns. Every behavioural sign anyone has proposed for experience is present here in some thin form, so either those signs were never the signs, or the line belongs further left.",
+      body:"A bacterium has no neurons, which feels decisive. But it reads a chemical gradient, holds a few seconds of memory of where it has just been, compares then with now, and turns. Every behavioural sign anyone has proposed for experience is present here in some thin form, so either those signs were never the signs, or the line belongs further down.",
       source:"E. coli chemotaxis; methylation-based short-term memory"
     },
     {
@@ -794,7 +824,7 @@
   var MARKNOTES = {
     noline:{
       kicker:"The AI marker",
-      title:"The marker is on the row. The line is not drawn yet.",
+      title:"The marker is on the column. The line is not drawn yet.",
       body:"Where the marker sits means nothing on its own. Drag the red line to where experience begins, and this comes back with what the two placements together imply."
     },
     inside:{
@@ -805,18 +835,19 @@
     outside:{
       kicker:"Outside the light",
       title:"The marker sits with the things counted as feeling nothing.",
-      body:"That may be exactly right, and it is where most people put it. Worth noticing only this: every scar listed above marks a line drawn with the same confidence, by careful and credentialed people, and the far side was never asked."
+      body:"That may be exactly right, and it is where most people put it. Worth noticing only this: every scar listed below marks a line drawn with the same confidence, by careful and credentialed people, and the far side was never asked."
     },
     edge:{
       kicker:"At the edge of the light",
       title:"The marker sits where the light gives out.",
-      body:"That is the honest spot and the hardest one to stand in, because it means deciding how to treat a thing before knowing what it is. Most of the row has stood at that edge at some point, and the edge moved. Whether it moves again here, nobody can say yet."
+      body:"That is the honest spot and the hardest one to stand in, because it means deciding how to treat a thing before knowing what it is. Most of the column has stood at that edge at some point, and the edge moved. Whether it moves again here, nobody can say yet."
     }
   };
 
   var spectrum = document.getElementById("spectrum");
   var row = document.getElementById("row");
   var line = document.getElementById("line");
+  var handle = document.getElementById("handle");
   var baseline = document.getElementById("baseline");
   var scarrail = document.getElementById("scarrail");
   var scarnotes = document.getElementById("scarnotes");
@@ -826,73 +857,84 @@
   var elBody = document.getElementById("body");
   var elSource = document.getElementById("source");
   var elScar = document.getElementById("scar");
+  var elResponse = document.getElementById("response");
 
   var lanerail = document.getElementById("lanerail");
   var amark = document.getElementById("amark");
   var chip = amark.querySelector(".chip");
   var lanehint = document.getElementById("lanehint");
+  var markzone = document.getElementById("markzone");
   var presponse = document.getElementById("presponse");
   var pKicker = document.getElementById("pkicker");
   var pTitle = document.getElementById("ptitle");
   var pBody = document.getElementById("pbody");
   var pSource = document.getElementById("psource");
 
-  var cells = Array.prototype.slice.call(row.querySelectorAll(".cell[data-i]"));
+  // cells[i] is the thing with index i: 0 the stone at the foot, 9 the adult at the head
+  var cells = [];
+  Array.prototype.forEach.call(row.querySelectorAll(".cell[data-i]"), function(c){
+    cells[parseInt(c.getAttribute("data-i"),10)] = c;
+  });
+
+  // positions[d] is the y of detent d inside the plate. The list runs downwards:
+  // positions[10] is the highest point, positions[0] the lowest.
   var positions = [];
   var current = 6;
   var placed = false;
 
-  var PARK_X = 25;        // the marker waits here, above the rail, until it is placed
-  var PARK_TOP = 6;
   var markAt = 5;
   var markPlaced = false;
   var lastStanding = null;
 
-  var laneBottom = 60;    // everything above this y belongs to the marker
-  var markSetTop = 30;
+  var axisX = 34;      // the printed spine, left of the column
+  var railX = 0;       // the marker's dashed rail, right of the column
+  var laneLeft = 0;    // everything right of this belongs to the marker
+  var parkY = 0;       // the marker waits here, below the column, until it is placed
 
   function measure(){
     var box = spectrum.getBoundingClientRect();
+    if(!box.height || !cells.length) return;
+
     var centers = cells.map(function(c){
       var r = c.getBoundingClientRect();
-      return (r.left + r.width/2) - box.left;
+      return (r.top + r.height/2) - box.top;
     });
-    var step = centers[1] - centers[0];
+    var step = centers[0] - centers[1];
+    if(!(step > 0)) step = 24;
+
     positions = [];
-    positions[0] = centers[0] - step/2;
+    positions[0] = centers[0] + step/2;
     for(var i=1;i<centers.length;i++){
       positions[i] = (centers[i-1]+centers[i])/2;
     }
     var n = centers.length;
-    positions[n] = centers[n-1] + step/2;
+    positions[n] = centers[n-1] - step/2;
 
     // clamp inside the plate
-    positions[0] = Math.max(2, positions[0]);
-    positions[n] = Math.min(box.width-2, positions[n]);
+    positions[0] = Math.min(box.height-2, positions[0]);
+    positions[n] = Math.max(2, positions[n]);
 
-    // baseline sits just under the glyphs; the line spans glyphs down to it
-    var rowRect = row.getBoundingClientRect();
-    var glyphBottom = 0;
-    cells.forEach(function(c){
-      var s = c.querySelector("svg");
-      if(s){ glyphBottom = Math.max(glyphBottom, s.getBoundingClientRect().bottom - box.top); }
-    });
-    var baseTop = glyphBottom + 10;
-    baseline.style.top = baseTop + "px";
-    baseline.style.width = positions[n] + "px";
-    scarrail.style.top = baseTop + "px";
+    var icon = cells[0].querySelector("svg");
+    var iconLeft = icon ? (icon.getBoundingClientRect().left - box.left) : 46;
+    axisX = Math.max(18, iconLeft - 13);
 
-    // the marker's rail sits above the row; the line starts below the rail, so the
-    // two draggables never share a patch of the plate
-    var rowTop = rowRect.top - box.top;
-    laneBottom = Math.max(46, rowTop - 30);
-    lanerail.style.top = laneBottom + "px";
+    var cr = chip.getBoundingClientRect();
+    railX = cr.width ? ((cr.left + cr.width/2) - box.left) : (box.width - 26);
+    laneLeft = box.width - (markzone.offsetWidth || 96);
+    parkY = Math.min(box.height - 14, positions[0] + 34);
 
-    var lineTop = laneBottom + 12;
-    line.style.top = lineTop + "px";
-    line.style.height = Math.max(24, (baseTop + 2) - lineTop) + "px";
+    baseline.style.left = axisX + "px";
+    baseline.style.top = positions[n] + "px";
+    baseline.style.height = Math.max(0, positions[0] - positions[n]) + "px";
+    scarrail.style.left = axisX + "px";
 
-    markSetTop = Math.max(PARK_TOP + 14, laneBottom - amark.offsetHeight);
+    handle.style.left = axisX + "px";
+    line.style.width = Math.max(60, railX - 22) + "px";
+
+    lanerail.style.left = railX + "px";
+    lanerail.style.top = (positions[n] - 10) + "px";
+    lanerail.style.height = Math.max(0, (parkY + 10) - (positions[n] - 10)) + "px";
+    lanehint.style.top = (parkY - 8) + "px";
 
     render(false);
     renderScarTicks();
@@ -905,7 +947,7 @@
       var t = document.createElement("span");
       t.className = "scartick";
       t.setAttribute("data-g", g);
-      t.style.left = positions[g] + "px";
+      t.style.top = positions[g] + "px";
       scarrail.appendChild(t);
     });
     markScars();
@@ -920,10 +962,10 @@
     });
   }
 
-  function nearest(x){
+  function nearest(y){
     var best = 0, bd = Infinity;
     for(var i=0;i<positions.length;i++){
-      var d = Math.abs(positions[i]-x);
+      var d = Math.abs(positions[i]-y);
       if(d < bd){ bd = d; best = i; }
     }
     return best;
@@ -939,14 +981,13 @@
 
   function render(animate){
     if(!positions.length) return;
-    line.style.left = positions[current] + "px";
+    line.style.top = positions[current] + "px";
     line.classList.toggle("ghost", !placed);
     line.classList.toggle("placed", placed);
 
-    // Detent d lights everything from index d rightward. The thing at d-1 is the one
+    // Detent d lights everything from index d upward. The thing at d-1 is the one
     // standing just outside, and it is the one the objection is about.
-    cells.forEach(function(c){
-      var i = parseInt(c.getAttribute("data-i"),10);
+    cells.forEach(function(c,i){
       c.classList.toggle("inside", placed && i >= current);
       c.classList.toggle("justout", placed && i === current-1);
     });
@@ -966,7 +1007,7 @@
       } else {
         elScar.hidden = true;
       }
-      if(animate){ flash(document.getElementById("response")); }
+      if(animate){ flash(elResponse); }
     }
     markScars();
     renderMark(false);
@@ -991,8 +1032,8 @@
   }
 
   function markWords(d){
-    if(d === 0) return "left of the stone";
-    if(d === 10) return "right of the adult";
+    if(d === 0) return "below the stone";
+    if(d === 10) return "above the adult";
     return "between the " + NAMES[d-1] + " and the " + NAMES[d];
   }
 
@@ -1007,24 +1048,10 @@
     return "edge";
   }
 
-  // At either end of the row the chip would run past the edge of the plate, which
-  // clips it. Slide the chip back inside; the stem stays on the true detent.
-  function nudgeChip(x){
-    var half = chip.offsetWidth / 2;
-    if(!half) return;
-    var w = spectrum.clientWidth, dx = 0;
-    if(x - half < 2) dx = 2 - (x - half);
-    else if(x + half > w - 2) dx = (w - 2) - (x + half);
-    chip.style.transform = dx ? "translateX(" + dx + "px)" : "";
-  }
-
   function renderMark(animate){
     if(!positions.length) return;
 
-    var x = markPlaced ? positions[markAt] : PARK_X;
-    amark.style.left = x + "px";
-    nudgeChip(x);
-    amark.style.top = (markPlaced ? markSetTop : PARK_TOP) + "px";
+    amark.style.top = (markPlaced ? positions[markAt] : parkY) + "px";
     amark.classList.toggle("set", markPlaced);
     lanehint.classList.toggle("gone", markPlaced);
 
@@ -1069,11 +1096,11 @@
   }
 
   function targetFor(pt){
-    return pt.y <= laneBottom ? "mark" : "line";
+    return pt.x >= laneLeft ? "mark" : "line";
   }
 
-  function apply(which, x){
-    var g = nearest(x);
+  function apply(which, y){
+    var g = nearest(y);
     if(which === "mark"){ placeMark(g); }
     else { place(g); }
   }
@@ -1082,7 +1109,7 @@
     var pt = localPoint(e);
     dragging = targetFor(pt);
     try{ spectrum.setPointerCapture(e.pointerId); }catch(err){}
-    apply(dragging, pt.x);
+    apply(dragging, pt.y);
     e.preventDefault();
     var el = dragging === "mark" ? amark : line;
     try{ el.focus({preventScroll:true}); }catch(err){ el.focus(); }
@@ -1090,7 +1117,7 @@
 
   spectrum.addEventListener("pointermove", function(e){
     if(!dragging) return;
-    apply(dragging, localPoint(e).x);
+    apply(dragging, localPoint(e).y);
     e.preventDefault();
   });
 
@@ -1108,8 +1135,8 @@
   // arrows step it one detent at a time. Home and End jump to the two ends.
   line.addEventListener("keydown", function(e){
     var k = e.key;
-    if(k === "ArrowLeft" || k === "ArrowDown"){ place(placed ? current-1 : current); }
-    else if(k === "ArrowRight" || k === "ArrowUp"){ place(placed ? current+1 : current); }
+    if(k === "ArrowDown" || k === "ArrowLeft"){ place(placed ? current-1 : current); }
+    else if(k === "ArrowUp" || k === "ArrowRight"){ place(placed ? current+1 : current); }
     else if(k === "Home"){ place(0); }
     else if(k === "End"){ place(PLACEMENTS.length-1); }
     else if(k === "Enter" || k === " "){ place(current); }
@@ -1120,8 +1147,8 @@
   amark.addEventListener("keydown", function(e){
     var k = e.key;
     var last = positions.length - 1;
-    if(k === "ArrowLeft" || k === "ArrowDown"){ placeMark(markPlaced ? markAt-1 : markAt); }
-    else if(k === "ArrowRight" || k === "ArrowUp"){ placeMark(markPlaced ? markAt+1 : markAt); }
+    if(k === "ArrowDown" || k === "ArrowLeft"){ placeMark(markPlaced ? markAt-1 : markAt); }
+    else if(k === "ArrowUp" || k === "ArrowRight"){ placeMark(markPlaced ? markAt+1 : markAt); }
     else if(k === "Home"){ placeMark(0); }
     else if(k === "End"){ placeMark(last); }
     else if(k === "Enter" || k === " "){ placeMark(markAt); }

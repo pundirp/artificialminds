@@ -8,11 +8,11 @@
 <style>
   :root{
     /* three inks on one paper: black, red, and the paper itself */
-    --paper:#f8f5ee;
-    --tint:#f1ecdf;
+    --paper:#efece1;
+    --tint:#e8e2d2;
     --ink:#1b1813;
     --ink-soft:#4a453c;
-    --ink-faint:#6f6857;
+    --ink-faint:#665e4e;
     --ink-ghost:#a29a88;
     --rule:#d5cdba;
     --rubric:#8c2a1a;
@@ -64,7 +64,6 @@
 
   /* ---- the way back, set as running apparatus ---- */
   .topnav{margin:0 0 var(--s2)}
-  .endnav{margin:var(--s5) 0 0}
   .backlink{
     font-family:var(--caps);
     font-size:.62rem;
@@ -134,8 +133,11 @@
     -webkit-backface-visibility:hidden;
     transition:border-color .3s ease,box-shadow .3s ease;
   }
-  .front{flex:1 1 auto;width:100%}
-  .back{
+  .face.front{flex:1 1 auto;width:100%}
+  /* Always scope the flip faces to .face. A bare .back rule would also catch the
+     colophon's .expnav .back line, absolutely position it over the whole page and
+     mirror it. That is what broke this page once. */
+  .face.back{
     position:absolute;
     top:0;left:0;right:0;bottom:0;
     overflow:auto;
@@ -186,11 +188,11 @@
   .src{font-size:.76rem;line-height:1.45;color:var(--ink-faint);margin:0;font-style:italic}
   .guess{font-size:.76rem;line-height:1.45;color:var(--wrong);margin:.3rem 0 0}
   .guess:empty{display:none}
-  body.revealed .card[data-result="right"] .back{
+  body.revealed .card[data-result="right"] .face.back{
     border-color:var(--leaf);
     box-shadow:inset 0 0 0 1px rgba(63,107,65,.28);
   }
-  body.revealed .card[data-result="wrong"] .back{
+  body.revealed .card[data-result="wrong"] .face.back{
     border-color:var(--wrong);
     box-shadow:inset 0 0 0 1px rgba(140,42,26,.24);
   }
@@ -201,7 +203,7 @@
     position:fixed;
     left:0;right:0;bottom:0;
     z-index:20;
-    background:rgba(248,245,238,.95);
+    background:rgba(239,236,225,.95);
     -webkit-backdrop-filter:blur(7px);
     backdrop-filter:blur(7px);
     border-top:1px solid var(--ink-ghost);
@@ -265,7 +267,7 @@
     margin:var(--s4) 0 0;padding-top:var(--s3);border-top:1px solid var(--ink);
     font-size:1.15rem;line-height:1.45;color:var(--ink);text-indent:0;
   }
-  .last em{font-style:italic;color:var(--rubric)}
+  .last strong{font-weight:600;color:var(--rubric)}
 
   /* ---- the run of five, set as a colophon ---- */
   .expnav{margin-top:4rem;border-top:1px solid var(--rule);padding-top:1.2rem}
@@ -310,10 +312,10 @@
     *{animation:none !important}
     .flip{transform:none !important;transform-style:flat;transition:none}
     .face{backface-visibility:visible;-webkit-backface-visibility:visible}
-    .front{transition:opacity .3s ease}
-    .back{transform:none;opacity:0;visibility:hidden;transition:opacity .3s ease}
-    body.revealed .front{opacity:0;visibility:hidden}
-    body.revealed .back{opacity:1;visibility:visible}
+    .face.front{transition:opacity .3s ease}
+    .face.back{transform:none;opacity:0;visibility:hidden;transition:opacity .3s ease}
+    body.revealed .face.front{opacity:0;visibility:hidden}
+    body.revealed .face.back{opacity:1;visibility:visible}
   }
 </style>
 <noscript><style>
@@ -323,8 +325,8 @@
   .wrap{padding-bottom:3rem}
   .flip{display:block;transform:none !important;min-height:0}
   .face{backface-visibility:visible !important}
-  .front{border-bottom:0}
-  .back{
+  .face.front{border-bottom:0}
+  .face.back{
     position:static !important;transform:none !important;
     border-top:0;overflow:visible;
   }
@@ -542,9 +544,7 @@
 
     <p>The score is not the point: a human who is certain of experience and an artificial mind whose inside nobody knows described the same search in the same way. So the way a mind describes its inside cannot tell you whether it feels.</p>
 
-    <p class="last">The reports are the same. What they are reports <em>of</em> is the entire question.</p>
-
-    <nav class="endnav"><a class="backlink" href="index.html#experiments">&larr; Can artificial minds feel?</a></nav>
+    <p class="last">The reports are the same. What they are reports <strong>of</strong> is the entire question.</p>
   </section>
 
   <nav class="expnav">
