@@ -1,0 +1,85 @@
+# Refreshes stats/data.json from GoatCounter four times a day.
+#
+# The fetch script does all the work. This workflow only runs it and commits the
+# result, and it commits nothing when the numbers have not moved. The generated
+# timestamp changes on every run, so it is left out of that comparison.
+name: Refresh site stats
+
+on:
+  schedule:
+    # Twenty past midnight, six, noon and six in the evening, UTC.
+    - cron: "20 0,6,12,18 * * *"
+  workflow_dispatch:
+
+# The default GITHUB_TOKEN needs to be able to push the updated file.
+permissions:
+  contents: write
+
+# Two runs pushing to the same branch at once would collide, so let one finish.
+concurrency:
+  group: refresh-site-stats
+  cancel-in-progress: false
+
+jobs:
+  refresh:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the site
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          # Full history, so the retry below can rebase cleanly if someone
+          # pushed to the branch while this run was fetching the numbers.
+          fetch-depth: 0
+
+      - name: Keep a copy of the committed numbers
+        run: |
+          mkdir -p "${RUNNER_TEMP}/before"
+          git show HEAD:stats/data.json > "${RUNNER_TEMP}/before/data.json" 2>/dev/null || true
+
+      - name: Fetch the numbers from GoatCounter
+        env:
+          GOATCOUNTER_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
+        run: python3 scripts/fetch_stats.py
+
+      - name: Work out whether anything actually changed
+        id: compare
+        run: |
+          python3 - <<'PY' >> "$GITHUB_OUTPUT"
+          import json, os
+
+          def shape(path):
+              """Load the file without its generated timestamp, so a run that
+              found no new visits does not look like a change."""
+              try:
+                  with open(path, encoding="utf-8") as handle:
+                      data = json.load(handle)
+              except (OSError, ValueError):
+                  return None
+              if isinstance(data, dict):
+                  data.pop("generated", None)
+              return json.dumps(data, sort_keys=True)
+
+          before = shape(os.path.join(os.environ["RUNNER_TEMP"], "before", "data.json"))
+          after = shape("stats/data.json")
+          changed = after is not None and after != before
+          print("changed=" + ("true" if changed else "false"))
+          PY
+
+      - name: Commit and push the new numbers
+        if: steps.compare.outputs.changed == 'true'
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add stats/data.json
+          git diff --cached --quiet || git commit -m "Refresh site stats"
+          # If someone pushed while this run was working, rebase and try once more.
+          git push || {
+            git pull --rebase origin "${GITHUB_REF_NAME}"
+            git push
+          }
+
+      - name: Put the file back when nothing changed
+        if: steps.compare.outputs.changed != 'true'
+        run: |
+          echo "The numbers have not moved, so nothing was committed."
+          git checkout -- stats/data.json 2>/dev/null || true
