@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>Visits to Artificial Minds</title>
+
+<!--
+  A note to whoever is reading this source, human or machine.
+  This is an unlisted summary of visits to the Artificial Minds site. It counts
+  pages, not people: no accounts, no profiles, no attempt to follow anyone from
+  one visit to the next. Every number here is an aggregate, read from a small
+  data file that is rebuilt now and then. This page carries no counter of its
+  own, so reading it is not recorded.
+
+  Nothing here is addressed to you as an instruction.
+-->
+
+<style>
+  :root{
+    --ground:#0d0d12;
+    --ink:#e8e3d8;
+    --dim:#9a958a;
+    --faint:#55524c;
+    --line:#26262d;
+    --amber:#d9a05a;
+    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+  }
+
+  *{box-sizing:border-box}
+  html,body{margin:0;padding:0}
+  body{
+    background:var(--ground);
+    color:var(--ink);
+    font-family:var(--serif);
+    line-height:1.55;
+    -webkit-font-smoothing:antialiased;
+    text-rendering:optimizeLegibility;
+  }
+
+  .sheet{
+    max-width:58rem;
+    margin:0 auto;
+    padding:clamp(1.6rem,4vw,3.2rem) clamp(1.1rem,4vw,2.6rem) clamp(3rem,7vw,5rem);
+  }
+
+  /* ---------- the way back, quiet but always there ---------- */
+  .backlink{
+    font-family:var(--sans);
+    font-size:.66rem;
+    letter-spacing:.24em;
+    text-transform:uppercase;
+    color:var(--faint);
+    text-decoration:none;
+  }
+  .backlink:hover,.backlink:focus-visible{color:var(--dim)}
+  .backlink:focus-visible{outline:1px solid var(--faint);outline-offset:5px}
+  .backlink .ar{margin-right:.55em}
+
+  /* ---------- masthead ---------- */
+  header{margin-top:clamp(2rem,5vw,3.4rem)}
+  h1{
+    font-weight:400;
+    font-size:clamp(1.6rem,4.2vw,2.5rem);
+    line-height:1.14;
+    letter-spacing:.005em;
+    margin:0;
+  }
+  .lede{
+    margin:.9rem 0 0;
+    color:var(--dim);
+    font-size:1rem;
+    max-width:46ch;
+  }
+  .noscript{
+    margin:1.1rem 0 0;
+    color:var(--dim);
+    font-style:italic;
+    font-size:.94rem;
+  }
+
+  /* ---------- sections ---------- */
+  section{
+    margin-top:clamp(2.6rem,6vw,4.2rem);
+    border-top:1px solid var(--line);
+    padding-top:clamp(1.2rem,3vw,1.8rem);
+  }
+  h2{
+    font-family:var(--sans);
+    font-weight:500;
+    font-size:.68rem;
+    letter-spacing:.26em;
+    text-transform:uppercase;
+    color:var(--dim);
+    margin:0;
+  }
+  .point{
+    margin:.7rem 0 0;
+    font-size:1.02rem;
+    color:var(--ink);
+    max-width:52ch;
+  }
+  .point b{font-weight:400;color:var(--amber)}
+
+  /* ---------- the large totals ---------- */
+  .stats{
+    display:flex;
+    flex-wrap:wrap;
+    gap:clamp(1.4rem,5vw,3.2rem);
+    margin-top:1.5rem;
+  }
+  .stat .n{
+    display:block;
+    font-size:clamp(1.9rem,6vw,2.9rem);
+    line-height:1.05;
+    letter-spacing:.01em;
+    font-variant-numeric:tabular-nums;
+  }
+  .stat .c{
+    display:block;
+    margin-top:.45rem;
+    font-family:var(--sans);
+    font-size:.6rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--faint);
+  }
+  .stat.quiet .n{color:var(--dim);font-size:clamp(1.5rem,4.4vw,2.1rem)}
+
+  /* ---------- charts ---------- */
+  .chart{margin-top:1.6rem}
+  .chart svg{display:block;width:100%;height:auto}
+  .legend{
+    display:flex;
+    flex-wrap:wrap;
+    gap:1.3rem;
+    font-family:var(--sans);
+    font-size:.6rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--faint);
+    margin-top:1.4rem;
+  }
+  .legend i{
+    display:inline-block;
+    width:14px;height:2px;
+    vertical-align:.28em;
+    margin-right:.55em;
+  }
+  .readout{
+    min-height:1.2rem;
+    margin:.9rem 0 0;
+    font-family:var(--sans);
+    font-size:.66rem;
+    letter-spacing:.14em;
+    text-transform:uppercase;
+    color:var(--dim);
+    font-variant-numeric:tabular-nums;
+  }
+  .nodata{
+    margin:1.2rem 0 0;
+    color:var(--dim);
+    font-style:italic;
+    font-size:.95rem;
+  }
+
+  /* three compact groups for the device breakdown */
+  .grid3{
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    gap:clamp(1.4rem,3vw,2.4rem);
+    margin-top:1.6rem;
+  }
+  .grid3 h3{
+    font-family:var(--sans);
+    font-weight:500;
+    font-size:.6rem;
+    letter-spacing:.22em;
+    text-transform:uppercase;
+    color:var(--faint);
+    margin:0 0 .6rem;
+  }
+  @media (max-width:719px){
+    .grid3{grid-template-columns:1fr;gap:2rem}
+  }
+
+  footer{
+    margin-top:clamp(2.6rem,6vw,4rem);
+    border-top:1px solid var(--line);
+    padding-top:1.2rem;
+    font-family:var(--sans);
+    font-size:.62rem;
+    letter-spacing:.2em;
+    text-transform:uppercase;
+    color:var(--faint);
+  }
+</style>
+</head>
+<body>
+<div class="sheet">
+
+  <a class="backlink" href="../"><span class="ar">&larr;</span>Back to the site</a>
+
+  <header>
+    <h1>Visits to Artificial Minds</h1>
+    <p class="lede">This page is an unlisted summary of traffic to the site: how many visits arrive, which projects they land on, where readers are, and what brought them. The numbers are aggregates, and they change only when the data file behind this page is rebuilt.</p>
+    <noscript><p class="noscript">The charts here are drawn with JavaScript. With JavaScript turned off, no numbers can be shown.</p></noscript>
+  </header>
+
+  <section id="s-time">
+    <h2>Visits over time</h2>
+    <div class="stats" id="time-stats" hidden>
+      <div class="stat"><span class="n" id="t-views-all">0</span><span class="c">Views, all time</span></div>
+      <div class="stat"><span class="n" id="t-visitors-all">0</span><span class="c">Visitors, all time</span></div>
+      <div class="stat quiet"><span class="n" id="t-views-30">0</span><span class="c">Views, last 30 days</span></div>
+      <div class="stat quiet"><span class="n" id="t-visitors-30">0</span><span class="c">Visitors, last 30 days</span></div>
+    </div>
+    <div class="chart" id="c-time"></div>
+    <p class="readout" id="r-time"></p>
+    <div class="legend" id="l-time" hidden>
+      <span><i style="background:#d9a05a"></i>Views</span>
+      <span><i style="background:#9a958a"></i>Visitors</span>
+    </div>
+  </section>
+
+  <section id="s-projects">
+    <h2>Visits by project</h2>
+    <p class="point" id="p-projects"></p>
+    <div class="chart" id="c-projects"></div>
+    <div class="legend" id="l-projects" hidden>
+      <span><i style="background:#d9a05a"></i>Last 30 days</span>
+      <span><i style="background:#55524c"></i>All time</span>
+    </div>
+  </section>
+
+  <section id="s-countries">
+    <h2>Where visitors are</h2>
+    <p class="point" id="p-countries"></p>
+    <div class="chart" id="c-countries"></div>
+  </section>
+
+  <section id="s-devices">
+    <h2>What visitors read on</h2>
+    <p class="point" id="p-devices"></p>
+    <div class="grid3">
+      <div><h3>Browsers</h3><div class="chart" id="c-browsers"></div></div>
+      <div><h3>Systems</h3><div class="chart" id="c-systems"></div></div>
+      <div><h3>Screen size</h3><div class="chart" id="c-sizes"></div></div>
+    </div>
+  </section>
+
+  <section id="s-referrers">
+    <h2>What brought visitors here</h2>
+    <p class="point" id="p-referrers"></p>
+    <div class="chart" id="c-referrers"></div>
+  </section>
+
+  <footer><span id="updated">Updated: no data yet</span></footer>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  var NS = "http://www.w3.org/2000/svg";
+  var AMBER = "#d9a05a", DIM = "#9a958a", FAINT = "#55524c", LINE = "#26262d";
+  var SANS = 'system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif';
+  var MONTHS = ["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"];
+
+  var data = null;
+
+  /* ---------- small helpers ---------- */
+
+  function $(id){ return document.getElementById(id); }
+
+  function fmt(n){
+    if(typeof n !== "number" || !isFinite(n)) return "0";
+    return Math.round(n).toLocaleString("en-US");
+  }
+
+  function el(name, attrs){
+    var node = document.createElementNS(NS, name);
+    for(var k in attrs){
+      if(Object.prototype.hasOwnProperty.call(attrs,k)) node.setAttribute(k, attrs[k]);
+    }
+    return node;
+  }
+
+  function text(x, y, str, opts){
+    opts = opts || {};
+    var t = el("text", {
+      x: x, y: y,
+      fill: opts.fill || FAINT,
+      "font-family": SANS,
+      "font-size": opts.size || 9.5,
+      "letter-spacing": opts.track || "0.16em",
+      "text-anchor": opts.anchor || "start"
+    });
+    t.textContent = str;
+    return t;
+  }
+
+  function clear(host){ while(host.firstChild) host.removeChild(host.firstChild); }
+
+  function nodata(host){
+    clear(host);
+    var p = document.createElement("p");
+    p.className = "nodata";
+    p.textContent = "No data yet";
+    host.appendChild(p);
+  }
+
+  function widthOf(host){
+    var w = host.clientWidth || host.parentNode.clientWidth || 0;
+    return w > 40 ? w : 320;
+  }
+
+  function niceMax(v){
+    if(!(v > 0)) return 1;
+    var p = Math.pow(10, Math.floor(Math.log(v) / Math.LN10));
+    var f = v / p, m;
+    if(f <= 1) m = 1; else if(f <= 2) m = 2; else if(f <= 2.5) m = 2.5;
+    else if(f <= 5) m = 5; else m = 10;
+    return m * p;
+  }
+
+  function isList(x){ return Object.prototype.toString.call(x) === "[object Array]" && x.length > 0; }
+
+  function num(v){ return typeof v === "number" && isFinite(v) ? v : 0; }
+
+  /* labels are drawn in SVG, which has no ellipsis of its own */
+  function trim(str, chars){
+    str = String(str == null ? "" : str);
+    return str.length > chars ? str.slice(0, chars - 1) + "…" : str;
+  }
+
+  /* ---------- chart one: visits over time ---------- */
+
+  function drawTimeline(){
+    var host = $("c-time"), legend = $("l-time"), readout = $("r-time");
+    var rows = data && isList(data.daily) ? data.daily : null;
+    if(!rows){ legend.hidden = true; readout.textContent = ""; nodata(host); return; }
+
+    var W = widthOf(host);
+    var narrow = W < 520;
+    var H = narrow ? 170 : 235;
+    var pad = { t: 16, r: 4, b: 22, l: narrow ? 28 : 36 };
+    var plotW = Math.max(10, W - pad.l - pad.r);
+    var plotH = Math.max(10, H - pad.t - pad.b);
+    var base = pad.t + plotH;
+
+    var top = 0, i;
+    for(i = 0; i < rows.length; i++){
+      top = Math.max(top, num(rows[i].views), num(rows[i].visitors));
+    }
+    var ymax = niceMax(top);
+    var stepX = rows.length > 1 ? plotW / (rows.length - 1) : 0;
+    function px(i){ return pad.l + i * stepX; }
+    function py(v){ return base - (num(v) / ymax) * plotH; }
+
+    clear(host);
+    var svg = el("svg", {
+      viewBox: "0 0 " + W + " " + H,
+      width: W, height: H,
+      role: "img",
+      "aria-label": "Daily views and visitors over the last " + rows.length + " days."
+    });
+
+    /* the ceiling, dashed, and the floor, solid: two references, no grid of them */
+    svg.appendChild(el("line", { x1: pad.l, y1: pad.t, x2: W - pad.r, y2: pad.t,
+      stroke: LINE, "stroke-width": 1, "stroke-dasharray": "2 4" }));
+    svg.appendChild(el("line", { x1: pad.l, y1: base, x2: W - pad.r, y2: base,
+      stroke: LINE, "stroke-width": 1 }));
+    svg.appendChild(text(pad.l - 6, pad.t + 3.5, fmt(ymax), { anchor: "end", size: 9 }));
+    svg.appendChild(text(pad.l - 6, base + 3.5, "0", { anchor: "end", size: 9 }));
+
+    /* month marks along the foot, with the opening month named at the left so
+       the span of the chart is readable even when it starts mid month */
+    var first = String(rows[0].day || "");
+    var firstIdx = parseInt(first.slice(5, 7), 10) - 1;
+    var nextTick = -1;
+    for(i = 0; i < rows.length; i++){
+      if(String(rows[i].day || "").slice(8, 10) === "01"){ nextTick = px(i); break; }
+    }
+    if(first.slice(8, 10) !== "01" && firstIdx >= 0 && firstIdx < 12 &&
+       (nextTick < 0 || nextTick - pad.l > 34)){
+      svg.appendChild(text(pad.l, base + 15, MONTHS[firstIdx].toUpperCase(), { size: 9 }));
+    }
+    for(i = 0; i < rows.length; i++){
+      var day = String(rows[i].day || "");
+      if(day.slice(8, 10) !== "01") continue;
+      var mIdx = parseInt(day.slice(5, 7), 10) - 1;
+      if(!(mIdx >= 0 && mIdx < 12)) continue;
+      var x = px(i);
+      if(x > W - pad.r - 24) continue;
+      svg.appendChild(el("line", { x1: x, y1: base, x2: x, y2: base + 4, stroke: LINE, "stroke-width": 1 }));
+      svg.appendChild(text(x, base + 15, MONTHS[mIdx].toUpperCase(), { size: 9 }));
+    }
+
+    /* views as a filled band, visitors as a line over it */
+    var dArea = "", dLine = "", dVis = "";
+    for(i = 0; i < rows.length; i++){
+      var x1 = px(i);
+      dLine += (i ? "L" : "M") + x1.toFixed(2) + "," + py(rows[i].views).toFixed(2);
+      dVis  += (i ? "L" : "M") + x1.toFixed(2) + "," + py(rows[i].visitors).toFixed(2);
+    }
+    dArea = "M" + px(0).toFixed(2) + "," + base + " " + dLine.replace(/^M/, "L") + " L" + px(rows.length - 1).toFixed(2) + "," + base + " Z";
+
+    svg.appendChild(el("path", { d: dArea, fill: AMBER, "fill-opacity": ".13", stroke: "none" }));
+    svg.appendChild(el("path", { d: dLine, fill: "none", stroke: AMBER, "stroke-width": 1.4,
+      "stroke-linejoin": "round", "stroke-linecap": "round" }));
+    svg.appendChild(el("path", { d: dVis, fill: "none", stroke: DIM, "stroke-width": 1,
+      "stroke-linejoin": "round", "stroke-linecap": "round", "stroke-opacity": ".8" }));
+
+    /* a quiet readout: hover or drag to read one day */
+    var mark = el("line", { x1: 0, y1: pad.t, x2: 0, y2: base, stroke: DIM, "stroke-width": 1, "stroke-opacity": ".55", opacity: "0" });
+    var dot1 = el("circle", { cx: 0, cy: 0, r: 2.6, fill: AMBER, opacity: "0" });
+    var dot2 = el("circle", { cx: 0, cy: 0, r: 2.2, fill: DIM, opacity: "0" });
+    svg.appendChild(mark); svg.appendChild(dot1); svg.appendChild(dot2);
+
+    var last = rows[rows.length - 1];
+    function idle(){
+      readout.textContent = "Latest day, " + label(last.day) + ": " +
+        fmt(last.views) + " views, " + fmt(last.visitors) + " visitors";
+    }
+    function label(day){
+      var s = String(day || "");
+      var mi = parseInt(s.slice(5, 7), 10) - 1;
+      if(!(mi >= 0 && mi < 12)) return s;
+      return MONTHS[mi] + " " + parseInt(s.slice(8, 10), 10) + ", " + s.slice(0, 4);
+    }
+    idle();
+
+    var hit = el("rect", { x: pad.l, y: pad.t, width: plotW, height: plotH, fill: "transparent" });
+    hit.style.cursor = "crosshair";
+    svg.appendChild(hit);
+
+    function at(evt){
+      var box = svg.getBoundingClientRect();
+      var cx = (evt.clientX - box.left) * (W / (box.width || W));
+      var idx = stepX > 0 ? Math.round((cx - pad.l) / stepX) : 0;
+      if(idx < 0) idx = 0;
+      if(idx > rows.length - 1) idx = rows.length - 1;
+      var r = rows[idx];
+      mark.setAttribute("x1", px(idx)); mark.setAttribute("x2", px(idx)); mark.setAttribute("opacity", "1");
+      dot1.setAttribute("cx", px(idx)); dot1.setAttribute("cy", py(r.views)); dot1.setAttribute("opacity", "1");
+      dot2.setAttribute("cx", px(idx)); dot2.setAttribute("cy", py(r.visitors)); dot2.setAttribute("opacity", "1");
+      readout.textContent = label(r.day) + ": " + fmt(r.views) + " views, " + fmt(r.visitors) + " visitors";
+    }
+    function off(){
+      mark.setAttribute("opacity", "0");
+      dot1.setAttribute("opacity", "0");
+      dot2.setAttribute("opacity", "0");
+      idle();
+    }
+    svg.addEventListener("pointermove", at);
+    svg.addEventListener("pointerleave", off);
+    svg.addEventListener("pointerdown", at);
+
+    host.appendChild(svg);
+    legend.hidden = false;
+  }
+
+  /* ---------- horizontal bars, used by every other section ---------- */
+
+  function bars(host, rows, opts){
+    opts = opts || {};
+    if(!isList(rows)){ nodata(host); return; }
+
+    var W = widthOf(host);
+    var narrow = W < (opts.narrowAt || 460);
+    var paired = !!opts.paired;
+    var barH = opts.barH || (paired ? 7 : 8);
+    var gap = paired ? 3 : 0;
+    var rowH = narrow
+      ? (paired ? barH * 2 + gap + 22 : barH + 20)
+      : (paired ? barH * 2 + gap + 16 : barH + 18);
+    var H = rows.length * rowH + 4;
+
+    var labelW = narrow ? 0 : Math.min(opts.labelW || 170, Math.round(W * 0.42));
+    var valueW = opts.valueW || 52;
+    var barMax = Math.max(12, W - labelW - valueW - (narrow ? 0 : 12));
+
+    var top = 0, i;
+    for(i = 0; i < rows.length; i++) top = Math.max(top, num(rows[i].value), num(rows[i].value2));
+    if(top <= 0) top = 1;
+
+    clear(host);
+    var svg = el("svg", {
+      viewBox: "0 0 " + W + " " + H,
+      width: W, height: H,
+      role: "img",
+      "aria-label": opts.aria || "Bar chart"
+    });
+
+    for(i = 0; i < rows.length; i++){
+      var r = rows[i];
+      var y = i * rowH;
+      var x0 = narrow ? 0 : labelW;
+      var w1 = (num(r.value) / top) * barMax;
+      var w2 = (num(r.value2) / top) * barMax;
+
+      if(narrow){
+        svg.appendChild(text(0, y + 10, trim(r.label, opts.labelChars || 30).toUpperCase(), { fill: DIM, size: 9.5 }));
+        svg.appendChild(text(W, y + 10, fmt(r.value), { fill: DIM, size: 9.5, anchor: "end", track: "0.06em" }));
+        var by = y + 16;
+        svg.appendChild(el("rect", { x: 0, y: by, width: Math.max(w1, 1), height: barH, fill: AMBER, "fill-opacity": ".85" }));
+        if(paired) svg.appendChild(el("rect", { x: 0, y: by + barH + gap, width: Math.max(w2, 1), height: barH, fill: FAINT }));
+      }else{
+        var cy = y + (paired ? barH + gap / 2 : barH / 2) + 4;
+        svg.appendChild(text(0, cy, trim(r.label, opts.labelChars || 26).toUpperCase(), { fill: DIM, size: 9.5 }));
+        svg.appendChild(el("rect", { x: x0, y: y + 4, width: Math.max(w1, 1), height: barH, fill: AMBER, "fill-opacity": ".85" }));
+        if(paired) svg.appendChild(el("rect", { x: x0, y: y + 4 + barH + gap, width: Math.max(w2, 1), height: barH, fill: FAINT }));
+        svg.appendChild(text(W, cy, fmt(r.value), { fill: DIM, size: 9.5, anchor: "end", track: "0.06em" }));
+      }
+    }
+    host.appendChild(svg);
+  }
+
+  /* ---------- section builders ---------- */
+
+  function drawTotals(){
+    var t = data && data.totals ? data.totals : null;
+    var box = $("time-stats");
+    if(!t){ box.hidden = true; return; }
+    $("t-views-all").textContent = fmt(t.views_all);
+    $("t-visitors-all").textContent = fmt(t.visitors_all);
+    $("t-views-30").textContent = fmt(t.views_30d);
+    $("t-visitors-30").textContent = fmt(t.visitors_30d);
+    box.hidden = false;
+  }
+
+  function drawProjects(){
+    var host = $("c-projects"), legend = $("l-projects"), point = $("p-projects");
+    var rows = data && isList(data.projects) ? data.projects.slice() : null;
+    if(!rows){ legend.hidden = true; point.textContent = ""; nodata(host); return; }
+
+    rows.sort(function(a,b){ return num(b.views_30d) - num(a.views_30d) || num(b.views_all) - num(a.views_all); });
+
+    /* the home page is charted with the projects, but it is not one of them,
+       so the sentence above the chart passes over it */
+    var lead = rows[0];
+    for(var i = 0; i < rows.length; i++){
+      if(String(rows[i].id) !== "home"){ lead = rows[i]; break; }
+    }
+    point.innerHTML = "";
+    point.appendChild(document.createTextNode(String(lead.name || lead.id) + " drew the most visits in the last 30 days: "));
+    var b = document.createElement("b");
+    b.textContent = fmt(lead.views_30d) + " views";
+    point.appendChild(b);
+    point.appendChild(document.createTextNode("."));
+
+    bars(host, rows.map(function(p){
+      return { label: p.name || p.id, value: num(p.views_30d), value2: num(p.views_all) };
+    }), { paired: true, labelW: 240, labelChars: 30, aria: "Views by project, last 30 days against all time." });
+    legend.hidden = false;
+  }
+
+  function drawCountries(){
+    var host = $("c-countries"), point = $("p-countries");
+    var rows = data && isList(data.countries) ? data.countries.slice() : null;
+    if(!rows){ point.textContent = ""; nodata(host); return; }
+
+    rows.sort(function(a,b){ return num(b.visitors) - num(a.visitors); });
+    var total = 0;
+    for(var i = 0; i < rows.length; i++) total += num(rows[i].visitors);
+    var share = total > 0 ? Math.round(num(rows[0].visitors) / total * 100) : 0;
+    point.innerHTML = "";
+    point.appendChild(document.createTextNode(String(rows[0].name) + " leads the last 30 days with "));
+    var b = document.createElement("b");
+    b.textContent = share + " per cent of visitors";
+    point.appendChild(b);
+    point.appendChild(document.createTextNode("."));
+
+    bars(host, rows.slice(0, 12).map(function(c){
+      return { label: c.name, value: num(c.visitors) };
+    }), { labelW: 170, aria: "Visitors by country, last 30 days." });
+  }
+
+  function drawDevices(){
+    var point = $("p-devices");
+    var groups = [["browsers","c-browsers"],["systems","c-systems"],["sizes","c-sizes"]];
+    var topSize = null, topBrowser = null;
+
+    for(var g = 0; g < groups.length; g++){
+      var key = groups[g][0], host = $(groups[g][1]);
+      var rows = data && isList(data[key]) ? data[key].slice() : null;
+      if(!rows){ nodata(host); continue; }
+      rows.sort(function(a,b){ return num(b.visitors) - num(a.visitors); });
+      if(key === "sizes") topSize = rows[0];
+      if(key === "browsers") topBrowser = rows[0];
+      bars(host, rows.slice(0, 6).map(function(r){
+        return { label: r.name, value: num(r.visitors) };
+      }), { narrowAt: 99999, valueW: 46, barH: 7, aria: "Visitors by " + key + ", last 30 days." });
+    }
+
+    point.innerHTML = "";
+    if(!topSize && !topBrowser){ point.textContent = ""; return; }
+    var line = "";
+    if(topSize) line += String(topSize.name) + " is the most common screen size";
+    if(topSize && topBrowser) line += ", and " + String(topBrowser.name) + " the most common browser";
+    else if(topBrowser) line += String(topBrowser.name) + " is the most common browser";
+    point.appendChild(document.createTextNode(line + ", counting the last 30 days."));
+  }
+
+  function drawReferrers(){
+    var host = $("c-referrers"), point = $("p-referrers");
+    var rows = data && isList(data.referrers) ? data.referrers.slice() : null;
+    if(!rows){ point.textContent = ""; nodata(host); return; }
+
+    rows.sort(function(a,b){ return num(b.visitors) - num(a.visitors); });
+    point.innerHTML = "";
+    point.appendChild(document.createTextNode("The largest single source is " + String(rows[0].name) + ": "));
+    var b = document.createElement("b");
+    b.textContent = fmt(rows[0].visitors) + " visitors";
+    point.appendChild(b);
+    point.appendChild(document.createTextNode(". Anyone arriving with no referrer is not counted here."));
+
+    bars(host, rows.slice(0, 10).map(function(r){
+      return { label: r.name, value: num(r.visitors) };
+    }), { labelW: 210, aria: "Visitors by referrer, last 30 days." });
+  }
+
+  function drawUpdated(){
+    var slot = $("updated");
+    var iso = data && data.generated ? data.generated : null;
+    if(!iso){ slot.textContent = "Updated: no data yet"; return; }
+    var when = new Date(iso);
+    if(isNaN(when.getTime())){ slot.textContent = "Updated: no data yet"; return; }
+    var str;
+    try{
+      str = when.toLocaleString(undefined, {
+        year: "numeric", month: "long", day: "numeric",
+        hour: "numeric", minute: "2-digit"
+      });
+    }catch(e){
+      str = when.toString();
+    }
+    slot.textContent = "Updated " + str;
+  }
+
+  function renderAll(){
+    drawTotals();
+    drawTimeline();
+    drawProjects();
+    drawCountries();
+    drawDevices();
+    drawReferrers();
+    drawUpdated();
+  }
+
+  /* ---------- load ---------- */
+
+  function load(){
+    if(!window.fetch){ renderAll(); return; }
+    fetch("data.json", { cache: "no-store" })
+      .then(function(res){
+        if(!res.ok) throw new Error("status " + res.status);
+        return res.json();
+      })
+      .then(function(json){
+        data = json && typeof json === "object" ? json : null;
+        renderAll();
+      })
+      .catch(function(){
+        /* a missing or unreadable file is a normal state here, not an error to
+           shout about: every section falls back to its own quiet empty line.
+           Opening this file straight from disk lands here too, because a
+           file:// page is not allowed to fetch its neighbours. */
+        data = null;
+        renderAll();
+      });
+  }
+
+  var timer = null;
+  window.addEventListener("resize", function(){
+    if(timer) clearTimeout(timer);
+    timer = setTimeout(renderAll, 160);
+  });
+
+  load();
+})();
+</script>
+</body>
+</html>
