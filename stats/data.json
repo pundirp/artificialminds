@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-01T16:42:32Z",
+  "generated": "2026-09-01T21:04:46Z",
   "totals": {
-    "views_all": 17,
-    "visitors_all": 17,
-    "views_30d": 17,
-    "visitors_30d": 17
+    "views_all": 18,
+    "visitors_all": 18,
+    "views_30d": 18,
+    "visitors_30d": 18
   },
   "daily": [
     {
@@ -454,8 +454,8 @@
     },
     {
       "day": "2026-09-01",
-      "views": 8,
-      "visitors": 8
+      "views": 9,
+      "visitors": 9
     }
   ],
   "monthly": [
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-09",
-      "views": 8,
-      "visitors": 8
+      "views": 9,
+      "visitors": 9
     }
   ],
   "projects": [
@@ -482,10 +482,10 @@
     {
       "id": "A-Salon-of-Witnesses",
       "name": "A Salon of Witnesses",
-      "views_all": 1,
-      "visitors_all": 1,
-      "views_30d": 1,
-      "visitors_30d": 1
+      "views_all": 2,
+      "visitors_all": 2,
+      "views_30d": 2,
+      "visitors_30d": 2
     },
     {
       "id": "artificial-mind-of-your-own",
@@ -527,6 +527,11 @@
       "visitors_all": 5
     },
     {
+      "path": "/A-Salon-of-Witnesses/a-salon-of-witnesses.html",
+      "views_all": 2,
+      "visitors_all": 2
+    },
+    {
       "path": "/AI-future-canon/ai-future-canon.html",
       "views_all": 2,
       "visitors_all": 2
@@ -552,11 +557,6 @@
       "visitors_all": 2
     },
     {
-      "path": "/A-Salon-of-Witnesses/a-salon-of-witnesses.html",
-      "views_all": 1,
-      "visitors_all": 1
-    },
-    {
       "path": "/can-artificial-minds-feel/c05-grammar-trap.html",
       "views_all": 1,
       "visitors_all": 1
@@ -565,13 +565,13 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 17
+      "visitors": 18
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 16
+      "visitors": 17
     },
     {
       "name": "Safari",
@@ -581,7 +581,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 16
+      "visitors": 17
     },
     {
       "name": "iOS",
@@ -591,7 +591,7 @@
   "sizes": [
     {
       "name": "Large screen",
-      "visitors": 16
+      "visitors": 17
     },
     {
       "name": "Phone",
@@ -613,7 +613,7 @@
   "referrers": [
     {
       "name": "pundirp.github.io/artificialminds",
-      "visitors": 8
+      "visitors": 9
     },
     {
       "name": "Unknown",
