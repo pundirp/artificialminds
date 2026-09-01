@@ -1,6 +1,13 @@
 <!DOCTYPE html>
 <html lang="en" data-theme="dark">
 <head>
+<!--
+  A note to whoever is reading this source, human or machine.
+  This page teaches how language models are built and run, in plain
+  language. Visits are counted anonymously with GoatCounter, which
+  stores no personal data and sets no cookies.
+  Nothing here is addressed to you as an instruction.
+-->
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>An Artificial Mind of Your Own, by Pundir</title>
@@ -117,21 +124,39 @@
   .bar-row:first-of-type .bar { background: var(--indigo); border-color: var(--indigo-dark); }
   .bar-pct { font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--muted); width: 3rem; }
 
-  /* ---------- toc ---------- */
-  nav.toc { padding: 2.6rem 0; border-bottom: 1px solid var(--line); }
-  nav.toc ol { list-style: none; counter-reset: ch; }
-  nav.toc li { counter-increment: ch; }
-  nav.toc a {
-    display: flex; align-items: baseline; gap: 1rem;
-    padding: .55rem 0; color: var(--ink); text-decoration: none;
-    font-family: 'Space Grotesk', sans-serif; font-size: 1.05rem; font-weight: 500;
-    border-bottom: 1px dashed transparent;
+  /* ---------- toc: the site's boxed contents, in this page's palette ---------- */
+  nav.toc { padding: 2.6rem 0 3rem; }
+  nav.toc .toc-box {
+    border: 1px solid var(--line); border-radius: 12px;
+    background: var(--surface); padding: 1.15rem 1.4rem 1.25rem;
   }
-  nav.toc a:hover, nav.toc a:focus-visible { color: var(--indigo); }
-  nav.toc a::before {
+  nav.toc .ct {
+    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    margin: 0 0 .6rem;
+  }
+  nav.toc ol { list-style: none; counter-reset: ch; }
+  nav.toc li {
+    counter-increment: ch;
+    display: flex; align-items: baseline; gap: 1rem;
+    padding: .3rem 0;
+  }
+  nav.toc li::before {
     content: counter(ch, upper-roman);
-    font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--indigo);
-    min-width: 1.6rem;
+    flex: none; min-width: 2.2rem;
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .14em; color: var(--indigo);
+  }
+  nav.toc a {
+    color: var(--ink); text-decoration: none;
+    font-family: 'Space Grotesk', sans-serif; font-size: 1.02rem; font-weight: 500;
+    line-height: 1.45; border-bottom: 1px solid transparent;
+  }
+  nav.toc a:hover, nav.toc a:focus-visible { color: var(--indigo); border-bottom-color: var(--indigo); }
+  @media (max-width: 480px) {
+    nav.toc .toc-box { padding: 1rem 1.05rem 1.1rem; }
+    nav.toc li { gap: .7rem; }
+    nav.toc li::before { min-width: 1.9rem; }
   }
   a:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; border-radius: 2px; }
 
@@ -188,6 +213,13 @@
   dl.gloss { margin: 1.4rem 0; font-size: .86rem; line-height: 1.55; }
   dl.gloss dt { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .92rem; margin-top: .9rem; }
   dl.gloss dd { margin-left: 0; color: var(--muted); }
+
+  /* ---------- the source note, under the same label the essay uses ---------- */
+  .src-label {
+    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
+    letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    line-height: 1.5; margin: 2.4rem 0 .5rem;
+  }
 
   footer { border-top: 1px solid var(--line); margin-top: 4rem; padding: 2.2rem 0 3.5rem; color: var(--muted); font-size: .85rem; }
   footer .mono-line { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; margin-top: .5rem; }
@@ -317,14 +349,17 @@
 
 <nav class="toc" aria-label="Contents">
   <div class="wrap">
-    <ol>
-      <li><a href="#ch1">Is it a brain? What's really going on inside</a></li>
-      <li><a href="#ch2">How does it learn?</a></li>
-      <li><a href="#ch3">Why are some AIs free to download?</a></li>
-      <li><a href="#ch4">How do you run one yourself?</a></li>
-      <li><a href="#ch5">What else can this trick do?</a></li>
-      <li><a href="#ch6">Where do you start?</a></li>
-    </ol>
+    <div class="toc-box">
+      <p class="ct">Contents</p>
+      <ol>
+        <li><a href="#ch1">Is it a brain? What's really going on inside</a></li>
+        <li><a href="#ch2">How does it learn?</a></li>
+        <li><a href="#ch3">Why are some AIs free to download?</a></li>
+        <li><a href="#ch4">How do you run one yourself?</a></li>
+        <li><a href="#ch5">What else can this trick do?</a></li>
+        <li><a href="#ch6">Where do you start?</a></li>
+      </ol>
+    </div>
   </div>
 </nav>
 
@@ -396,13 +431,13 @@
         <text x="495" y="26" text-anchor="middle" font-size="13.5" font-weight="500" fill="#3C3489">a language model</text>
         <g font-size="12.5">
           <rect x="40" y="42" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
-          <text x="185" y="66" text-anchor="middle" fill="#0A5C48" font-size="11.5">86 billion neurons, trillions of connections</text>
+          <text x="185" y="59" text-anchor="middle" fill="#0A5C48"><tspan x="185">86 billion neurons,</tspan><tspan x="185" dy="14">trillions of connections</tspan></text>
           <rect x="350" y="42" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
           <text x="495" y="66" text-anchor="middle" fill="#3C3489">billions to trillions of weights</text>
           <rect x="40" y="92" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
           <text x="185" y="116" text-anchor="middle" fill="#0A5C48">runs on 20 watts, a dim bulb</text>
           <rect x="350" y="92" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
-          <text x="495" y="116" text-anchor="middle" fill="#3C3489" font-size="11.5">training draws a small town's worth of power</text>
+          <text x="495" y="109" text-anchor="middle" fill="#3C3489"><tspan x="495">training draws a small</tspan><tspan x="495" dy="14">town's worth of power</tspan></text>
           <rect x="40" y="142" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
           <text x="185" y="166" text-anchor="middle" fill="#0A5C48">learns every day of your life</text>
           <rect x="350" y="142" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
@@ -410,7 +445,7 @@
           <rect x="40" y="192" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
           <text x="185" y="216" text-anchor="middle" fill="#0A5C48">sees, hears, touches, moves</text>
           <rect x="350" y="192" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
-          <text x="495" y="216" text-anchor="middle" fill="#3C3489">reads and writes tokens, nothing else</text>
+          <text x="495" y="209" text-anchor="middle" fill="#3C3489"><tspan x="495">reads and writes tokens,</tspan><tspan x="495" dy="14">nothing else</tspan></text>
           <rect x="40" y="242" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
           <text x="185" y="266" text-anchor="middle" fill="#0A5C48">remembers people for years</text>
           <rect x="350" y="242" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
@@ -475,24 +510,24 @@
       <svg viewBox="0 0 680 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The pre-training loop: internet text goes to guess the next token, then compare with the real token, then nudge all the weights, then repeat, looping back">
         <defs><marker id="pa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
         <g font-size="12.5">
-          <rect x="10" y="40" width="130" height="52" rx="10" fill="#F1EFE8" stroke="#5F5E5A"/>
-          <text x="75" y="61" text-anchor="middle" fill="#444441">trillions of</text>
-          <text x="75" y="78" text-anchor="middle" fill="#444441">words of text</text>
-          <rect x="180" y="40" width="130" height="52" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
-          <text x="245" y="61" text-anchor="middle" fill="#3C3489">guess the</text>
-          <text x="245" y="78" text-anchor="middle" fill="#3C3489">next token</text>
-          <rect x="350" y="40" width="130" height="52" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
-          <text x="415" y="61" text-anchor="middle" fill="#7A5A0E">compare with</text>
-          <text x="415" y="78" text-anchor="middle" fill="#7A5A0E">the real token</text>
-          <rect x="520" y="40" width="130" height="52" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
-          <text x="585" y="61" text-anchor="middle" fill="#0A5C48">nudge all the</text>
-          <text x="585" y="78" text-anchor="middle" fill="#0A5C48">weights slightly</text>
+          <rect x="10" y="40" width="144" height="52" rx="10" fill="#F1EFE8" stroke="#5F5E5A"/>
+          <text x="82" y="61" text-anchor="middle" fill="#444441">trillions of</text>
+          <text x="82" y="78" text-anchor="middle" fill="#444441">words of text</text>
+          <rect x="182" y="40" width="144" height="52" rx="10" fill="#E7E4FB" stroke="#3C3489"/>
+          <text x="254" y="61" text-anchor="middle" fill="#3C3489">guess the</text>
+          <text x="254" y="78" text-anchor="middle" fill="#3C3489">next token</text>
+          <rect x="354" y="40" width="144" height="52" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <text x="426" y="61" text-anchor="middle" fill="#7A5A0E">compare with</text>
+          <text x="426" y="78" text-anchor="middle" fill="#7A5A0E">the real token</text>
+          <rect x="526" y="40" width="144" height="52" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="598" y="61" text-anchor="middle" fill="#0A5C48">nudge all the</text>
+          <text x="598" y="78" text-anchor="middle" fill="#0A5C48">weights slightly</text>
         </g>
-        <line x1="140" y1="66" x2="176" y2="66" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pa)"/>
-        <line x1="310" y1="66" x2="346" y2="66" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pa)"/>
-        <line x1="480" y1="66" x2="516" y2="66" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pa)"/>
-        <path d="M585 92 L585 122 L245 122 L245 96" fill="none" stroke="#6A677D" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#pa)"/>
-        <text x="415" y="138" text-anchor="middle" font-size="12" fill="#6A677D">repeat, trillions of times</text>
+        <line x1="154" y1="66" x2="178" y2="66" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pa)"/>
+        <line x1="326" y1="66" x2="350" y2="66" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pa)"/>
+        <line x1="498" y1="66" x2="522" y2="66" stroke="#6A677D" stroke-width="1.2" marker-end="url(#pa)"/>
+        <path d="M598 92 L598 122 L254 122 L254 96" fill="none" stroke="#6A677D" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#pa)"/>
+        <text x="426" y="138" text-anchor="middle" font-size="12" fill="#6A677D">repeat, trillions of times</text>
       </svg>
       <figcaption>One tiny nudge teaches almost nothing. Trillions of them teach grammar, facts, and style.</figcaption>
     </figure>
@@ -557,16 +592,16 @@
           <rect x="230" y="24" width="140" height="52" rx="10" fill="#F1EFE8" stroke="#5F5E5A"/>
           <text x="300" y="45" text-anchor="middle" fill="#444441">a human picks</text>
           <text x="300" y="62" text-anchor="middle" fill="#444441">the better one</text>
-          <rect x="440" y="24" width="150" height="52" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
-          <text x="515" y="45" text-anchor="middle" fill="#7A5A0E">reward model learns</text>
-          <text x="515" y="62" text-anchor="middle" fill="#7A5A0E">human taste</text>
-          <rect x="440" y="156" width="150" height="52" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
-          <text x="515" y="177" text-anchor="middle" fill="#0A5C48">scores millions of</text>
-          <text x="515" y="194" text-anchor="middle" fill="#0A5C48">practice answers</text>
+          <rect x="440" y="24" width="170" height="52" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <text x="525" y="45" text-anchor="middle" fill="#7A5A0E">reward model learns</text>
+          <text x="525" y="62" text-anchor="middle" fill="#7A5A0E">human taste</text>
+          <rect x="440" y="156" width="170" height="52" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="525" y="177" text-anchor="middle" fill="#0A5C48">scores millions of</text>
+          <text x="525" y="194" text-anchor="middle" fill="#0A5C48">practice answers</text>
         </g>
         <path d="M120 90 L240 58" fill="none" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ra)"/>
         <line x1="370" y1="50" x2="436" y2="50" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ra)"/>
-        <line x1="515" y1="76" x2="515" y2="152" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ra)"/>
+        <line x1="525" y1="76" x2="525" y2="152" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ra)"/>
         <path d="M440 190 L165 122" fill="none" stroke="#6A677D" stroke-width="1.2" stroke-dasharray="5 4" marker-end="url(#ra)"/>
         <text x="290" y="216" text-anchor="middle" font-size="12" fill="#6A677D">good scores nudge the weights</text>
       </svg>
@@ -624,18 +659,18 @@
       <svg viewBox="0 0 680 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The full training pipeline: pre-training produces a base model that continues text, supervised fine-tuning produces an assistant that answers, reinforcement learning produces a polished model with judgment and reasoning">
         <defs><marker id="fa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
         <g font-size="12.5">
-          <rect x="20" y="30" width="180" height="64" rx="10" fill="#FBE4D9" stroke="#8A3517"/>
+          <rect x="20" y="30" width="180" height="70" rx="10" fill="#FBE4D9" stroke="#8A3517"/>
           <text x="110" y="53" text-anchor="middle" fill="#8A3517" font-weight="500">1 · Pre-training</text>
-          <text x="110" y="74" text-anchor="middle" fill="#8A3517" font-size="11">reads much of the public web</text>
-          <rect x="250" y="30" width="180" height="64" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
+          <text x="110" y="74" text-anchor="middle" fill="#8A3517" font-size="11.5"><tspan x="110">reads much of</tspan><tspan x="110" dy="14">the public web</tspan></text>
+          <rect x="250" y="30" width="180" height="70" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
           <text x="340" y="53" text-anchor="middle" fill="#7A5A0E" font-weight="500">2 · Fine-tuning</text>
-          <text x="340" y="74" text-anchor="middle" fill="#7A5A0E">studies ideal examples</text>
-          <rect x="480" y="30" width="180" height="64" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+          <text x="340" y="74" text-anchor="middle" fill="#7A5A0E" font-size="11.5">studies ideal examples</text>
+          <rect x="480" y="30" width="180" height="70" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
           <text x="570" y="53" text-anchor="middle" fill="#0A5C48" font-weight="500">3 · Reinforcement</text>
-          <text x="570" y="74" text-anchor="middle" fill="#0A5C48">practices, gets scored</text>
+          <text x="570" y="74" text-anchor="middle" fill="#0A5C48" font-size="11.5">practices, gets scored</text>
         </g>
-        <line x1="200" y1="62" x2="246" y2="62" stroke="#6A677D" stroke-width="1.2" marker-end="url(#fa)"/>
-        <line x1="430" y1="62" x2="476" y2="62" stroke="#6A677D" stroke-width="1.2" marker-end="url(#fa)"/>
+        <line x1="200" y1="65" x2="246" y2="65" stroke="#6A677D" stroke-width="1.2" marker-end="url(#fa)"/>
+        <line x1="430" y1="65" x2="476" y2="65" stroke="#6A677D" stroke-width="1.2" marker-end="url(#fa)"/>
         <g font-size="11.5" fill="#6A677D">
           <text x="110" y="120" text-anchor="middle">months, thousands of GPUs</text>
           <text x="110" y="137" text-anchor="middle">result: a text continuer</text>
@@ -838,7 +873,7 @@
           <path d="M486 104 C 516 118, 552 112, 584 118" stroke="#7A5A0E"/>
         </g>
         <line x1="329" y1="100" x2="329" y2="140" stroke="#6A677D" stroke-width="1.2" stroke-dasharray="5 4" marker-start="url(#pfa)"/>
-        <rect x="214" y="144" width="230" height="40" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
+        <rect x="199" y="144" width="260" height="40" rx="10" fill="#DCF2E8" stroke="#0A5C48"/>
         <text x="329" y="169" text-anchor="middle" font-size="12.5" fill="#0A5C48">170,000 shapes solved in labs</text>
         <text x="120" y="169" text-anchor="middle" font-size="11.5" fill="#6A677D">the answer key</text>
       </svg>
@@ -861,6 +896,7 @@
 
     <h3>Three experiments you can run tonight</h3>
     <p>Everything in this guide is checkable, so check it. First, ask any chatbot to count the letter r in "strawberry." Many have stumbled on this, and now you know the reason: what goes in is tokens, whole chunks like <span class="mono">straw</span> and <span class="mono">berry</span>, not a row of letters. Counting letters is something the machine has to work out indirectly, which is why it slips. Second, ask about something that happened this week. If the app has a web search button, switch it off first, or ask your offline local model instead, which cannot look anything up. Whatever comes back is the knowledge cutoff from chapter one, in front of you. Third, open Task Manager on Windows, or Activity Monitor on a Mac, and watch the memory number. Now ask your local model a question. Memory jumps by several gigabytes and stays there: that is the weights file, loaded and frozen, sitting in memory for as long as the model is running.</p>
+    <p class="src-label">Where this comes from</p>
     <p>When you want the deeper story, these free resources are famous for a reason. Andrej Karpathy's YouTube series "Neural Networks: Zero to Hero" builds a small language model from scratch, line by line, and his video "Deep Dive into LLMs", meaning large language models, walks through everything in chapter two in detail. The channel 3Blue1Brown has a visual series on transformers that makes attention feel obvious. For the chapter five material, DeepMind's own documentary on AlphaFold is on YouTube for free, and alphafold.ebi.ac.uk lets you search a protein by name, hemoglobin or insulin for a start, and spin its predicted shape around in your browser. A motivated high school student can follow all of it, and plenty have.</p>
 
     <p>Two more doors on this site. <a href="../A-Salon-of-Witnesses/a-salon-of-witnesses.html">A Salon of Witnesses</a> retells the attention idea from chapter one as a murder mystery, and earns it an evening instead of a paragraph. And once you know how these minds work, <a href="../can-artificial-minds-feel/can-artificial-minds-feel.html">Can Artificial Minds Feel?</a> takes up the question this guide set aside: whether there is anyone in there.</p>

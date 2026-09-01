@@ -71,6 +71,10 @@
     letter-spacing:.22em;
     text-transform:uppercase;
   }
+  /* one quiet way to reach the author */
+  .signature-link{ margin:.7rem 0 0; }
+  .signature-link a{ color:var(--faint); display:inline-block; line-height:0; transition:color .3s; }
+  .signature-link a:hover{ color:var(--dim); }
   /* the title field keeps still while the index scrolls past it. With four
      entries in the margin a centred field would sink below the fold; sticky
      holds the h1 in view and lets the margin do the travelling. */
@@ -159,12 +163,49 @@
     will-change:transform,opacity;
   }
 
-  /* ---- the open face (project 02): one photograph, stilled into the
-     page's own monochrome warmth, the manor's treatment applied ---- */
-  .feelface{display:block;width:100%;aspect-ratio:3/2;overflow:hidden;background:var(--ground)}
+  /* ---- the open face (project 02): one photograph in the page's own
+     monochrome warmth, the manor's treatment applied. It is no longer quite
+     still. Two very slow things happen to it, on counts that share no common
+     measure, so the pair never repeats inside a visit: the frame closes on the
+     face by six percent and opens again, and the warm light in the top corner
+     swells and drifts. Both are meant to be felt rather than seen. ---- */
+  .feelface{position:relative;display:block;width:100%;aspect-ratio:3/2;overflow:hidden;background:var(--ground)}
   .feelface img{
     width:100%;height:100%;object-fit:cover;display:block;
     filter:grayscale(1) sepia(.26) contrast(1.12) brightness(.82);
+    /* the origin sits just off the brow, so the scale is a slow push in on the
+       face rather than a swell out of the middle of the frame. One uniform
+       scale, no skew: the face keeps its proportions exactly. */
+    transform-origin:62% 38%;
+    will-change:transform;
+    animation:feeldrift 64s ease-in-out infinite alternate;
+  }
+  @keyframes feeldrift{
+    from{transform:scale(1)}
+    to{transform:scale(1.06)}
+  }
+  /* the light, kept in the top right corner where the photograph's own light
+     source already is, and stopped short of the porcelain: the gradient has
+     gone to nothing well before the brow, at both ends of the drift, so the
+     face is never lit by anything the photograph did not light itself.
+     The overlay's opacity is set only inside the keyframes. A browser with no
+     CSS animation leaves it at zero, which is the photograph exactly as it
+     was, and so does the reduced-motion rule further down. */
+  .feelface::after{
+    content:"";
+    position:absolute;
+    inset:0;
+    pointer-events:none;
+    opacity:0;
+    background:radial-gradient(46% 52% at 88% 12%,
+      rgba(217,160,90,.16) 0%,
+      rgba(217,160,90,.07) 42%,
+      rgba(217,160,90,0) 72%);
+    animation:feelglow 47s ease-in-out infinite alternate;
+  }
+  @keyframes feelglow{
+    from{opacity:.5;transform:translate(0,0)}
+    to{opacity:1;transform:translate(2.5%,4%)}
   }
 
   /* ---- the manor, stilled and made monochrome (project 03, variant B) ---- */
@@ -178,8 +219,9 @@
   }
   .manor svg{display:block;width:100%;height:100%}
   /* the study lamp breathes: a small, contained pool that goes out altogether
-     at the trough and comes back blazing at the pane. Ten seconds, dark to full. */
-  .manor .lamp{animation:lampbreath 10s ease-in-out infinite}
+     at the trough and comes back blazing at the pane. Under seven seconds,
+     dark to full. */
+  .manor .lamp{animation:lampbreath 6.667s ease-in-out infinite}
   @keyframes lampbreath{
     0%,100%{opacity:1}
     45%,55%{opacity:0}
@@ -211,12 +253,12 @@
   .halves svg,.shelf svg{display:block;width:100%;height:auto}
 
   /* the lamp carried past the bookcase: each shelf's pool swells and subsides
-     in turn over half a minute, the next one already rising as the last one
+     in turn over eighteen seconds, the next one already rising as the last one
      falls, so the light drifts rather than jumps. The shelves it has left
      behind go back nearly all the way down, and the one it rests on blazes. */
-  .shelf .glow{opacity:.09;animation:shelfwake 27s ease-in-out infinite;animation-delay:-4.32s}
-  .shelf .g2{animation-delay:-22.32s}
-  .shelf .g3{animation-delay:-13.32s}
+  .shelf .glow{opacity:.09;animation:shelfwake 18s ease-in-out infinite;animation-delay:-2.88s}
+  .shelf .g2{animation-delay:-14.88s}
+  .shelf .g3{animation-delay:-8.88s}
   @keyframes shelfwake{
     0%{opacity:.09}
     16%{opacity:1}
@@ -225,10 +267,10 @@
     100%{opacity:.09}
   }
   /* and the dark itself, drawn back off a shelf exactly as its pool rises and
-     laid over it again as the pool goes down: the same 27 seconds, run backwards */
-  .shelf .veil{opacity:.58;animation:veilwake 27s ease-in-out infinite;animation-delay:-4.32s}
-  .shelf .v2{animation-delay:-22.32s}
-  .shelf .v3{animation-delay:-13.32s}
+     laid over it again as the pool goes down: the same eighteen seconds, run backwards */
+  .shelf .veil{opacity:.58;animation:veilwake 18s ease-in-out infinite;animation-delay:-2.88s}
+  .shelf .v2{animation-delay:-14.88s}
+  .shelf .v3{animation-delay:-8.88s}
   @keyframes veilwake{
     0%{opacity:.58}
     16%{opacity:.04}
@@ -337,6 +379,11 @@
 
   @media (prefers-reduced-motion:reduce){
     .mosaic img{will-change:auto}
+    /* the photograph is handed back exactly as it was: the frame stops where
+       it started and the added light goes out, leaving only what the
+       photograph brought with it */
+    .feelface img{animation:none;transform:none;will-change:auto}
+    .feelface::after{animation:none;opacity:0}
     .manor .lamp{animation:none}
     /* the lamp is set down on the middle shelf and left there; the lattice is
        caught mid-thought, three edges lit and the rest waiting their turn. */
@@ -365,6 +412,11 @@
       </p>
       
       <p class="signature">Pundir</p>
+      <p class="signature-link">
+        <a href="https://www.linkedin.com/in/pundir-ny/" aria-label="Pundir on LinkedIn">
+          <svg viewBox="0 0 16 16" width="13" height="13" aria-hidden="true" fill="currentColor"><path d="M2 0h12a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2Zm1.4 5.9h2.3v7.1H3.4V5.9Zm1.15-3.2a1.33 1.33 0 1 1 0 2.66 1.33 1.33 0 0 1 0-2.66ZM7.1 5.9h2.2v1c.3-.58 1.07-1.18 2.2-1.18 1.8 0 3.1 1.17 3.1 3.34V13h-2.3V9.4c0-1.08-.46-1.7-1.36-1.7-.83 0-1.54.58-1.54 1.76V13H7.1V5.9Z"/></svg>
+        </a>
+      </p>
     </main>
 
     <div class="rule" aria-hidden="true"></div>

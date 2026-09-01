@@ -131,34 +131,33 @@
     background:var(--rubric);margin-bottom:var(--s2);
   }
 
-  /* ---- contents, one click to any section ---- */
+  /* ---- contents, one click to any section. Set in a box, the way the essay
+     sets its contents, so the two read as one piece of furniture ---- */
   .contents{
-    border-top:1px solid var(--rule);
-    border-bottom:1px solid var(--rule);
-    padding:.85rem 0 .9rem;
+    border:1px solid var(--rule);
+    padding:1rem 1.2rem;
     margin:0 0 var(--s5);
   }
   .contents .ct{
-    font-size:.62rem;
-    letter-spacing:.16em;
-    text-transform:uppercase;
-    color:var(--ink-faint);
+    font-variant:small-caps;
+    letter-spacing:.08em;
+    color:var(--ink-soft);
     margin:0 0 .5rem;
   }
   .contents ol{list-style:none;margin:0;padding:0}
   .contents li{
     display:flex;
-    gap:.85rem;
+    gap:.7rem;
     align-items:baseline;
-    padding:.14rem 0;
+    padding:.18rem 0;
     font-size:.92rem;
     line-height:1.45;
   }
   .contents .n{
     flex:none;
     min-width:2.2rem;
-    font-size:.6rem;
-    letter-spacing:.16em;
+    font-size:.68rem;
+    letter-spacing:.14em;
     text-transform:uppercase;
     color:var(--rubric);
   }
@@ -430,7 +429,7 @@
 </header>
 
 <nav class="contents" aria-label="Contents">
-  <p class="ct">What is on this page</p>
+  <p class="ct">Contents</p>
   <ol>
     <li><span class="n">I</span><a href="#sec-1">Humans seem continuous, and artificial minds run in flashes</a></li>
     <li><span class="n">II</span><a href="#sec-2">A change in plain sight can go unseen</a></li>

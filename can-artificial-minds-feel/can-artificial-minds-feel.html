@@ -161,6 +161,11 @@
   footer a{color:var(--ink-faint);text-decoration:none;border-bottom:1px solid var(--rule)}
   footer a:hover{color:var(--rubric);border-bottom-color:var(--rubric)}
   footer a:focus-visible,.runhead a:focus-visible{outline:2px solid var(--rubric);outline-offset:2px}
+  /* the source note at the foot, under the same label the experiments use */
+  .colophon .label{
+    display:block;font-style:normal;font-size:.62rem;letter-spacing:.16em;
+    text-transform:uppercase;color:var(--ink-faint);line-height:1.5;margin-bottom:.35rem;
+  }
   @media (max-width:1000px){
     .leaf{grid-template-columns:minmax(0,var(--measure))}
     .col,.full{grid-column:1}
@@ -687,7 +692,7 @@
   <footer class="leaf">
     <div class="col">
       <p><a href="../index.html">&larr; Artificial Minds, the main site</a></p>
-      <p class="colophon" style="font-style:italic;margin-top:.5rem">Every quotation in this essay was checked against a primary text before use.</p>
+      <p class="colophon" style="font-style:italic;margin-top:.9rem"><span class="label">Where this comes from</span>Every quotation in this essay was checked against a primary text before use.</p>
     </div>
   </footer>
 
