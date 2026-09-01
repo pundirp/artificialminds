@@ -240,6 +240,8 @@ th {{ font-size: 10.5px; letter-spacing: .08em; text-transform: uppercase; color
 td:nth-child(2), td:nth-child(7), td:nth-child(8) {{ font-variant-numeric: tabular-nums; }}
 
 footer {{ margin-top: 56px; text-align: center; color: var(--muted); font-size: 12.5px; }}
+footer a {{ color: var(--ink-2); text-decoration: underline; text-underline-offset: 3px; }}
+footer a:hover {{ color: var(--ink); }}
 footer p {{ max-width: 640px; margin: 4px auto; }}
 .card[hidden] {{ display: none; }}
 
@@ -359,6 +361,7 @@ footer p {{ max-width: 640px; margin: 4px auto; }}
 </details>
 
 <footer>
+  <p>My personal reading list lives on <a href="https://www.goodreads.com/pundir">Goodreads</a>. Always glad to hear what you could not put down.</p>
   <p>Review quotes are copied word for word from the named sources. Scores reflect what had actually happened in the world as of July 2026.</p>
 </footer>
 </div>
