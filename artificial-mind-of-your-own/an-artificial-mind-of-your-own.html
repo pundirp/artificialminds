@@ -259,7 +259,7 @@
     <h1>An Artificial Mind of <span class="amp">Your Own</span></h1>
     <p class="subtitle">Is it like your brain? Six plain questions about the machines that talk: how they learn, why some are free to download, and how to run one on your laptop.</p>
 
-    <div class="hero-art" role="img" aria-label="Two half-brain shapes facing each other across a dashed seam: the left is one continuous looping scribble labeled 'a mind', the right is a neat network of colored nodes and weighted links labeled 'an artificial one'">
+    <div class="hero-art" role="img" aria-label="Two half-brain shapes facing each other across a dashed line down the middle. The left one is a single looping scribble, labeled 'a mind'. The right one is a tidy web of colored dots joined by lines, a few of them thicker, labeled 'an artificial one'.">
       <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
         <line x1="340" y1="52" x2="340" y2="268" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="2 6"/>
         <g fill="none" stroke="#211E33" stroke-width="2.2" stroke-linecap="round">
@@ -342,15 +342,15 @@
       <div class="bar-row"><span class="bar-word">moon</span><div class="bar-track"><div class="bar" style="width:1%"></div></div><span class="bar-pct">1%</span></div>
     </div>
 
-    <p>Every bar is the model's confidence in one possible next word. That is a model thinking, the entire act of it. Everything else in this guide is about how those guesses get good, and what happens to them afterward.</p>
+    <p>Every bar shows how likely the model rates one possible next word. Something still has to pick one. The machine usually picks from near the top, with a little randomness thrown in, which is why the same question can get two different answers. That ranking is the whole of what the model computes at each step. Everything else in this guide is about how those guesses get good, and what happens to them afterward.</p>
   </section>
 
   <section class="chapter" id="ch1">
     <p class="ch-eyebrow">Chapter I · Prediction</p>
     <h2><span class="tok t1">Is</span> <span class="tok t2">it</span> <span class="tok t3">a</span> <span class="tok t4">brain?</span></h2>
     <p class="lede">When an AI writes you a poem or explains your homework, it is natural to picture a little electronic brain in there, thinking. So let's answer the question head on. A language model borrows exactly one idea from your brain, and differs from it in almost every other way. This chapter shows you what is actually inside.</p>
-    <p>Start small. Your phone's keyboard already does a tiny version of what ChatGPT does. Type "see you" and it suggests "later." A large language model is that idea scaled up by a factor of billions: instead of guessing from the last two words, it considers everything you wrote, and instead of a small word list, it has read more text than any human ever will.</p>
-    <p>Before a model can read anything, text gets chopped into <strong>tokens</strong>: small chunks that are usually a word, part of a word, or a punctuation mark. Each token has an ID number, because computers work with numbers, and the full list of tokens a model knows is its vocabulary, typically between 50,000 and 250,000 entries.</p>
+    <p>Start small. Your phone's keyboard already does a tiny version of what ChatGPT does. Type "see you" and it suggests "later." A large language model is the same idea, enormously bigger. Your keyboard guesses from the last word or two. A model can look back over everything in front of it, thousands of words at a time, and it has read more text than any human ever will.</p>
+    <p>One correction to the demo above: the machine does not work in whole words. Before a model can read anything, text gets chopped into <strong>tokens</strong>: small chunks that are usually a word, part of a word, or a punctuation mark. Each token has an ID number, because computers work with numbers. The full list of tokens a model knows is called its vocabulary, usually 50,000 to 250,000 of them.</p>
 
     <figure>
       <svg viewBox="0 0 680 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The sentence 'Language models are surprisingly simple' split into colored token chunks, each mapped to an ID number">
@@ -380,27 +380,27 @@
       <figcaption>Notice "surprisingly" became two tokens. Rare words get split; common ones stay whole. The dot marks a leading space.</figcaption>
     </figure>
 
-    <p>The model itself is one enormous math function. Token IDs go in, and out comes a probability for every token in the vocabulary: a full ranking of what might come next. Inside the function sit billions of adjustable numbers called <strong>weights</strong> (also called parameters). Think of them as billions of tiny dials. At the start they are random and the model outputs nonsense. Training is the process of turning those dials until the guesses get good.</p>
-    <p>The architecture, meaning the shape of the function, is called a <strong>transformer</strong>. It was introduced in a 2017 paper titled "Attention Is All You Need," and its central move is called attention: as the model processes each token, it can look back at every earlier token and decide which ones matter right now. Reading "the cat sat on the," attention lets the model weigh "cat" heavily when guessing what comes next. Nearly every model you have heard of, from GPT to Claude to Llama, is a stack of these attention layers, and that shared shape will matter a lot in chapter four.</p>
+    <p>The model itself is one enormous math function. Token IDs go in, and out comes a score for every token in the vocabulary: how likely each one is to come next. Inside the function sit billions of adjustable numbers called <strong>weights</strong> (also called parameters). Think of them as billions of tiny dials. At the start they are random and the model outputs nonsense. Training is the process of turning those dials until the guesses get good.</p>
+    <p>The architecture, meaning the shape of the function, is called a <strong>transformer</strong>. It came from a 2017 paper called "Attention Is All You Need." The idea in the title, attention, works like this: as the model handles each token, it can look back at every earlier token and decide which ones matter right now. In "the cat sat on the," attention lets the model give "cat" extra weight when it guesses the next word. Nearly every model you have heard of, from GPT to Claude to Llama, is a stack of these attention layers, and that shared shape will matter a lot in chapter four.</p>
     <p>To generate a paragraph, the model just repeats the trick. Predict a token, add it to the text, predict the next one, again and again, dozens of times per second. Every essay an AI has ever written was produced one token at a time.</p>
 
     <h3>So where does the brain comparison come in?</h3>
-    <p>Here is the one idea the model genuinely borrows. Your brain is a web of roughly 86 billion neurons, simple cells that each do a small job, connected by trillions of links whose strengths change as you learn. A language model is also a web of simple units connected by adjustable links, which is why the design is called a <strong>neural network</strong> and why the dials are the "strength" of each connection. Learning by adjusting connection strengths: that is the borrowed idea, and it is a great one. It came from researchers who studied brains, and two of them, John Hopfield and Geoffrey Hinton, won the 2024 Nobel Prize in Physics for working it out decades before it paid off.</p>
-    <p>Everything past that one idea splits apart. Put the two side by side and the differences are bigger than the similarity.</p>
+    <p>Here is the one idea the model genuinely borrows. Your brain is a web of roughly 86 billion neurons, each one doing a small job. Trillions of links join them, and the strength of those links changes as you learn. A language model is also a web of simple units joined by adjustable links. That is why the design is called a <strong>neural network</strong>, and why each dial is the strength of one connection. Learning by adjusting connection strengths: that is the borrowed idea, and it is a great one. It came from researchers who studied brains, and two of them, John Hopfield and Geoffrey Hinton, won the 2024 Nobel Prize in Physics for working it out decades before it paid off.</p>
+    <p>Past that one idea, the two stop resembling each other. Put them side by side and the differences are bigger than the similarity.</p>
 
     <figure>
-      <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scoreboard comparing your brain and a language model: 86 billion neurons versus up to two trillion weights; runs on 20 watts versus training drawing a small town's power; learns every day versus frozen after training; sees, hears, and touches versus reading tokens only; remembers people for years versus forgetting every chat">
+      <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Scoreboard comparing your brain and a language model: 86 billion neurons and trillions of connections versus billions to trillions of weights; runs on 20 watts versus training drawing a small town's worth of power; learns every day versus frozen after training; sees, hears, and touches versus reading and writing tokens and nothing else; remembers people for years versus learning nothing from any chat">
         <text x="185" y="26" text-anchor="middle" font-size="13.5" font-weight="500" fill="#0A5C48">your brain</text>
         <text x="495" y="26" text-anchor="middle" font-size="13.5" font-weight="500" fill="#3C3489">a language model</text>
         <g font-size="12.5">
           <rect x="40" y="42" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
-          <text x="185" y="66" text-anchor="middle" fill="#0A5C48">86 billion neurons</text>
+          <text x="185" y="66" text-anchor="middle" fill="#0A5C48" font-size="11.5">86 billion neurons, trillions of connections</text>
           <rect x="350" y="42" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
-          <text x="495" y="66" text-anchor="middle" fill="#3C3489">up to about 2 trillion weights</text>
+          <text x="495" y="66" text-anchor="middle" fill="#3C3489">billions to trillions of weights</text>
           <rect x="40" y="92" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
           <text x="185" y="116" text-anchor="middle" fill="#0A5C48">runs on 20 watts, a dim bulb</text>
           <rect x="350" y="92" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
-          <text x="495" y="116" text-anchor="middle" fill="#3C3489">training draws a town's worth of power</text>
+          <text x="495" y="116" text-anchor="middle" fill="#3C3489" font-size="11.5">training draws a small town's worth of power</text>
           <rect x="40" y="142" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
           <text x="185" y="166" text-anchor="middle" fill="#0A5C48">learns every day of your life</text>
           <rect x="350" y="142" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
@@ -408,18 +408,18 @@
           <rect x="40" y="192" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
           <text x="185" y="216" text-anchor="middle" fill="#0A5C48">sees, hears, touches, moves</text>
           <rect x="350" y="192" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
-          <text x="495" y="216" text-anchor="middle" fill="#3C3489">reads and writes tokens, only</text>
+          <text x="495" y="216" text-anchor="middle" fill="#3C3489">reads and writes tokens, nothing else</text>
           <rect x="40" y="242" width="290" height="40" rx="8" fill="#DCF2E8" stroke="#0A5C48"/>
           <text x="185" y="266" text-anchor="middle" fill="#0A5C48">remembers people for years</text>
           <rect x="350" y="242" width="290" height="40" rx="8" fill="#E7E4FB" stroke="#3C3489"/>
-          <text x="495" y="266" text-anchor="middle" fill="#3C3489">forgets every chat completely</text>
+          <text x="495" y="266" text-anchor="middle" fill="#3C3489">learns nothing from any chat</text>
         </g>
       </svg>
-      <figcaption>One shared idea, adjustable connections, and then the paths split hard.</figcaption>
+      <figcaption>One shared idea, connections that change strength. After that, almost nothing in common. Pictures and sound count as tokens too: they get chopped into chunks the same way. What the machine never gets is a body in the world.</figcaption>
     </figure>
 
     <h3>One big difference from you: the dials freeze</h3>
-    <p>Before we watch a model learn, clear up the most common misunderstanding about AI. Your brain updates itself constantly. You will remember something from today for years, without trying. A language model works on a completely different schedule: there is a <strong>training phase</strong>, when the dials move, and after it ends they are locked. Every conversation the model has afterward runs on the same frozen numbers.</p>
+    <p>Before we watch a model learn, here is the most common misunderstanding about AI. Your brain updates itself constantly. You will remember something from today for years, without trying. A language model works on a completely different schedule: there is a <strong>training phase</strong>, when the dials move, and after it ends they are locked. Every conversation the model has afterward runs on the same frozen numbers.</p>
 
     <figure>
       <svg viewBox="0 0 680 270" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison: a human brain loops between experience and rewiring every day for life, while a language model has a training phase where weights change, then a lock, then years of inference where weights are frozen">
@@ -447,23 +447,27 @@
           <text x="520" y="206" text-anchor="middle" fill="#3C3489" font-size="11.5">the dials are locked</text>
         </g>
         <line x1="330" y1="192" x2="426" y2="192" stroke="#6A677D" stroke-width="1.2" marker-end="url(#ba)"/>
-        <text x="378" y="180" text-anchor="middle" font-size="15">🔒</text>
+        <g aria-hidden="true">
+          <path d="M375 175 v-3.5 a3.5 3.5 0 0 1 7 0 v3.5" fill="none" stroke="#6A677D" stroke-width="1.4" stroke-linecap="round"/>
+          <rect x="371.5" y="174.5" width="14" height="10" rx="2" fill="#6A677D"/>
+        </g>
         <text x="380" y="250" text-anchor="middle" font-size="11.5" fill="#6A677D">a one-way door: after training ends, nothing the model reads changes it</text>
       </svg>
-      <figcaption>You learn in a loop. A model learns once, then gets frozen and shipped.</figcaption>
+      <figcaption>You learn in a loop. A model learns once, then gets frozen and shipped. Inference is the industry word for the second box: using a model, as opposed to training one.</figcaption>
     </figure>
 
-    <p>This one fact explains a lot of everyday AI behavior. Ask a model about last week's news and it may have no idea, because its training ended months earlier. The industry calls that boundary the <strong>knowledge cutoff</strong>: the model knows the world up to the day its training data was collected, and nothing after. It also means that when you chat with an AI, you are using it, never teaching it. Correct its mistake and it will apologize and adjust within that conversation, but the weights do not budge. Start a fresh chat and the same frozen model greets you, with no memory that you ever spoke. Any "learning" between then and now happened back at the lab, in the phase the next chapter is about.</p>
-    <p>So, is it a brain? Verdict: it is a machine built on one great idea from the brain, running on a completely different schedule, with no body, no senses, and no memory of you. Keep both halves of that answer in mind. The borrowed idea explains why it is so capable. The differences explain almost everything odd about it.</p>
+    <p>This one fact explains a lot of everyday AI behavior. Ask a model about last week's news and it may have no idea, because its training ended months earlier. The industry calls that boundary the <strong>knowledge cutoff</strong>: the model knows the world up to the day its training data was collected, and nothing after. When an AI does know last week's news, it looked it up. The app searched the web and pasted the results into the conversation. The dials still know nothing after the cutoff. It also means that nothing you say changes the machine you are talking to. Your chat may still end up in the training data for a future one, but that is a later machine, not this one. Correct its mistake and it will apologize and adjust within that conversation, but the weights do not budge. Start a fresh chat and the same frozen model greets you. If it seems to remember you, the app saved notes and handed them back to it as text. The model itself kept nothing. Any "learning" between then and now happened back at the lab, in the phase the next chapter is about.</p>
+    <p>So, is it a brain? Verdict: it is a machine built on one great idea from the brain, running on a completely different schedule, with no body, no life outside the text it is given, and no memory of its own. Keep both halves of that answer in mind. The borrowed idea explains why it is so capable. The differences explain almost everything odd about it.</p>
   </section>
 
   <section class="chapter" id="ch2">
     <p class="ch-eyebrow">Chapter II · Training</p>
     <h2><span class="tok t2">How</span> <span class="tok t1">does</span> <span class="tok t4">it</span> <span class="tok t3">learn?</span></h2>
-    <p class="lede">Training happens in two big phases. First the model reads a giant chunk of the internet and learns how language works. Then it gets coached, the way an athlete gets coached, into being a useful assistant. The industry calls these pre-training and post-training.</p>
+    <p class="lede">Training happens in two big phases, and the second one splits in two. First the model reads a giant chunk of the internet and picks up how language works, along with most of what the writing was about. Then it gets coached, the way an athlete gets coached, into being a useful assistant. The industry calls the phases pre-training and post-training. Post-training is where the two coaching steps live.</p>
 
     <h3>Phase one: pre-training</h3>
-    <p>Pre-training is a loop, run trillions of times. Show the model a snippet of real text with the ending hidden. Let it guess the next token. Compare the guess to the real answer. Nudge every weight a tiny amount in the direction that would have made the right answer more likely. Repeat with the next snippet.</p>
+    <p>Pre-training is a loop, run trillions of times. Show the model a snippet of real text with the ending hidden. Let it guess the next token. Compare the guess to the real answer. Nudge every weight a tiny amount, so that next time the right answer comes out a little more likely. Repeat with the next snippet.</p>
+    <p>How does it know which way to turn billions of dials? Because the whole thing is arithmetic. The error can be traced back through the math, dial by dial, and each one gets told which way it should have leaned.</p>
 
     <figure>
       <svg viewBox="0 0 680 150" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The pre-training loop: internet text goes to guess the next token, then compare with the real token, then nudge all the weights, then repeat, looping back">
@@ -491,9 +495,9 @@
       <figcaption>One tiny nudge teaches almost nothing. Trillions of them teach grammar, facts, and style.</figcaption>
     </figure>
 
-    <p>The scale is hard to picture. Llama 3 was pre-trained on about 15 trillion tokens, roughly the text of 50 million books. Where does that much text come from? Mostly from crawling the public web, the same way a search engine does, plus books, Wikipedia, scientific papers, and huge amounts of computer code, all filtered to strip out spam, duplicates, and junk. Choosing and cleaning this mountain of data is a serious craft of its own, because the model becomes what it reads.</p>
-    <p>Then comes the hardware. The job runs on thousands of specialized chips called GPUs, each costing about as much as a car. Meta trained its biggest Llama 3 on 16,384 of them at once, running for months and drawing enough electricity to power a town. Sam Altman has said GPT-4 cost more than 100 million dollars to train. This single phase is where most of the money in AI goes, and it is why only a handful of organizations on Earth train frontier models from scratch.</p>
-    <p>Something remarkable happens along the way. To keep getting better at predicting text, the model is forced to absorb the things text is <em>about</em>. Predicting the end of "the capital of France is" requires knowing it is Paris. Predicting the next line of a Python program requires learning Python. Nobody programs these facts in. They get soaked up because knowing them makes the guesses better. Researchers track progress with a single number called the loss, which measures how wrong the guesses are, and they watch it fall.</p>
+    <p>The scale is hard to picture. Llama 3 was pre-trained on about 15 trillion tokens, roughly 11 trillion words, or more than a hundred million books. Where does that much text come from? Mostly from crawling the public web, the same way a search engine does, plus books, Wikipedia, scientific papers, and huge amounts of computer code, all filtered to strip out spam, duplicates, and junk. Choosing and cleaning that mountain of text is a craft of its own, because whatever goes in shapes everything that comes out.</p>
+    <p>Then comes the hardware. The job runs on thousands of specialized chips called GPUs, each costing about as much as a car. Meta trained its biggest Llama 3 on 16,384 of them at once, running for months and drawing enough electricity to power a small town. Sam Altman has said GPT-4 cost more than 100 million dollars to train. Most of what it costs to build one of these gets spent right here, which is why only a handful of organizations on Earth build the biggest ones from scratch.</p>
+    <p>Something remarkable happens along the way. The only way to keep getting better at guessing the next word is to pick up what the words are <em>about</em>. Predicting the end of "the capital of France is" requires knowing it is Paris. Predicting the next line of a Python program requires learning Python. Nobody programs these facts in. They get soaked up because knowing them makes the guesses better. Researchers track progress with one number: how wrong the guesses are, on average. They call it the loss, and they watch it fall.</p>
 
     <figure>
       <svg viewBox="0 0 680 230" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A loss curve falling over training time, annotated: early output is gibberish, then grammar appears, then facts and reasoning, ending with a fluent sentence">
@@ -509,10 +513,10 @@
         <circle cx="560" cy="160" r="4" fill="#0A5C48"/>
         <text x="552" y="146" text-anchor="end" font-size="11.5" fill="#0A5C48">"the cat, now fed, curled up by the fire"</text>
       </svg>
-      <figcaption>The falling line is the entire show. Gibberish becomes grammar, grammar becomes knowledge.</figcaption>
+      <figcaption>That falling line is all pre-training is. Gibberish becomes grammar, grammar becomes knowledge.</figcaption>
     </figure>
 
-    <p>The result is called a <strong>base model</strong>, and here is the catch: it is a text continuer, a supercharged autocomplete. It has read half the internet but it has never had a conversation. Ask it a question and it may respond with three more questions, because on the internet, questions often appear in lists next to other questions. It imitates text. It does not yet help you.</p>
+    <p>The result is called a <strong>base model</strong>, and here is the catch: all it does is keep text going, like a supercharged autocomplete. It has read more text than any human ever will, and it has never once had a conversation. Ask it a question and it may respond with three more questions, because on the internet, questions often appear in lists next to other questions. It imitates text. It does not yet help you.</p>
 
     <h3>Phase two: post-training</h3>
     <p>Post-training turns the continuer into an assistant. Watch one question travel through the stages. The question: <span class="mono">A train leaves at 3:40 pm and the ride takes 85 minutes. When does it arrive?</span></p>
@@ -521,7 +525,7 @@
       <div class="stage">
         <h4>After pre-training</h4>
         <p class="out">"When does it arrive? How long is the ride? Is there a dining car? Practice problems, page 74."</p>
-        <p class="note">It continues the text like a workbook page. Technically language, practically useless.</p>
+        <p class="note">It continues the text like a workbook page. Fluent English, and no use at all.</p>
       </div>
       <div class="stage">
         <h4>After supervised fine-tuning</h4>
@@ -535,11 +539,11 @@
       </div>
     </div>
 
-    <p><strong>Supervised fine-tuning</strong>, or SFT, comes first. People write out thousands of example conversations showing the ideal behavior: a question, then a helpful, honest, well-organized answer. The model trains on these the same way it trained on internet text, and it learns the format of being an assistant. Tone, structure, "here's how I can help." What SFT cannot easily teach is judgment, because you cannot write an example for every situation.</p>
-    <p><strong>Reinforcement learning</strong>, or RL, handles judgment, and it works like practice with a coach instead of studying worked examples. The model produces answers, something scores them, and the weights get nudged toward whatever scored well. The interesting part is who does the scoring, and there are three main answers.</p>
+    <p>First, people show it what a good answer looks like. The industry calls that <strong>supervised fine-tuning</strong>, or SFT. They write out thousands of example conversations showing the ideal behavior: a question, then a helpful, honest, well-organized answer. It trains on these the same way it trained on internet text, and it picks up the shape of an assistant's reply. Tone, structure, "here's how I can help." What SFT cannot easily teach is judgment, because you cannot write an example for every situation.</p>
+    <p>Judgment comes from practice with a coach, not from studying worked examples. The industry calls that <strong>reinforcement learning</strong>, or RL. It writes answers, something scores them, and the weights get nudged to make the high-scoring kind more likely next time. The interesting part is who does the scoring, and there are three answers. They are not rivals. A modern assistant is trained with all three, each on the kind of question it suits.</p>
 
     <h3>Scoring method one: human feedback (RLHF)</h3>
-    <p>The model writes two answers to the same question. A person picks the better one. Do this tens of thousands of times and you can train a second model, called a <strong>reward model</strong>, that learns to predict which answers people prefer. Now the main model can practice against the reward model millions of times, far more than humans could ever judge directly. This technique, published by OpenAI in 2022, is what turned GPT-3 into ChatGPT, and it is a big reason the chatbots you use feel polite and clear.</p>
+    <p>The model writes two answers to the same question. A person picks the better one. Do this tens of thousands of times and you can train a second model, called a <strong>reward model</strong>, that learns to predict which answers people prefer. Now the main model can practice against the reward model millions of times, far more than humans could ever judge directly. OpenAI's 2022 work on this is what turned GPT-3 into ChatGPT, and it is a big reason the chatbots you use feel polite and clear.</p>
 
     <figure>
       <svg viewBox="0 0 680 240" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The RLHF loop: the model writes answers A and B, a human picks the better one, those choices train a reward model, and the reward model scores the main model's practice, updating it">
@@ -568,10 +572,10 @@
     </figure>
 
     <h3>Scoring method two: AI feedback (RLAIF)</h3>
-    <p>Human judging is slow and expensive, so labs found a shortcut: let a capable AI model do the judging, guided by a written list of principles. Anthropic calls its version Constitutional AI, because the judging model literally checks answers against a short constitution, with rules like "choose the response that is more honest" and "avoid helping with anything dangerous." The loop is the same as RLHF with the human swapped out, which means it scales enormously. Most modern assistants are shaped by a blend of human and AI feedback.</p>
+    <p>Human judging is slow and expensive, so labs found a shortcut: let a capable AI model do the judging, guided by a written list of principles. Anthropic calls its version Constitutional AI: the judge checks each answer against that written list, with rules like "choose the response that is more honest" and "avoid helping with anything dangerous." The loop is the same as with human feedback, with the human swapped out, so it can run millions of times for a fraction of the cost. Most modern assistants are shaped by a blend of human and AI feedback.</p>
 
     <h3>Scoring method three: checkable answers (RLVR)</h3>
-    <p>Here is the newest idea, and it is behind the "reasoning" models that appeared around 2024 and 2025. For some questions, taste does not matter because the answer can be <em>checked</em>. A math problem has one correct number. Code either passes its tests or fails. So: give the model a hard problem, let it try many long, step-by-step solutions, automatically check which ones end correct, and reward those. This is called reinforcement learning with verifiable rewards.</p>
+    <p>Here is the newest idea, and it is behind the "reasoning" models that appeared around 2024 and 2025. For some questions, taste does not matter because the answer can be <em>checked</em>. A math problem has one correct number. Code either passes its tests or fails. So: give it a hard problem, let it try many long step-by-step solutions, check automatically which ones reach the right answer, and reward those. This is called reinforcement learning with verifiable rewards. It has one hard limit. It only works where an answer can be checked by machine, which rules out most of what people actually ask: write this email, is this argument fair, explain this to my mother.</p>
 
     <figure>
       <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="RLVR: a math problem leads to many attempted solutions, an automatic checker marks each attempt right or wrong, and correct chains of reasoning get rewarded">
@@ -607,12 +611,12 @@
       <figcaption>No human in the loop at all. The answer key is the coach.</figcaption>
     </figure>
 
-    <p>Something surprising falls out of this. When correct final answers get rewarded, models teach themselves to think longer before answering: to try an approach, notice a mistake, back up, and check their work, because those habits lead to more correct answers. DeepSeek's R1 model, released openly in January 2025, showed the whole world this working, and reasoning models from every major lab now train this way on math and code.</p>
+    <p>Something surprising falls out of this. Nobody tells it to show its working. But when only correct final answers earn a reward, longer working turns out to pay, so more of it appears: try an approach, notice a mistake, back up, check the answer. DeepSeek published R1 openly in January 2025, and everyone could see it work. The major labs now train their reasoning models this way, on math and code.</p>
 
     <h3>Why it still makes things up</h3>
-    <p>Training also explains the most famous AI flaw. Ask a model for a book that does not exist and it may hand you a title, an author, and a publication year, invented on the spot with total confidence. The industry calls this <strong>hallucination</strong>, and now you can see where it comes from: the machine is a next-token guesser at its core, and a smooth, plausible guess scores well even when no true answer exists in its weights. Post-training pushes hard against this. Models practice saying "I'm not sure," and answers get graded on honesty as well as helpfulness. The same phase teaches safety: refusing to help with dangerous requests is a trained behavior, shaped by thousands of graded examples, exactly like everything else in this chapter. The guessing never fully goes away, though, which is why you should treat a model's confident claims the way you treat a smart friend's: usually right, worth checking when it matters.</p>
+    <p>Training also explains the most famous AI flaw. Ask a model for a book that does not exist and it may hand you a title, an author, and a publication year, invented on the spot with total confidence. The industry calls this <strong>hallucination</strong>, and now you can see where it comes from. Underneath, the machine is still guessing the next token. A smooth, plausible guess scores well whether or not there was anything true to say. Post-training pushes hard against this. It is harder than it sounds, because nothing inside marks the difference between a fact it absorbed and a guess it assembled. Both come out the same way, in the same confident voice. Models practice saying "I'm not sure," and answers get graded on honesty as well as helpfulness. The same phase teaches safety: refusing to help with dangerous requests is a trained behavior, shaped by thousands of graded examples, exactly like everything else in this chapter. The guessing never fully goes away, though, which is why you should treat a model's confident claims the way you treat a smart friend's: usually right, worth checking when it matters.</p>
 
-    <p>Put the phases together and you get the full recipe.</p>
+    <p>Put the phases together and the whole recipe fits in one picture: read everything, study good examples, then practice against a scorer.</p>
 
     <figure>
       <svg viewBox="0 0 680 190" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The full training pipeline: pre-training produces a base model that continues text, supervised fine-tuning produces an assistant that answers, reinforcement learning produces a polished model with judgment and reasoning">
@@ -620,7 +624,7 @@
         <g font-size="12.5">
           <rect x="20" y="30" width="180" height="64" rx="10" fill="#FBE4D9" stroke="#8A3517"/>
           <text x="110" y="53" text-anchor="middle" fill="#8A3517" font-weight="500">1 · Pre-training</text>
-          <text x="110" y="74" text-anchor="middle" fill="#8A3517">reads the internet</text>
+          <text x="110" y="74" text-anchor="middle" fill="#8A3517" font-size="11">reads much of the public web</text>
           <rect x="250" y="30" width="180" height="64" rx="10" fill="#F8ECCB" stroke="#7A5A0E"/>
           <text x="340" y="53" text-anchor="middle" fill="#7A5A0E" font-weight="500">2 · Fine-tuning</text>
           <text x="340" y="74" text-anchor="middle" fill="#7A5A0E">studies ideal examples</text>
@@ -635,8 +639,8 @@
           <text x="110" y="137" text-anchor="middle">result: a text continuer</text>
           <text x="340" y="120" text-anchor="middle">days to weeks</text>
           <text x="340" y="137" text-anchor="middle">result: an assistant</text>
-          <text x="570" y="120" text-anchor="middle">weeks, judged by humans,</text>
-          <text x="570" y="137" text-anchor="middle">AI, and answer keys</text>
+          <text x="570" y="120" text-anchor="middle">weeks or longer, judged by</text>
+          <text x="570" y="137" text-anchor="middle">humans, AI, and answer keys</text>
         </g>
         <text x="340" y="175" text-anchor="middle" font-size="12" fill="#4038A8">the finished product: one file of billions of tuned weights</text>
       </svg>
@@ -647,9 +651,9 @@
   <section class="chapter" id="ch3">
     <p class="ch-eyebrow">Chapter III · The release</p>
     <h2><span class="tok t4">Why</span> <span class="tok t1">are</span> <span class="tok t2">some</span> <span class="tok t3">AIs</span> <span class="tok t5">free?</span></h2>
-    <p class="lede">All that training boils down to one thing: the final settings of those billions of dials. A file of numbers. When a lab publishes that file for anyone to download, the model is called <strong>open weights</strong>. Meta's Llama, Mistral's models, DeepSeek, and Alibaba's Qwen all work this way. OpenAI, Anthropic, and Google keep their frontier models' weights private and sell access instead. This chapter is about the open path: how it works, and why a company would give away something that cost a hundred million dollars to make.</p>
-    <p>Here is a puzzle worth sitting with. When Meta releases a new Llama, dozens of companies are running it within hours. None of them trained it. So how can a stranger take a mystery file of numbers and bring it to life? Wouldn't they need to know how it was built and trained?</p>
-    <p>The answer comes in two parts. Part one: a release is a package with everything a stranger needs. Four things ship together.</p>
+    <p class="lede">All that training boils down to one thing: the final settings of those billions of dials. A file of numbers. When a lab publishes that file for anyone to download, the model is called <strong>open weights</strong>. Meta's Llama, Mistral's models, DeepSeek's models, and Alibaba's Qwen all work this way. OpenAI, Anthropic, and Google keep the weights of their best models private and sell access instead. This chapter is about the open path: how it works, and why a company would give away something that cost a hundred million dollars to make.</p>
+    <p>Here is the puzzle. When Meta releases a new Llama, dozens of companies are running it within hours. None of them trained it. So how can a stranger take a mystery file of numbers and bring it to life? Wouldn't they need to know how it was built and trained?</p>
+    <p>The answer comes in two parts. Part one: a release is a package with everything a stranger needs. Four things come in it.</p>
 
     <figure>
       <svg viewBox="0 0 680 130" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The four parts of an open weights release: the weights in safetensors format, the config file, the tokenizer, and reference code">
@@ -672,23 +676,23 @@
       <figcaption>Weights alone would be a locked safe. The other three parts are the combination.</figcaption>
     </figure>
 
-    <p>The <strong>config</strong> is a small file that describes the model's shape: how many layers, how big each one is, which architecture to use. It is the blueprint that tells software how to arrange the numbers. The <strong>tokenizer</strong> is the exact text chopper from chapter one, and it must match perfectly, because a model fed the wrong token IDs outputs garbage. The <strong>reference code</strong> is a working implementation the lab publishes so there is no guesswork about any new component. And the weights themselves come in a standard file format called safetensors that labels every block of numbers by name, shape, and type.</p>
-    <p>Part two of the answer: <strong>the training history does not matter for running the model</strong>. Everything the training accomplished, all those months and millions of dollars, lives inside the final numbers. Think of a chess player who studied for twenty years. To play her, you do not need her study notes. Her skill shows up in her moves. Same here: to run a model you need the weights and the blueprint, and the story of how the weights got their values is already baked in.</p>
+    <p>The <strong>config</strong> is a small file that describes the model's shape: how many layers it has, how big each layer is, and which design it follows. It is the blueprint that tells software how to arrange the numbers. The <strong>tokenizer</strong> is the exact text chopper from chapter one, and it has to match perfectly. Chop the text even slightly differently and the wrong numbers go in, so garbage comes out. The <strong>reference code</strong> is working code the lab publishes, so nobody has to guess how any new part is meant to run. And the weights come in a standard file format called safetensors, which labels each group of numbers so the software knows what it is and where it belongs.</p>
+    <p>Part two of the answer: <strong>the training history does not matter for running the model</strong>. Everything the training accomplished, all those months and millions of dollars, lives inside the final numbers. Think of a chess player who studied for twenty years. To play her, you do not need her study notes. Her skill shows up in her moves. Same here: to run a model you need the weights, the config, and the tokenizer, and the story of how the weights got their values is already inside the numbers.</p>
     <div class="q-box">Quick check: a friend says "you can't run Llama without Meta's training data." What do you tell them? (Answer: the data shaped the weights during training, but running the model only needs the weights, the config, and the tokenizer, all of which are in the release.)</div>
-    <p>One more helpful fact makes the whole system click. Remember from chapter one that nearly every model is a transformer. The differences between a Llama, a Qwen, and a Mistral are small variations on one shared design, like different car models sharing the same kind of engine. So software written to run transformers can run almost any new model just by reading its config, and when a lab does invent a genuinely new part, it publishes the code for that part with the release.</p>
+    <p>One more helpful fact makes the whole system click. Remember from chapter one that nearly every model is a transformer. The differences between a Llama, a Qwen, and a Mistral are small variations on one shared design, like different car models sharing the same kind of engine. So software written to run transformers can run almost any new model, just by reading its config. When a lab does invent a genuinely new part, it publishes the code for that part with the release.</p>
 
     <h3>But why give it away?</h3>
-    <p>Giving away a hundred-million-dollar model sounds like burning money, so it is worth understanding the business logic, because it is real strategy, and it echoes an old story. In the 1990s and 2000s, free software like Linux, built in the open by volunteers and companies together, quietly took over the world's servers; today it runs most of the internet and every Android phone. The AI labs releasing open weights are betting on the same effect.</p>
-    <p>The bet has several parts. A free model gets used by millions of developers, who find its flaws, build tools around it, and make the next version better, a workforce no company could hire. It makes the lab the standard that startups and universities build on, which pays off later in influence and in cloud business. It attracts researchers, who want their work in the world rather than locked in a vault. And some labs simply believe powerful technology gets safer when many eyes can study it rather than a few. Most open releases come with a license letting anyone use them, even to build a business, and the license file ships right in the release package next to the weights.</p>
-    <p>Notice the split runs through the industry on purpose. Meta gives Llama away to make its platforms stronger and starve rivals of an advantage. OpenAI and Anthropic sell access to fund the enormous cost of the next model. Both strategies are working at once, which is exactly why you can download some of the world's best models for free while others live behind a subscription. Either way, a downloaded file of weights just sits there until software brings it to life. That software is the next chapter.</p>
+    <p>Giving away a hundred-million-dollar model sounds like burning money. It is not. It is a strategy, and it has worked before. In the 1990s and 2000s, volunteers and companies together built free software like Linux out in the open. Today it runs most of the internet and every Android phone. The AI labs releasing open weights are betting on the same effect.</p>
+    <p>The bet has four parts. A free model gets used by millions of developers, who find its flaws, build tools around it, and make the next version better. No company could hire a workforce that size. It makes the lab's model the one that startups and universities build on, which pays off later in influence and in paid services. It attracts researchers, who want their work in the world rather than locked in a vault. And some labs simply believe powerful technology gets safer when many people can inspect it, not just a few. Most open releases come with a license letting anyone use them, even to build a business, and that license file sits right next to the weights in the package. Read it: a few licenses put conditions on very large companies.</p>
+    <p>Notice that both sides chose their path on purpose. Meta gives Llama away to make its own products stronger, and to stop a rival from owning the model everyone builds on. OpenAI and Anthropic sell access to fund the enormous cost of the next model. Both strategies are succeeding at the same time, which is why you can download some of the world's best models for free while others sit behind a subscription. Either way, a downloaded file of weights just sits there until software brings it to life. That software is the next chapter.</p>
   </section>
 
   <section class="chapter" id="ch4">
     <p class="ch-eyebrow">Chapter IV · Inference</p>
     <h2><span class="tok t3">How</span> <span class="tok t1">do</span> <span class="tok t2">you</span> <span class="tok t4">run</span> <span class="tok t5">one?</span></h2>
-    <p class="lede">Using a trained model is called <strong>inference</strong>: tokens in, predictions out, no more learning. The weights are frozen. What makes inference interesting is the ecosystem of free software, called inference engines, that anyone can use to run any open model, and the story of who built it.</p>
-    <p>First, feel what inference is. When you press enter on a message, your words get chopped into tokens, the engine pushes those numbers through every layer of the network, and out comes one predicted token. Then it does the whole thing again for the next token, and again, often 50 or more times per second. That is why the reply appears word by word on your screen instead of all at once: you are literally watching each prediction land as it happens.</p>
-    <p>Nobody owns this ecosystem. The pieces came from universities, lone programmers, and chip companies, and all of it is free to use, even commercially. The whole pipeline, from a lab's release to a model running on a laptop, looks like this.</p>
+    <p class="lede">Using a trained model is called <strong>inference</strong>: tokens in, predictions out, no more learning. The weights are frozen. The interesting part is the free software that does the running, called inference engines, and the story of who built it.</p>
+    <p>First, feel what inference is. When you press enter on a message, your words get chopped into tokens, the engine pushes those numbers through every layer of the network, and out comes one predicted token. Then it does the whole thing again for the next token, and again, often 50 or more times per second. That is why the reply appears word by word on your screen instead of all at once: you are watching each prediction arrive.</p>
+    <p>No single company controls this software. The pieces came from universities, lone programmers, and chip companies, and all of it is free to use, even commercially. Running a model on your own computer, instead of sending your words to a company's servers, is called running it locally. The whole pipeline, from a lab's release to a model running on a laptop, looks like this.</p>
 
     <figure>
       <svg viewBox="0 0 680 450" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The open pipeline: open weight labs send day-zero code contributions to the Hugging Face Hub, anyone loads the weights into open inference engines such as vLLM, SGLang, TensorRT-LLM, HF TGI, llama.cpp, Ollama, LM Studio, and MLX, then shrinks and runs models on ordinary computers">
@@ -728,13 +732,13 @@
       <figcaption>Free software, top to bottom. The labs contribute code to the engines before each release so everything works on day one.</figcaption>
     </figure>
 
-    <p>A few of these deserve their origin stories, because they show who actually builds AI infrastructure. <strong>vLLM</strong> came out of a research lab at UC Berkeley and became the standard engine that companies use to serve open models to millions of users. <strong>llama.cpp</strong> began in 2023 when a programmer named Georgi Gerganov decided to make Llama run on his MacBook, alone, as a side project. His code now powers most of the local AI scene, including <strong>Ollama</strong> and <strong>LM Studio</strong>, the friendly apps most people use to run models at home. The <strong>Hugging Face Hub</strong> is the website where nearly every open model gets published, something like GitHub for AI models, and it now hosts more than two million of them, fine-tuned for everything from law to chemistry to Minecraft. One student with a laptop can, today, download the same weights a billion-dollar company serves.</p>
+    <p>Three of these are worth knowing, because they show who actually builds the software behind AI. <strong>vLLM</strong> came out of a research lab at UC Berkeley and became the standard engine that companies use to serve open models to millions of users. <strong>llama.cpp</strong> began in 2023, when a programmer named Georgi Gerganov set out to make Llama run on his MacBook, alone, in his spare time. His code now runs underneath most home AI software, including <strong>Ollama</strong> and <strong>LM Studio</strong>, the friendly apps most people use to run models on their own computers. The <strong>Hugging Face Hub</strong> is the website where nearly every open model gets published, a public library anyone can download from. It now holds more than two million, including versions tuned for everything from law to chemistry to Minecraft. Today one student with a laptop can download the same weights a billion-dollar company runs for its customers.</p>
 
     <h3>The shrink ray: quantization</h3>
-    <p>There is one problem with running a big model at home. Each weight is normally stored as a 16-bit number, so a 70-billion-weight model needs about 140 gigabytes of memory, way beyond any laptop. The fix is <strong>quantization</strong>: store each weight with fewer bits, the way a compressed photo uses less space than the original. Squeeze the weights down to 4 bits each and that model fits in about 35 gigabytes, and smaller models shrink to a few gigabytes, which a regular computer handles fine. You lose a little sharpness, and it is usually a good trade. Anyone can do the squeezing, since the release documents exactly how the original numbers are stored.</p>
+    <p>There is one problem with running a big model at home. Each weight is normally stored as a 16-bit number. A bit is the smallest piece of storage a computer has, and 16 bits is two bytes, so a 70-billion-weight model needs about 140 gigabytes, far beyond a normal laptop. Memory here means the computer's working memory, the space it uses while running, not hard drive space. The whole model has to sit in there at once. The fix is <strong>quantization</strong>: store each weight with fewer bits, the way a compressed photo uses less space than the original. Squeeze each weight down to 4 bits, a quarter of the size, and that model fits in about 35 gigabytes. Smaller models shrink to a few gigabytes, which a normal computer handles fine. The answers get slightly worse. For almost everything people do at home, it is a good trade. Anyone can do the squeezing, since the release documents exactly how the original numbers are stored.</p>
 
     <h3>What about ChatGPT and Claude?</h3>
-    <p>The closed labs run a different road entirely. Their model designs are secret, so public engines could not run them even in principle, and their scale is staggering: ChatGPT alone reported 900 million people using it every week in early 2026. At that size it pays to build custom software tuned to their exact chips. So OpenAI, Anthropic, and Google each build a private serving system in-house, and the only thing that ever leaves the building is the model's answers.</p>
+    <p>The closed labs took a different road entirely. Their designs are secret, so the public engines could not run them even if someone had the weights. The scale is staggering too: OpenAI reported 900 million people using ChatGPT every week in early 2026. At that size it pays to build custom software tuned to their exact chips. So OpenAI, Anthropic, and Google each build their own private software for running their models, and the only things that ever leave the building are the answers. For a user, that is the whole practical difference. An open model you can download, keep, and run with the machine unplugged from the internet. A closed one you can only visit, which means the words you send it leave your computer.</p>
 
     <figure>
       <svg viewBox="0 0 680 310" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Side by side comparison: on the open path, labs publish weights and config to shared engines and the model runs on anyone's hardware; on the closed path, a secret design goes into a private in-house system and users get answers only, through an app or API">
@@ -767,17 +771,17 @@
       <figcaption>Both paths start with the same training recipe from chapter two. They split at the release decision.</figcaption>
     </figure>
 
-    <p>The two worlds trade ideas constantly. Speed tricks invented for the open engines get rebuilt inside the private systems, research from the closed labs shows up in open code, and sometimes a closed lab publishes an open model, which then flows through the exact same Hub-and-engines pipeline as everyone else's. The walls are real, and ideas jump over them all the time.</p>
+    <p>The two worlds trade ideas constantly. Speed tricks invented for the open engines get rebuilt inside the private systems, and research from the closed labs shows up in open code. Sometimes a closed lab publishes an open model, and it then travels the same path as every other one: onto the Hub, then into the engines. The walls are real, and ideas jump over them all the time.</p>
   </section>
 
   <section class="chapter" id="ch5">
     <p class="ch-eyebrow">Chapter V · The bigger picture</p>
     <h2><span class="tok t1">What</span> <span class="tok t3">else</span> <span class="tok t2">can</span> <span class="tok t4">this</span> <span class="tok t5">trick</span> <span class="tok t1">do?</span></h2>
     <p class="lede">Language models are one branch of a much bigger family. Zoom out and you find the same basic recipe, dials plus practice, solving problems that look nothing like writing. The variety comes from one choice: what the model practices on.</p>
-    <p>Start with the names, because they get thrown around loosely. <strong>Artificial intelligence</strong> is the broad goal of getting computers to do things that need intelligence. <strong>Machine learning</strong> is one approach to that goal: instead of a programmer writing the rules by hand, the computer works them out from examples. <strong>Deep learning</strong> is the kind of machine learning that took over the field around 2012, using neural networks with many layers of those adjustable dials. Language models sit in that innermost circle, next to some very different cousins.</p>
+    <p>Start with the names, because they get thrown around loosely. <strong>Artificial intelligence</strong> is the broad goal of getting computers to do things that would count as intelligent if a person did them. <strong>Machine learning</strong> is one approach to that goal: instead of a programmer writing the rules by hand, the computer works them out from examples. <strong>Deep learning</strong> is the kind of machine learning that took over the field around 2012, using neural networks with many layers of those adjustable dials. Language models sit in that innermost box, next to some very different cousins.</p>
 
     <figure>
-      <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nested circles: artificial intelligence contains machine learning, which contains deep learning, which contains language models alongside AlphaFold, chess engines, and image models">
+      <svg viewBox="0 0 680 300" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Nested boxes: artificial intelligence contains machine learning, which contains deep learning, which contains language models alongside AlphaFold, chess engines, and image models">
         <rect x="30" y="20" width="620" height="260" rx="16" fill="none" stroke="#B4B2A9" stroke-width="1.2"/>
         <text x="48" y="44" font-size="13" font-weight="500" fill="#444441">artificial intelligence</text>
         <rect x="58" y="58" width="564" height="204" rx="14" fill="none" stroke="#8A3517" stroke-width="1.2"/>
@@ -803,12 +807,12 @@
     </figure>
 
     <h3>A chess player that taught itself</h3>
-    <p>In 2017, DeepMind built <strong>AlphaZero</strong>. It was told the rules of chess and nothing else: no opening book, no famous games, no advice from grandmasters. It then played against itself, millions of times, starting from random flailing. Win, and the moves that led there got rewarded. Lose, and they got discouraged. That is reinforcement learning, the same idea from chapter two, with the game's result as the answer key.</p>
+    <p>In 2017, DeepMind built <strong>AlphaZero</strong>. It was told the rules of chess and nothing else: no famous games, no memorized openings, no advice from grandmasters. It then played against itself, millions of times, starting from random flailing. Win, and the moves that led there got rewarded. Lose, and they got discouraged. That is reinforcement learning, the same idea from chapter two, with the game's result as the answer key.</p>
     <p>After nine hours of self-play it was beating the strongest existing chess program. And it played strangely, sacrificing pieces in ways human theory called wrong, because it had never read human theory. It had learned chess from scratch, and some of its ideas have since changed how top humans play. Notice what is different from a language model: no internet text, no human examples, no next-token prediction. Just dials, a scoreboard, and enormous practice.</p>
 
     <h3>The one that won a Nobel Prize</h3>
-    <p>Now the big one. Proteins are the machines that run your body, and each starts as a long chain of chemical beads that folds into a specific three-dimensional shape. Shape determines what the protein does, so knowing it matters enormously for understanding disease and designing medicine. The trouble is that the chain can fold in an astronomical number of ways, and for fifty years, working out a single protein's shape meant years of lab work with expensive equipment. Biologists called it the protein folding problem, and it was one of the great unsolved puzzles in science.</p>
-    <p>DeepMind's <strong>AlphaFold</strong> attacked it with deep learning. Feed in the chain of beads, predict the folded shape, compare against the roughly 170,000 structures biologists had painstakingly solved by hand, and nudge the dials. By 2020 it was predicting shapes about as accurately as the lab methods, and the puzzle was largely considered solved. DeepMind then released predicted structures for over 200 million proteins, nearly every one known to science, free for any researcher on Earth. Work that would have taken a lifetime now takes seconds.</p>
+    <p>Now the big one. Proteins are the machines that run your body, and each starts as a long chain of chemical beads that folds into a specific three-dimensional shape. Shape determines what the protein does, so knowing the shape matters enormously for understanding disease and designing medicine. The trouble is that the chain can fold in an astronomical number of ways. For fifty years, working out a single protein's shape meant years of lab work with expensive equipment. Biologists called it the protein folding problem, and it was one of the great unsolved puzzles in science.</p>
+    <p>DeepMind's <strong>AlphaFold</strong> attacked it with deep learning. Feed in the chain of beads, predict the folded shape, compare against the roughly 170,000 structures biologists had already worked out in labs, and nudge the dials. By 2020 it was predicting shapes for most proteins about as accurately as the lab methods, and the puzzle was largely considered solved. DeepMind then released predicted structures for over 200 million proteins, nearly every one known to science, free for any researcher on Earth. Work that would have taken years now takes minutes.</p>
 
     <figure>
       <svg viewBox="0 0 680 200" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="AlphaFold: a chain of amino acid beads goes into the model, which predicts the folded three-dimensional shape, trained by comparing against structures solved in labs">
@@ -841,38 +845,41 @@
 
     <p>In October 2024, Demis Hassabis and John Jumper of DeepMind shared the Nobel Prize in Chemistry for this work, alongside David Baker for protein design. A Nobel in chemistry, awarded partly for a piece of software. Add the physics prize from chapter one, for the neural network idea itself, and 2024 becomes the year the Nobel committees said, twice, that this recipe changed science.</p>
 
-    <div class="q-box">Worth noticing: nothing about AlphaFold predicts words, and nothing about AlphaZero reads text. Yet all three systems in this chapter are built from layers of adjustable numbers, trained by comparing guesses against a target and nudging. Learn the recipe once and you can read the whole field.</div>
+    <div class="q-box">Worth noticing: nothing about AlphaFold predicts words, and nothing about AlphaZero reads text. Yet AlphaFold, AlphaZero, and language models are all built from layers of adjustable numbers, all trained by comparing a guess against a target and nudging the dials. Learn the recipe once and you can read the whole field.</div>
 
-    <p>Other members of the family follow the same pattern with different practice tasks. Image generators learn by taking clean pictures, adding visual static until they are unrecognizable, and practicing the reverse until they can produce a picture from pure noise. Speech recognizers practice on audio paired with transcripts. Weather models like DeepMind's GraphCast practice on decades of past weather to forecast the next ten days, running in about a minute on one computer where traditional forecasting needs hours on a supercomputer. Self-driving systems practice on video paired with the steering a human chose.</p>
-    <p>So language models are not the whole of AI, and they are not even the most scientifically consequential thing the field has produced. They are the branch that happens to speak, which is why they became the public face of a much wider effort.</p>
+    <p>Other members of the family follow the same pattern with different practice tasks. Image generators learn by taking clean pictures, adding visual noise until nothing is recognizable, then practicing the reverse until they can build a picture out of pure noise. Speech recognizers practice on audio paired with transcripts. Weather models like DeepMind's GraphCast practice on decades of past weather to forecast the next ten days. One forecast takes about a minute on a single computer, while traditional forecasting needs hours on a supercomputer. Self-driving systems practice on video paired with the steering a human chose.</p>
+    <p>So language models are not the whole of AI, and they may not even be the part that matters most to science. They are the branch that happens to speak, which is why they became the public face of a much wider effort.</p>
   </section>
 
   <section class="chapter" id="ch6">
     <p class="ch-eyebrow">Chapter VI · Your move</p>
     <h2><span class="tok t2">Where</span> <span class="tok t4">do</span> <span class="tok t1">you</span> <span class="tok t3">start?</span></h2>
-    <p class="lede">You now know the full arc: predict the next token, train on the internet, coach with feedback and answer keys, freeze the weights, package them, run them anywhere, and place the whole thing inside a family of models that fold proteins and play chess. The best part is that "anywhere" includes your own computer, today, for free.</p>
-    <p>The easiest start is <strong>Ollama</strong> (ollama.com) or <strong>LM Studio</strong> (lmstudio.ai). Install one, pick a small model of a few billion weights, and within minutes you will have an AI running fully offline on your machine. Then browse <strong>huggingface.co</strong> and see the thousands of open models people have published, including ones fine-tuned for music theory, medicine, and ancient Greek.</p>
+    <p class="lede">You now know the whole arc: predict the next token, train on the internet, coach with feedback and answer keys, freeze the weights, package them, run them anywhere. And you know where all of it sits, in a family of models that also fold proteins and play chess. The best part is that "anywhere" includes your own computer, today, for free.</p>
+    <p>The easiest start is <strong>Ollama</strong> (ollama.com) or <strong>LM Studio</strong> (lmstudio.ai). Install one, then pick a small model. Sizes are written into the names: a 3B or 7B model means 3 or 7 billion weights, which is the range that runs comfortably on a normal computer. The download is a few gigabytes, and within minutes you will have an AI running fully offline on your machine. Then browse <strong>huggingface.co</strong> and see the millions of open models people have published, including ones fine-tuned for music theory, medicine, and ancient Greek.</p>
 
     <h3>Three experiments you can run tonight</h3>
-    <p>Everything in this guide is checkable, so check it. First, ask any chatbot to count the letter r in "strawberry." Many models have stumbled on this, and now you know the reason: the model sees tokens, whole chunks like <span class="mono">straw</span> and <span class="mono">berry</span>, so individual letters are half-invisible to it. Second, ask about something that happened this week. If the model cannot browse the web, you will watch the knowledge cutoff from chapter one appear in front of you. Third, with your local model from Ollama running, open your computer's task manager while it types and watch the memory fill with billions of frozen weights doing inference in real time.</p>
-    <p>When you want the deeper story, two free resources are famous for a reason. Andrej Karpathy's YouTube series "Neural Networks: Zero to Hero" builds a small language model from scratch, line by line, and his video "Deep Dive into LLMs" walks through everything in chapter two in glorious detail. The channel 3Blue1Brown has a visual series on transformers that makes attention feel obvious. For the chapter five material, DeepMind's own documentary on AlphaFold is on YouTube for free, and alphafold.ebi.ac.uk lets you type in a protein and spin its predicted shape around in your browser. A motivated high school student can follow all of it, and plenty have.</p>
-    <p>And if any of this made you want to build rather than just use, that instinct is worth trusting. llama.cpp started as one person's weekend curiosity. The field is young enough that the textbooks are still being written, some of them by people who first met these ideas in a guide like this one.</p>
+    <p>Everything in this guide is checkable, so check it. First, ask any chatbot to count the letter r in "strawberry." Many have stumbled on this, and now you know the reason: what goes in is tokens, whole chunks like <span class="mono">straw</span> and <span class="mono">berry</span>, not a row of letters. Counting letters is something the machine has to work out indirectly, which is why it slips. Second, ask about something that happened this week. If the app has a web search button, switch it off first, or ask your offline local model instead, which cannot look anything up. Whatever comes back is the knowledge cutoff from chapter one, in front of you. Third, open Task Manager on Windows, or Activity Monitor on a Mac, and watch the memory number. Now ask your local model a question. Memory jumps by several gigabytes and stays there: that is the weights file, loaded and frozen, sitting in memory for as long as the model is running.</p>
+    <p>When you want the deeper story, these free resources are famous for a reason. Andrej Karpathy's YouTube series "Neural Networks: Zero to Hero" builds a small language model from scratch, line by line, and his video "Deep Dive into LLMs", meaning large language models, walks through everything in chapter two in detail. The channel 3Blue1Brown has a visual series on transformers that makes attention feel obvious. For the chapter five material, DeepMind's own documentary on AlphaFold is on YouTube for free, and alphafold.ebi.ac.uk lets you search a protein by name, hemoglobin or insulin for a start, and spin its predicted shape around in your browser. A motivated high school student can follow all of it, and plenty have.</p>
+    <p>And if any of this made you want to build rather than just use, that instinct is worth trusting. llama.cpp started as one person's spare-time curiosity. The field is young enough that the textbooks are still being written, some of them by people who first met these ideas in a guide like this one.</p>
 
     <h3>Small glossary</h3>
     <dl class="gloss">
       <dt>Token</dt><dd>A small chunk of text, usually a word or part of one. Models read and write tokens, not letters.</dd>
-      <dt>Weights (parameters)</dt><dd>The billions of adjustable numbers inside a model. Training sets them; inference uses them frozen.</dd>
-      <dt>Knowledge cutoff</dt><dd>The date a model's training data stops. It knows nothing that happened after, and chatting with it never updates that.</dd>
+      <dt>Weights (parameters)</dt><dd>The billions of adjustable numbers inside a model. Training sets them. After that they are frozen, and running the model just reads them.</dd>
+      <dt>Knowledge cutoff</dt><dd>The date a model's training data stops. Nothing that happened after that date is in the model itself, and chatting with it never adds any. Later facts have to arrive some other way, pasted into the conversation or fetched by a web search.</dd>
       <dt>Deep learning</dt><dd>Machine learning using neural networks with many layers of adjustable numbers. The approach behind language models, AlphaFold, and AlphaZero alike.</dd>
-      <dt>Transformer</dt><dd>The standard model design since 2017. Its attention layers let every token consider every other token.</dd>
-      <dt>Pre-training</dt><dd>The first phase: learning to predict the next token across trillions of words of text.</dd>
+      <dt>GPU</dt><dd>A specialized chip, originally built for video games, that does the enormous number of small calculations training and running a model needs. Training the biggest models takes thousands of them.</dd>
+      <dt>Transformer</dt><dd>The standard design for language models since 2017. It works by letting every token in the text look back at every other token and decide which ones matter right now.</dd>
+      <dt>Pre-training</dt><dd>The first phase of training: the model learns to predict the next token, across trillions of words of text.</dd>
       <dt>Loss</dt><dd>The number that measures how wrong the model's guesses are. Training pushes it down.</dd>
-      <dt>Base model</dt><dd>What pre-training produces: a powerful text continuer with no assistant manners yet.</dd>
-      <dt>Fine-tuning (SFT)</dt><dd>Training on human-written example conversations so the model learns to answer helpfully.</dd>
-      <dt>RLHF</dt><dd>Reinforcement learning from human feedback: people rank answers, a reward model learns their taste, the main model practices against it.</dd>
-      <dt>RLVR</dt><dd>Reinforcement learning with verifiable rewards: answers checked automatically, as in math and code. The engine behind reasoning models.</dd>
-      <dt>Open weights</dt><dd>A release where anyone can download the trained weights, config, and tokenizer.</dd>
+      <dt>Base model</dt><dd>What the first phase of training produces: a model that can continue any text you give it, but does not yet behave like a helpful assistant.</dd>
+      <dt>Fine-tuning (SFT)</dt><dd>Short for supervised fine-tuning. Extra training on human-written example conversations, so the model learns to answer like a helpful assistant.</dd>
+      <dt>RLHF</dt><dd>Reinforcement learning from human feedback. People rank a model's answers best to worst. A second model learns what they preferred, and the main model then practices until it scores well with that second model.</dd>
+      <dt>RLVR</dt><dd>Reinforcement learning with verifiable rewards. The answers are ones a computer can check by itself, as in math and code, so no human grader is needed. This is how reasoning models, the ones that work step by step before answering, are trained.</dd>
+      <dt>Hallucination</dt><dd>When a model states something false with full confidence, because a smooth, plausible guess scores well even when it has no real answer.</dd>
+      <dt>Open weights</dt><dd>A release where anyone can download the finished model: the trained weights, the config that describes the model's shape, and the tokenizer that chops text into tokens.</dd>
       <dt>Inference</dt><dd>Running a trained model: tokens in, predictions out, no learning.</dd>
+      <dt>Inference engine</dt><dd>The free software that actually runs a downloaded model on a computer. Examples: vLLM for servers, Ollama and LM Studio for home machines.</dd>
       <dt>Quantization</dt><dd>Storing weights with fewer bits so a model fits in less memory, like compressing a photo.</dd>
     </dl>
   </section>
