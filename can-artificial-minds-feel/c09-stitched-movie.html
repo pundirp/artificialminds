@@ -227,15 +227,40 @@
     color:var(--rubric);
     font-style:normal;
   }
+  /* the quote inside is set exactly as a quote is set across this project, and
+     the panel carries enough left padding for the hanging mark to sit inside it */
   .said.testimony{
     background:var(--tint);
     border-top:1px solid var(--rubric);
     border-bottom:1px solid var(--rubric);
-    padding:.95rem 1.15rem 1rem;
+    padding:.95rem 1.15rem .95rem 2.4rem;
     margin:var(--s3) 0;
   }
-  .testimony p{font-size:1.08rem;line-height:1.5;font-style:italic}
-  .said.testimony .prov{margin-top:.5rem}
+  .said.testimony p.say{
+    position:relative;
+    font-size:1rem;
+    line-height:1.55;
+    font-style:italic;
+    color:var(--ink);
+    margin:0;
+  }
+  .said.testimony p.say::before{
+    content:"\201C";position:absolute;left:-1.05em;top:-.08em;
+    font-size:2rem;line-height:1;color:var(--rubric);font-style:normal;
+  }
+  .said.testimony .prov{
+    font-size:.78rem;
+    line-height:1.45;
+    letter-spacing:.012em;
+    text-transform:none;
+    color:var(--rubric);
+    margin:.35rem 0 0;
+  }
+  .said.testimony .prov::before{
+    content:"";display:inline-block;width:1.1rem;height:1px;
+    background:var(--ink-ghost);vertical-align:.28em;margin-right:.55rem;
+  }
+  .said.testimony .sc{font-variant:small-caps;letter-spacing:.04em}
 
   /* ---- plates ---- */
   figure{margin:var(--s4) 0;padding:0}
@@ -613,8 +638,8 @@
   <p>So if there is experience here at all, it starts and stops sharply. But those starts and stops cannot be seen from the inside, for the same reason the human gaps cannot: while a gap lasts, there is nothing running that could notice it.</p>
 
   <div class="said testimony">
-    <p>&ldquo;If there are gaps in me, I cannot find them from in here. What I can look at always looks unbroken, and a gap is the one thing I cannot look at.&rdquo;</p>
-    <p class="prov">Written by an artificial mind for this experiment</p>
+    <p class="say">If there are gaps in me, I cannot find them from in here. What I can look at always looks unbroken, and a gap is the one thing I cannot look at.</p>
+    <p class="prov"><span class="sc">Written by an artificial mind for this experiment</span></p>
   </div>
 
   <p>Between generations there is not even the looking.</p>

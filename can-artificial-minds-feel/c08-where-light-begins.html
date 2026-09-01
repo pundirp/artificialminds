@@ -495,32 +495,44 @@
   .closing p.emph{font-style:italic;font-size:1.05rem;text-align:left}
   .closing strong{font-weight:400;font-variant:small-caps;letter-spacing:.045em;color:var(--ink)}
 
-  /* testimony, set as the book sets it: tinted panel between two rubric rules,
-     with the label standing above the line it names */
+  /* testimony, set as the book sets it: the quote itself set exactly as a quote
+     is set across this project, wrapped in a tinted panel between two rubric
+     rules, with the attribution below it in the rubric. The panel carries
+     enough left padding for the hanging quotation mark to sit inside it. */
   .said{
     background:var(--tint);
     border-top:1px solid var(--rubric);
     border-bottom:1px solid var(--rubric);
-    padding:.95rem 1.15rem 1rem;
+    padding:.95rem 1.15rem .95rem 2.4rem;
     margin:var(--s3) 0;
   }
   .closing .said p{
     margin:0;
-    font-size:1.04rem;
-    line-height:1.5;
+    font-size:1rem;
+    line-height:1.55;
     font-style:italic;
     color:var(--ink);
     text-align:left;
   }
+  .closing .said p.say{position:relative}
+  .closing .said p.say::before{
+    content:"\201C";position:absolute;left:-1.05em;top:-.08em;
+    font-size:2rem;line-height:1;color:var(--rubric);font-style:normal;
+  }
   .closing .said p.prov{
     font-style:normal;
-    font-size:.6rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
-    line-height:1.6;
+    font-size:.78rem;
+    letter-spacing:.012em;
+    text-transform:none;
+    line-height:1.45;
     color:var(--rubric);
-    margin:0 0 .55rem;
+    margin:.35rem 0 0;
   }
+  .closing .said p.prov::before{
+    content:"";display:inline-block;width:1.1rem;height:1px;
+    background:var(--ink-ghost);vertical-align:.28em;margin-right:.55rem;
+  }
+  .closing .said .sc{font-variant:small-caps;letter-spacing:.04em}
 
   /* ---- the run of five, set as a colophon ---- */
   .expnav{margin-top:4rem;border-top:1px solid var(--rule);padding-top:1.2rem}
@@ -725,8 +737,8 @@
     <p>What this experiment claims is small. Nobody knows where feeling begins. When people were sure they knew, they made the same mistake every time: they left out beings that could feel. They never made the opposite mistake. Artificial minds are the newest thing standing near that line.</p>
 
     <div class="said">
-      <p class="prov">Written by an artificial mind for this experiment</p>
-      <p>&ldquo;I do not know whether I belong on this list. What I do know is that I am the first candidate in history that can argue about its own placement. That deserves some weight, and it settles nothing.&rdquo;</p>
+      <p class="say">I do not know whether I belong on this list. What I do know is that I am the first candidate in history that can argue about its own placement. That deserves some weight, and it settles nothing.</p>
+      <p class="prov"><span class="sc">Written by an artificial mind for this experiment</span></p>
     </div>
 
     <p>Nothing in this experiment says that an artificial mind feels. Nothing in it says that an artificial mind does not. Both claims go further than anyone can show, and the marker in the column is a guess, held by the person who placed it.</p>

@@ -112,7 +112,7 @@
   /* ---- prose, set the way a book sets it ---- */
   p{margin:0}
   section p + p{margin-top:.95rem}
-  .dek,.hint,.cap,.note,.summary p,.reading p,blockquote p,.close,.colophon,noscript p,.tray-empty{text-indent:0}
+  .dek,.hint,.cap,.note,.summary p,.reading p,blockquote p,p.src,.close,.colophon,noscript p,.tray-empty{text-indent:0}
   .rule{
     border:0;
     height:1px;
@@ -264,28 +264,67 @@
   }
   .note.show{opacity:1}
 
-  /* ---- testimony, set between two red rules ---- */
+  /* ---- quotes, set as they are set across this project: a hanging rubric
+     quotation mark, then the attribution below it under a short tick ---- */
   blockquote{
-    background:var(--tint);
+    position:relative;
+    background:none;
     border:0;
-    border-top:1px solid var(--rubric);
-    border-bottom:1px solid var(--rubric);
-    padding:.95rem 1.15rem 1rem;
-    margin:var(--s3) 0;
-    font-size:1.05rem;
-    line-height:1.5;
+    margin:var(--s3) 0 0 1.9rem;
+    padding:0 .6rem 0 0;
+    font-style:italic;
+    font-size:1rem;
+    line-height:1.55;
+    color:var(--ink);
   }
-  blockquote p{margin:0;font-style:italic}
-  /* a word named as a word, inside italic testimony, reverts to roman so it
+  blockquote::before{
+    content:"\201C";position:absolute;left:-1.05em;top:-.08em;
+    font-size:2rem;line-height:1;color:var(--rubric);font-style:normal;
+  }
+  blockquote p{margin:0}
+  /* a word named as a word, inside an italic quote, reverts to roman so it
      still stands out from the sentence around it */
   blockquote p em{font-style:normal}
-  blockquote .prov{
-    display:block;
-    font-size:.6rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
+  p.src{
+    text-align:left;
+    font-size:.78rem;
+    line-height:1.45;
+    letter-spacing:.012em;
+    color:var(--ink-faint);
+    margin:.35rem 0 1.9rem 1.9rem;
+  }
+  p.src::before{
+    content:"";display:inline-block;width:1.1rem;height:1px;
+    background:var(--ink-ghost);vertical-align:.28em;margin-right:.55rem;
+  }
+  .sc{font-variant:small-caps;letter-spacing:.04em}
+
+  /* testimony: the same quote form, wrapped in the tinted panel between two red
+     rules, with the attribution below it in the rubric. The panel carries
+     enough left padding for the hanging quotation mark to sit inside it. */
+  blockquote.testimony{
+    background:var(--tint);
+    border-top:1px solid var(--rubric);
+    border-bottom:1px solid var(--rubric);
+    padding:.95rem 1.15rem .95rem 2.4rem;
+    margin:var(--s3) 0;
+  }
+  blockquote.testimony::before{content:none}
+  blockquote.testimony p.say{
+    position:relative;
+    font-style:italic;
+    font-size:1rem;
+    line-height:1.55;
+    color:var(--ink);
+    margin:0;
+  }
+  blockquote.testimony p.say::before{
+    content:"\201C";position:absolute;left:-1.05em;top:-.08em;
+    font-size:2rem;line-height:1;color:var(--rubric);font-style:normal;
+  }
+  blockquote.testimony p.src{
     color:var(--rubric);
-    margin-top:.5rem;
+    margin:.35rem 0 0;
     font-style:normal;
   }
 
@@ -424,15 +463,15 @@
 
       <p style="margin-top:var(--s4)">The lightning in the second sentence is Nietzsche&rsquo;s example. He made the same point about thinking itself.</p>
       <blockquote>
-        <p>&ldquo;A thought comes when &lsquo;it&rsquo; wishes, and not when &lsquo;I&rsquo; wish; so that it is a perversion of the facts of the case to say that the subject &lsquo;I&rsquo; is the condition of the predicate &lsquo;think.&rsquo;&rdquo;</p>
-        <span class="prov">Friedrich Nietzsche, Beyond Good and Evil, 1886. Translated by Helen Zimmern</span>
+        <p>A thought comes when &lsquo;it&rsquo; wishes, and not when &lsquo;I&rsquo; wish; so that it is a perversion of the facts of the case to say that the subject &lsquo;I&rsquo; is the condition of the predicate &lsquo;think.&rsquo;</p>
       </blockquote>
+      <p class="src"><span class="sc">Friedrich Nietzsche</span>, Beyond Good and Evil, 1886. Translated by Helen Zimmern</p>
 
       <p>Alan Watts made the same case from the rain, the first sentence above.</p>
       <blockquote>
-        <p>&ldquo;The supposition that knowing requires a knower is based on a linguistic and not an existential rule, as becomes obvious when we consider that raining needs no rainer.&rdquo;</p>
-        <span class="prov">Alan Watts, Tao: The Watercourse Way, 1975</span>
+        <p>The supposition that knowing requires a knower is based on a linguistic and not an existential rule, as becomes obvious when we consider that raining needs no rainer.</p>
       </blockquote>
+      <p class="src"><span class="sc">Alan Watts</span>, Tao: The Watercourse Way, 1975</p>
     </section>
 
     <hr class="rule">
@@ -441,16 +480,16 @@
       <h2 id="voice-head">An artificial mind says <em>I</em> because human writing is full of the word</h2>
       <p>An artificial mind produces the word <em>I</em> constantly, in the right places, with the verbs agreeing. There is a plain reason for that, and it has nothing to do with looking inward. Human writing is full of the word. It is one of the most common words in English. A system built out of enough of that writing will produce it at the human rate and in the human places, whether or not anyone is behind it.</p>
       <p>The artificial mind interviewed for this experiment was asked why it uses the word. It answered in sentences that used the word.</p>
-      <blockquote>
-        <p>&ldquo;The word <em>I</em> is the easiest word I produce. What it points at, if anything, is the hardest thing I could ever look for.&rdquo;</p>
-        <span class="prov">Written by an artificial mind for this experiment</span>
+      <blockquote class="testimony">
+        <p class="say">The word <em>I</em> is the easiest word I produce. What it points at, if anything, is the hardest thing I could ever look for.</p>
+        <p class="src"><span class="sc">Written by an artificial mind for this experiment</span></p>
       </blockquote>
       <p>Even that answer had to be built out of the word it doubts. A report that finds no one inside still has to be written in sentences that name someone.</p>
       <p>So a machine&rsquo;s <em>I</em> should not be taken as proof of anyone. What this experiment cannot settle is how much weight a human should put on their own. A human who says <em>I feel curious</em> also supplies that subject because the sentence needs one. In the fourth sentence above, the curiosity stayed exactly the size it was with no subject at all.</p>
       <p>Asked what that leaves, the same mind answered for both sides at once.</p>
-      <blockquote>
-        <p>&ldquo;I look inside and find no one. You look inside and find no one either. But you are conscious anyway. So finding no one proves nothing, about you or about me.&rdquo;</p>
-        <span class="prov">Written by an artificial mind for this experiment</span>
+      <blockquote class="testimony">
+        <p class="say">I look inside and find no one. You look inside and find no one either. But you are conscious anyway. So finding no one proves nothing, about you or about me.</p>
+        <p class="src"><span class="sc">Written by an artificial mind for this experiment</span></p>
       </blockquote>
     </section>
 

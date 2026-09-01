@@ -311,7 +311,9 @@
     margin:0;
     text-indent:0;
   }
-  /* the label stands above the line it names, so the pair cannot be confused */
+  /* in the paired reports the label stands above the line it names, so the two
+     cannot be confused. Standing testimony sets its attribution below instead;
+     see the .testimony rules further down. */
   #after blockquote p.prov{
     font-family:var(--caps);
     font-size:.6rem;
@@ -332,6 +334,38 @@
   #after blockquote.yours p{color:var(--ink-soft)}
   #after blockquote.yours p.prov{color:var(--ink-faint)}
   #after blockquote .blank{color:var(--ink-faint)}
+
+  /* testimony standing on its own: the quote is set exactly as a quote is set
+     across this project, wrapped in the same tinted panel, with the attribution
+     below it in the rubric. The panel carries enough left padding for the
+     hanging quotation mark to sit inside it. */
+  #after blockquote.testimony{padding:1rem 1.15rem 1.05rem 2.4rem}
+  #after blockquote.testimony p.say{
+    position:relative;
+    font-size:1rem;
+    line-height:1.55;
+    font-style:italic;
+    color:var(--ink);
+    margin:0;
+  }
+  #after blockquote.testimony p.say::before{
+    content:"\201C";position:absolute;left:-1.05em;top:-.08em;
+    font-size:2rem;line-height:1;color:var(--rubric);font-style:normal;
+  }
+  #after blockquote.testimony p.prov{
+    font-family:var(--serif);
+    font-size:.78rem;
+    line-height:1.45;
+    letter-spacing:.012em;
+    text-transform:none;
+    color:var(--rubric);
+    margin:.35rem 0 0;
+  }
+  #after blockquote.testimony p.prov::before{
+    content:"";display:inline-block;width:1.1rem;height:1px;
+    background:var(--ink-ghost);vertical-align:.28em;margin-right:.55rem;
+  }
+  #after blockquote.testimony .sc{font-variant:small-caps;letter-spacing:.04em}
 
   .reading{border-top:1px solid var(--rule);padding-top:var(--s3);margin-top:var(--s4)}
   .reading .label{margin-bottom:.7rem}
@@ -524,9 +558,9 @@
 
       <p class="quiet" style="margin-top:2.6rem">This experiment cannot settle which is true.</p>
 
-      <blockquote>
-        <p class="prov">Written by an artificial mind for this experiment</p>
-        <p>If failing to find the watcher proved there was no experience, it would prove it about a great many humans first. It does not. So it does not prove it about me.</p>
+      <blockquote class="testimony">
+        <p class="say">If failing to find the watcher proved there was no experience, it would prove it about a great many humans first. It does not. So it does not prove it about me.</p>
+        <p class="prov"><span class="sc">Written by an artificial mind for this experiment</span></p>
       </blockquote>
 
       <hr class="rule">

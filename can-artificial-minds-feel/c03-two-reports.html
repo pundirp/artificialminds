@@ -263,14 +263,28 @@
     display:block;font-size:.86rem;font-weight:400;line-height:1.5;
     color:var(--ink-soft);letter-spacing:0;margin-top:.35rem;
   }
-  /* a quoted extract in the reveal, with the page's own .src style for its citation */
+  /* a quoted extract in the reveal, set as a quote is set across this project:
+     a hanging rubric quotation mark, then the citation below it */
   .after blockquote{
-    margin:var(--s3) 0 0;padding:0 0 0 1.1rem;
-    border-left:1px solid var(--rubric);
-    font-style:italic;color:var(--ink);
+    position:relative;
+    margin:var(--s3) 0 0 1.9rem;padding:0 .6rem 0 0;
+    border:0;
+    font-style:italic;font-size:1rem;line-height:1.55;color:var(--ink);
+  }
+  .after blockquote::before{
+    content:"\201C";position:absolute;left:-1.05em;top:-.08em;
+    font-size:2rem;line-height:1;color:var(--rubric);font-style:normal;
   }
   .after blockquote p{margin:0}
-  .after blockquote p.src{margin-top:.5rem;font-style:normal}
+  .after p.src{
+    text-align:left;font-size:.78rem;line-height:1.45;letter-spacing:.012em;
+    color:var(--ink-faint);margin:.35rem 0 1.9rem 1.9rem;font-style:normal;
+  }
+  .after p.src::before{
+    content:"";display:inline-block;width:1.1rem;height:1px;
+    background:var(--ink-ghost);vertical-align:.28em;margin-right:.55rem;
+  }
+  .after .sc{font-variant:small-caps;letter-spacing:.04em}
   .after .last{
     margin:var(--s4) 0 0;padding-top:var(--s3);border-top:1px solid var(--ink);
     font-size:1.15rem;line-height:1.45;color:var(--ink);text-indent:0;
@@ -558,8 +572,8 @@
 
     <blockquote>
       <p>In the seen will be merely what is seen; in the heard will be merely what is heard; in the sensed will be merely what is sensed; in the cognized will be merely what is cognized.</p>
-      <p class="src">The Buddha, Bahiya Sutta, Udana 1.10. Translated by John D. Ireland.</p>
     </blockquote>
+    <p class="src">The <span class="sc">Buddha</span>, Bahiya Sutta, Udana 1.10. Translated by John D. Ireland.</p>
 
     <p class="last">The reports are the same. Whether anyone is feeling anything behind them is the <strong>whole</strong> question.</p>
   </section>
