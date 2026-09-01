@@ -280,6 +280,7 @@
     if(typeof n !== "number" || !isFinite(n)) return "0";
     return Math.round(n).toLocaleString("en-US");
   }
+  function unit(n, word) { return fmt(n) + " " + word + (n === 1 ? "" : "s"); }
 
   function el(name, attrs){
     var node = document.createElementNS(NS, name);
@@ -424,7 +425,7 @@
     var last = rows[rows.length - 1];
     function idle(){
       readout.textContent = "Latest day, " + label(last.day) + ": " +
-        fmt(last.views) + " views, " + fmt(last.visitors) + " visitors";
+        unit(last.views, "view") + ", " + unit(last.visitors, "visitor");
     }
     function label(day){
       var s = String(day || "");
@@ -448,7 +449,7 @@
       mark.setAttribute("x1", px(idx)); mark.setAttribute("x2", px(idx)); mark.setAttribute("opacity", "1");
       dot1.setAttribute("cx", px(idx)); dot1.setAttribute("cy", py(r.views)); dot1.setAttribute("opacity", "1");
       dot2.setAttribute("cx", px(idx)); dot2.setAttribute("cy", py(r.visitors)); dot2.setAttribute("opacity", "1");
-      readout.textContent = label(r.day) + ": " + fmt(r.views) + " views, " + fmt(r.visitors) + " visitors";
+      readout.textContent = label(r.day) + ": " + unit(r.views, "view") + ", " + unit(r.visitors, "visitor");
     }
     function off(){
       mark.setAttribute("opacity", "0");
@@ -549,7 +550,7 @@
     point.innerHTML = "";
     point.appendChild(document.createTextNode(String(lead.name || lead.id) + " drew the most visits in the last 30 days: "));
     var b = document.createElement("b");
-    b.textContent = fmt(lead.views_30d) + " views";
+    b.textContent = unit(lead.views_30d, "view");
     point.appendChild(b);
     point.appendChild(document.createTextNode("."));
 
@@ -615,7 +616,7 @@
     point.innerHTML = "";
     point.appendChild(document.createTextNode("The largest single source is " + String(rows[0].name) + ": "));
     var b = document.createElement("b");
-    b.textContent = fmt(rows[0].visitors) + " visitors";
+    b.textContent = unit(rows[0].visitors, "visitor");
     point.appendChild(b);
     point.appendChild(document.createTextNode(". Anyone arriving with no referrer is not counted here."));
 
