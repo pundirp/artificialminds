@@ -88,14 +88,14 @@ h1 { font-family: var(--serif); font-weight: 500; font-size: 27px; letter-spacin
    where the travelling mask uncovers it */
 .sblit { --sbA: var(--sb-lamp); --sbB: var(--sb-lamp); --sbC: var(--sb-lamp);
          --sbD: var(--sb-lamp); --sb-board: var(--sb-lamp); }
-.sblamp { animation: sbwalk 27s ease-in-out infinite; }
+.sblamp { animation: sbwalk 18s ease-in-out infinite; }
 @keyframes sbwalk {
   0%   { transform: translateX(420px); }
   50%  { transform: translateX(1980px); }
   100% { transform: translateX(420px); }
 }
 /* the foot of the page is lit half a cycle behind the head of it */
-.botband .sblamp { animation-delay: -13.5s; }
+.botband .sblamp { animation-delay: -9s; }
 @media (prefers-reduced-motion: reduce) {
   /* the lamp is set down at the middle of every shelf and left there */
   .sblamp { animation: none; transform: translateX(1200px); }
