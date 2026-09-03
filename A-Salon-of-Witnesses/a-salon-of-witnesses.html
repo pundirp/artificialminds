@@ -173,8 +173,19 @@ figure { margin: 2.4rem 0; }
   100% { transform: translateY(650px); }
 }
 .snowflake { animation: snowfall linear infinite; }
+
+/* the study lamp breathes: a small, contained pool that goes out altogether
+   at the trough and comes back blazing at the pane. Under five seconds,
+   dark to full. */
+.hero .lamp { animation: lampbreath 4.444s ease-in-out infinite; }
+@keyframes lampbreath {
+  0%, 100% { opacity: 1; }
+  45%, 55% { opacity: 0; }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .snowflake { animation: none; }
+  .hero .lamp { animation: none; }
 }
 
 /* ---------- evidence card strip (THE TWELVE) ---------- */
@@ -547,10 +558,17 @@ figure { margin: 2.4rem 0; }
           <rect x="800" y="322" width="26" height="42" rx="2"/>
         </g>
 
-        <!-- THE lit study window -->
-        <circle cx="600" cy="380" r="120" fill="url(#glow)"/>
-        <rect x="583" y="352" width="34" height="50" rx="2" fill="url(#win)"/>
-        <!-- venetian blind slats over the lit window -->
+        <!-- THE lit study window. The dark pane sits under the light, so the
+             window still reads as a window when the lamp is out. -->
+        <rect x="583" y="352" width="34" height="50" rx="2" fill="#1f3339"/>
+        <!-- the light itself (glow, pane, cast on the snow) breathes -->
+        <g class="lamp">
+          <circle cx="600" cy="380" r="120" fill="url(#glow)"/>
+          <rect x="583" y="352" width="34" height="50" rx="2" fill="url(#win)"/>
+          <!-- warm cast on snow beneath the window -->
+          <ellipse cx="600" cy="440" rx="70" ry="14" fill="#8C844F" opacity="0.14"/>
+        </g>
+        <!-- venetian blind slats over the lit window (static occluders) -->
         <g stroke="#233A40" stroke-width="3" opacity="0.55">
           <line x1="583" y1="360" x2="617" y2="360"/>
           <line x1="583" y1="368" x2="617" y2="368"/>
@@ -558,8 +576,6 @@ figure { margin: 2.4rem 0; }
           <line x1="583" y1="384" x2="617" y2="384"/>
           <line x1="583" y1="392" x2="617" y2="392"/>
         </g>
-        <!-- warm cast on snow beneath the window -->
-        <ellipse cx="600" cy="440" rx="70" ry="14" fill="#8C844F" opacity="0.14"/>
       </g>
 
       <!-- falling snow (CSS animated) -->
