@@ -402,8 +402,8 @@
   @media (prefers-reduced-motion:reduce){
     .mosaic img{will-change:auto}
     /* the photograph is handed back exactly as it was. Both added layers are
-       taken away rather than stilled: the ripple is driven inside the SVG
-       filter, where a media query cannot reach it, and nine points left
+       taken away rather than stilled: the ripple is driven by script through
+       an SVG filter, where a media query cannot reach it, and nine points left
        standing on a still face would only look like marks on the print */
     .feelface img.ripple{display:none}
     .feelface i{display:none}
@@ -677,14 +677,18 @@
   </div>
 
   <!-- the noise field that pushes the reflection about on card 02. It draws
-       nothing itself; the layer that uses it is added by the script below. -->
+       nothing itself; the layer that uses it is added by the script below.
+       The noise is made as one tile the size of the card, stitched so its
+       edges meet, repeated across a region twice the card each way, and slid
+       steadily down and a little sideways by the script. Because the tile
+       repeats exactly, the slide can wrap at one tile and nothing shows the
+       join: the water flows in one direction and never turns back. -->
   <svg width="0" height="0" aria-hidden="true" style="position:absolute">
-    <filter id="ripple" x="-10%" y="-10%" width="120%" height="120%">
-      <feTurbulence type="fractalNoise" baseFrequency="0.011 0.055" numOctaves="2" seed="7" result="noise">
-        <animate attributeName="baseFrequency" dur="6s" repeatCount="indefinite"
-                 values="0.011 0.055;0.007 0.081;0.0145 0.044;0.011 0.055"/>
-      </feTurbulence>
-      <feDisplacementMap in="SourceGraphic" in2="noise" scale="12" xChannelSelector="R" yChannelSelector="G"/>
+    <filter id="ripple" x="-110%" y="-110%" width="220%" height="220%">
+      <feTurbulence id="ripple-noise" type="fractalNoise" baseFrequency="0.011 0.055" numOctaves="2" seed="7" stitchTiles="stitch" x="0" y="0" width="330" height="220" result="noise"/>
+      <feTile in="noise" result="tiled"/>
+      <feOffset id="ripple-flow" in="tiled" dx="0" dy="0" result="flow"/>
+      <feDisplacementMap in="SourceGraphic" in2="flow" scale="12" xChannelSelector="R" yChannelSelector="G"/>
     </filter>
   </svg>
 
@@ -845,6 +849,39 @@
       dot.setAttribute('aria-hidden','true');
       face.appendChild(dot);
     }
+
+    // The water's flow. The noise tile is kept the size of the card, so it
+    // repeats exactly once per card, and the slide wraps at that size. Thirteen and a half
+    // pixels a second down and four and a half across, whatever the card's size, so the
+    // ripples are the same speed on every screen. A hidden tab gets no frames
+    // and the flow simply picks up where it stopped.
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var noise = document.getElementById('ripple-noise');
+    var flow = document.getElementById('ripple-flow');
+    if(reduce || !noise || !flow) return;
+    var W = 330, H = 220;
+    function size(){
+      var r = face.getBoundingClientRect();
+      W = Math.max(1, Math.round(r.width));
+      H = Math.max(1, Math.round(r.height));
+      noise.setAttribute('width', W);
+      noise.setAttribute('height', H);
+    }
+    size();
+    window.addEventListener('resize', size);
+    var last = null, dx = 0, dy = 0;
+    function step(t){
+      if(last !== null){
+        var s = Math.min(0.1, (t - last) / 1000);
+        dx = (dx + 4.5 * s) % W;
+        dy = (dy + 13.5 * s) % H;
+        flow.setAttribute('dx', dx.toFixed(2));
+        flow.setAttribute('dy', dy.toFixed(2));
+      }
+      last = t;
+      requestAnimationFrame(step);
+    }
+    requestAnimationFrame(step);
   })();
   </script>
 <script data-goatcounter="https://artificialminds.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
