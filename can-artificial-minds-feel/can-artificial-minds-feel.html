@@ -778,8 +778,8 @@
   hero.insertBefore(layer, text);
 
   /* The water's flow. The noise tile is kept the size of the picture, so it
-     repeats exactly once per picture, and the slide wraps at that size. Twenty pixels a
-     second down and seven across, faster than the index card because the
+     repeats exactly once per picture, and the slide wraps at that size. Thirty pixels a
+     second down and ten across, faster than the index card because the
      water is a smaller part of the view here. A hidden tab gets no frames and the flow picks up where it
      stopped. A reader who asks for less motion never starts it. */
   var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -800,8 +800,8 @@
   function step(t){
     if (last !== null){
       var s = Math.min(0.1, (t - last) / 1000);
-      dx = (dx + 6.75 * s) % W;
-      dy = (dy + 20.25 * s) % H;
+      dx = (dx + 10 * s) % W;
+      dy = (dy + 30 * s) % H;
       flow.setAttribute('dx', dx.toFixed(2));
       flow.setAttribute('dy', dy.toFixed(2));
     }

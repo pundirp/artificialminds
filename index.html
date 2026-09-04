@@ -851,8 +851,8 @@
     }
 
     // The water's flow. The noise tile is kept the size of the card, so it
-    // repeats exactly once per card, and the slide wraps at that size. Thirteen and a half
-    // pixels a second down and four and a half across, whatever the card's size, so the
+    // repeats exactly once per card, and the slide wraps at that size. Twenty
+    // pixels a second down and seven across, whatever the card's size, so the
     // ripples are the same speed on every screen. A hidden tab gets no frames
     // and the flow simply picks up where it stopped.
     var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -873,8 +873,8 @@
     function step(t){
       if(last !== null){
         var s = Math.min(0.1, (t - last) / 1000);
-        dx = (dx + 4.5 * s) % W;
-        dy = (dy + 13.5 * s) % H;
+        dx = (dx + 6.75 * s) % W;
+        dy = (dy + 20.25 * s) % H;
         flow.setAttribute('dx', dx.toFixed(2));
         flow.setAttribute('dy', dy.toFixed(2));
       }
