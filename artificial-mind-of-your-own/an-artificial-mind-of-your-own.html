@@ -96,8 +96,43 @@
   }
   h1 .amp { color: var(--indigo); }
   .subtitle { font-family: 'Literata', Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--muted); max-width: 36rem; }
-  .hero-art { margin: 3rem auto 0; max-width: 42rem; }
-  .hero-art svg { width: 100%; height: auto; display: block; }
+  /* Two cutouts side by side, biological on the left, artificial on the right.
+     One column below 560px. */
+  .hero-art {
+    margin: 3rem auto 0; max-width: 44rem;
+    display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;
+    align-items: center;
+  }
+  .hero-art figure { margin: 0; max-width: none; }
+  .hero-art img { display: block; width: 100%; height: auto; }
+  .hero-cap {
+    display: block; width: fit-content; margin: .9rem auto 0;
+    padding: .04em .5em; border-radius: 7px;
+    font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-style: normal;
+    font-size: .95rem; letter-spacing: .01em; line-height: 1.6;
+    text-align: center;
+  }
+  .hero-cap.c1 { background: var(--chip1); color: var(--chip1-ink); }
+  .hero-cap.c2 { background: var(--chip2); color: var(--chip2-ink); }
+  @media (max-width: 560px) {
+    .hero-art { grid-template-columns: 1fr; gap: 1.6rem; max-width: 22rem; }
+  }
+
+  /* ---------- cutouts ----------
+     The photographs are objects on transparency, so they sit on the
+     page with no frame and no background, in either theme. */
+  .cutout img { display: block; width: 100%; height: auto; max-width: 30rem; margin: 0 auto; }
+  /* The laptop is grey on black and sinks into the page, so it gets lifted
+     into the indigo family: lilac-grey body, deep indigo screen. */
+  .cutout-wide img {
+    max-width: 36rem;
+    filter: brightness(1.18) contrast(1.06) sepia(.35) hue-rotate(215deg) saturate(1.5)
+            drop-shadow(0 18px 40px rgba(64, 56, 168, .28));
+  }
+  :root[data-theme="dark"] .cutout-wide img {
+    filter: brightness(1.18) contrast(1.06) sepia(.35) hue-rotate(215deg) saturate(1.5)
+            drop-shadow(0 0 34px rgba(139, 132, 232, .34));
+  }
 
   /* prediction demo */
   .demo {
@@ -293,56 +328,15 @@
     <h1>An Artificial Mind of <span class="amp">Your Own</span></h1>
     <p class="subtitle">Is it like your brain? Six plain questions about the machines that talk: how they learn, why some are free to download, and how to run one on your laptop.</p>
 
-    <div class="hero-art" role="img" aria-label="Two half-brain shapes facing each other across a dashed line down the middle. The left one is a single looping scribble, labeled 'a mind'. The right one is a tidy web of colored dots joined by lines, a few of them thicker, labeled 'an artificial one'.">
-      <svg viewBox="0 0 680 320" xmlns="http://www.w3.org/2000/svg">
-        <line x1="340" y1="52" x2="340" y2="268" stroke="#B4B2A9" stroke-width="1" stroke-dasharray="2 6"/>
-        <g fill="none" stroke="#211E33" stroke-width="2.2" stroke-linecap="round">
-          <path d="M205 252 C 150 250 108 224 100 178 C 92 132 122 84 170 66 C 214 50 268 58 296 92 C 318 118 320 158 300 190 C 282 218 246 236 210 232 C 182 228 166 204 176 182 C 186 160 214 154 232 168 C 246 179 246 200 232 210"/>
-          <path d="M150 170 C 148 140 170 116 200 112 C 232 108 258 128 262 156"/>
-          <path d="M190 200 C 172 196 162 178 170 162"/>
-          <path d="M129 120 C 142 104 162 94 184 92"/>
-          <path d="M205 252 C 205 266 199 274 189 279"/>
-        </g>
-        <g stroke="#B4B2A9" stroke-width="1">
-          <line x1="475" y1="68" x2="418" y2="94"/><line x1="475" y1="68" x2="532" y2="94"/>
-          <line x1="418" y1="94" x2="384" y2="142"/><line x1="532" y1="94" x2="566" y2="142"/>
-          <line x1="532" y1="94" x2="475" y2="126"/>
-          <line x1="384" y1="142" x2="424" y2="176"/><line x1="475" y1="126" x2="424" y2="176"/>
-          <line x1="566" y1="142" x2="526" y2="176"/>
-          <line x1="424" y1="176" x2="475" y2="214"/><line x1="526" y1="176" x2="475" y2="214"/>
-          <line x1="384" y1="142" x2="396" y2="200"/><line x1="566" y1="142" x2="554" y2="200"/>
-          <line x1="424" y1="176" x2="396" y2="200"/><line x1="526" y1="176" x2="554" y2="200"/>
-          <line x1="396" y1="200" x2="440" y2="244"/><line x1="554" y1="200" x2="510" y2="244"/>
-          <line x1="475" y1="214" x2="440" y2="244"/><line x1="475" y1="214" x2="510" y2="244"/>
-          <line x1="440" y1="244" x2="475" y2="258"/><line x1="510" y1="244" x2="475" y2="258"/>
-          <line x1="475" y1="258" x2="475" y2="280"/>
-        </g>
-        <g stroke="#4038A8" stroke-width="2.4">
-          <line x1="418" y1="94" x2="475" y2="126"/>
-          <line x1="475" y1="126" x2="526" y2="176"/>
-          <line x1="475" y1="214" x2="510" y2="244"/>
-        </g>
-        <g stroke-width="1.4">
-          <circle cx="475" cy="68" r="7" fill="#E7E4FB" stroke="#3C3489"/>
-          <circle cx="418" cy="94" r="7" fill="#DCF2E8" stroke="#0A5C48"/>
-          <circle cx="532" cy="94" r="7" fill="#FBE4D9" stroke="#8A3517"/>
-          <circle cx="384" cy="142" r="7" fill="#F8ECCB" stroke="#7A5A0E"/>
-          <circle cx="475" cy="126" r="7" fill="#F9E0EA" stroke="#8C2F4F"/>
-          <circle cx="566" cy="142" r="7" fill="#E7E4FB" stroke="#3C3489"/>
-          <circle cx="424" cy="176" r="7" fill="#FBE4D9" stroke="#8A3517"/>
-          <circle cx="526" cy="176" r="7" fill="#DCF2E8" stroke="#0A5C48"/>
-          <circle cx="475" cy="214" r="7" fill="#F8ECCB" stroke="#7A5A0E"/>
-          <circle cx="396" cy="200" r="7" fill="#F9E0EA" stroke="#8C2F4F"/>
-          <circle cx="554" cy="200" r="7" fill="#DCF2E8" stroke="#0A5C48"/>
-          <circle cx="440" cy="244" r="7" fill="#E7E4FB" stroke="#3C3489"/>
-          <circle cx="510" cy="244" r="7" fill="#FBE4D9" stroke="#8A3517"/>
-          <circle cx="475" cy="258" r="7" fill="#DCF2E8" stroke="#0A5C48"/>
-        </g>
-        <g font-family="IBM Plex Mono, monospace" font-size="12" fill="#6A677D">
-          <text x="205" y="306" text-anchor="middle">a mind</text>
-          <text x="475" y="306" text-anchor="middle">an artificial one</text>
-        </g>
-      </svg>
+    <div class="hero-art">
+      <figure>
+        <img src="artificial-mind-of-your-own-brain.webp" width="900" height="840" alt="A pale human brain in the dark, with fine gold threads running out of it.">
+        <figcaption class="hero-cap c1">biological</figcaption>
+      </figure>
+      <figure>
+        <img src="artificial-mind-of-your-own-lattice.webp" width="900" height="847" alt="A stack of upright glass sheets carrying small paper cards, joined into a lattice by fine gold wires, standing in the dark.">
+        <figcaption class="hero-cap c2">artificial</figcaption>
+      </figure>
     </div>
   </div>
 </header>
@@ -386,6 +380,7 @@
     <p class="ch-eyebrow">Chapter I · Prediction</p>
     <h2><span class="tok t1">Is</span> <span class="tok t2">it</span> <span class="tok t3">a</span> <span class="tok t4">brain?</span></h2>
     <p class="lede">When an AI writes you a poem or explains your homework, it is natural to picture a little electronic brain in there, thinking. So let's answer the question head on. A language model borrows exactly one idea from your brain, and differs from it in almost every other way. This chapter shows you what is actually inside.</p>
+
     <p>Start small. Your phone's keyboard already does a tiny version of what ChatGPT does. Type "see you" and it suggests "later." A large language model is the same idea, enormously bigger. Your keyboard guesses from the last word or two. A model can look back over everything in front of it, thousands of words at a time, and it has read more text than any human ever will.</p>
     <p>One correction to the demo above: the machine does not work in whole words. Before a model can read anything, text gets chopped into <strong>tokens</strong>: small chunks that are usually a word, part of a word, or a punctuation mark. Each token has an ID number, because computers work with numbers. The full list of tokens a model knows is called its vocabulary, usually 50,000 to 250,000 of them.</p>
 
@@ -729,6 +724,10 @@
     <h2><span class="tok t3">How</span> <span class="tok t1">do</span> <span class="tok t2">you</span> <span class="tok t4">run</span> <span class="tok t5">one?</span></h2>
     <p class="lede">Using a trained model is called <strong>inference</strong>: tokens in, predictions out, no more learning. The weights are frozen. The interesting part is the free software that does the running, called inference engines, and the story of who built it.</p>
     <p>First, feel what inference is. When you press enter on a message, your words get chopped into tokens, the engine pushes those numbers through every layer of the network, and out comes one predicted token. Then it does the whole thing again for the next token, and again, often 50 or more times per second. That is why the reply appears word by word on your screen instead of all at once: you are watching each prediction arrive.</p>
+
+    <figure class="cutout cutout-wide">
+      <img src="artificial-mind-of-your-own-laptop.webp" width="1200" height="725" alt="An open laptop in the dark. Where the screen would be there is a glass lattice of small paper cards joined by gold wires, the same lattice as in the picture at the top.">
+    </figure>
     <p>No single company controls this software. The pieces came from universities, lone programmers, and chip companies, and all of it is free to use, even commercially. Running a model on your own computer, instead of sending your words to a company's servers, is called running it locally. The whole pipeline, from a lab's release to a model running on a laptop, looks like this.</p>
 
     <figure>
