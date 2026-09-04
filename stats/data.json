@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-04T04:38:57Z",
+  "generated": "2026-09-04T20:47:53Z",
   "totals": {
-    "views_all": 19,
-    "visitors_all": 19,
-    "views_30d": 19,
-    "visitors_30d": 19
+    "views_all": 20,
+    "visitors_all": 20,
+    "views_30d": 20,
+    "visitors_30d": 20
   },
   "daily": [
     {
@@ -454,8 +454,8 @@
     },
     {
       "day": "2026-09-04",
-      "views": 0,
-      "visitors": 0
+      "views": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-09",
-      "views": 10,
-      "visitors": 10
+      "views": 11,
+      "visitors": 11
     }
   ],
   "projects": [
@@ -514,17 +514,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 5,
-      "visitors_all": 5,
-      "views_30d": 5,
-      "visitors_30d": 5
+      "views_all": 6,
+      "visitors_all": 6,
+      "views_30d": 6,
+      "visitors_30d": 6
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 5,
-      "visitors_all": 5
+      "views_all": 6,
+      "visitors_all": 6
     },
     {
       "path": "/A-Salon-of-Witnesses/a-salon-of-witnesses.html",
@@ -565,7 +565,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 19
+      "visitors": 20
     }
   ],
   "browsers": [
@@ -575,13 +575,13 @@
     },
     {
       "name": "Safari",
-      "visitors": 1
+      "visitors": 2
     }
   ],
   "systems": [
     {
       "name": "macOS",
-      "visitors": 18
+      "visitors": 19
     },
     {
       "name": "iOS",
@@ -591,7 +591,7 @@
   "sizes": [
     {
       "name": "Large screen",
-      "visitors": 17
+      "visitors": 18
     },
     {
       "name": "Desktop",
@@ -617,7 +617,7 @@
     },
     {
       "name": "Unknown",
-      "visitors": 3
+      "visitors": 4
     },
     {
       "name": "pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html",
