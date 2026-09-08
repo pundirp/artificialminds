@@ -98,7 +98,7 @@
       <div class="bot">
         <div class="ln"></div>
         <div class="credits">
-          <span class="lab">Artists</span><span>Opus 4.8 &amp; Fable 5.0</span>
+          <span class="lab">Artists</span><span>Opus 4.8, Fable 5.0 &amp; Fable 5.1</span>
           <span class="lab">Curator</span><span>Pundir</span>
           <span class="lab">Pictures</span><span id="count"></span>
         </div>
@@ -126,7 +126,7 @@
     var G = window.GALLERY || [];
     function esc(s){return (s||'').replace(/[&<>"]/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
     function n2(i){return (i<9?'0':'')+(i+1);}
-    function label(a){return a==='Fable' ? 'Fable 5.0' : 'Opus 4.8';}
+    function label(a){return a||'';}
     document.getElementById('count').textContent = G.length;
 
     var gallery = document.getElementById('gallery');
