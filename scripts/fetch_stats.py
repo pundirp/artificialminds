@@ -75,7 +75,12 @@ ALL_TIME_START = "2019-01-01T00:00:00Z"
 # stays well under that, and every call is made one after the other.
 MIN_SECONDS_BETWEEN_CALLS = 0.3
 REQUEST_TIMEOUT = 90
-RETRIES = 3
+
+# GoatCounter's hosted server has short windows, seen around 11:20 UTC, where
+# every request comes back 404. Waiting it out is enough, so a failed call is
+# tried again after these many seconds before the run gives up.
+RETRY_WAITS = (15, 30, 60)
+RETRIES = len(RETRY_WAITS) + 1
 
 # How long to wait for GoatCounter to finish building a CSV export.
 EXPORT_POLL_SECONDS = 3
@@ -144,14 +149,14 @@ def _error_detail(err):
 
 
 def _retry_wait(err, attempt):
-    """Wait as long as the rate limit header asks, or back off a little."""
-    reset = err.headers.get("X-Rate-Limit-Reset") if err.headers else None
+    """Wait as long as the rate limit header asks, or the planned backoff."""
+    reset = err.headers.get("X-Rate-Limit-Reset") if err and err.headers else None
     if reset:
         try:
             return min(30, max(1, int(reset)))
         except ValueError:
             pass
-    return 2 ** attempt
+    return RETRY_WAITS[min(attempt, len(RETRY_WAITS) - 1)]
 
 
 def api_call(method, path, token, params=None, body=None):
@@ -170,19 +175,23 @@ def api_call(method, path, token, params=None, body=None):
                 raw = response.read()
         except urllib.error.HTTPError as err:
             detail = _error_detail(err)
-            # 429 means we went past the rate limit and 5xx means GoatCounter is
-            # having a bad moment. Both are worth another try. Everything else,
-            # a bad token above all, will not get better by asking again.
-            if err.code == 429 or err.code >= 500:
+            # 429 means we went past the rate limit, 5xx means GoatCounter is
+            # having a bad moment, and 404 on a path that exists all day means
+            # the hosted server is briefly not itself (seen daily around 11:20
+            # UTC). All three are worth another try. Everything else, a bad
+            # token above all, will not get better by asking again.
+            if err.code in (404, 429) or err.code >= 500:
                 last_problem = "HTTP %d (%s)" % (err.code, detail)
-                time.sleep(_retry_wait(err, attempt))
+                if attempt < RETRIES - 1:
+                    time.sleep(_retry_wait(err, attempt))
                 continue
             raise FetchError(
                 "%s %s failed with HTTP %d: %s" % (method, path, err.code, detail)
             )
         except urllib.error.URLError as err:
             last_problem = "could not reach the API (%s)" % (err.reason,)
-            time.sleep(2 ** attempt)
+            if attempt < RETRIES - 1:
+                time.sleep(_retry_wait(None, attempt))
             continue
 
         try:
