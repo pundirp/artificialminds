@@ -42,7 +42,12 @@
   .gallery{flex:1;padding:clamp(44px,6vh,76px) clamp(22px,3.6vw,60px) 96px;column-gap:38px}
   .item{break-inside:avoid;margin:0 0 40px}
   .imgwrap{position:relative;display:block;background:#fff;box-shadow:0 3px 18px rgba(0,0,0,.10);cursor:zoom-in}
-  .imgwrap img{width:100%;display:block;-webkit-user-drag:none;user-select:none}
+  .imgwrap:focus-visible{outline:1px solid var(--faint);outline-offset:4px}
+  /* width/height attributes on the img reserve the right shape before the file loads,
+     so the columns do not reflow. height:auto keeps them as a ratio, not a pixel size. */
+  .imgwrap img{width:100%;height:auto;display:block;-webkit-user-drag:none;user-select:none;
+    opacity:0;transition:opacity .25s ease}
+  .imgwrap img.on{opacity:1}
   .imgwrap::after{content:attr(data-artist);position:absolute;right:10px;bottom:8px;font-family:var(--sans);
     font-size:8.5px;font-weight:400;letter-spacing:.1em;color:var(--lc,#ddd8cf);pointer-events:none}
   .imgwrap[data-lbl="d"]::after{text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
@@ -73,17 +78,30 @@
        flex-direction:column;gap:18px;padding:32px;z-index:40}
   #box.open{display:flex}
   #bf{position:relative;display:inline-block}
-  #bf img{display:block;max-height:80vh;max-width:92vw;-webkit-user-drag:none;user-select:none}
+  /* width:auto and height:auto stop the width/height attributes from stretching the picture.
+     The attributes and the aspect-ratio set in paint() give the frame its right shape
+     before the file arrives, so stepping does not resize the box. */
+  #bf img{display:block;width:auto;height:auto;max-height:80vh;max-width:92vw;
+    -webkit-user-drag:none;user-select:none;opacity:1;transition:opacity .18s ease}
+  #bf img.swap{opacity:0}
   #bf::after{content:attr(data-artist);position:absolute;right:12px;bottom:10px;font-family:var(--sans);
     font-size:10.5px;font-weight:400;letter-spacing:.11em;color:var(--lc,#ddd8cf);pointer-events:none}
   #bf[data-lbl="d"]::after{text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
   #bf[data-lbl="l"]::after{text-shadow:0 1px 1.5px rgba(255,255,255,.45)}
-  #bcap{font-style:italic;font-size:22px;color:#ece8df;text-align:center}
+  #bcap{font-style:italic;font-size:22px;color:#ece8df;text-align:center;max-width:92vw}
   #bcap .no{font-family:var(--sans);font-style:normal;font-size:11px;letter-spacing:.2em;color:#8c867a;margin-right:10px}
   #x{position:fixed;top:15px;right:21px;font-size:30px;line-height:1;color:#b7b2a6;background:none;border:0;cursor:pointer;font-family:var(--sans)}
   #x:hover{color:#fff}
   .arw{position:fixed;top:50%;transform:translateY(-50%);font-size:42px;color:#857f73;background:none;border:0;cursor:pointer;padding:10px 18px}
   .arw:hover{color:#fff}.ap{left:8px}.an{right:8px}
+  .arw:focus-visible,#x:focus-visible{outline:1px solid #857f73;outline-offset:4px}
+  /* the page behind the enlargement does not scroll while it is open */
+  html.hold,html.hold body{overflow:hidden}
+
+  @media(prefers-reduced-motion:reduce){
+    .imgwrap img,#bf img{transition:none}
+    .imgwrap img{opacity:1}
+  }
 </style>
 </head>
 <body>
@@ -132,32 +150,80 @@
     var gallery = document.getElementById('gallery');
     G.forEach(function(w, idx){
       var d = document.createElement('div'); d.className = 'item';
+      var dim = (w.w && w.h) ? ' width="'+w.w+'" height="'+w.h+'"' : '';
+      var load = (idx < 6) ? 'eager' : 'lazy';
+      var pri = (idx < 2) ? ' fetchpriority="high"' : '';
       d.innerHTML =
-        '<a class="imgwrap" data-artist="'+esc(label(w.artist))+'" data-lbl="'+(w.lbl||'d')+'" style="--lc:'+(w.lc||'#ddd8cf')+'"><img loading="lazy" src="'+w.src+'" alt=""></a>'
+        '<a class="imgwrap" role="button" tabindex="0" data-artist="'+esc(label(w.artist))+'" data-lbl="'+(w.lbl||'d')+'" style="--lc:'+(w.lc||'#ddd8cf')+'"><img loading="'+load+'" decoding="async"'+pri+dim+' src="'+w.src+'" alt=""></a>'
       + '<figcaption><span class="no">'+n2(idx)+'</span><span>&ldquo;'+esc(w.title)+'&rdquo;</span></figcaption>';
-      d.querySelector('.imgwrap').onclick = function(){ open(idx); };
+      var a = d.querySelector('.imgwrap');
+      a.onclick = function(){ open(idx, a); };
+      a.onkeydown = function(e){
+        if(e.key==='Enter' || e.key===' ' || e.key==='Spacebar'){ e.preventDefault(); open(idx, a); }
+      };
+      /* a picture already in the cache is shown at once, everything else fades in on arrival */
+      var im = d.querySelector('img');
+      if(im.complete) im.className = 'on';
+      else im.addEventListener('load', function(){ im.className = 'on'; });
+      im.addEventListener('error', function(){ im.className = 'on'; });
       gallery.appendChild(d);
     });
 
     var box=document.getElementById('box'), bf=document.getElementById('bf'), bimg=document.getElementById('bimg'),
-        bcap=document.getElementById('bcap'), cur=0, pre={};
-    function preload(i){ [i-1,i+1].forEach(function(j){ j=(j+G.length)%G.length;
+        bcap=document.getElementById('bcap'), cur=0, pre={}, opener=null, sy=0, swapT=0, swiped=0,
+        xb=document.getElementById('x'),
+        calm=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    function preload(i){ [i-1,i+1,i+2].forEach(function(j){ j=(j+G.length)%G.length;
       if(!pre[j]){ var im=new Image(); im.src=G[j].src; pre[j]=im; } }); }
-    function open(i){ cur=i; paint(); box.classList.add('open'); }
-    function close(){ box.classList.remove('open'); bimg.src=''; }
-    function paint(){ var w=G[cur]||{}; bimg.src=w.src; bimg.alt=w.title||'';
+    function open(i, from){
+      opener = from || null; cur = i;
+      sy = window.pageYOffset || document.documentElement.scrollTop || 0;
+      document.documentElement.classList.add('hold');
+      box.classList.add('open'); paint(false); xb.focus();
+    }
+    function close(){
+      box.classList.remove('open'); bimg.removeAttribute('src'); clearTimeout(swapT);
+      document.documentElement.classList.remove('hold'); window.scrollTo(0, sy);
+      if(opener && opener.focus) opener.focus();
+      opener = null;
+    }
+    function show(){ bimg.classList.remove('swap'); }
+    /* the frame is given its shape before the file loads, so the box never resizes mid step */
+    function apply(){ var w=G[cur]||{};
+      if(w.w && w.h){ bimg.width=w.w; bimg.height=w.h; bimg.style.aspectRatio = w.w+' / '+w.h; }
+      else { bimg.removeAttribute('width'); bimg.removeAttribute('height'); bimg.style.aspectRatio=''; }
+      bimg.onload = show; bimg.onerror = show;
+      bimg.src=w.src; bimg.alt=w.title||'';
       bf.setAttribute('data-artist', label(w.artist)); bf.setAttribute('data-lbl', w.lbl||'d');
       bf.style.setProperty('--lc', w.lc||'#ddd8cf');
-      bcap.innerHTML='<span class="no">'+n2(cur)+'</span>&ldquo;'+esc(w.title)+'&rdquo;'; preload(cur); }
-    function step(d){ cur=(cur+d+G.length)%G.length; paint(); }
-    document.getElementById('x').onclick = close;
+      bcap.innerHTML='<span class="no">'+n2(cur)+'</span>&ldquo;'+esc(w.title)+'&rdquo;';
+      if(bimg.complete) show();
+      preload(cur); }
+    function paint(fade){ clearTimeout(swapT);
+      if(calm){ show(); apply(); return; }
+      bimg.classList.add('swap');
+      if(fade) swapT = setTimeout(apply, 170); else apply(); }
+    function step(d){ cur=(cur+d+G.length)%G.length; paint(true); }
+    xb.onclick = close;
     document.getElementById('bp').onclick = function(){ step(-1); };
     document.getElementById('bn').onclick = function(){ step(1); };
-    box.addEventListener('click', function(e){ if(e.target===box) close(); });
+    box.addEventListener('click', function(e){ if(e.target===box && Date.now()-swiped > 400) close(); });
     document.addEventListener('keydown', function(e){
       if(!box.classList.contains('open')) return;
       if(e.key==='Escape') close(); else if(e.key==='ArrowRight') step(1); else if(e.key==='ArrowLeft') step(-1);
     });
+    /* swipe left or right to step, on a phone */
+    var tx=0, ty=0, tok=false;
+    box.addEventListener('touchstart', function(e){
+      if(e.touches.length!==1){ tok=false; return; }
+      tok=true; tx=e.touches[0].clientX; ty=e.touches[0].clientY;
+    }, {passive:true});
+    box.addEventListener('touchend', function(e){
+      if(!tok) return; tok=false;
+      var t=e.changedTouches[0], dx=t.clientX-tx, dy=t.clientY-ty;
+      if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){ swiped = Date.now(); step(dx < 0 ? 1 : -1); }
+    }, {passive:true});
+
     document.addEventListener('contextmenu', function(e){ if(e.target.tagName==='IMG') e.preventDefault(); });
     document.addEventListener('dragstart', function(e){ if(e.target.tagName==='IMG') e.preventDefault(); });
   </script>
