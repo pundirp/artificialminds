@@ -1,4 +1,4 @@
-# Refreshes stats/data.json from GoatCounter four times a day.
+# Refreshes stats/data.json from GoatCounter three times a day.
 #
 # The fetch script does all the work. This workflow only runs it and commits the
 # result, and it commits nothing when the numbers have not moved. The generated
@@ -7,8 +7,10 @@ name: Refresh site stats
 
 on:
   schedule:
-    # Twenty past midnight, six, noon and six in the evening, UTC.
-    - cron: "20 0,6,12,18 * * *"
+    # Twenty past midnight, noon and six in the evening, UTC. The six in the
+    # morning slot was dropped: GitHub ran it hours late, landing in a daily
+    # window around 11:20 UTC where GoatCounter answers every call with 404.
+    - cron: "20 0,12,18 * * *"
   workflow_dispatch:
 
 # The default GITHUB_TOKEN needs to be able to push the updated file.
@@ -36,10 +38,42 @@ jobs:
           mkdir -p "${RUNNER_TEMP}/before"
           git show HEAD:stats/data.json > "${RUNNER_TEMP}/before/data.json" 2>/dev/null || true
 
+      # One failed fetch is not worth an email. The step below turns a failure
+      # into a note, and the run only fails (which is what sends the email)
+      # when the committed numbers have gone more than STALE_DAYS without a
+      # refresh.
       - name: Fetch the numbers from GoatCounter
+        id: fetch
+        continue-on-error: true
         env:
           GOATCOUNTER_TOKEN: ${{ secrets.GOATCOUNTER_TOKEN }}
         run: python3 scripts/fetch_stats.py
+
+      - name: Fail only if the numbers have gone stale
+        if: steps.fetch.outcome == 'failure'
+        env:
+          STALE_DAYS: "3"
+        run: |
+          python3 - <<'PY'
+          import json, os, sys
+          from datetime import datetime, timedelta, timezone
+
+          limit = int(os.environ["STALE_DAYS"])
+          path = os.path.join(os.environ["RUNNER_TEMP"], "before", "data.json")
+          try:
+              with open(path, encoding="utf-8") as handle:
+                  stamp = json.load(handle).get("generated", "")
+              generated = datetime.strptime(stamp, "%Y-%m-%dT%H:%M:%SZ").replace(tzinfo=timezone.utc)
+          except (OSError, ValueError, AttributeError):
+              print("This fetch failed and the committed file has no readable timestamp.")
+              sys.exit(1)
+
+          age = datetime.now(timezone.utc) - generated
+          if age > timedelta(days=limit):
+              print("This fetch failed and the numbers were last refreshed %s, %d days ago. Look into it." % (stamp, age.days))
+              sys.exit(1)
+          print("This fetch failed, but the numbers were refreshed %s, so no alarm yet." % (stamp,))
+          PY
 
       - name: Work out whether anything actually changed
         id: compare
