@@ -1,0 +1,210 @@
+/* fonts.css
+   Fonts for Artificial Minds. Every face here is free and under the SIL Open
+   Font Licence. The licence text for each one is in LICENSES/ beside this file.
+
+   Two parts. First the @font-face rules, one per file. Then a :root block that
+   groups the faces into four families of three roles: text, label, mono.
+
+   A page adopts a family by pointing its own three variables at one family:
+
+     <link rel="stylesheet" href="fonts/fonts.css">
+     :root { --serif: var(--family-charter-text);
+             --sans:  var(--family-charter-label);
+             --mono:  var(--family-charter-mono); }
+
+   The url() paths are relative to this file, so the folder can sit anywhere.
+   Every hosted stack ends in the matching system stack, so a page still reads
+   correctly if a file fails to load. All files are subset to Latin plus the
+   punctuation and figure marks the site draws.
+*/
+
+/* ---------- faces ---------- */
+
+/* Charis SIL */
+@font-face {
+  font-family: "Charis SIL";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("charis-sil-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Charis SIL";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("charis-sil-700-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Charis SIL";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("charis-sil-400-italic.woff2") format("woff2");
+}
+
+/* Public Sans */
+@font-face {
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("public-sans-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Public Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("public-sans-600-normal.woff2") format("woff2");
+}
+
+/* Cousine */
+@font-face {
+  font-family: "Cousine";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("cousine-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Cousine";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("cousine-700-normal.woff2") format("woff2");
+}
+
+/* Brygada 1918 */
+@font-face {
+  font-family: "Brygada 1918";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("brygada-1918-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Brygada 1918";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("brygada-1918-700-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Brygada 1918";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("brygada-1918-400-italic.woff2") format("woff2");
+}
+
+/* Albert Sans */
+@font-face {
+  font-family: "Albert Sans";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("albert-sans-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Albert Sans";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("albert-sans-600-normal.woff2") format("woff2");
+}
+
+/* Sometype Mono */
+@font-face {
+  font-family: "Sometype Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("sometype-mono-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Sometype Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("sometype-mono-500-normal.woff2") format("woff2");
+}
+
+/* Bitter */
+@font-face {
+  font-family: "Bitter";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("bitter-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Bitter";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("bitter-700-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Bitter";
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+  src: url("bitter-400-italic.woff2") format("woff2");
+}
+
+/* Atkinson Hyperlegible */
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("atkinson-hyperlegible-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Atkinson Hyperlegible";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("atkinson-hyperlegible-700-normal.woff2") format("woff2");
+}
+
+/* Spline Sans Mono */
+@font-face {
+  font-family: "Spline Sans Mono";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("spline-sans-mono-400-normal.woff2") format("woff2");
+}
+@font-face {
+  font-family: "Spline Sans Mono";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("spline-sans-mono-500-normal.woff2") format("woff2");
+}
+
+/* ---------- families ---------- */
+
+:root {
+  /* House */
+  --family-house-text:         "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --family-house-label:        -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --family-house-mono:         ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Charter */
+  --family-charter-text:       "Charis SIL", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --family-charter-label:      "Public Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --family-charter-mono:       "Cousine", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Brygada */
+  --family-brygada-text:       "Brygada 1918", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --family-brygada-label:      "Albert Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --family-brygada-mono:       "Sometype Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+
+  /* Bitter */
+  --family-bitter-text:        "Bitter", "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif;
+  --family-bitter-label:       "Atkinson Hyperlegible", -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --family-bitter-mono:        "Spline Sans Mono", ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace;
+}

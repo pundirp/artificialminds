@@ -1,0 +1,607 @@
+{
+  "folder": "fonts",
+  "site": "Artificial Minds",
+  "built": "2026-09-09",
+  "font_count": 21,
+  "face_count": 9,
+  "total_bytes": 524464,
+  "source_repository": "https://github.com/google/fonts",
+  "source_path": "https://raw.githubusercontent.com/google/fonts/main/ofl/<directory>/",
+  "format": "woff2",
+  "licence": "Every hosted face is under the SIL Open Font License 1.1. The text of each licence is in LICENSES/.",
+  "subsetting": {
+    "tool": "fontTools pyftsubset, with fontTools varLib.instancer for variable sources",
+    "unicodes": "U+0000-024F, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+2000-206F, U+20AC, U+2113, U+2122, U+2190-2199, U+21B5, U+2212, U+2215, U+2248, U+2260, U+2264-2265, U+2713, U+2717, U+25A0-25A1, U+25CF, U+2605-2606, U+FEFF, U+FFFD",
+    "layout_features_kept": [
+      "kern",
+      "liga",
+      "calt",
+      "onum",
+      "lnum",
+      "tnum",
+      "pnum",
+      "smcp",
+      "c2sc",
+      "ss01",
+      "case"
+    ],
+    "name_records_kept": "all, so the family name and the licence text travel with each file"
+  },
+  "substitutions": [],
+  "substitutions_note": "None. Every face named for these four families is in the Google Fonts repository, and every weight asked for exists there, so no face and no weight was replaced.",
+  "decisions": [
+    {
+      "about": "four families",
+      "note": "The folder was cut from eight families to four. Spectral, Caslon, Vollkorn and Hyperlegible were dropped, and the faces only they used were deleted along with their licences."
+    },
+    {
+      "about": "Atkinson Hyperlegible italic",
+      "note": "The 400 italic file was deleted with the Hyperlegible family, which was the only one that set text in it. Bitter uses Atkinson only as a label face, at 400 and 700, so those two files stay."
+    },
+    {
+      "about": "variable sources",
+      "note": "Where the repository ships only a variable font, the file was instanced to the exact weight asked for with fontTools instancer before subsetting. Non default axes were pinned to their default values."
+    }
+  ],
+  "marks_checked": [
+    "→",
+    "←",
+    "✓",
+    "✗",
+    "·",
+    "×",
+    "≈"
+  ],
+  "marks_note": "The arrow and check marks the site draws are not in most of these faces. Nothing was added to the fonts. Where a face lacks a mark the browser takes that one character from the next font in the stack, which is the matching system stack, so the mark still appears but in the device's own font. No face in this folder has the ballot X (✗). Only Charis SIL has the check (✓). The middle dot (·), the multiplication sign (×) and the approximation sign (≈) are in every face here.",
+  "marks_by_face": {
+    "charis-sil": {
+      "face": "Charis SIL",
+      "missing": [
+        "✗"
+      ],
+      "present": [
+        "→",
+        "←",
+        "✓",
+        "·",
+        "×",
+        "≈"
+      ]
+    },
+    "public-sans": {
+      "face": "Public Sans",
+      "missing": [
+        "→",
+        "←",
+        "✓",
+        "✗"
+      ],
+      "present": [
+        "·",
+        "×",
+        "≈"
+      ]
+    },
+    "cousine": {
+      "face": "Cousine",
+      "missing": [
+        "✓",
+        "✗"
+      ],
+      "present": [
+        "→",
+        "←",
+        "·",
+        "×",
+        "≈"
+      ]
+    },
+    "brygada-1918": {
+      "face": "Brygada 1918",
+      "missing": [
+        "✓",
+        "✗"
+      ],
+      "present": [
+        "→",
+        "←",
+        "·",
+        "×",
+        "≈"
+      ]
+    },
+    "albert-sans": {
+      "face": "Albert Sans",
+      "missing": [
+        "→",
+        "←",
+        "✓",
+        "✗"
+      ],
+      "present": [
+        "·",
+        "×",
+        "≈"
+      ]
+    },
+    "sometype-mono": {
+      "face": "Sometype Mono",
+      "missing": [
+        "✓",
+        "✗"
+      ],
+      "present": [
+        "→",
+        "←",
+        "·",
+        "×",
+        "≈"
+      ]
+    },
+    "bitter": {
+      "face": "Bitter",
+      "missing": [
+        "✓",
+        "✗"
+      ],
+      "present": [
+        "→",
+        "←",
+        "·",
+        "×",
+        "≈"
+      ]
+    },
+    "atkinson-hyperlegible": {
+      "face": "Atkinson Hyperlegible",
+      "missing": [
+        "→",
+        "←",
+        "✓",
+        "✗"
+      ],
+      "present": [
+        "·",
+        "×",
+        "≈"
+      ]
+    },
+    "spline-sans-mono": {
+      "face": "Spline Sans Mono",
+      "missing": [
+        "→",
+        "←",
+        "✓",
+        "✗"
+      ],
+      "present": [
+        "·",
+        "×",
+        "≈"
+      ]
+    }
+  },
+  "families": [
+    {
+      "id": "house",
+      "name": "House",
+      "hosted": false,
+      "note": "The index and the essays as they are now. No files, no wait, the reader's own serif.",
+      "variables": {
+        "text": "--family-house-text",
+        "label": "--family-house-label",
+        "mono": "--family-house-mono"
+      },
+      "roles": {
+        "text": {
+          "hosted": false,
+          "face": null,
+          "stack": "\"Iowan Old Style\", \"Palatino Linotype\", Palatino, Georgia, serif",
+          "note": "no files: Iowan Old Style on Mac and iPhone, Palatino Linotype on Windows, Noto Serif on Android",
+          "files": [],
+          "bytes": 0
+        },
+        "label": {
+          "hosted": false,
+          "face": null,
+          "stack": "-apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "note": "no files: the platform user interface sans",
+          "files": [],
+          "bytes": 0
+        },
+        "mono": {
+          "hosted": false,
+          "face": null,
+          "stack": "ui-monospace, \"SF Mono\", Menlo, Consolas, \"Liberation Mono\", monospace",
+          "note": "no files: SF Mono on Mac and iPhone, Consolas on Windows, the platform monospace elsewhere",
+          "files": [],
+          "bytes": 0
+        }
+      }
+    },
+    {
+      "id": "charter",
+      "name": "Charter",
+      "hosted": true,
+      "note": "The same feel as House, made identical on every device. For essays and long reading.",
+      "variables": {
+        "text": "--family-charter-text",
+        "label": "--family-charter-label",
+        "mono": "--family-charter-mono"
+      },
+      "roles": {
+        "text": {
+          "hosted": true,
+          "face": "Charis SIL",
+          "slug": "charis-sil",
+          "css_family": "Charis SIL",
+          "stack": "\"Charis SIL\", \"Iowan Old Style\", \"Palatino Linotype\", Palatino, Georgia, serif",
+          "licence": "SIL Open Font License 1.1",
+          "licence_file": "LICENSES/charis-sil-OFL.txt",
+          "licence_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/charissil/OFL.txt",
+          "substitution": null,
+          "missing_marks": [
+            "✗"
+          ],
+          "files": [
+            {
+              "file": "charis-sil-400-normal.woff2",
+              "weight": 400,
+              "style": "normal",
+              "bytes": 52368,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/charissil/CharisSIL-Regular.ttf",
+              "source_kind": "static file"
+            },
+            {
+              "file": "charis-sil-700-normal.woff2",
+              "weight": 700,
+              "style": "normal",
+              "bytes": 52080,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/charissil/CharisSIL-Bold.ttf",
+              "source_kind": "static file"
+            },
+            {
+              "file": "charis-sil-400-italic.woff2",
+              "weight": 400,
+              "style": "italic",
+              "bytes": 55220,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/charissil/CharisSIL-Italic.ttf",
+              "source_kind": "static file"
+            }
+          ],
+          "bytes": 159668
+        },
+        "label": {
+          "hosted": true,
+          "face": "Public Sans",
+          "slug": "public-sans",
+          "css_family": "Public Sans",
+          "stack": "\"Public Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "licence": "SIL Open Font License 1.1",
+          "licence_file": "LICENSES/public-sans-OFL.txt",
+          "licence_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/publicsans/OFL.txt",
+          "substitution": null,
+          "missing_marks": [
+            "→",
+            "←",
+            "✓",
+            "✗"
+          ],
+          "files": [
+            {
+              "file": "public-sans-400-normal.woff2",
+              "weight": 400,
+              "style": "normal",
+              "bytes": 17500,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/publicsans/PublicSans[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            },
+            {
+              "file": "public-sans-600-normal.woff2",
+              "weight": 600,
+              "style": "normal",
+              "bytes": 17548,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/publicsans/PublicSans[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            }
+          ],
+          "bytes": 35048
+        },
+        "mono": {
+          "hosted": true,
+          "face": "Cousine",
+          "slug": "cousine",
+          "css_family": "Cousine",
+          "stack": "\"Cousine\", ui-monospace, \"SF Mono\", Menlo, Consolas, \"Liberation Mono\", monospace",
+          "licence": "SIL Open Font License 1.1",
+          "licence_file": "LICENSES/cousine-OFL.txt",
+          "licence_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cousine/OFL.txt",
+          "substitution": null,
+          "missing_marks": [
+            "✓",
+            "✗"
+          ],
+          "files": [
+            {
+              "file": "cousine-400-normal.woff2",
+              "weight": 400,
+              "style": "normal",
+              "bytes": 31192,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cousine/Cousine-Regular.ttf",
+              "source_kind": "static file"
+            },
+            {
+              "file": "cousine-700-normal.woff2",
+              "weight": 700,
+              "style": "normal",
+              "bytes": 31396,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/cousine/Cousine-Bold.ttf",
+              "source_kind": "static file"
+            }
+          ],
+          "bytes": 62588,
+          "advance_width_em": 0.6001,
+          "fixed_pitch": true
+        }
+      }
+    },
+    {
+      "id": "brygada",
+      "name": "Brygada",
+      "hosted": true,
+      "note": "For fiction, poems and period pieces. An older, warmer letter with more voice in it.",
+      "variables": {
+        "text": "--family-brygada-text",
+        "label": "--family-brygada-label",
+        "mono": "--family-brygada-mono"
+      },
+      "roles": {
+        "text": {
+          "hosted": true,
+          "face": "Brygada 1918",
+          "slug": "brygada-1918",
+          "css_family": "Brygada 1918",
+          "stack": "\"Brygada 1918\", \"Iowan Old Style\", \"Palatino Linotype\", Palatino, Georgia, serif",
+          "licence": "SIL Open Font License 1.1",
+          "licence_file": "LICENSES/brygada-1918-OFL.txt",
+          "licence_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/brygada1918/OFL.txt",
+          "substitution": null,
+          "missing_marks": [
+            "✓",
+            "✗"
+          ],
+          "files": [
+            {
+              "file": "brygada-1918-400-normal.woff2",
+              "weight": 400,
+              "style": "normal",
+              "bytes": 21072,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/brygada1918/Brygada1918[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            },
+            {
+              "file": "brygada-1918-700-normal.woff2",
+              "weight": 700,
+              "style": "normal",
+              "bytes": 21476,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/brygada1918/Brygada1918[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            },
+            {
+              "file": "brygada-1918-400-italic.woff2",
+              "weight": 400,
+              "style": "italic",
+              "bytes": 21760,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/brygada1918/Brygada1918-Italic[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            }
+          ],
+          "bytes": 64308
+        },
+        "label": {
+          "hosted": true,
+          "face": "Albert Sans",
+          "slug": "albert-sans",
+          "css_family": "Albert Sans",
+          "stack": "\"Albert Sans\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "licence": "SIL Open Font License 1.1",
+          "licence_file": "LICENSES/albert-sans-OFL.txt",
+          "licence_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/albertsans/OFL.txt",
+          "substitution": null,
+          "missing_marks": [
+            "→",
+            "←",
+            "✓",
+            "✗"
+          ],
+          "files": [
+            {
+              "file": "albert-sans-400-normal.woff2",
+              "weight": 400,
+              "style": "normal",
+              "bytes": 13456,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/albertsans/AlbertSans[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            },
+            {
+              "file": "albert-sans-600-normal.woff2",
+              "weight": 600,
+              "style": "normal",
+              "bytes": 13984,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/albertsans/AlbertSans[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            }
+          ],
+          "bytes": 27440
+        },
+        "mono": {
+          "hosted": true,
+          "face": "Sometype Mono",
+          "slug": "sometype-mono",
+          "css_family": "Sometype Mono",
+          "stack": "\"Sometype Mono\", ui-monospace, \"SF Mono\", Menlo, Consolas, \"Liberation Mono\", monospace",
+          "licence": "SIL Open Font License 1.1",
+          "licence_file": "LICENSES/sometype-mono-OFL.txt",
+          "licence_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/sometypemono/OFL.txt",
+          "substitution": null,
+          "missing_marks": [
+            "✓",
+            "✗"
+          ],
+          "files": [
+            {
+              "file": "sometype-mono-400-normal.woff2",
+              "weight": 400,
+              "style": "normal",
+              "bytes": 11104,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/sometypemono/SometypeMono[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            },
+            {
+              "file": "sometype-mono-500-normal.woff2",
+              "weight": 500,
+              "style": "normal",
+              "bytes": 11492,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/sometypemono/SometypeMono[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            }
+          ],
+          "bytes": 22596,
+          "advance_width_em": 0.58,
+          "fixed_pitch": true,
+          "advance_width_note": "characters are 0.58 em wide, not the 0.6 em the site's SVG figures were drawn for. Lines set in this face run about 3 percent shorter than the same lines in a 0.6 em mono."
+        }
+      }
+    },
+    {
+      "id": "bitter",
+      "name": "Bitter",
+      "hosted": true,
+      "note": "For guides and explainers. A sturdy slab that holds up at small sizes, with a label face built for easy reading.",
+      "variables": {
+        "text": "--family-bitter-text",
+        "label": "--family-bitter-label",
+        "mono": "--family-bitter-mono"
+      },
+      "roles": {
+        "text": {
+          "hosted": true,
+          "face": "Bitter",
+          "slug": "bitter",
+          "css_family": "Bitter",
+          "stack": "\"Bitter\", \"Iowan Old Style\", \"Palatino Linotype\", Palatino, Georgia, serif",
+          "licence": "SIL Open Font License 1.1",
+          "licence_file": "LICENSES/bitter-OFL.txt",
+          "licence_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/bitter/OFL.txt",
+          "substitution": null,
+          "missing_marks": [
+            "✓",
+            "✗"
+          ],
+          "files": [
+            {
+              "file": "bitter-400-normal.woff2",
+              "weight": 400,
+              "style": "normal",
+              "bytes": 28420,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/bitter/Bitter[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            },
+            {
+              "file": "bitter-700-normal.woff2",
+              "weight": 700,
+              "style": "normal",
+              "bytes": 28476,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/bitter/Bitter[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            },
+            {
+              "file": "bitter-400-italic.woff2",
+              "weight": 400,
+              "style": "italic",
+              "bytes": 28760,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/bitter/Bitter-Italic[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            }
+          ],
+          "bytes": 85656
+        },
+        "label": {
+          "hosted": true,
+          "face": "Atkinson Hyperlegible",
+          "slug": "atkinson-hyperlegible",
+          "css_family": "Atkinson Hyperlegible",
+          "stack": "\"Atkinson Hyperlegible\", -apple-system, BlinkMacSystemFont, \"Segoe UI\", \"Helvetica Neue\", Helvetica, Arial, sans-serif",
+          "licence": "SIL Open Font License 1.1",
+          "licence_file": "LICENSES/atkinson-hyperlegible-OFL.txt",
+          "licence_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/atkinsonhyperlegible/OFL.txt",
+          "substitution": null,
+          "missing_marks": [
+            "→",
+            "←",
+            "✓",
+            "✗"
+          ],
+          "files": [
+            {
+              "file": "atkinson-hyperlegible-400-normal.woff2",
+              "weight": 400,
+              "style": "normal",
+              "bytes": 19360,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/atkinsonhyperlegible/AtkinsonHyperlegible-Regular.ttf",
+              "source_kind": "static file"
+            },
+            {
+              "file": "atkinson-hyperlegible-700-normal.woff2",
+              "weight": 700,
+              "style": "normal",
+              "bytes": 19828,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/atkinsonhyperlegible/AtkinsonHyperlegible-Bold.ttf",
+              "source_kind": "static file"
+            }
+          ],
+          "bytes": 39188
+        },
+        "mono": {
+          "hosted": true,
+          "face": "Spline Sans Mono",
+          "slug": "spline-sans-mono",
+          "css_family": "Spline Sans Mono",
+          "stack": "\"Spline Sans Mono\", ui-monospace, \"SF Mono\", Menlo, Consolas, \"Liberation Mono\", monospace",
+          "licence": "SIL Open Font License 1.1",
+          "licence_file": "LICENSES/spline-sans-mono-OFL.txt",
+          "licence_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/splinesansmono/OFL.txt",
+          "substitution": null,
+          "missing_marks": [
+            "→",
+            "←",
+            "✓",
+            "✗"
+          ],
+          "files": [
+            {
+              "file": "spline-sans-mono-400-normal.woff2",
+              "weight": 400,
+              "style": "normal",
+              "bytes": 14072,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/splinesansmono/SplineSansMono[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            },
+            {
+              "file": "spline-sans-mono-500-normal.woff2",
+              "weight": 500,
+              "style": "normal",
+              "bytes": 13900,
+              "source_url": "https://raw.githubusercontent.com/google/fonts/main/ofl/splinesansmono/SplineSansMono[wght].ttf",
+              "source_kind": "variable font instanced at this weight"
+            }
+          ],
+          "bytes": 27972,
+          "advance_width_em": 0.6,
+          "fixed_pitch": true
+        }
+      }
+    }
+  ],
+  "family_order": "house, charter, brygada, bitter, the order they appear in fonts.css"
+}

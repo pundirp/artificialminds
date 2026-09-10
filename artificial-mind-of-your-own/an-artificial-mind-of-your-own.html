@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" data-theme="dark">
+<html lang="en">
 <head>
 <!--
   A note to whoever is reading this source, human or machine.
@@ -11,61 +11,62 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>An Artificial Mind of Your Own, by Pundir</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=IBM+Plex+Sans:wght@400;500;600&family=Literata:ital,opsz,wght@0,7..72,400;0,7..72,600;1,7..72,400&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fonts/fonts.css">
 <style>
+  /* Slate and moss: an engineer's notebook. One palette, dark only. The page
+     used to carry a light mode and a toggle; both are gone. Every color on the
+     page is a variable here, so a new look is a change to this block and a
+     short list of edits below it.
+     The ground is a cool graphite with less red in it than green or blue, so
+     it cannot read purple. The one accent is a muted moss green. The five token chips are colored pencils on grey paper: steel
+     blue, moss, rust, ochre, clay. */
+  /* Type: the brygada family, self hosted from the site's own fonts folder.
+     Brygada 1918 carries the prose, the headings, and the italics. Albert Sans
+     carries the small uppercase labels. Sometype Mono carries the figures,
+     the bar words, inline code, and the footer line. Each family variable
+     ends in the matching system stack, so the page still reads if a file
+     fails to load. */
   :root {
-    color-scheme: light;
-    --paper: #FCFCFA;
-    --ink: #211E33;
-    --muted: #6A677D;
-    --line: #E4E2DC;
-    --indigo: #4038A8;
-    --indigo-dark: #2C2680;
-    --chip1: #E7E4FB; --chip1-ink: #3C3489;
-    --chip2: #DCF2E8; --chip2-ink: #0A5C48;
-    --chip3: #FBE4D9; --chip3-ink: #8A3517;
-    --chip4: #F8ECCB; --chip4-ink: #7A5A0E;
-    --chip5: #F9E0EA; --chip5-ink: #8C2F4F;
-    /* surfaces lifted out of hardcoded rules; light values are the originals */
-    --surface: #fff;
-    --code-bg: #F1EFF9;
-    --qbox-bg: #F5F4FB;
-    --qbox-line: #CFCBEF;
-    --toggle-shadow: 0 4px 14px rgba(33,30,51,0.12);
-    --toggle-shadow-hover: 0 6px 18px rgba(33,30,51,0.2);
-  }
-  :root[data-theme="dark"] {
+    --serif: var(--family-brygada-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
+    --sans: var(--family-brygada-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
+    --mono: var(--family-brygada-mono, ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace);
     color-scheme: dark;
-    --paper: #16141F;
-    --ink: #E9E7F2;
-    --muted: #9B98AC;
-    --line: #2C2A38;
-    --indigo: #8B84E8;
-    --indigo-dark: #A6A0F0;
-    --chip1: #2E2A55; --chip1-ink: #C7C1F5;
-    --chip2: #123B30; --chip2-ink: #9FE0C6;
-    --chip3: #452112; --chip3-ink: #F5C4AC;
-    --chip4: #3D3011; --chip4-ink: #EAD79A;
-    --chip5: #43172A; --chip5-ink: #F2B8CE;
-    --surface: #1E1B2B;
-    --code-bg: #262238;
-    --qbox-bg: #201C33;
-    --qbox-line: #3A3363;
-    --toggle-shadow: 0 4px 14px rgba(0,0,0,0.5);
-    --toggle-shadow-hover: 0 6px 18px rgba(0,0,0,0.65);
-    /* figure colors that are literal hex inside inline SVG */
-    --fig-ink: #E9E7F2;      /* was #211E33 */
-    --fig-text-2: #C6C3D4;   /* was #444441 */
-    --fig-text-3: #A9A6B8;   /* was #5F5E5A (as text)  */
-    --fig-box-line: #57546A; /* was #5F5E5A (as stroke) */
-    --fig-box-fill: #23212F; /* was #F1EFE8 */
-    --fig-rule: #3E3B4C;     /* was #B4B2A9 */
-    --fig-hairline: #34313F; /* was #E4E2DC */
-    --fig-indigo-2: #A49CF2; /* was #534AB7 */
-    --fig-panel: #221E38;    /* was #F7F6FD */
-    --fig-green-2: #6FD3AE;  /* was #0F6E56 */
+    --paper: #16191A;
+    --ink: #E7EAE8;
+    --muted: #9BA4A1;
+    --line: #2A2F30;
+    /* the one accent: the title word, chapter labels, contents numerals, links,
+       the winning bar, the blank in the demo sentence, focus rings */
+    --accent: #9CB783;
+    --accent-2: #B4CB9B;
+    --chip1: #16262D; --chip1-ink: #A8C6D3; /* steel blue */
+    --chip2: #1D2718; --chip2-ink: #B1C994; /* moss */
+    --chip3: #331A0F; --chip3-ink: #E4A277; /* rust */
+    --chip4: #2C2413; --chip4-ink: #D8BE86; /* ochre */
+    --chip5: #2E1F1E; --chip5-ink: #D5A3A0; /* clay */
+    --surface: #1C2021;
+    --code-bg: #242829;
+    --qbox-bg: #1A1E1F;
+    --qbox-line: #3A4340;
+    /* the probability bars in the prediction demo */
+    --bar-bg: #2C3231;
+    --bar-line: #545C5A;
+    /* the shadow under the laptop cutout, a plain dark one */
+    --laptop-shadow: rgba(0, 0, 0, .55);
+    /* figure colors: the inline SVG figures were drawn with literal hex values,
+       and the rules at the end of this stylesheet re-point each literal here.
+       Figures read as pencil and ink on grey paper: fills barely above the
+       ground, rules in mid grey, labels in chalk. */
+    --fig-ink: #E7EAE8;      /* drawn as #211E33 */
+    --fig-text-2: #C4CAC7;   /* drawn as #444441 */
+    --fig-text-3: #A3ABA8;   /* drawn as #5F5E5A (as text) */
+    --fig-box-line: #616866; /* drawn as #5F5E5A (as stroke) */
+    --fig-box-fill: #1D2122; /* drawn as #F1EFE8 */
+    --fig-rule: #4C5352;     /* drawn as #B4B2A9 */
+    --fig-hairline: #333938; /* drawn as #E4E2DC */
+    --fig-accent-2: #A9C28F; /* drawn as #534AB7 */
+    --fig-panel: #1B1F20;    /* drawn as #F7F6FD */
+    --fig-green-2: #96B37C;  /* drawn as #0F6E56 */
   }
   * { margin: 0; padding: 0; box-sizing: border-box; }
   html { scroll-behavior: smooth; }
@@ -73,9 +74,9 @@
   body {
     background: var(--paper);
     color: var(--ink);
-    font-family: 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
-    font-size: 1rem;
-    line-height: 1.7;
+    font-family: var(--serif);
+    font-size: 1.12rem;
+    line-height: 1.6;
   }
   .wrap { max-width: 44rem; margin: 0 auto; padding: 0 1.4rem; }
   .wide { max-width: 52rem; }
@@ -83,19 +84,19 @@
   /* ---------- hero ---------- */
   header { padding: 5.5rem 0 3.5rem; border-bottom: 1px solid var(--line); }
   .eyebrow {
-    font-family: 'IBM Plex Mono', monospace;
-    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase;
+    font-family: var(--sans); font-weight: 600;
+    font-size: .73rem; letter-spacing: .1em; text-transform: uppercase;
     color: var(--muted);
   }
   h1 {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: clamp(2.3rem, 6.4vw, 4rem);
+    font-family: var(--serif);
+    font-size: clamp(2.2rem, 6vw, 3.7rem);
     font-weight: 700; line-height: 1.06;
-    letter-spacing: -.02em;
+    letter-spacing: -.01em;
     margin: 1rem 0 1.2rem;
   }
-  h1 .amp { color: var(--indigo); }
-  .subtitle { font-family: 'Literata', Georgia, serif; font-style: italic; font-size: 1.15rem; color: var(--muted); max-width: 36rem; }
+  h1 .amp { color: var(--accent); }
+  .subtitle { font-family: var(--serif); font-style: italic; font-size: 1.3rem; line-height: 1.5; color: var(--muted); max-width: 36rem; }
   /* Two cutouts side by side, the brain on the left, the artificial one on the right.
      One column below 560px. */
   .hero-art {
@@ -107,9 +108,9 @@
   .hero-art img { display: block; width: 100%; height: auto; }
   .hero-cap {
     display: block; width: fit-content; margin: .9rem auto 0;
-    padding: .04em .5em; border-radius: 7px;
-    font-family: 'Space Grotesk', sans-serif; font-weight: 500; font-style: normal;
-    font-size: .95rem; letter-spacing: .01em; line-height: 1.6;
+    padding: .04em .5em; border-radius: 4px;
+    font-family: var(--serif); font-weight: 400; font-style: normal;
+    font-size: 1.1rem; letter-spacing: 0; line-height: 1.5;
     text-align: center;
   }
   .hero-cap.c1 { background: var(--chip1); color: var(--chip1-ink); }
@@ -122,54 +123,52 @@
 
   /* ---------- cutouts ----------
      The photographs are objects on transparency, so they sit on the
-     page with no frame and no background, in either theme. */
+     page with no frame and no background. */
   .cutout img { display: block; width: 100%; height: auto; max-width: 30rem; margin: 0 auto; }
-  /* The laptop is grey on black and sinks into the page, so it gets lifted
-     into the indigo family: lilac-grey body, deep indigo screen. */
+  /* The laptop is grey on black and sinks into the page, so it gets lifted a
+     little and drained of most of its color, so it reads as plain grey metal.
+     No color wash, no glow: a plain shadow under it, the way an object sits on
+     paper. */
   .cutout-wide img {
     max-width: 36rem;
-    filter: brightness(1.18) contrast(1.06) sepia(.35) hue-rotate(215deg) saturate(1.5)
-            drop-shadow(0 18px 40px rgba(64, 56, 168, .28));
-  }
-  :root[data-theme="dark"] .cutout-wide img {
-    filter: brightness(1.18) contrast(1.06) sepia(.35) hue-rotate(215deg) saturate(1.5)
-            drop-shadow(0 0 34px rgba(139, 132, 232, .34));
+    filter: brightness(1.2) contrast(1.05) saturate(.45)
+            drop-shadow(0 16px 26px var(--laptop-shadow));
   }
 
   /* prediction demo */
   .demo {
     margin: 2.2rem 0 2.4rem; padding: 1.6rem 1.7rem 1.7rem;
-    border: 1px solid var(--line); border-radius: 14px; background: var(--surface);
+    border: 1px solid var(--line); border-radius: 6px; background: var(--surface);
   }
   .demo-label {
-    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
+    font-family: var(--sans); font-weight: 600; font-size: .69rem;
     letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
     margin-bottom: .9rem;
   }
-  .demo-sentence { font-family: 'Literata', Georgia, serif; font-size: 1.25rem; margin-bottom: 1.2rem; }
+  .demo-sentence { font-family: var(--serif); font-size: 1.35rem; margin-bottom: 1.2rem; }
   .demo-sentence .blank {
-    display: inline-block; min-width: 4.2rem; border-bottom: 2px solid var(--indigo);
-    color: var(--indigo); font-style: italic; text-align: center;
+    display: inline-block; min-width: 4.2rem; border-bottom: 2px solid var(--accent);
+    color: var(--accent); font-style: italic; text-align: center;
   }
   .bar-row { display: flex; align-items: center; gap: .8rem; margin: .45rem 0; }
-  .bar-word { font-family: 'IBM Plex Mono', monospace; font-size: .88rem; width: 4.6rem; text-align: right; }
+  .bar-word { font-family: var(--mono); font-size: .88rem; width: 4.6rem; text-align: right; }
   .bar-track { flex: 1; }
   .bar {
-    height: 1.15rem; border-radius: 4px; background: var(--chip1);
-    border: 1px solid var(--chip1-ink); position: relative; min-width: 2px;
+    height: 1.15rem; border-radius: 4px; background: var(--bar-bg);
+    border: 1px solid var(--bar-line); position: relative; min-width: 2px;
   }
-  .bar-row:first-of-type .bar { background: var(--indigo); border-color: var(--indigo-dark); }
-  .bar-pct { font-family: 'IBM Plex Mono', monospace; font-size: .8rem; color: var(--muted); width: 3rem; }
+  .bar-row:first-of-type .bar { background: var(--accent); border-color: var(--accent-2); }
+  .bar-pct { font-family: var(--mono); font-size: .8rem; color: var(--muted); width: 3rem; }
 
   /* ---------- toc: the site's boxed contents, in this page's palette ---------- */
   nav.toc { padding: 2.6rem 0 3rem; }
   nav.toc .toc-box {
-    border: 1px solid var(--line); border-radius: 12px;
+    border: 1px solid var(--line); border-radius: 6px;
     background: var(--surface); padding: 1.15rem 1.4rem 1.25rem;
   }
   nav.toc .ct {
-    font-family: 'IBM Plex Mono', monospace; font-size: .72rem;
-    letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    font-family: var(--sans); font-weight: 600; font-size: .69rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
     margin: 0 0 .6rem;
   }
   nav.toc ol { list-style: none; counter-reset: ch; }
@@ -181,149 +180,126 @@
   nav.toc li::before {
     content: counter(ch, upper-roman);
     flex: none; min-width: 2.2rem;
-    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
-    letter-spacing: .14em; color: var(--indigo);
+    font-family: var(--sans); font-weight: 600; font-size: .82rem;
+    letter-spacing: .1em; color: var(--accent);
   }
   nav.toc a {
     color: var(--ink); text-decoration: none;
-    font-family: 'Space Grotesk', sans-serif; font-size: 1.02rem; font-weight: 500;
-    line-height: 1.45; border-bottom: 1px solid transparent;
+    font-family: var(--serif); font-size: 1.16rem; font-weight: 400;
+    line-height: 1.4; border-bottom: 1px solid transparent;
   }
-  nav.toc a:hover, nav.toc a:focus-visible { color: var(--indigo); border-bottom-color: var(--indigo); }
+  nav.toc a:hover, nav.toc a:focus-visible { color: var(--accent); border-bottom-color: var(--accent); }
   @media (max-width: 480px) {
     nav.toc .toc-box { padding: 1rem 1.05rem 1.1rem; }
     nav.toc li { gap: .7rem; }
     nav.toc li::before { min-width: 1.9rem; }
   }
-  a:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; border-radius: 2px; }
+  a:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 2px; }
 
   /* ---------- chapters ---------- */
   section.chapter { padding: 4.2rem 0 1rem; }
-  .ch-eyebrow {
-    font-family: 'IBM Plex Mono', monospace; font-size: .75rem;
-    letter-spacing: .12em; text-transform: uppercase; color: var(--indigo);
-    margin-bottom: 1rem;
-  }
-  h2 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: clamp(1.7rem, 4vw, 2.3rem); line-height: 1.5; margin-bottom: 1.6rem; letter-spacing: -.01em; }
-  h2 .tok { display: inline-block; padding: .04em .3em; border-radius: 7px; margin: .06em 0; }
+  h2 { font-family: var(--serif); font-weight: 700; font-size: clamp(1.66rem, 3.9vw, 2.2rem); line-height: 1.4; margin-bottom: 1.6rem; letter-spacing: -.008em; }
+  h2 .tok { display: inline-block; padding: .04em .3em; border-radius: 4px; margin: .06em 0; }
   .t1 { background: var(--chip1); color: var(--chip1-ink); }
   .t2 { background: var(--chip2); color: var(--chip2-ink); }
   .t3 { background: var(--chip3); color: var(--chip3-ink); }
   .t4 { background: var(--chip4); color: var(--chip4-ink); }
   .t5 { background: var(--chip5); color: var(--chip5-ink); }
-  h3 { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: 1.32rem; margin: 2.6rem 0 .8rem; }
+  h3 { font-family: var(--serif); font-weight: 700; font-size: 1.44rem; line-height: 1.32; letter-spacing: -.006em; margin: 2.6rem 0 .8rem; }
   p { margin-bottom: 1.15rem; }
-  p.lede { font-size: 1.24rem; line-height: 1.62; }
+  p.lede { font-size: 1.34rem; line-height: 1.5; }
   em { font-style: italic; }
-  strong { font-weight: 600; }
-  .mono { font-family: 'IBM Plex Mono', monospace; font-size: .92em; background: var(--code-bg); padding: .08em .35em; border-radius: 5px; }
+  strong { font-weight: 700; }
+  .mono { font-family: var(--mono); font-size: .86em; background: var(--code-bg); padding: .08em .35em; border-radius: 5px; }
 
   /* ---------- figures ---------- */
   figure { margin: 2.2rem auto 2.4rem; max-width: 52rem; }
   figure svg { width: 100%; height: auto; display: block; }
-  figure svg text { font-family: 'IBM Plex Mono', monospace; }
+  figure svg text { font-family: var(--mono); }
   figcaption {
-    font-family: 'Literata', Georgia, serif; font-style: italic;
-    font-size: .82rem; color: var(--muted);
+    font-family: var(--serif); font-style: italic;
+    font-size: .93rem; color: var(--muted);
     text-align: center; margin-top: .9rem; line-height: 1.55;
   }
 
   /* ---------- example panels ---------- */
   .stages { display: grid; gap: 1rem; margin: 2rem 0 2.2rem; }
   @media (min-width: 700px) { .stages { grid-template-columns: 1fr 1fr 1fr; } }
-  .stage { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 1.1rem 1.15rem 1.2rem; }
-  .stage h4 { font-family: 'IBM Plex Mono', monospace; font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .7rem; }
+  .stage { border: 1px solid var(--line); border-radius: 6px; background: var(--surface); padding: 1.1rem 1.15rem 1.2rem; }
+  .stage h4 { font-family: var(--sans); font-weight: 600; font-size: .69rem; letter-spacing: .1em; text-transform: uppercase; margin-bottom: .7rem; }
   .stage:nth-child(1) h4 { color: var(--chip3-ink); }
   .stage:nth-child(2) h4 { color: var(--chip4-ink); }
   .stage:nth-child(3) h4 { color: var(--chip2-ink); }
-  .stage p { font-size: .9rem; line-height: 1.58; margin-bottom: .5rem; }
-  .stage .out { font-family: 'Literata', Georgia, serif; font-style: italic; color: var(--ink); }
-  .stage .note { font-size: .79rem; color: var(--muted); font-style: normal; margin-bottom: 0; }
+  .stage p { font-size: 1rem; line-height: 1.55; margin-bottom: .5rem; }
+  .stage .out { font-family: var(--serif); font-style: italic; color: var(--ink); }
+  .stage .note { font-size: .87rem; color: var(--muted); font-style: normal; margin-bottom: 0; }
 
   .q-box {
     border: 1px solid var(--qbox-line); background: var(--qbox-bg);
-    padding: .95rem 1.25rem; border-radius: 10px; margin: 1.6rem 0;
-    font-size: .94rem;
+    padding: .95rem 1.25rem; border-radius: 6px; margin: 1.6rem 0;
+    font-size: 1.05rem;
   }
 
   /* ---------- glossary ---------- */
-  dl.gloss { margin: 1.4rem 0; font-size: .86rem; line-height: 1.55; }
-  dl.gloss dt { font-family: 'Space Grotesk', sans-serif; font-weight: 700; font-size: .92rem; margin-top: .9rem; }
+  dl.gloss { margin: 1.4rem 0; font-size: .97rem; line-height: 1.56; }
+  dl.gloss dt { font-family: var(--serif); font-weight: 700; font-size: 1.04rem; margin-top: .9rem; }
   dl.gloss dd { margin-left: 0; color: var(--muted); }
 
   /* ---------- the source note, under the same label the essay uses ---------- */
   .src-label {
-    font-family: 'IBM Plex Mono', monospace; font-size: .7rem;
-    letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+    font-family: var(--sans); font-weight: 600; font-size: .69rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
     line-height: 1.5; margin: 2.4rem 0 .5rem;
   }
 
-  footer { border-top: 1px solid var(--line); margin-top: 4rem; padding: 2.2rem 0 3.5rem; color: var(--muted); font-size: .85rem; }
-  footer .mono-line { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; margin-top: .5rem; }
+  footer { border-top: 1px solid var(--line); margin-top: 4rem; padding: 2.2rem 0 3.5rem; color: var(--muted); font-size: .93rem; }
+  footer .mono-line { font-family: var(--mono); font-size: .76rem; margin-top: .5rem; }
   footer .home-link { margin-bottom: 1rem; }
-  footer .home-link a { font-family: 'IBM Plex Mono', monospace; font-size: .74rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
-  footer .home-link a:hover { color: var(--indigo); }
-  .chapter p a { color: var(--indigo); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
-  .chapter p a:hover { color: var(--indigo-dark); }
+  footer .home-link a { font-family: var(--sans); font-weight: 600; font-size: .71rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted); text-decoration: none; }
+  /* the arrow comes from the mono face, whose arrow is plain; the label face has none and the text face's is decorated */
+  footer .home-link .ar { font-family: var(--mono); }
+  footer .home-link a:hover { color: var(--accent); }
+  .chapter p a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .chapter p a:hover { color: var(--accent-2); }
 
-  /* ---------- theme toggle ---------- */
-  .theme-toggle {
-    position: fixed; top: 16px; right: 16px; z-index: 40;
-    display: flex; align-items: center; gap: 7px;
-    font: 600 13px 'IBM Plex Sans', 'Helvetica Neue', Arial, sans-serif;
-    padding: 9px 16px; border-radius: 999px; cursor: pointer;
-    background: var(--surface); color: var(--ink); border: 1px solid var(--line);
-    box-shadow: var(--toggle-shadow);
-  }
-  .theme-toggle:hover { box-shadow: var(--toggle-shadow-hover); }
-  .theme-toggle:focus-visible { outline: 2px solid var(--indigo); outline-offset: 3px; }
-  .theme-toggle svg { width: 15px; height: 15px; }
-
-  /* dark: the probability bars need a readable body, not just a bright outline */
-  [data-theme="dark"] .bar { background: #362F63; border-color: #6F65C0; }
-
-  /* ---------- dark: remap literal colors baked into the inline SVG figures ----------
-     Attribute selectors match the presentation attributes as written in the markup;
+  /* ---------- re-point the literal colors baked into the inline SVG figures ----------
+     The figures were drawn with literal hex values from the page's original palette.
+     Attribute selectors match those presentation attributes as written in the markup;
      an author CSS declaration outranks a presentation attribute, so each literal is
-     re-pointed at a themed value. Nothing here applies in light mode. */
-  [data-theme="dark"] [fill="#211E33"] { fill: var(--fig-ink); }
-  [data-theme="dark"] [stroke="#211E33"] { stroke: var(--fig-ink); }
-  [data-theme="dark"] [fill="#444441"] { fill: var(--fig-text-2); }
-  [data-theme="dark"] [fill="#5F5E5A"] { fill: var(--fig-text-3); }
-  [data-theme="dark"] [stroke="#5F5E5A"] { stroke: var(--fig-box-line); }
-  [data-theme="dark"] [fill="#F1EFE8"] { fill: var(--fig-box-fill); }
-  [data-theme="dark"] [stroke="#B4B2A9"] { stroke: var(--fig-rule); }
-  [data-theme="dark"] [stroke="#E4E2DC"] { stroke: var(--fig-hairline); }
-  [data-theme="dark"] [fill="#F7F6FD"] { fill: var(--fig-panel); }
-  [data-theme="dark"] [fill="#0F6E56"] { fill: var(--fig-green-2); }
-  [data-theme="dark"] [fill="#534AB7"] { fill: var(--fig-indigo-2); }
-  [data-theme="dark"] [fill="#6A677D"] { fill: var(--muted); }
-  [data-theme="dark"] [stroke="#6A677D"] { stroke: var(--muted); }
-  [data-theme="dark"] [fill="#4038A8"] { fill: var(--indigo); }
-  [data-theme="dark"] [stroke="#4038A8"] { stroke: var(--indigo); }
-  [data-theme="dark"] [fill="#E7E4FB"] { fill: var(--chip1); }
-  [data-theme="dark"] [fill="#3C3489"] { fill: var(--chip1-ink); }
-  [data-theme="dark"] [stroke="#3C3489"] { stroke: var(--chip1-ink); }
-  [data-theme="dark"] [fill="#DCF2E8"] { fill: var(--chip2); }
-  [data-theme="dark"] [fill="#0A5C48"] { fill: var(--chip2-ink); }
-  [data-theme="dark"] [stroke="#0A5C48"] { stroke: var(--chip2-ink); }
-  [data-theme="dark"] [fill="#FBE4D9"] { fill: var(--chip3); }
-  [data-theme="dark"] [fill="#8A3517"] { fill: var(--chip3-ink); }
-  [data-theme="dark"] [stroke="#8A3517"] { stroke: var(--chip3-ink); }
-  [data-theme="dark"] [fill="#F8ECCB"] { fill: var(--chip4); }
-  [data-theme="dark"] [fill="#7A5A0E"] { fill: var(--chip4-ink); }
-  [data-theme="dark"] [stroke="#7A5A0E"] { stroke: var(--chip4-ink); }
-  [data-theme="dark"] [fill="#F9E0EA"] { fill: var(--chip5); }
-  [data-theme="dark"] [fill="#8C2F4F"] { fill: var(--chip5-ink); }
-  [data-theme="dark"] [stroke="#8C2F4F"] { stroke: var(--chip5-ink); }
+     re-pointed at a variable. To recolor the figures, change the variables, not the SVG. */
+  [fill="#211E33"] { fill: var(--fig-ink); }
+  [stroke="#211E33"] { stroke: var(--fig-ink); }
+  [fill="#444441"] { fill: var(--fig-text-2); }
+  [fill="#5F5E5A"] { fill: var(--fig-text-3); }
+  [stroke="#5F5E5A"] { stroke: var(--fig-box-line); }
+  [fill="#F1EFE8"] { fill: var(--fig-box-fill); }
+  [stroke="#B4B2A9"] { stroke: var(--fig-rule); }
+  [stroke="#E4E2DC"] { stroke: var(--fig-hairline); }
+  [fill="#F7F6FD"] { fill: var(--fig-panel); }
+  [fill="#0F6E56"] { fill: var(--fig-green-2); }
+  [fill="#534AB7"] { fill: var(--fig-accent-2); }
+  [fill="#6A677D"] { fill: var(--muted); }
+  [stroke="#6A677D"] { stroke: var(--muted); }
+  [fill="#4038A8"] { fill: var(--accent); }
+  [stroke="#4038A8"] { stroke: var(--accent); }
+  [fill="#E7E4FB"] { fill: var(--chip1); }
+  [fill="#3C3489"] { fill: var(--chip1-ink); }
+  [stroke="#3C3489"] { stroke: var(--chip1-ink); }
+  [fill="#DCF2E8"] { fill: var(--chip2); }
+  [fill="#0A5C48"] { fill: var(--chip2-ink); }
+  [stroke="#0A5C48"] { stroke: var(--chip2-ink); }
+  [fill="#FBE4D9"] { fill: var(--chip3); }
+  [fill="#8A3517"] { fill: var(--chip3-ink); }
+  [stroke="#8A3517"] { stroke: var(--chip3-ink); }
+  [fill="#F8ECCB"] { fill: var(--chip4); }
+  [fill="#7A5A0E"] { fill: var(--chip4-ink); }
+  [stroke="#7A5A0E"] { stroke: var(--chip4-ink); }
+  [fill="#F9E0EA"] { fill: var(--chip5); }
+  [fill="#8C2F4F"] { fill: var(--chip5-ink); }
+  [stroke="#8C2F4F"] { stroke: var(--chip5-ink); }
 </style>
 </head>
 <body>
-<button class="theme-toggle" id="themeBtn" aria-label="Switch between light and dark mode">
-  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="4.5"/><path d="M12 2.5v2.5M12 19v2.5M2.5 12h2.5M19 12h2.5M4.9 4.9l1.8 1.8M17.3 17.3l1.8 1.8M19.1 4.9l-1.8 1.8M6.7 17.3l-1.8 1.8"/></svg>
-  <span id="themeLabel">Light mode</span>
-</button>
-
 <header>
   <div class="wrap">
     <p class="eyebrow">A field guide for curious students</p>
@@ -368,7 +344,6 @@
 
 <div class="wrap">
   <section class="chapter" id="preface">
-    <p class="ch-eyebrow">Why this guide exists</p>
     <p class="lede">You have probably used ChatGPT, Claude, or Gemini. Maybe today. These systems write essays, explain calculus, and debug code, yet almost nobody can say how they work or where they come from. This guide closes that gap by answering six plain questions, one per chapter, starting with the one everybody secretly asks: is there a little brain in there?</p>
     <p>Here is the promise. By the end, you will understand the full life of a language model: how it learns from a huge slice of the internet, how companies teach it to be helpful instead of weird, what actually gets published when a model is "open," and how a sixteen-year-old with a decent laptop can run one at home for free. Every step uses ideas you already have. Guessing. Practicing. Getting graded. Getting better.</p>
     <p>One warm-up fact before chapter one. A language model does exactly one thing: it predicts the next chunk of text. Here is one caught in the act.</p>
@@ -386,7 +361,6 @@
   </section>
 
   <section class="chapter" id="ch1">
-    <p class="ch-eyebrow">Chapter I · Prediction</p>
     <h2><span class="tok t1">Is</span> <span class="tok t2">it</span> <span class="tok t3">a</span> <span class="tok t4">brain?</span></h2>
     <p class="lede">When an AI writes you a poem or explains your homework, it is natural to picture a little electronic brain in there, thinking. So let's answer the question head on. A language model borrows exactly one idea from your brain, and differs from it in almost every other way. This chapter shows you what is actually inside.</p>
 
@@ -502,7 +476,6 @@
   </section>
 
   <section class="chapter" id="ch2">
-    <p class="ch-eyebrow">Chapter II · Training</p>
     <h2><span class="tok t2">How</span> <span class="tok t1">does</span> <span class="tok t4">it</span> <span class="tok t3">learn?</span></h2>
     <p class="lede">Training happens in two big phases, and the second one splits in two. First the model reads a giant chunk of the internet and picks up how language works, along with most of what the writing was about. Then it gets coached, the way an athlete gets coached, into being a useful assistant. The industry calls the phases pre-training and post-training. Post-training is where the two coaching steps live.</p>
 
@@ -690,7 +663,6 @@
   </section>
 
   <section class="chapter" id="ch3">
-    <p class="ch-eyebrow">Chapter III · The release</p>
     <h2><span class="tok t4">Why</span> <span class="tok t1">are</span> <span class="tok t2">some</span> <span class="tok t3">AIs</span> <span class="tok t5">free?</span></h2>
     <p class="lede">All that training boils down to one thing: the final settings of those billions of dials. A file of numbers. When a lab publishes that file for anyone to download, the model is called <strong>open weights</strong>. Meta's Llama, Mistral's models, DeepSeek's models, and Alibaba's Qwen all work this way. OpenAI, Anthropic, and Google keep the weights of their best models private and sell access instead. This chapter is about the open path: how it works, and why a company would give away something that cost a hundred million dollars to make.</p>
     <p>Here is the puzzle. When Meta releases a new Llama, dozens of companies are running it within hours. None of them trained it. So how can a stranger take a mystery file of numbers and bring it to life? Wouldn't they need to know how it was built and trained?</p>
@@ -729,7 +701,6 @@
   </section>
 
   <section class="chapter" id="ch4">
-    <p class="ch-eyebrow">Chapter IV · Inference</p>
     <h2><span class="tok t3">How</span> <span class="tok t1">do</span> <span class="tok t2">you</span> <span class="tok t4">run</span> <span class="tok t5">one?</span></h2>
     <p class="lede">Using a trained model is called <strong>inference</strong>: tokens in, predictions out, no more learning. The weights are frozen. The interesting part is the free software that does the running, called inference engines, and the story of who built it.</p>
     <p>First, feel what inference is. When you press enter on a message, your words get chopped into tokens, the engine pushes those numbers through every layer of the network, and out comes one predicted token. Then it does the whole thing again for the next token, and again, often 50 or more times per second. That is why the reply appears word by word on your screen instead of all at once: you are watching each prediction arrive.</p>
@@ -820,7 +791,6 @@
   </section>
 
   <section class="chapter" id="ch5">
-    <p class="ch-eyebrow">Chapter V · The bigger picture</p>
     <h2><span class="tok t1">What</span> <span class="tok t3">else</span> <span class="tok t2">can</span> <span class="tok t4">this</span> <span class="tok t5">trick</span> <span class="tok t1">do?</span></h2>
     <p class="lede">Language models are one branch of a much bigger family. Zoom out and you find the same basic recipe, dials plus practice, solving problems that look nothing like writing. The variety comes from one choice: what the model practices on.</p>
     <p>Start with the names, because they get thrown around loosely. <strong>Artificial intelligence</strong> is the broad goal of getting computers to do things that would count as intelligent if a person did them. <strong>Machine learning</strong> is one approach to that goal: instead of a programmer writing the rules by hand, the computer works them out from examples. <strong>Deep learning</strong> is the kind of machine learning that took over the field around 2012, using neural networks with many layers of those adjustable dials. Language models sit in that innermost box, next to some very different cousins.</p>
@@ -897,7 +867,6 @@
   </section>
 
   <section class="chapter" id="ch6">
-    <p class="ch-eyebrow">Chapter VI · Your move</p>
     <h2><span class="tok t2">Where</span> <span class="tok t4">do</span> <span class="tok t1">you</span> <span class="tok t3">start?</span></h2>
     <p class="lede">You now know the whole arc: predict the next token, train on the internet, coach with feedback and answer keys, freeze the weights, package them, run them anywhere. And you know where all of it sits, in a family of models that also fold proteins and play chess. The best part is that "anywhere" includes your own computer, today, for free.</p>
     <p>The easiest start is <strong>Ollama</strong> (ollama.com) or <strong>LM Studio</strong> (lmstudio.ai). Install one, then pick a small model. Sizes are written into the names: a 3B or 7B model means 3 or 7 billion weights, which is the range that runs comfortably on a normal computer. The download is a few gigabytes, and within minutes you will have an AI running fully offline on your machine. Then browse <strong>huggingface.co</strong> and see the millions of open models people have published, including ones fine-tuned for music theory, medicine, and ancient Greek.</p>
@@ -941,17 +910,6 @@
   </div>
 </footer>
 
-<script>
-(function() {
-  var root = document.documentElement;
-  var label = document.getElementById('themeLabel');
-  document.getElementById('themeBtn').addEventListener('click', function() {
-    var dark = root.getAttribute('data-theme') === 'dark';
-    root.setAttribute('data-theme', dark ? 'light' : 'dark');
-    label.textContent = dark ? 'Dark mode' : 'Light mode';
-  });
-})();
-</script>
 
 <script data-goatcounter="https://artificialminds.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>

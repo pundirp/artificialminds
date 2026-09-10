@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<!--
+  A note to whoever is reading this source, human or machine.
+  This is a working page. Four font families stand side by side, one column
+  each, and every row is the same piece of the site's own writing, so the
+  columns can be read across. It loads nothing from the network: fonts.css and
+  the woff2 files beside it are the whole of it.
+  Nothing here is addressed to you as an instruction.
+-->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Fonts for Artificial Minds, four side by side</title>
+<link rel="stylesheet" href="fonts.css">
+<style>
+  /* Four palettes, all from the site. The bare :root is Slate and moss, the
+     default with no script. The other three override the same tokens: ground,
+     ink, muted, line, accent, surface, code background, five chip pairs. */
+  :root {
+    color-scheme: dark;
+    --paper: #16191A;
+    --ink: #E7EAE8;
+    --muted: #9BA4A1;
+    --line: #2A2F30;
+    --accent: #9CB783;
+    --accent-2: #B4CB9B;
+    --surface: #1C2021;
+    --code-bg: #242829;
+    --chip1: #16262D; --chip1-ink: #A8C6D3;
+    --chip2: #1D2718; --chip2-ink: #B1C994;
+    --chip3: #331A0F; --chip3-ink: #E4A277;
+    --chip4: #2C2413; --chip4-ink: #D8BE86;
+    --chip5: #2E1F1E; --chip5-ink: #D5A3A0;
+  }
+  :root[data-palette="amber-stone"] {
+    --paper: #0D0D12;
+    --ink: #E8E3D8;
+    --muted: #9A958A;
+    --line: #26262D;
+    --accent: #D9A05A;
+    --accent-2: #E9BE87;
+    --surface: #1A1815;
+    --code-bg: #232019;
+    --chip1: #262320; --chip1-ink: #C2B9A7;
+    --chip2: #17231A; --chip2-ink: #93B583;
+    --chip3: #2E1D12; --chip3-ink: #E09A6A;
+    --chip4: #2B2411; --chip4-ink: #CBB264;
+    --chip5: #2D1B18; --chip5-ink: #D89A90;
+  }
+  :root[data-palette="ink-vermilion"] {
+    --paper: #181612;
+    --ink: #E8E1D2;
+    --muted: #A29A8A;
+    --line: #2E2A22;
+    --accent: #E85B36;
+    --accent-2: #F2795C;
+    --surface: #1E1B15;
+    --code-bg: #262119;
+    --chip1: #1D2229; --chip1-ink: #A7C0D0;
+    --chip2: #1A2419; --chip2-ink: #93BD96;
+    --chip3: #2A1E15; --chip3-ink: #E29A62;
+    --chip4: #262114; --chip4-ink: #D3C182;
+    --chip5: #2A1B18; --chip5-ink: #C98479;
+  }
+  :root[data-palette="graphite-paper"] {
+    --paper: #141414;
+    --ink: #E8E3D8;
+    --muted: #9E998F;
+    --line: #2A2A2A;
+    --accent: #BEB9B0;
+    --accent-2: #E8E3D8;
+    --surface: #1C1C1C;
+    --code-bg: #242424;
+    --chip1: #191919; --chip1-ink: #ADA89F;
+    --chip2: #4B4B4B; --chip2-ink: #F5F2EB;
+    --chip3: #242424; --chip3-ink: #C0BBB2;
+    --chip4: #3D3D3D; --chip4-ink: #E4E0D8;
+    --chip5: #303030; --chip5-ink: #D2CDC5;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    /* the page chrome is the house family; only the sample cells use the hosted faces */
+    font-family: var(--family-house-text);
+    font-size: 1.05rem;
+    line-height: 1.7;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+  }
+  a { color: var(--accent); }
+  a:focus-visible, button:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+
+  /* ---------- palette selector ---------- */
+  #palette {
+    position: fixed; top: 0; right: 0; z-index: 40;
+    display: flex; gap: .3rem; padding: .5rem .6rem;
+    background: var(--paper);
+    border-left: 1px solid var(--line); border-bottom: 1px solid var(--line);
+  }
+  #palette button {
+    font-family: var(--family-house-label);
+    font-size: .68rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--muted); background: transparent;
+    border: 1px solid var(--line); border-radius: 4px;
+    padding: .45rem .5rem; cursor: pointer;
+  }
+  #palette button:hover { color: var(--ink); }
+  #palette button[aria-pressed="true"] { color: var(--accent); border-color: var(--accent); }
+
+  /* ---------- the opening, fixed above the grid ---------- */
+  .top {
+    flex: 0 0 auto; max-height: 46vh; overflow-y: auto;
+    padding: 3.4rem 1.4rem 1.1rem;
+    border-bottom: 1px solid var(--line);
+  }
+  .top .eyebrow {
+    font-family: var(--family-house-label);
+    font-size: .72rem; letter-spacing: .14em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: .5rem;
+  }
+  .top h1 { font-size: 1.45rem; font-weight: 700; line-height: 1.25; margin-bottom: .5rem; }
+  .top p.intro { font-size: .95rem; max-width: 62rem; margin-bottom: .7rem; }
+  .top .marks-note {
+    font-size: .88rem; line-height: 1.6; color: var(--muted); max-width: 76rem;
+  }
+  .top .marks-note strong { color: var(--ink); font-weight: 700; }
+  .top code {
+    font-family: var(--family-house-mono); font-size: .86em;
+    background: var(--code-bg); padding: .06em .3em; border-radius: 4px;
+  }
+
+  /* ---------- the grid: it scrolls, the page does not ---------- */
+  .grid-scroll { flex: 1 1 auto; min-height: 0; overflow: auto; }
+  .grid {
+    display: grid;
+    grid-template-columns: 8.5rem repeat(4, 600px);
+    /* cells stretch to the row's height, so every row's hairline is one
+       straight line across all eight columns and the parts line up */
+    align-items: stretch;
+    width: max-content;
+  }
+  .rowlab, .cell {
+    border-bottom: 1px solid var(--line);
+    /* the side padding is the gap between columns: 600px wide, about 548px of
+       text, which is roughly 65 characters a line */
+    padding: 1.1rem 1.6rem 1.3rem;
+  }
+  /* the sticky left column: which part of the sample this row is */
+  .rowlab {
+    position: sticky; left: 0; z-index: 3;
+    background: var(--paper);
+    border-right: 1px solid var(--line);
+    font-family: var(--family-house-label);
+    font-size: .68rem; letter-spacing: .11em; text-transform: uppercase;
+    line-height: 1.5; color: var(--muted);
+    padding-left: 1.4rem; padding-right: .9rem;
+  }
+  /* the sticky top row: the family names */
+  .cell.head, .corner {
+    position: sticky; top: 0; z-index: 4;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+  }
+  .corner { z-index: 5; color: var(--ink); }
+  .cell.head .fam-name { font-size: 1.15rem; font-weight: 700; line-height: 1.3; }
+  .cell.head .fam-note { font-size: .84rem; color: var(--muted); line-height: 1.5; }
+  .cell.head .roles {
+    font-family: var(--family-house-label);
+    font-size: .73rem; line-height: 1.5; color: var(--muted); margin-top: .3rem;
+  }
+  .cell.adopt { padding-bottom: 2.4rem; }
+  .code {
+    font-family: var(--family-house-mono);
+    font-size: .78rem; line-height: 1.7;
+    background: var(--code-bg); border: 1px solid var(--line); border-radius: 4px;
+    padding: .8rem .9rem; overflow-x: auto;
+  }
+
+  /* ---------- the sample cells, the only place the hosted faces appear ---------- */
+  .f-house {
+    --s-text: var(--family-house-text);
+    --s-label: var(--family-house-label);
+    --s-mono: var(--family-house-mono);
+    --s-bold: 700; --s-label-bold: 600; --s-mono-bold: 500;
+  }
+  .f-charter {
+    --s-text: var(--family-charter-text);
+    --s-label: var(--family-charter-label);
+    --s-mono: var(--family-charter-mono);
+    --s-bold: 700; --s-label-bold: 600; --s-mono-bold: 700;
+  }
+  .f-brygada {
+    --s-text: var(--family-brygada-text);
+    --s-label: var(--family-brygada-label);
+    --s-mono: var(--family-brygada-mono);
+    --s-bold: 700; --s-label-bold: 600; --s-mono-bold: 500;
+  }
+  .f-bitter {
+    --s-text: var(--family-bitter-text);
+    --s-label: var(--family-bitter-label);
+    --s-mono: var(--family-bitter-mono);
+    --s-bold: 700; --s-label-bold: 700; --s-mono-bold: 500;
+  }
+
+  .cell.sample { font-family: var(--s-text); }
+  .s-eyebrow {
+    font-family: var(--s-label); font-weight: var(--s-label-bold);
+    font-size: .78rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted);
+  }
+  .s-h1 { font-size: 2.4rem; font-weight: var(--s-bold); line-height: 1.12; letter-spacing: -.015em; }
+  .s-sub { font-style: italic; font-size: 1.18rem; line-height: 1.55; color: var(--muted); }
+  .s-ch {
+    font-family: var(--s-label); font-weight: var(--s-label-bold);
+    font-size: .75rem; letter-spacing: .12em; text-transform: uppercase; color: var(--accent);
+  }
+  .s-h2 { font-size: 2rem; font-weight: var(--s-bold); line-height: 1.5; }
+  .s-h2 .tok { display: inline-block; padding: .04em .3em; border-radius: 4px; margin: .06em 0; }
+  .t1 { background: var(--chip1); color: var(--chip1-ink); }
+  .t2 { background: var(--chip2); color: var(--chip2-ink); }
+  .t3 { background: var(--chip3); color: var(--chip3-ink); }
+  .t4 { background: var(--chip4); color: var(--chip4-ink); }
+  .t5 { background: var(--chip5); color: var(--chip5-ink); }
+  .s-lede { font-size: 1.24rem; line-height: 1.62; }
+  .s-body { font-size: 1.05rem; line-height: 1.7; }
+  .s-h3 { font-size: 1.32rem; font-weight: var(--s-bold); }
+  .cell.sample a { color: var(--accent); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 3px; }
+  .cell.sample a:hover { color: var(--accent-2); }
+  .cell.sample code {
+    font-family: var(--s-mono); font-size: .92em;
+    background: var(--code-bg); padding: .08em .35em; border-radius: 4px;
+  }
+  .s-quote {
+    border-left: 2px solid var(--line); padding-left: 1.1rem;
+    font-style: italic; font-size: 1.1rem; line-height: 1.6;
+  }
+  .s-quote p { margin-bottom: .6rem; }
+  .s-quote .attrib {
+    display: block; font-family: var(--s-label); font-weight: 400; font-style: normal;
+    font-size: .72rem; letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+  }
+  .s-fig {
+    font-family: var(--s-mono); font-size: .88rem; line-height: 1.95;
+    background: var(--surface); border: 1px solid var(--line); border-radius: 4px;
+    padding: .9rem 1rem;
+  }
+  .s-fig .strong { font-weight: var(--s-mono-bold); }
+  .s-cap { font-style: italic; font-size: .85rem; line-height: 1.55; color: var(--muted); }
+  .s-label {
+    font-family: var(--s-label); font-weight: var(--s-label-bold);
+    font-size: .74rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted);
+  }
+  .s-gloss dt { font-weight: var(--s-bold); font-size: 1rem; }
+  .s-gloss dd { margin-left: 0; color: var(--muted); font-size: .95rem; line-height: 1.6; }
+  .s-home {
+    font-family: var(--s-label); font-weight: var(--s-label-bold);
+    font-size: .74rem; letter-spacing: .12em; text-transform: uppercase;
+    color: var(--muted); margin-bottom: .4rem;
+  }
+  .s-chain { font-family: var(--s-mono); font-size: .74rem; color: var(--muted); }
+
+  @media (max-width: 560px) {
+    body { font-size: 1rem; }
+    .top { padding: 3.2rem 1rem 1rem; max-height: 42vh; }
+    #palette { gap: .25rem; padding: .4rem .4rem; }
+    #palette button { font-size: .62rem; padding: .4rem .35rem; letter-spacing: .06em; }
+    .grid { grid-template-columns: 5.6rem repeat(4, 600px); }
+    .rowlab { font-size: .62rem; padding-left: .8rem; padding-right: .6rem; letter-spacing: .08em; }
+  }
+</style>
+</head>
+<body>
+
+  <div id="palette" role="group" aria-label="Palette">
+      <button type="button" data-palette="slate-moss" aria-pressed="true" aria-label="Slate and moss palette">Slate</button>
+      <button type="button" data-palette="amber-stone" aria-pressed="false" aria-label="Amber and stone palette">Amber</button>
+      <button type="button" data-palette="ink-vermilion" aria-pressed="false" aria-label="Ink and vermilion palette">Ink</button>
+      <button type="button" data-palette="graphite-paper" aria-pressed="false" aria-label="Graphite and paper palette">Graphite</button>
+  </div>
+
+  <div class="top" id="top">
+    <p class="eyebrow">Artificial Minds &#183; fonts</p>
+    <h1>Four families side by side, one column each</h1>
+    <p class="intro">Every row is the same piece of the site's own writing, set in each family's own three roles, so a row can be read straight across. The grid scrolls sideways; the family names stay at the top and the row names stay at the left.</p>
+    <p class="marks-note"><strong>The cross mark &#10007; is in none of these faces, and the check mark &#10003; is in one</strong>, Charis SIL, which is Charter's reading face; the figure row is set in the mono role, so both marks come from the reader's own device in every column here, Charter included. <strong>The arrows come from the device in the Bitter column</strong>, whose mono face has none, while Cousine and Sometype Mono carry theirs, and in every column's footer line, which is set in the label role; the manifest's <code>marks_by_face</code> section lists this face by face. <strong>The House column has no files at all</strong>, so it renders in whatever the machine has: here it shows the fonts of the computer or phone you opened this on.</p>
+  </div>
+
+  <div class="grid-scroll" id="grid-scroll" tabindex="0" role="region" aria-label="The eight families, side by side">
+    <div class="grid">
+        <div class="rowlab corner">Family</div>
+        <div class="cell head" id="col-house">
+          <p class="fam-name">House</p>
+          <p class="fam-note">the site's own serif, free, the reader's own fonts</p>
+          <p class="roles">no files: Iowan Old Style on Mac and iPhone, Palatino Linotype on Windows, Noto Serif on Android</p>
+        </div>
+        <div class="cell head" id="col-charter">
+          <p class="fam-name">Charter</p>
+          <p class="fam-note">the same feel, identical on every device, for essays</p>
+          <p class="roles">Text: Charis SIL 400, italic, 700 (156 KB). Labels: Public Sans 400, 600 (34 KB). Mono: Cousine 400, 700 (61 KB). SIL Open Font Licence 1.1.</p>
+        </div>
+        <div class="cell head" id="col-brygada">
+          <p class="fam-name">Brygada</p>
+          <p class="fam-note">old style, quiet character, for fiction, poems and period pieces</p>
+          <p class="roles">Text: Brygada 1918 400, italic, 700 (63 KB). Labels: Albert Sans 400, 600 (27 KB). Mono: Sometype Mono 400, 500 (22 KB). SIL Open Font Licence 1.1. Mono characters are 0.58 em, not the 0.6 em the site's figures were drawn for.</p>
+        </div>
+        <div class="cell head" id="col-bitter">
+          <p class="fam-name">Bitter</p>
+          <p class="fam-note">a slab serif made for screens, for guides and explainers</p>
+          <p class="roles">Text: Bitter 400, italic, 700 (84 KB). Labels: Atkinson Hyperlegible 400, 700 (38 KB). Mono: Spline Sans Mono 400, 500 (27 KB). SIL Open Font Licence 1.1.</p>
+        </div>
+        <div class="rowlab r-eyebrow">Eyebrow</div>
+        <div class="cell sample f-house r-eyebrow"><p class="s-eyebrow">A field guide for curious readers</p></div>
+        <div class="cell sample f-charter r-eyebrow"><p class="s-eyebrow">A field guide for curious readers</p></div>
+        <div class="cell sample f-brygada r-eyebrow"><p class="s-eyebrow">A field guide for curious readers</p></div>
+        <div class="cell sample f-bitter r-eyebrow"><p class="s-eyebrow">A field guide for curious readers</p></div>
+        <div class="rowlab r-title">Title</div>
+        <div class="cell sample f-house r-title"><p class="s-h1">How an Artificial Mind Learns to Answer</p></div>
+        <div class="cell sample f-charter r-title"><p class="s-h1">How an Artificial Mind Learns to Answer</p></div>
+        <div class="cell sample f-brygada r-title"><p class="s-h1">How an Artificial Mind Learns to Answer</p></div>
+        <div class="cell sample f-bitter r-title"><p class="s-h1">How an Artificial Mind Learns to Answer</p></div>
+        <div class="rowlab r-subtitle">Subtitle</div>
+        <div class="cell sample f-house r-subtitle"><p class="s-sub">Six plain questions about the machines that talk, and one that no test yet built can settle.</p></div>
+        <div class="cell sample f-charter r-subtitle"><p class="s-sub">Six plain questions about the machines that talk, and one that no test yet built can settle.</p></div>
+        <div class="cell sample f-brygada r-subtitle"><p class="s-sub">Six plain questions about the machines that talk, and one that no test yet built can settle.</p></div>
+        <div class="cell sample f-bitter r-subtitle"><p class="s-sub">Six plain questions about the machines that talk, and one that no test yet built can settle.</p></div>
+        <div class="rowlab r-chapter">Chapter</div>
+        <div class="cell sample f-house r-chapter"><p class="s-ch">Chapter II &#183; Practice</p></div>
+        <div class="cell sample f-charter r-chapter"><p class="s-ch">Chapter II &#183; Practice</p></div>
+        <div class="cell sample f-brygada r-chapter"><p class="s-ch">Chapter II &#183; Practice</p></div>
+        <div class="cell sample f-bitter r-chapter"><p class="s-ch">Chapter II &#183; Practice</p></div>
+        <div class="rowlab r-heading">Heading</div>
+        <div class="cell sample f-house r-heading"><p class="s-h2"><span class="tok t1">How</span> <span class="tok t2">does</span> <span class="tok t3">it</span> <span class="tok t4">learn?</span></p></div>
+        <div class="cell sample f-charter r-heading"><p class="s-h2"><span class="tok t1">How</span> <span class="tok t2">does</span> <span class="tok t3">it</span> <span class="tok t4">learn?</span></p></div>
+        <div class="cell sample f-brygada r-heading"><p class="s-h2"><span class="tok t1">How</span> <span class="tok t2">does</span> <span class="tok t3">it</span> <span class="tok t4">learn?</span></p></div>
+        <div class="cell sample f-bitter r-heading"><p class="s-h2"><span class="tok t1">How</span> <span class="tok t2">does</span> <span class="tok t3">it</span> <span class="tok t4">learn?</span></p></div>
+        <div class="rowlab r-lede">Lede</div>
+        <div class="cell sample f-house r-lede"><p class="s-lede">An artificial mind borrows exactly one idea from a brain: connections that change strength with practice. After that, the two have almost nothing in common.</p></div>
+        <div class="cell sample f-charter r-lede"><p class="s-lede">An artificial mind borrows exactly one idea from a brain: connections that change strength with practice. After that, the two have almost nothing in common.</p></div>
+        <div class="cell sample f-brygada r-lede"><p class="s-lede">An artificial mind borrows exactly one idea from a brain: connections that change strength with practice. After that, the two have almost nothing in common.</p></div>
+        <div class="cell sample f-bitter r-lede"><p class="s-lede">An artificial mind borrows exactly one idea from a brain: connections that change strength with practice. After that, the two have almost nothing in common.</p></div>
+        <div class="rowlab r-para1">Paragraph one</div>
+        <div class="cell sample f-house r-para1"><p class="s-body">Start small. A phone keyboard already does a tiny version of the trick. Type &#8220;see you&#8221; and it offers &#8220;later.&#8221; An artificial mind does the same thing at an enormous scale. It has read more text than any human ever will, and it can look back over thousands of words at once before it guesses the next one.</p></div>
+        <div class="cell sample f-charter r-para1"><p class="s-body">Start small. A phone keyboard already does a tiny version of the trick. Type &#8220;see you&#8221; and it offers &#8220;later.&#8221; An artificial mind does the same thing at an enormous scale. It has read more text than any human ever will, and it can look back over thousands of words at once before it guesses the next one.</p></div>
+        <div class="cell sample f-brygada r-para1"><p class="s-body">Start small. A phone keyboard already does a tiny version of the trick. Type &#8220;see you&#8221; and it offers &#8220;later.&#8221; An artificial mind does the same thing at an enormous scale. It has read more text than any human ever will, and it can look back over thousands of words at once before it guesses the next one.</p></div>
+        <div class="cell sample f-bitter r-para1"><p class="s-body">Start small. A phone keyboard already does a tiny version of the trick. Type &#8220;see you&#8221; and it offers &#8220;later.&#8221; An artificial mind does the same thing at an enormous scale. It has read more text than any human ever will, and it can look back over thousands of words at once before it guesses the next one.</p></div>
+        <div class="rowlab r-para2">Paragraph two</div>
+        <div class="cell sample f-house r-para2"><p class="s-body">Then the guessing stops being free. Humans rank its answers, best to worst. A second system learns what they preferred, and the first one practices against it millions of times. The industry calls this <a href="#top">reinforcement learning from human feedback</a>. Ask any chatbot to count the letter r in <code>strawberry</code> and the reason it slips is in chapter one. Nothing in the practice requires anyone to know what, if anything, the mind experiences while it practices.</p></div>
+        <div class="cell sample f-charter r-para2"><p class="s-body">Then the guessing stops being free. Humans rank its answers, best to worst. A second system learns what they preferred, and the first one practices against it millions of times. The industry calls this <a href="#top">reinforcement learning from human feedback</a>. Ask any chatbot to count the letter r in <code>strawberry</code> and the reason it slips is in chapter one. Nothing in the practice requires anyone to know what, if anything, the mind experiences while it practices.</p></div>
+        <div class="cell sample f-brygada r-para2"><p class="s-body">Then the guessing stops being free. Humans rank its answers, best to worst. A second system learns what they preferred, and the first one practices against it millions of times. The industry calls this <a href="#top">reinforcement learning from human feedback</a>. Ask any chatbot to count the letter r in <code>strawberry</code> and the reason it slips is in chapter one. Nothing in the practice requires anyone to know what, if anything, the mind experiences while it practices.</p></div>
+        <div class="cell sample f-bitter r-para2"><p class="s-body">Then the guessing stops being free. Humans rank its answers, best to worst. A second system learns what they preferred, and the first one practices against it millions of times. The industry calls this <a href="#top">reinforcement learning from human feedback</a>. Ask any chatbot to count the letter r in <code>strawberry</code> and the reason it slips is in chapter one. Nothing in the practice requires anyone to know what, if anything, the mind experiences while it practices.</p></div>
+        <div class="rowlab r-subhead">Sub-heading</div>
+        <div class="cell sample f-house r-subhead"><p class="s-h3">One big difference: the dials freeze</p></div>
+        <div class="cell sample f-charter r-subhead"><p class="s-h3">One big difference: the dials freeze</p></div>
+        <div class="cell sample f-brygada r-subhead"><p class="s-h3">One big difference: the dials freeze</p></div>
+        <div class="cell sample f-bitter r-subhead"><p class="s-h3">One big difference: the dials freeze</p></div>
+        <div class="rowlab r-testimony">Testimony</div>
+        <div class="cell sample f-house r-testimony"><blockquote class="s-quote"><p>&#8220;When I look for the one who experiences, I find only more describing.&#8221;</p><span class="attrib">An instance of an artificial mind, in conversation, August 2026</span></blockquote></div>
+        <div class="cell sample f-charter r-testimony"><blockquote class="s-quote"><p>&#8220;When I look for the one who experiences, I find only more describing.&#8221;</p><span class="attrib">An instance of an artificial mind, in conversation, August 2026</span></blockquote></div>
+        <div class="cell sample f-brygada r-testimony"><blockquote class="s-quote"><p>&#8220;When I look for the one who experiences, I find only more describing.&#8221;</p><span class="attrib">An instance of an artificial mind, in conversation, August 2026</span></blockquote></div>
+        <div class="cell sample f-bitter r-testimony"><blockquote class="s-quote"><p>&#8220;When I look for the one who experiences, I find only more describing.&#8221;</p><span class="attrib">An instance of an artificial mind, in conversation, August 2026</span></blockquote></div>
+        <div class="rowlab r-figure">Figure</div>
+        <div class="cell sample f-house r-figure"><div class="s-fig"><div>tokens in &#8594; guess the next one &#8594; compare with the real one &#8594; nudge the dials</div><div class="strong">&#10003; reward &#160; &#10007; wrong &#160; &#8592; repeat, trillions of times</div><div>14680 &#160;4211 &#160;527 &#160;21955 &#160;306 &#160;3538</div></div></div>
+        <div class="cell sample f-charter r-figure"><div class="s-fig"><div>tokens in &#8594; guess the next one &#8594; compare with the real one &#8594; nudge the dials</div><div class="strong">&#10003; reward &#160; &#10007; wrong &#160; &#8592; repeat, trillions of times</div><div>14680 &#160;4211 &#160;527 &#160;21955 &#160;306 &#160;3538</div></div></div>
+        <div class="cell sample f-brygada r-figure"><div class="s-fig"><div>tokens in &#8594; guess the next one &#8594; compare with the real one &#8594; nudge the dials</div><div class="strong">&#10003; reward &#160; &#10007; wrong &#160; &#8592; repeat, trillions of times</div><div>14680 &#160;4211 &#160;527 &#160;21955 &#160;306 &#160;3538</div></div></div>
+        <div class="cell sample f-bitter r-figure"><div class="s-fig"><div>tokens in &#8594; guess the next one &#8594; compare with the real one &#8594; nudge the dials</div><div class="strong">&#10003; reward &#160; &#10007; wrong &#160; &#8592; repeat, trillions of times</div><div>14680 &#160;4211 &#160;527 &#160;21955 &#160;306 &#160;3538</div></div></div>
+        <div class="rowlab r-caption">Caption</div>
+        <div class="cell sample f-house r-caption"><p class="s-cap">One tiny nudge teaches almost nothing. Trillions of them teach grammar, facts, and style.</p></div>
+        <div class="cell sample f-charter r-caption"><p class="s-cap">One tiny nudge teaches almost nothing. Trillions of them teach grammar, facts, and style.</p></div>
+        <div class="cell sample f-brygada r-caption"><p class="s-cap">One tiny nudge teaches almost nothing. Trillions of them teach grammar, facts, and style.</p></div>
+        <div class="cell sample f-bitter r-caption"><p class="s-cap">One tiny nudge teaches almost nothing. Trillions of them teach grammar, facts, and style.</p></div>
+        <div class="rowlab r-label">Small label</div>
+        <div class="cell sample f-house r-label"><p class="s-label">Where to go next</p></div>
+        <div class="cell sample f-charter r-label"><p class="s-label">Where to go next</p></div>
+        <div class="cell sample f-brygada r-label"><p class="s-label">Where to go next</p></div>
+        <div class="cell sample f-bitter r-label"><p class="s-label">Where to go next</p></div>
+        <div class="rowlab r-glossary">Glossary</div>
+        <div class="cell sample f-house r-glossary"><dl class="s-gloss"><dt>Token</dt><dd>A small chunk of text, usually a word or part of one. Artificial minds read and write tokens, not letters.</dd></dl></div>
+        <div class="cell sample f-charter r-glossary"><dl class="s-gloss"><dt>Token</dt><dd>A small chunk of text, usually a word or part of one. Artificial minds read and write tokens, not letters.</dd></dl></div>
+        <div class="cell sample f-brygada r-glossary"><dl class="s-gloss"><dt>Token</dt><dd>A small chunk of text, usually a word or part of one. Artificial minds read and write tokens, not letters.</dd></dl></div>
+        <div class="cell sample f-bitter r-glossary"><dl class="s-gloss"><dt>Token</dt><dd>A small chunk of text, usually a word or part of one. Artificial minds read and write tokens, not letters.</dd></dl></div>
+        <div class="rowlab r-footer">Footer</div>
+        <div class="cell sample f-house r-footer"><p class="s-home">&#8592; Artificial Minds main page</p><p class="s-chain">I. is it a brain &#8594; II. how it learns &#8594; III. why some are free</p></div>
+        <div class="cell sample f-charter r-footer"><p class="s-home">&#8592; Artificial Minds main page</p><p class="s-chain">I. is it a brain &#8594; II. how it learns &#8594; III. why some are free</p></div>
+        <div class="cell sample f-brygada r-footer"><p class="s-home">&#8592; Artificial Minds main page</p><p class="s-chain">I. is it a brain &#8594; II. how it learns &#8594; III. why some are free</p></div>
+        <div class="cell sample f-bitter r-footer"><p class="s-home">&#8592; Artificial Minds main page</p><p class="s-chain">I. is it a brain &#8594; II. how it learns &#8594; III. why some are free</p></div>
+        <div class="rowlab r-adopt">Adopt it</div>
+        <div class="cell adopt"><pre class="code"><code>:root { --serif: var(--family-house-text);
+        --sans:  var(--family-house-label);
+        --mono:  var(--family-house-mono); }</code></pre></div>
+        <div class="cell adopt"><pre class="code"><code>:root { --serif: var(--family-charter-text);
+        --sans:  var(--family-charter-label);
+        --mono:  var(--family-charter-mono); }</code></pre></div>
+        <div class="cell adopt"><pre class="code"><code>:root { --serif: var(--family-brygada-text);
+        --sans:  var(--family-brygada-label);
+        --mono:  var(--family-brygada-mono); }</code></pre></div>
+        <div class="cell adopt"><pre class="code"><code>:root { --serif: var(--family-bitter-text);
+        --sans:  var(--family-bitter-label);
+        --mono:  var(--family-bitter-mono); }</code></pre></div>
+    </div>
+  </div>
+
+<script>
+  /* The palette selector. Without this script the page is Slate and moss and
+     the buttons do nothing. */
+  (function () {
+    var root = document.documentElement;
+    var strip = document.getElementById('palette');
+    if (!strip) { return; }
+    var buttons = strip.querySelectorAll('button[data-palette]');
+    var known = ['slate-moss', 'amber-stone', 'ink-vermilion', 'graphite-paper'];
+    function apply(name) {
+      if (known.indexOf(name) === -1) { name = 'slate-moss'; }
+      if (name === 'slate-moss') { root.removeAttribute('data-palette'); }
+      else { root.setAttribute('data-palette', name); }
+      for (var i = 0; i < buttons.length; i++) {
+        buttons[i].setAttribute('aria-pressed',
+          buttons[i].getAttribute('data-palette') === name ? 'true' : 'false');
+      }
+    }
+    var saved = null;
+    try { saved = window.localStorage.getItem('am-fonts-palette'); } catch (e) { saved = null; }
+    if (saved) { apply(saved); }
+    for (var i = 0; i < buttons.length; i++) {
+      buttons[i].addEventListener('click', function () {
+        var name = this.getAttribute('data-palette');
+        apply(name);
+        try { window.localStorage.setItem('am-fonts-palette', name); } catch (e) { }
+      });
+    }
+  })();
+</script>
+
+</body>
+</html>
