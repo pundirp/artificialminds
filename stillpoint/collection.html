@@ -4,15 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>Still Point: The Collection, by Pundir</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=EB+Garamond:ital,wght@0,400;0,500;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../fonts/fonts.css">
 <style>
   :root{
     --paper:#f3f1ea; --ink:#211e19; --soft:#6e675b; --faint:#a59e90; --line:#dfdacd;
-    --disp:"Cormorant Garamond",Georgia,serif;
-    --serif:"EB Garamond",Georgia,serif;
-    --sans:system-ui,-apple-system,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --disp:var(--family-brygada-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
+    --serif:var(--family-brygada-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
+    --sans:var(--family-brygada-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);-webkit-font-smoothing:antialiased}
@@ -23,19 +21,19 @@
     border-right:1px solid var(--line);
     padding:clamp(40px,6vh,72px) clamp(30px,3.4vw,58px);
     display:flex;flex-direction:column;justify-content:space-between}
-  .kick{font-family:var(--sans);font-size:11px;letter-spacing:.36em;text-transform:uppercase;color:var(--soft)}
+  .kick{font-family:var(--sans);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--soft)}
   .mid{max-width:13em}
-  h1{font-family:var(--disp);font-weight:600;font-size:clamp(56px,6.4vw,92px);line-height:.93;
+  h1{font-family:var(--disp);font-weight:400;font-size:clamp(49px,5.6vw,80px);line-height:1.02;
      letter-spacing:.005em;margin:0 0 26px}
-  .epi{font-style:italic;font-size:20px;line-height:1.5;color:#403b32;margin:0;max-width:15em}
+  .epi{font-style:italic;font-size:18px;line-height:1.55;color:#403b32;margin:0;max-width:15em}
   .epi .by{display:block;margin-top:12px;font-family:var(--sans);font-style:normal;
-    font-size:10.5px;letter-spacing:.24em;text-transform:uppercase;color:var(--soft)}
+    font-size:10.5px;letter-spacing:.21em;text-transform:uppercase;color:var(--soft)}
   .bot .ln{height:1px;background:var(--line);margin-bottom:16px}
-  .credits{font-family:var(--sans);font-size:10.5px;letter-spacing:.18em;text-transform:uppercase;
+  .credits{font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
     color:var(--soft);display:grid;grid-template-columns:auto 1fr;gap:7px 18px;align-items:baseline}
   .credits .lab{color:var(--faint)}
   .back{display:inline-block;margin-top:20px;font-family:var(--sans);font-size:10px;
-    letter-spacing:.16em;text-transform:uppercase;color:var(--faint);text-decoration:none}
+    letter-spacing:.14em;text-transform:uppercase;color:var(--faint);text-decoration:none}
   .back:hover{color:var(--soft)}
 
   /* ---- the pictures ---- */
@@ -52,13 +50,13 @@
     font-size:8.5px;font-weight:400;letter-spacing:.1em;color:var(--lc,#ddd8cf);pointer-events:none}
   .imgwrap[data-lbl="d"]::after{text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
   .imgwrap[data-lbl="l"]::after{text-shadow:0 1px 1.5px rgba(255,255,255,.45)}
-  figcaption{margin-top:12px;font-style:italic;font-size:18px;color:#383329;line-height:1.34;
+  figcaption{margin-top:12px;font-style:italic;font-size:16px;color:#383329;line-height:1.38;
     display:flex;gap:11px;align-items:baseline}
-  figcaption .no{font-family:var(--sans);font-style:normal;font-size:10px;letter-spacing:.16em;
-    color:var(--faint);flex:none;padding-top:3px}
-  .foot{font-family:var(--sans);font-size:10px;letter-spacing:.18em;text-transform:uppercase;
+  figcaption .no{font-family:var(--sans);font-style:normal;font-size:10px;letter-spacing:.14em;
+    color:var(--faint);flex:none;padding-top:2px}
+  .foot{font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
     color:var(--faint);text-align:center;padding:6px 24px 44px}
-  .home{font-family:var(--sans);font-size:10px;letter-spacing:.24em;text-transform:uppercase;
+  .home{font-family:var(--sans);font-size:10px;letter-spacing:.21em;text-transform:uppercase;
     color:var(--faint);text-align:center;padding:0 24px 52px;margin:0}
   .home a{color:inherit;text-decoration:none;transition:color .3s}
   .home a:hover{color:var(--soft)}
@@ -88,8 +86,8 @@
     font-size:10.5px;font-weight:400;letter-spacing:.11em;color:var(--lc,#ddd8cf);pointer-events:none}
   #bf[data-lbl="d"]::after{text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
   #bf[data-lbl="l"]::after{text-shadow:0 1px 1.5px rgba(255,255,255,.45)}
-  #bcap{font-style:italic;font-size:22px;color:#ece8df;text-align:center;max-width:92vw}
-  #bcap .no{font-family:var(--sans);font-style:normal;font-size:11px;letter-spacing:.2em;color:#8c867a;margin-right:10px}
+  #bcap{font-style:italic;font-size:20px;color:#ece8df;text-align:center;max-width:92vw}
+  #bcap .no{font-family:var(--sans);font-style:normal;font-size:11px;letter-spacing:.18em;color:#8c867a;margin-right:10px}
   #x{position:fixed;top:15px;right:21px;font-size:30px;line-height:1;color:#b7b2a6;background:none;border:0;cursor:pointer;font-family:var(--sans)}
   #x:hover{color:#fff}
   .arw{position:fixed;top:50%;transform:translateY(-50%);font-size:42px;color:#857f73;background:none;border:0;cursor:pointer;padding:10px 18px}
