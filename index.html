@@ -413,6 +413,12 @@
     .mosaic{max-width:none}
     /* the text under each picture runs to four fifths of the picture's width */
     .blurb{max-width:80%}
+    /* each column packs on its own, so a card sits right under the card above it
+       instead of under the taller card beside it. The script below measures each
+       card and gives it that many 8px rows; without the script the plain grid stands. */
+    .index.masonry{grid-auto-rows:8px;row-gap:0;grid-auto-flow:row dense}
+    .index.masonry>li:nth-child(odd){grid-column:1}
+    .index.masonry>li:nth-child(even){grid-column:2}
   }
   /* when the margin is dragged narrow, the two-by-two index falls back to one column */
   .margin{container-type:inline-size}
@@ -845,6 +851,37 @@
       var cur=parseFloat(page.style.getPropertyValue('--side'));
       if(cur) setSide(cur);
     });
+  })();
+  // Pack the two index columns independently (see .index.masonry above).
+  (function(){
+    var list=document.querySelector('.index'); if(!list) return;
+    var items=Array.prototype.slice.call(list.children);
+    var unit=8, busy=false;
+    function layout(){
+      if(busy) return; busy=true;
+      var cs=getComputedStyle(list);
+      var two = cs.display==='grid' && cs.gridTemplateColumns.split(' ').length===2;
+      if(!two){
+        list.classList.remove('masonry');
+        items.forEach(function(li){ li.style.gridRowEnd=''; });
+        busy=false; return;
+      }
+      var gap=parseFloat(getComputedStyle(document.documentElement).fontSize)*2.4 || 38;
+      list.classList.add('masonry');
+      items.forEach(function(li){ li.style.gridRowEnd=''; });
+      var spans=items.map(function(li){ return Math.ceil((li.getBoundingClientRect().height+gap)/unit); });
+      items.forEach(function(li,i){ li.style.gridRowEnd='span '+spans[i]; });
+      busy=false;
+    }
+    layout();
+    window.addEventListener('load', layout);
+    if(window.ResizeObserver){
+      var ro=new ResizeObserver(function(){ layout(); });
+      var margin=document.querySelector('.margin'); if(margin) ro.observe(margin);
+      items.forEach(function(li){ ro.observe(li.querySelector('.entry')||li); });
+    } else {
+      window.addEventListener('resize', layout);
+    }
   })();
   </script>
 <script data-goatcounter="https://artificialminds.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
