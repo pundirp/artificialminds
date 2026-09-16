@@ -410,17 +410,16 @@
       align-items:start;
     }
     .art{max-width:none}
-    /* the mosaic is the one square among three bands; held a little narrower
-       it keeps the top row from towering over everything under it */
-    .mosaic{max-width:17.5rem}
-    .blurb{max-width:34ch}
+    .mosaic{max-width:none}
+    /* the text under each picture runs to four fifths of the picture's width */
+    .blurb{max-width:80%}
   }
   /* when the margin is dragged narrow, the two-by-two index falls back to one column */
   .margin{container-type:inline-size}
   @container (max-width:36rem){
     .index{display:flex;flex-direction:column;gap:2.8rem}
-    .mosaic{max-width:20rem}
-    .blurb{max-width:none}
+    .mosaic{max-width:none}
+    .blurb{max-width:80%}
   }
 
   /* ---- below 760px: margin flows beneath the name, keeps its smallness ---- */
