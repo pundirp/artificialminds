@@ -64,7 +64,9 @@ h2{font-weight:400;font-size:1.5rem;line-height:1.32;margin:2.8rem 0 1rem;paddin
 .hero .scene{position:relative;aspect-ratio:1672/941;overflow:hidden}
 .hero .scene>*{position:absolute;inset:0;width:100%;height:100%;max-width:none;display:block}
 .hero .scene .hand.human{transform-origin:51.5% 62.9%;transform:translate(-10.23%,11.48%) scale(1.08)}
-.hero .scene .hand.machine{will-change:transform,opacity;transform:translate(.36%,-15.41%);animation:wr-machine 20.8s linear infinite}
+.hero .scene .hand.machine{will-change:transform,opacity;transform:translate(.36%,-15.41%);animation:wr-machine 15.6s linear infinite}
+/* inside the sliding layer, the pen itself dips and lifts in short strokes, pivoting about the nib */
+.hero .scene .hand.machine img{display:block;width:100%;height:100%;transform-origin:44.6% 74.9%;animation:wr-bob 3.3s ease-in-out infinite}
 /* the human hand rests. the machine hand writes one line, slowly, then lifts away and begins the line again */
 @keyframes wr-machine{
   0%{transform:translate(.36%,-15.41%);opacity:1}
@@ -73,8 +75,25 @@ h2{font-weight:400;font-size:1.5rem;line-height:1.32;margin:2.8rem 0 1rem;paddin
   92.1%{transform:translate(.36%,-15.41%);opacity:0}
   100%{transform:translate(.36%,-15.41%);opacity:1}
 }
+@keyframes wr-bob{
+  0%{transform:translate(0,0) rotate(0deg)}
+  7%{transform:translate(0,-.22%) rotate(-.12deg)}
+  13%{transform:translate(0,.06%) rotate(.05deg)}
+  19%{transform:translate(0,-.28%) rotate(-.16deg)}
+  25%{transform:translate(0,0) rotate(0deg)}
+  31%{transform:translate(0,-.18%) rotate(-.1deg)}
+  37%,52%{transform:translate(0,0) rotate(0deg)}
+  57%{transform:translate(.08%,-.85%) rotate(-.6deg)}
+  61%{transform:translate(.1%,-.9%) rotate(-.65deg)}
+  66%{transform:translate(0,-.08%) rotate(-.05deg)}
+  72%{transform:translate(0,-.24%) rotate(-.14deg)}
+  78%{transform:translate(0,.05%) rotate(.04deg)}
+  84%{transform:translate(0,-.2%) rotate(-.12deg)}
+  90%,100%{transform:translate(0,0) rotate(0deg)}
+}
 @media (prefers-reduced-motion:reduce){
   .hero .scene .hand.machine{animation:none;transform:translate(.36%,-15.41%)}
+  .hero .scene .hand.machine img{animation:none}
 }
 .sub{font-size:1.1rem;line-height:1.45;color:var(--dim);margin-bottom:1.6rem}
 
@@ -300,7 +319,7 @@ details[open] summary::before{content:"\2212  "}
   <div class="scene" role="img" aria-label="A human hand and a mechanical hand, each holding a fountain pen, writing the same lines of handwriting on one sheet of paper.">
     <img class="wpaper" src="page.webp" width="1672" height="941" alt="">
     <img class="hand human" src="hand-human.webp" width="1672" height="941" alt="">
-    <img class="hand machine" src="hand-machine.webp" width="1672" height="941" alt="">
+    <div class="hand machine"><img src="hand-machine.webp" width="1672" height="941" alt=""></div>
   </div>
   <div class="hero-text">
     <h1>Did AI Write This?</h1>
