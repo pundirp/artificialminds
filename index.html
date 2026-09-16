@@ -400,7 +400,9 @@
      entries two by two, so the whole index can be taken in at one look
      instead of scrolled past. Reading order is unchanged: 1 2 over 3 4. ---- */
   @media (min-width:1180px){
-    .page{grid-template-columns:1fr 1px var(--side,minmax(40rem,46rem))}
+    /* on a wide screen the index takes a little over half the width, so the
+       cards grow with the screen instead of leaving the name alone in a field */
+    .page{grid-template-columns:1fr 1px var(--side,clamp(40rem,56vw,calc(100vw - 40rem)))}
     .margin{padding:2.2rem 2.4rem}
     .index{
       display:grid;

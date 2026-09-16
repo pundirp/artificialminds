@@ -116,10 +116,7 @@
   .card{display:flex;perspective:1400px}
   .flip{
     position:relative;
-    /* both faces share one grid cell, so the card is as tall as its taller face
-       and the back never overruns the box the front drew */
-    display:grid;
-    grid-template-columns:100%;
+    display:flex;
     flex:1 1 auto;
     min-height:12.4rem;
     transform-style:preserve-3d;
@@ -136,14 +133,14 @@
     -webkit-backface-visibility:hidden;
     transition:border-color .3s ease,box-shadow .3s ease;
   }
-  .face.front{grid-area:1 / 1;width:100%}
+  .face.front{flex:1 1 auto;width:100%}
   /* Always scope the flip faces to .face. A bare .back rule would also catch the
      colophon's .expnav .back line, absolutely position it over the whole page and
      mirror it. That is what broke this page once. */
   .face.back{
-    grid-area:1 / 1;
-    position:relative;
-    overflow:visible;
+    position:absolute;
+    top:0;left:0;right:0;bottom:0;
+    overflow:auto;
     transform:rotateY(180deg);
     background:var(--tint);
   }
