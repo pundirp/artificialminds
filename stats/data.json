@@ -1,17 +1,12 @@
 {
-  "generated": "2026-09-15T04:59:30Z",
+  "generated": "2026-09-16T04:55:10Z",
   "totals": {
-    "views_all": 28,
-    "visitors_all": 28,
-    "views_30d": 28,
-    "visitors_30d": 28
+    "views_all": 30,
+    "visitors_all": 30,
+    "views_30d": 30,
+    "visitors_30d": 30
   },
   "daily": [
-    {
-      "day": "2026-06-18",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-06-19",
       "views": 0,
@@ -454,8 +449,13 @@
     },
     {
       "day": "2026-09-15",
-      "views": 0,
-      "visitors": 0
+      "views": 1,
+      "visitors": 1
+    },
+    {
+      "day": "2026-09-16",
+      "views": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-09",
-      "views": 19,
-      "visitors": 19
+      "views": 21,
+      "visitors": 21
     }
   ],
   "projects": [
@@ -514,17 +514,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 9,
-      "visitors_all": 9,
-      "views_30d": 9,
-      "visitors_30d": 9
+      "views_all": 11,
+      "visitors_all": 11,
+      "views_30d": 11,
+      "visitors_30d": 11
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 9,
-      "visitors_all": 9
+      "views_all": 11,
+      "visitors_all": 11
     },
     {
       "path": "/stillpoint/collection.html",
@@ -565,23 +565,23 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 28
+      "visitors": 30
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 23
+      "visitors": 24
     },
     {
       "name": "Safari",
-      "visitors": 5
+      "visitors": 6
     }
   ],
   "systems": [
     {
       "name": "macOS",
-      "visitors": 27
+      "visitors": 29
     },
     {
       "name": "iOS",
@@ -591,11 +591,11 @@
   "sizes": [
     {
       "name": "Large screen",
-      "visitors": 19
+      "visitors": 20
     },
     {
       "name": "Desktop",
-      "visitors": 8
+      "visitors": 9
     },
     {
       "name": "Phone",
@@ -617,7 +617,7 @@
     },
     {
       "name": "Unknown",
-      "visitors": 7
+      "visitors": 9
     },
     {
       "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
