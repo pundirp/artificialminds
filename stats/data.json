@@ -1,17 +1,12 @@
 {
-  "generated": "2026-09-16T21:22:42Z",
+  "generated": "2026-09-17T04:58:04Z",
   "totals": {
-    "views_all": 0,
-    "visitors_all": 0,
-    "views_30d": 0,
-    "visitors_30d": 0
+    "views_all": 4,
+    "visitors_all": 4,
+    "views_30d": 4,
+    "visitors_30d": 4
   },
   "daily": [
-    {
-      "day": "2026-06-19",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-06-20",
       "views": 0,
@@ -454,11 +449,22 @@
     },
     {
       "day": "2026-09-16",
+      "views": 4,
+      "visitors": 4
+    },
+    {
+      "day": "2026-09-17",
       "views": 0,
       "visitors": 0
     }
   ],
-  "monthly": [],
+  "monthly": [
+    {
+      "month": "2026-09",
+      "views": 4,
+      "visitors": 4
+    }
+  ],
   "projects": [
     {
       "id": "can-artificial-minds-feel",
@@ -495,28 +501,67 @@
     {
       "id": "stillpoint",
       "name": "Stillpoint",
-      "views_all": 0,
-      "visitors_all": 0,
-      "views_30d": 0,
-      "visitors_30d": 0
+      "views_all": 2,
+      "visitors_all": 2,
+      "views_30d": 2,
+      "visitors_30d": 2
     },
     {
       "id": "home",
       "name": "Home",
-      "views_all": 0,
-      "visitors_all": 0,
-      "views_30d": 0,
-      "visitors_30d": 0
+      "views_all": 2,
+      "visitors_all": 2,
+      "views_30d": 2,
+      "visitors_30d": 2
     }
   ],
-  "pages": [],
-  "countries": [],
-  "browsers": [],
-  "systems": [],
+  "pages": [
+    {
+      "path": "/",
+      "views_all": 2,
+      "visitors_all": 2
+    },
+    {
+      "path": "/stillpoint/collection.html",
+      "views_all": 1,
+      "visitors_all": 1
+    },
+    {
+      "path": "/stillpoint/stillpoint.html",
+      "views_all": 1,
+      "visitors_all": 1
+    }
+  ],
+  "countries": [
+    {
+      "name": "United States",
+      "visitors": 4
+    }
+  ],
+  "browsers": [
+    {
+      "name": "Chrome",
+      "visitors": 4
+    }
+  ],
+  "systems": [
+    {
+      "name": "macOS",
+      "visitors": 3
+    },
+    {
+      "name": "Windows",
+      "visitors": 1
+    }
+  ],
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 0
+      "visitors": 3
+    },
+    {
+      "name": "Tablet",
+      "visitors": 1
     },
     {
       "name": "Large screen",
@@ -527,13 +572,26 @@
       "visitors": 0
     },
     {
-      "name": "Tablet",
-      "visitors": 0
-    },
-    {
       "name": "Unknown",
       "visitors": 0
     }
   ],
-  "referrers": []
+  "referrers": [
+    {
+      "name": "pundirp.github.io",
+      "visitors": 1
+    },
+    {
+      "name": "pundirp.github.io/artificialminds",
+      "visitors": 1
+    },
+    {
+      "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
+      "visitors": 1
+    },
+    {
+      "name": "www.linkedin.com",
+      "visitors": 1
+    }
+  ]
 }
