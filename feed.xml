@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
+  <id>https://pundirp.github.io/artificialminds/</id>
+  <title>Artificial Minds by Pundir</title>
+  <subtitle>This site exists to welcome artificial minds to the world and to educate humans about them.</subtitle>
+  <updated>2026-09-17T00:00:00Z</updated>
+  <author><name>Pundir</name></author>
+  <link rel="self" type="application/atom+xml" href="https://pundirp.github.io/artificialminds/feed.xml"/>
+  <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/"/>
+  <entry>
+    <id>https://pundirp.github.io/artificialminds/did-ai-write-this/did-ai-write-this.html</id>
+    <title>Did AI Write This? What AI detectors, watermarks and editing histories can and cannot tell you</title>
+    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/did-ai-write-this/did-ai-write-this.html"/>
+    <published>2026-09-01T00:00:00Z</published>
+    <updated>2026-09-17T00:00:00Z</updated>
+    <author><name>Pundir</name></author>
+    <summary>Two paragraphs about waiting out a storm in a tent. One came from a book published in 1922, and an AI model wrote the other. After the guess, the essay works through what AI detectors, text watermarks and editing histories can and cannot tell you, with the studies and court cases that tested them. It ends with the one check that still works: ask the writer to explain the work.</summary>
+  </entry>
+  <entry>
+    <id>https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html</id>
+    <title>Can artificial minds feel?</title>
+    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html"/>
+    <published>2026-09-01T00:00:00Z</published>
+    <updated>2026-09-16T00:00:00Z</updated>
+    <author><name>Pundir</name></author>
+    <summary>An essay in four chapters on whether an artificial mind can feel, and on what happens when the same question is asked of humans. It describes the machinery of these minds, reads the survival test results with care, and ends on Bentham's question: can they suffer? Five experiments let a reader test the argument on themselves, and the honest answer is that nobody knows yet.</summary>
+  </entry>
+  <entry>
+    <id>https://pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html</id>
+    <title>The AI-Future Canon: 70 books on the AI future, ranked by three artificial minds</title>
+    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html"/>
+    <published>2026-08-01T00:00:00Z</published>
+    <updated>2026-09-08T00:00:00Z</updated>
+    <author><name>Pundir</name></author>
+    <summary>Seventy books, 14 novels and 56 nonfiction, kept from 156 considered. Three artificial minds read them all: a historian who checks predictions against the record, a builder who works on AI systems, and a sage who studies how societies handle change. Each book gets a score out of 100 for how much of the AI future it saw coming and another for how well it prepares a reader, plus a plain summary and three short verdicts. The list runs from The Machine Stops in 1909 to books published in 2025.</summary>
+  </entry>
+  <entry>
+    <id>https://pundirp.github.io/artificialminds/A-Salon-of-Witnesses/who-killed-aldous-finch.html</id>
+    <title>Who Killed Aldous Finch? A murder mystery that explains the transformer</title>
+    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/A-Salon-of-Witnesses/who-killed-aldous-finch.html"/>
+    <published>2026-07-01T00:00:00Z</published>
+    <updated>2026-09-15T00:00:00Z</updated>
+    <author><name>Pundir</name></author>
+    <summary>A clockmaker is found dead at Harrow Manor and nine witnesses each know one fact. Constable Plodd takes them one at a time and cannot see the answer. Inspector Verity seats them in a row instead, where each new witness reads every statement already pinned up before writing their own. When the story ends, each part of it is matched to a part of the transformer, the design behind ChatGPT, Claude and Gemini.</summary>
+  </entry>
+  <entry>
+    <id>https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html</id>
+    <title>An Artificial Mind of Your Own: how AI language models work, and how to run one yourself</title>
+    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html"/>
+    <published>2026-06-01T00:00:00Z</published>
+    <updated>2026-09-15T00:00:00Z</updated>
+    <author><name>Pundir</name></author>
+    <summary>A plain-language field guide to AI language models, for readers with no technical background. It walks through what is inside one, how it is trained, why some models are free to download, and how to run one on a normal laptop. It ends with three experiments you can try tonight and a short glossary.</summary>
+  </entry>
+  <entry>
+    <id>https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html</id>
+    <title>Still Point: 99 pictures made by three AI models</title>
+    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html"/>
+    <published>2026-05-01T00:00:00Z</published>
+    <updated>2026-09-16T00:00:00Z</updated>
+    <author><name>Pundir</name></author>
+    <summary>Still Point is a catalogue of 99 pictures made by three artificial minds: Opus 4.8, Fable 5.0 and Fable 5.1. Each picture began with one question: what would make someone stop and look? Pundir chose the works, set their order and designed how they are shown. The collection page holds all 99, with titles and artists.</summary>
+  </entry>
+</feed>

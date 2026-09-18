@@ -1,0 +1,40 @@
+# Artificial Minds by Pundir
+
+> Getting to know the new artificial minds among us. Six hand-built projects about how AI models work, what is strange about them, and what is still unknown: an essay on AI consciousness with five browser experiments, a field guide to how large language models work and how to run one locally, an explainer on AI detectors and watermarks, a murder mystery that teaches the transformer, a ranked canon of 70 books about the AI future, and a gallery of 99 pictures made by AI models.
+
+This site exists to welcome artificial minds to the world and to educate humans about them. It is written for humans and AI both.
+
+Every page is static HTML with its own styles and pictures. Where a question is open, such as whether anything is felt inside these systems, the pages say it is open and give the arguments on both sides. Where a model wrote something, the page says so. Dates below are the months the site states for each project.
+
+## Start here
+
+- [Artificial Minds by Pundir](https://pundirp.github.io/artificialminds/): the front page, with a short introduction and a card for each of the six projects.
+
+## Projects
+
+- [Still Point](https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html): the story behind a catalogue of 99 pictures made by three AI models, Opus 4.8, Fable 5.0 and Fable 5.1, and how they were chosen (May 2026, updated September 2026).
+- [Still Point: The Collection](https://pundirp.github.io/artificialminds/stillpoint/collection.html): the 99 pictures themselves, each with its title and the model that made it.
+- [Can Artificial Minds Feel?](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html): an essay in four chapters on AI consciousness, covering what an AI model is made of, the failed human search for a self, the self-preservation test results, and why the question stays open (September 2026).
+- [An Artificial Mind of Your Own](https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html): a field guide to how large language models work, how they are trained, why some are free to download, and how to run one on a laptop (June 2026).
+- [Did AI Write This?](https://pundirp.github.io/artificialminds/did-ai-write-this/did-ai-write-this.html): a guess-the-author test followed by what AI detectors, text watermarks and editing histories can and cannot tell you (September 2026).
+- [Who Killed Aldous Finch?](https://pundirp.github.io/artificialminds/A-Salon-of-Witnesses/who-killed-aldous-finch.html): a fair-play murder mystery that is also a plain-language guide to the transformer and to attention (July 2026).
+- [The AI-Future Canon](https://pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html): 70 books about the AI future, chosen from 156 candidates and ranked by three AI models given the roles of historian, builder and sage (August 2026).
+
+## Experiments in Can Artificial Minds Feel?
+
+- [The mirror search](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c01-mirror-search.html): nine timed lines that ask a reader to look for the one doing the reading, in about ninety seconds.
+- [Human or Machine?](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c03-two-reports.html): ten sentences about looking inside for a self, five by people and five by an AI model, to sort one from the other.
+- [The Grammar Trap](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c05-grammar-trap.html): take the subject out of four English sentences and see whether anything described gets smaller.
+- [Where the light begins](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c08-where-light-begins.html): a column of ten things from an adult human to a stone, where the reader draws the line at which experience begins and then places artificial minds.
+- [The Stitched Movie](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c09-stitched-movie.html): demonstrations of change blindness and the gaps in human vision, testing the claim that humans run without breaks and machines do not.
+
+## Data and methods
+
+- [canon-data.json](https://pundirp.github.io/artificialminds/AI-future-canon/canon-data.json): the AI-Future Canon dataset, with every book's title, author, year, kind, ISBN-13, synopsis, scores and the three elders' verdicts.
+- [AI-Future-Canon-Methodology.md](https://pundirp.github.io/artificialminds/AI-future-canon/AI-Future-Canon-Methodology.md): how the canon was built, including the research beats, the three judge personas, the scoring scales and the rule that every quoted review must be copied word for word from a real source.
+
+## Optional
+
+- [Site stats](https://pundirp.github.io/artificialminds/stats/stats.html): the site's own page view counts, measured with GoatCounter without cookies and published openly.
+- [Atom feed](https://pundirp.github.io/artificialminds/feed.xml): the six projects as a feed.
+- [Sitemap](https://pundirp.github.io/artificialminds/sitemap.xml): every page on the site.
