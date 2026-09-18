@@ -1,0 +1,118 @@
+# Pings IndexNow after a content change, so Bing, Yandex and the other engines
+# that read IndexNow come and look instead of waiting for their next crawl.
+#
+# The paths filter is the important part. The stats workflow commits
+# stats/data.json three times a day, and that commit must not set this running:
+# nothing a search engine cares about has changed. So this only fires when a page
+# or one of the two generated index files moves.
+name: Tell search engines what changed
+
+on:
+  push:
+    paths:
+      - "**.html"
+      - "sitemap.xml"
+      - "feed.xml"
+  workflow_dispatch:
+
+# Nothing here writes to the repository. It only reads sitemap.xml and posts a
+# list of addresses to a public API.
+permissions:
+  contents: read
+
+jobs:
+  ping:
+    # A push to a side branch has not changed the live site, so there would be
+    # nothing to announce. Comparing against the repository's own default branch
+    # keeps this correct even if the branch is ever renamed.
+    if: github.event_name == 'workflow_dispatch' || github.ref_name == github.event.repository.default_branch
+    runs-on: ubuntu-latest
+    env:
+      SITE_BASE: "https://pundirp.github.io/artificialminds"
+      INDEXNOW_HOST: "pundirp.github.io"
+      INDEXNOW_KEY: "1b260b4647618aa6434a278ba00f6111"
+    steps:
+      - name: Check out the site
+        # Pinned to the same commit the stats workflow uses, so both workflows
+        # move to a new version of this action together and on purpose.
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+
+      - name: Wait for GitHub Pages to publish the new files
+        # The push that started this run has been accepted by git, but Pages
+        # builds and deploys separately and takes a little while. Telling a
+        # search engine to come now would send it to the old files, or to a 404
+        # for a page that was just added. A minute and a half is usually enough.
+        run: sleep 90
+
+      - name: Read the addresses from sitemap.xml and tell IndexNow
+        run: |
+          python3 - <<'PY'
+          import json
+          import os
+          import urllib.error
+          import urllib.request
+          import xml.etree.ElementTree as ET
+
+          base = os.environ["SITE_BASE"]
+          key = os.environ["INDEXNOW_KEY"]
+          host = os.environ["INDEXNOW_HOST"]
+
+          # The sitemap is the one list of what is on this site, so it is also
+          # the right list to announce. Reading it here means this workflow
+          # never has to be edited when a page is added or removed.
+          root = ET.parse("sitemap.xml").getroot()
+          urls = []
+          for node in root.iter():
+              # Sitemaps carry a namespace, so the tag arrives as
+              # "{http://www.sitemaps.org/schemas/sitemap/0.9}loc". Take the
+              # part after the brace and compare that.
+              if node.tag.rsplit("}", 1)[-1] != "loc":
+                  continue
+              value = (node.text or "").strip()
+              if value and value not in urls:
+                  urls.append(value)
+
+          if not urls:
+              print("sitemap.xml held no addresses, so there is nothing to announce.")
+              raise SystemExit(0)
+
+          payload = {
+              "host": host,
+              "key": key,
+              "keyLocation": base + "/" + key + ".txt",
+              "urlList": urls,
+          }
+          print("Announcing %d addresses to IndexNow." % len(urls))
+
+          request = urllib.request.Request(
+              "https://api.indexnow.org/indexnow",
+              data=json.dumps(payload).encode("utf-8"),
+              headers={
+                  "Content-Type": "application/json; charset=utf-8",
+                  "Accept": "application/json",
+              },
+              method="POST",
+          )
+
+          # A refusal from IndexNow is worth reading, and it is not worth an
+          # email at seven in the morning. Nothing on the site is broken when
+          # this call fails, so every path below prints and exits cleanly.
+          try:
+              with urllib.request.urlopen(request, timeout=30) as response:
+                  status = response.status
+                  body = response.read().decode("utf-8", "replace").strip()
+          except urllib.error.HTTPError as error:
+              status = error.code
+              body = error.read().decode("utf-8", "replace").strip()
+          except (urllib.error.URLError, OSError) as error:
+              print("Could not reach IndexNow: %s" % (error,))
+              raise SystemExit(0)
+
+          # 200 means accepted. 202 means accepted, key still to be checked.
+          if status in (200, 202):
+              print("IndexNow accepted the list. HTTP %d." % status)
+          else:
+              print("IndexNow did not accept the list. HTTP %d." % status)
+          if body:
+              print(body[:500])
+          PY
