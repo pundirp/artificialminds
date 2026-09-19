@@ -1,17 +1,12 @@
 {
-  "generated": "2026-09-18T16:29:24Z",
+  "generated": "2026-09-19T04:42:44Z",
   "totals": {
-    "views_all": 5,
-    "visitors_all": 5,
-    "views_30d": 5,
-    "visitors_30d": 5
+    "views_all": 7,
+    "visitors_all": 7,
+    "views_30d": 7,
+    "visitors_30d": 7
   },
   "daily": [
-    {
-      "day": "2026-06-21",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-06-22",
       "views": 0,
@@ -454,6 +449,11 @@
     },
     {
       "day": "2026-09-18",
+      "views": 2,
+      "visitors": 2
+    },
+    {
+      "day": "2026-09-19",
       "views": 0,
       "visitors": 0
     }
@@ -461,18 +461,18 @@
   "monthly": [
     {
       "month": "2026-09",
-      "views": 5,
-      "visitors": 5
+      "views": 7,
+      "visitors": 7
     }
   ],
   "projects": [
     {
       "id": "stillpoint",
       "name": "Stillpoint",
-      "views_all": 2,
-      "visitors_all": 2,
-      "views_30d": 2,
-      "visitors_30d": 2
+      "views_all": 4,
+      "visitors_all": 4,
+      "views_30d": 4,
+      "visitors_30d": 4
     },
     {
       "id": "can-artificial-minds-feel",
@@ -531,31 +531,31 @@
     },
     {
       "path": "/stillpoint/collection.html",
-      "views_all": 1,
-      "visitors_all": 1
+      "views_all": 2,
+      "visitors_all": 2
     },
     {
       "path": "/stillpoint/stillpoint.html",
-      "views_all": 1,
-      "visitors_all": 1
+      "views_all": 2,
+      "visitors_all": 2
     }
   ],
   "countries": [
     {
       "name": "United States",
-      "visitors": 5
+      "visitors": 7
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 5
+      "visitors": 7
     }
   ],
   "systems": [
     {
       "name": "macOS",
-      "visitors": 4
+      "visitors": 6
     },
     {
       "name": "Windows",
@@ -568,12 +568,12 @@
       "visitors": 4
     },
     {
-      "name": "Tablet",
-      "visitors": 1
+      "name": "Large screen",
+      "visitors": 2
     },
     {
-      "name": "Large screen",
-      "visitors": 0
+      "name": "Tablet",
+      "visitors": 1
     },
     {
       "name": "Phone",
@@ -586,8 +586,16 @@
   ],
   "referrers": [
     {
+      "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
+      "visitors": 2
+    },
+    {
       "name": "www.linkedin.com",
       "visitors": 2
+    },
+    {
+      "name": "Unknown",
+      "visitors": 1
     },
     {
       "name": "pundirp.github.io",
@@ -595,10 +603,6 @@
     },
     {
       "name": "pundirp.github.io/artificialminds",
-      "visitors": 1
-    },
-    {
-      "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
       "visitors": 1
     }
   ]
