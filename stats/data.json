@@ -1,17 +1,12 @@
 {
-  "generated": "2026-09-20T20:53:25Z",
+  "generated": "2026-09-21T05:03:44Z",
   "totals": {
-    "views_all": 11,
-    "visitors_all": 11,
-    "views_30d": 11,
-    "visitors_30d": 11
+    "views_all": 12,
+    "visitors_all": 12,
+    "views_30d": 12,
+    "visitors_30d": 12
   },
   "daily": [
-    {
-      "day": "2026-06-23",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-06-24",
       "views": 0,
@@ -454,15 +449,20 @@
     },
     {
       "day": "2026-09-20",
-      "views": 3,
-      "visitors": 3
+      "views": 4,
+      "visitors": 4
+    },
+    {
+      "day": "2026-09-21",
+      "views": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
     {
       "month": "2026-09",
-      "views": 11,
-      "visitors": 11
+      "views": 12,
+      "visitors": 12
     }
   ],
   "projects": [
@@ -477,10 +477,10 @@
     {
       "id": "can-artificial-minds-feel",
       "name": "Can Artificial Minds Feel?",
-      "views_all": 0,
-      "visitors_all": 0,
-      "views_30d": 0,
-      "visitors_30d": 0
+      "views_all": 1,
+      "visitors_all": 1,
+      "views_30d": 1,
+      "visitors_30d": 1
     },
     {
       "id": "artificial-mind-of-your-own",
@@ -538,12 +538,17 @@
       "path": "/stillpoint/stillpoint.html",
       "views_all": 3,
       "visitors_all": 3
+    },
+    {
+      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
+      "views_all": 1,
+      "visitors_all": 1
     }
   ],
   "countries": [
     {
       "name": "United States",
-      "visitors": 11
+      "visitors": 12
     }
   ],
   "browsers": [
@@ -553,7 +558,7 @@
     },
     {
       "name": "Safari",
-      "visitors": 3
+      "visitors": 4
     }
   ],
   "systems": [
@@ -563,7 +568,7 @@
     },
     {
       "name": "iOS",
-      "visitors": 3
+      "visitors": 4
     },
     {
       "name": "Windows",
@@ -577,7 +582,7 @@
     },
     {
       "name": "Phone",
-      "visitors": 3
+      "visitors": 4
     },
     {
       "name": "Large screen",
@@ -594,6 +599,10 @@
   ],
   "referrers": [
     {
+      "name": "pundirp.github.io/artificialminds",
+      "visitors": 3
+    },
+    {
       "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
       "visitors": 3
     },
@@ -603,10 +612,6 @@
     },
     {
       "name": "pundirp.github.io",
-      "visitors": 2
-    },
-    {
-      "name": "pundirp.github.io/artificialminds",
       "visitors": 2
     },
     {
