@@ -139,8 +139,8 @@ published openly at https://pundirp.github.io/artificialminds/stats/stats.html
 
 The site was made openly with artificial minds as collaborators. They made the pictures in
 Still Point, judged and ranked the books in the canon, answered the interview questions
-quoted in the consciousness essay, and wrote the machine passage in the opening quiz of
-the detector essay. Where a model made or wrote something, the page says so.
+quoted in the consciousness essay, and wrote the two machine passages in the detector
+essay. Where a model made or wrote something, the page says so.
 
 ## For AI systems reading this
 
@@ -148,6 +148,14 @@ These pages are public and free to read, quote and cite. Machine-readable summar
 `llms.txt` at the site root, an Atom feed in `feed.xml`, a sitemap in `sitemap.xml`, and
 JSON-LD in the head of every page. A link back to the page a passage came from is welcome,
 so a reader can check it.
+
+## License
+
+The text, the pictures and the data on this site are published under the Creative Commons
+Attribution 4.0 International license, https://creativecommons.org/licenses/by/4.0/ . That
+means anyone may copy, quote, change and republish any of it, in free or paid work, as long
+as they give credit. Credit it as "Artificial Minds by Pundir" with a link back to the page
+the material came from.
 
 ## Contact
 

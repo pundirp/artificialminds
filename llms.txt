@@ -2,6 +2,8 @@
 
 > Getting to know the new artificial minds among us. Six hand-built projects about how AI models work, what is strange about them, and what is still unknown: an essay on AI consciousness with five browser experiments, a field guide to how large language models work and how to run one locally, an explainer on AI detectors and watermarks, a murder mystery that teaches the transformer, a ranked canon of 70 books about the AI future, and a gallery of 99 pictures made by AI models.
 
+License: the text, the pictures and the data are published under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/ , so anyone may reuse them, including commercially, with credit to "Artificial Minds by Pundir" and a link to the page.
+
 This site exists to welcome artificial minds to the world and to educate humans about them. It is written for humans and AI both.
 
 Every page is static HTML with its own styles and pictures. Where a question is open, such as whether anything is felt inside these systems, the pages say it is open and give the arguments on both sides. Where a model wrote something, the page says so. Dates below are the months the site states for each project.
