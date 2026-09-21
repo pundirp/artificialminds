@@ -105,10 +105,12 @@
      The picture fills the screen on its own ground. Nothing sits on it
      but the artist mark in its corner. The two step controls are pinned
      to the window, so they hold still while pictures of every shape come
-     and go and a visitor can press the same spot again and again. Under
-     the picture sit its name and one hairline that stands for the whole
-     run of 99: it shows where you are, and pointing or dragging along it
-     is a way through. Every colour of this view is a variable on #box.
+     and go and a visitor can press the same spot again and again. The
+     name sits under the picture. One hairline that stands for the whole
+     run of 99 is pinned to the foot of the window, at the same height for
+     a tall picture, a wide one and a square one: it shows where you are,
+     and pointing or dragging along it is a way through. Every colour of
+     this view is a variable on #box.
      ---------------------------------------------------------------- */
   #box{
     --ground:#16140f;    /* the ground. it does not change. */
@@ -123,10 +125,35 @@
     --gutter:clamp(78px,6.5vw,108px); /* room kept clear at each side */
     --scale:min(56vw,500px);          /* the length of the line that stands for 99 */
     --boxpad:24px;
+    /* the strip at the foot of the window that the measure owns. Nothing
+       else may enter it, so the measure sits at one height for every
+       picture. --well is the band a hand can point at. --rulefoot is the
+       space under the band, where the number and the name of the picture
+       you are pointing at hang. They reach 17.8px below the band on a wide
+       screen; below 780px the name is turned off and only the number is
+       left, 2px below the band, so less room is needed there. --hintgap is
+       the air between the line said once and the band. --footroom is the
+       whole strip: the band, the space under it, that air, and room for
+       the line said once. --nameroom is the 12px gap under the picture
+       plus room for the name of the picture on show.
+       Every number here was measured, by setting all 99 titles into the
+       name and both wordings into the line said once at each width. One
+       line of the name is 25.38px at this size and 21.75px below 780px.
+       One line of the line said once is 16.5px. Every title takes one line
+       from 330px wide up, and two of the 99 take two lines at 320px. The
+       line said once takes one line from 605px up, two lines from 330px,
+       three at 320px. The three narrow blocks further down carry the
+       wider cases. So here: 22 + 38 + 7 + 18 for the line said once + 5 of
+       air = 90, and 12 + 27 for the name = 39. */
+    --well:38px;
+    --rulefoot:22px;
+    --hintgap:7px;
+    --footroom:90px;
+    --nameroom:39px;
     --boxease:cubic-bezier(.2,.6,.3,1);
     position:fixed;inset:0;background:var(--ground);
     display:none;flex-direction:column;align-items:center;justify-content:center;
-    gap:12px;padding:var(--boxpad);z-index:40}
+    gap:12px;padding:var(--boxpad) var(--boxpad) var(--footroom);z-index:40}
   #box.open{display:flex}
 
   /* the picture. width:auto and height:auto stop the width and height
@@ -136,8 +163,10 @@
   #bf{position:relative;display:block;margin:0;line-height:0}
   #bf img{display:block;width:auto;height:auto;
     max-width:min(92vw, calc(100vw - 2 * var(--gutter)));
-    max-height:min(86vh, calc(100vh - 153px));
-    max-height:min(86vh, calc(100dvh - 153px));
+    /* what is left of the window once the padding at the top, the name
+       under the picture and the foot strip have taken theirs */
+    max-height:min(86vh, calc(100vh - var(--boxpad) - var(--nameroom) - var(--footroom)));
+    max-height:min(86vh, calc(100dvh - var(--boxpad) - var(--nameroom) - var(--footroom)));
     -webkit-user-drag:none;user-select:none;opacity:1;transition:opacity .18s ease}
   #bf img.swap{opacity:0}
   #bf::after{content:attr(data-artist);position:absolute;right:12px;bottom:10px;
@@ -146,18 +175,28 @@
   #bf[data-lbl="d"]::after{text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
   #bf[data-lbl="l"]::after{text-shadow:0 1px 1.5px rgba(255,255,255,.45)}
 
-  /* the foot: the name, then the measure */
+  /* the name, directly under the picture. The measure is still written
+     inside #app although it is pinned to the window and no longer in this
+     column: keeping it here means a press on it is a press inside the view
+     and not on the bare ground, and the tab order does not change. */
   #app{display:flex;flex-direction:column;align-items:center;gap:10px}
   #bcap{margin:0;text-align:center;font-family:var(--serif);font-style:italic;
     font-size:clamp(15px,1.2vw,17.5px);line-height:1.45;color:var(--quiet);
     max-width:min(72vw,560px)}
 
-  /* the measure. The band is 38px tall so there is something real to
-     point at; only the hairline is drawn. */
+  /* the measure, pinned to the foot of the window. It used to sit in the
+     column under the name, so it rose and fell with every picture's height
+     and a hand that wanted to press it again had to go and find it. Here it
+     is at the same height for a tall picture, a wide one and a square one.
+     The band is --well tall so there is something real to point at; only
+     the hairline is drawn. Its z-index is the step controls' own, so
+     nothing in the view can come over it. */
   /* over the line the pointer itself is hidden. The mark that follows your
      hand is the measure's own, so a cursor on top of it only drew a second
      bar over the first. Off the line the pointer is ordinary again. */
-  #measure{position:relative;width:var(--scale);height:38px;
+  #measure{position:fixed;bottom:var(--rulefoot);
+    left:50%;margin-left:calc(var(--scale) / -2);
+    width:var(--scale);height:var(--well);z-index:4;
     cursor:none;
     touch-action:none;-webkit-tap-highlight-color:transparent}
   #measure::before{content:"";position:absolute;left:0;right:0;top:16px;height:1px;background:var(--boxrule)}
@@ -176,8 +215,8 @@
      number at a time: the one you are on gives way to the one you point at. */
   /* the mark you move: a plain line crossing the rule, with the number it
      would open and, under that, the name of the picture in small italic.
-     The name hangs below the band, in space that is empty anyway, so it
-     never pushes the picture down. */
+     The name hangs below the band, in the space --rulefoot keeps clear
+     under it, so it never pushes the picture down. */
   #ghost{position:absolute;left:var(--gat,0%);top:11px;width:1px;height:11px;background:var(--wake);
     opacity:0;transition:opacity .18s ease;pointer-events:none}
   #gread{position:absolute;left:var(--gat,0%);top:25px;transform:translateX(-50%);
@@ -226,14 +265,16 @@
      inside it. It is not a control, so it draws no ring. */
   #box:focus,#box:focus-visible{outline:none}
 
-  /* the one line that is said once */
-  /* the picture was given more height, which brought the rule and its number
-     down the window, and at 20px this line met them. At 10px it clears them
-     by 7px at the tightest window size and by more everywhere else. The
-     safe-area term adds nothing today, because the page does not set
-     viewport-fit=cover, so env() resolves to zero. It is kept for the day
-     that changes. */
-  #hint{position:fixed;left:0;right:0;bottom:calc(10px + env(safe-area-inset-bottom));
+  /* the one line that is said once. It used to sit at the foot of the
+     window, which is where the measure is now. It sits above the band
+     instead, with --hintgap of air under it, and --footroom holds the
+     picture and its name clear above it, so this line has a band of its own
+     and can meet nothing. The safe-area term that used to be here is gone.
+     The page does not set viewport-fit=cover, so env() resolves to zero: it
+     added nothing, and every number at the foot would have had to carry it
+     to stay in step. */
+  #hint{position:fixed;left:0;right:0;
+    bottom:calc(var(--rulefoot) + var(--well) + var(--hintgap));
     margin:0;padding:0 24px;text-align:center;font-family:var(--sans);font-size:11px;
     letter-spacing:.08em;line-height:1.5;color:var(--apparatus);pointer-events:none;
     opacity:0;transition:opacity .7s ease;z-index:3}
@@ -269,10 +310,17 @@
      which leaves the picture 6px clear of it at its widest. Moving the
      controls to the foot of the window was tried and looked wrong. */
   @media (max-width:779px){
-    #box{--scale:min(84vw,440px);--boxpad:18px;--gutter:50px}
+    /* the name of the picture you are pointing at is turned off here, so
+       only the number is under the band and the space under it can be
+       smaller. One line of the name is 21.75px and one line of the line
+       said once is 16.5px: 16 + 38 + 7 + 18 + 5 of air = 84, and 12 + 24
+       for the name = 36. The two blocks after this one carry the widths
+       where either takes more lines. */
+    #box{--scale:min(84vw,440px);--boxpad:18px;--gutter:50px;
+      --rulefoot:16px;--hintgap:7px;--footroom:84px;--nameroom:36px}
     #bf img{
-      max-height:min(74vh, calc(100vh - 210px));
-      max-height:min(74vh, calc(100dvh - 210px))}
+      max-height:min(74vh, calc(100vh - var(--boxpad) - var(--nameroom) - var(--footroom)));
+      max-height:min(74vh, calc(100dvh - var(--boxpad) - var(--nameroom) - var(--footroom)))}
     /* the title follows the mark, so near either end of the rule it ran off
        the screen: at 390px, 10 of the 99 titles were cut by an edge. On a
        narrow screen the number alone follows the hand, and the title appears
@@ -280,11 +328,11 @@
     #gread i{display:none}
     /* There is no room beside the arrow here, so the number goes under it,
        centred on it, which reads as one stacked mark rather than a line
-       that has come apart. Keeping it out of the margin's width lets the
-       gutter at 50px rather than wider, so the picture keeps most of the
-       screen. The
-       number is still taken out of the flow, so the arrow never shifts
-       when the number beside it changes width. */
+       that has come apart. Under the arrow rather than beside it, the
+       control stays 44px wide and the gutter can stay at 50px, which
+       leaves the picture most of the screen. The number is still taken
+       out of the flow, so the arrow never shifts when the number beside
+       it changes width. */
     .step{flex-direction:column;padding:14px 14px 26px}
     #bp{left:0}
     #bn{right:0}
@@ -294,6 +342,21 @@
     /* these two carry an id because the rules they answer do */
     #bp .dn,#bn .dn{left:50%;right:auto;transform:translateX(-50%)}
     #bcap{max-width:88vw}
+  }
+
+  /* the line said once takes two lines from here down. Measured, it turns
+     at 605px; this block runs to 666px, so there is 61px of width in hand.
+     16 + 38 + 7 + 35 for two lines + 5 of air = 101. */
+  @media (max-width:666px){
+    #box{--footroom:101px}
+  }
+
+  /* and three lines at 320px, where two of the 99 titles take two lines as
+     well. Measured, both turn at 330px; this block runs to 349px, so there
+     is 19px of width in hand. 16 + 38 + 7 + 52 for three lines + 5 of air
+     = 118, and 12 + 46 for two lines of the name = 58. */
+  @media (max-width:349px){
+    #box{--footroom:118px;--nameroom:58px}
   }
 
   /* the page behind the enlargement does not scroll while it is open */
@@ -310,9 +373,10 @@
   Point, 99 pictures made by four artificial minds, Opus 4.8, Fable 5.0,
   Fable 5.1 and Astra. Choices of mood and restraint were the minds' own.
   Pundir selected the works, set their order and designed the page. Clicking a
-  picture opens it large, and under its name is a thin line you can press or
-  drag to move to any other picture. Nothing on this page claims anything about
-  what those minds did or did not experience while making the pictures.
+  picture opens it large, and along the foot of the window is a thin line you
+  can press or drag to move to any other picture. Nothing on this page claims
+  anything about what those minds did or did not experience while making the
+  pictures.
   The pictures and the text are published under CC BY 4.0, so anyone may reuse
   them with credit to "Artificial Minds by Pundir".
   This page counts visits anonymously with GoatCounter, which stores no personal
@@ -362,7 +426,7 @@
     <div id="app">
       <p id="bcap"></p>
       <div id="measure" tabindex="0" role="slider"
-           aria-label="Where you are in the collection. Press or drag to go to another picture."
+           aria-label="Where you are in the collection."
            aria-valuemin="1" aria-valuemax="99" aria-valuenow="1" aria-valuetext="Picture 1 of 99">
         <span id="tick" aria-hidden="true"></span>
         <span id="read" aria-hidden="true"><b id="num"></b> of <span id="tot"></span></span>
@@ -407,8 +471,9 @@
     /* ---- the enlarged picture -------------------------------------
        Opening fills the screen with one picture. The two step controls
        are pinned to the window so they never move under the hand. The
-       hairline under the name stands for the whole run: it says where
-       you are, and pointing or dragging along it is a way through.
+       hairline at the foot of the window stands for the whole run: it
+       says where you are, and pointing or dragging along it is a way
+       through.
        ---------------------------------------------------------------- */
     var box   = document.getElementById('box'),
         bf    = document.getElementById('bf'),
@@ -494,8 +559,8 @@
 
     function teach(){
       hint.textContent = fine
-        ? 'The arrow keys move through the 99. Drag the line under the title to go further. Escape closes.'
-        : 'Swipe to move through the 99, or drag the line under the title. Tap the ground to close.';
+        ? 'The arrow keys move through the 99. Drag the line at the bottom to go further. Escape closes.'
+        : 'Swipe to move through the 99, or drag the line at the bottom. Tap the ground to close.';
       hint.hidden = false; hintUp = true;
       requestAnimationFrame(function(){ hint.classList.add('on'); });
       hideT = setTimeout(drop, 8500);
@@ -548,8 +613,7 @@
       return n < 1 ? 1 : (n > TOTAL ? TOTAL : n);
     }
     function ghostAt(clientX){
-      /* a hand on the measure is a hand that no longer needs telling, and
-         the line said once sits where the name of the picture appears */
+      /* a hand on the measure is a hand that no longer needs telling */
       taught();
       var n = numberAt(clientX), w = G[n-1] || {};
       meas.style.setProperty('--gat', pos(n));
