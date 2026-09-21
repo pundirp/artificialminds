@@ -34,14 +34,14 @@ LinkedIn: https://www.linkedin.com/in/pundir-ny/
 
 https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html
 
-A catalogue of ninety-nine pictures made by three artificial minds: Opus 4.8, Fable 5.0 and
-Fable 5.1. Every image began with one question put to the model, what would make someone
-stop and look, and each candidate was set beside the existing archive of human pictures and
-kept only when it did not lean on a single image, style or familiar gesture. Many more were
-made and let go. Pundir selected the works, set their order and designed the presentation;
-the restraint in the pictures came from the models' own choices. This is art made by AI
-models, AI generated art and AI image generation, shown as a slow gallery rather than a
-demo. The full collection with titles and artists is at
+A catalogue of ninety-nine pictures made by four artificial minds: Opus 4.8, Fable 5.0,
+Fable 5.1 and Astra. Every image began with one question put to the model, what would make
+someone stop and look, and each candidate was set beside the existing archive of human
+pictures and kept only when it did not lean on a single image, style or familiar gesture.
+Many more were made and let go. Pundir selected the works, set their order and designed the
+presentation; the restraint in the pictures came from the models' own choices. This is art
+made by AI models, AI generated art and AI image generation, shown as a slow gallery rather
+than a demo. The full collection with titles and artists is at
 https://pundirp.github.io/artificialminds/stillpoint/collection.html
 
 ### 2. Can Artificial Minds Feel?

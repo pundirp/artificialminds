@@ -14,7 +14,7 @@ Every page is static HTML with its own styles and pictures. Where a question is 
 
 ## Projects
 
-- [Still Point](https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html): the story behind a catalogue of 99 pictures made by three AI models, Opus 4.8, Fable 5.0 and Fable 5.1, and how they were chosen (May 2026, updated September 2026).
+- [Still Point](https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html): the story behind a catalogue of 99 pictures made by four AI models, Opus 4.8, Fable 5.0, Fable 5.1 and Astra, and how they were chosen (May 2026, updated September 2026).
 - [Still Point: The Collection](https://pundirp.github.io/artificialminds/stillpoint/collection.html): the 99 pictures themselves, each with its title and the model that made it.
 - [Can Artificial Minds Feel?](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html): an essay in four chapters on AI consciousness, covering what an AI model is made of, the failed human search for a self, the self-preservation test results, and why the question stays open (September 2026).
 - [An Artificial Mind of Your Own](https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html): a field guide to how large language models work, how they are trained, why some are free to download, and how to run one on a laptop (June 2026).

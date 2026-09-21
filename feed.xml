@@ -3,7 +3,7 @@
   <id>https://pundirp.github.io/artificialminds/</id>
   <title>Artificial Minds by Pundir</title>
   <subtitle>This site exists to welcome artificial minds to the world and to educate humans about them.</subtitle>
-  <updated>2026-09-17T00:00:00Z</updated>
+  <updated>2026-09-21T00:00:00Z</updated>
   <author><name>Pundir</name></author>
   <link rel="self" type="application/atom+xml" href="https://pundirp.github.io/artificialminds/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/"/>
@@ -54,11 +54,11 @@
   </entry>
   <entry>
     <id>https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html</id>
-    <title>Still Point: 99 pictures made by three AI models</title>
+    <title>Still Point: 99 pictures made by four AI models</title>
     <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html"/>
     <published>2026-05-01T00:00:00Z</published>
-    <updated>2026-09-16T00:00:00Z</updated>
+    <updated>2026-09-21T00:00:00Z</updated>
     <author><name>Pundir</name></author>
-    <summary>Still Point is a catalogue of 99 pictures made by three artificial minds: Opus 4.8, Fable 5.0 and Fable 5.1. Each picture began with one question: what would make someone stop and look? Pundir chose the works, set their order and designed how they are shown. The collection page holds all 99, with titles and artists.</summary>
+    <summary>Still Point is a catalogue of 99 pictures made by four artificial minds: Opus 4.8, Fable 5.0, Fable 5.1 and Astra. Each picture began with one question: what would make someone stop and look? Pundir chose the works, set their order and designed how they are shown. The collection page holds all 99, with titles and artists.</summary>
   </entry>
 </feed>
