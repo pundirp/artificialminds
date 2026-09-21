@@ -101,31 +101,157 @@
     .gallery{column-count:1;padding:34px 22px 72px}
   }
 
-  /* ---- enlarge ---- */
-  #box{position:fixed;inset:0;background:#16140f;display:none;align-items:center;justify-content:center;
-       flex-direction:column;gap:18px;padding:32px;z-index:40}
+  /* ---- enlarge ----------------------------------------------------
+     The picture fills the screen on its own ground. Nothing sits on it
+     but the artist mark in its corner. The two step controls are pinned
+     to the window, so they hold still while pictures of every shape come
+     and go and a visitor can press the same spot again and again. Under
+     the picture sit its name and one hairline that stands for the whole
+     run of 99: it shows where you are, and pointing or dragging along it
+     is a way through. Every colour of this view is a variable on #box.
+     ---------------------------------------------------------------- */
+  #box{
+    --ground:#16140f;    /* the ground. it does not change. */
+    --lit:#ece8df;       /* the mark on the measure, and its number */
+    --wake:#cdc7ba;      /* a control a hand has come near */
+    --quiet:#b6b0a3;     /* the name of the picture */
+    --apparatus:#8c867a; /* the small sans words */
+    --sleep:#6f6a60;     /* a control at rest */
+    --boxrule:#5b554a;   /* the measure line itself */
+    --boxfocus:#b7b2a6;  /* the ring a keyboard user sees */
+    --boxmark:#ddd8cf;   /* the artist mark, if a picture carries no colour */
+    --gutter:clamp(78px,6.5vw,108px); /* room kept clear at each side */
+    --scale:min(56vw,500px);          /* the length of the line that stands for 99 */
+    --boxpad:30px;
+    --boxease:cubic-bezier(.2,.6,.3,1);
+    position:fixed;inset:0;background:var(--ground);
+    display:none;flex-direction:column;align-items:center;justify-content:center;
+    gap:18px;padding:var(--boxpad);z-index:40}
   #box.open{display:flex}
-  #bf{position:relative;display:inline-block}
-  /* width:auto and height:auto stop the width/height attributes from stretching the picture.
-     The attributes and the aspect-ratio set in paint() give the frame its right shape
-     before the file arrives, so stepping does not resize the box. */
-  #bf img{display:block;width:auto;height:auto;max-height:80vh;max-width:92vw;
+
+  /* the picture. width:auto and height:auto stop the width and height
+     attributes stretching it; those attributes and the aspect-ratio set
+     when it changes give the frame its shape before the file arrives,
+     so stepping never resizes the view. */
+  #bf{position:relative;display:block;margin:0;line-height:0}
+  #bf img{display:block;width:auto;height:auto;
+    max-width:min(92vw, calc(100vw - 2 * var(--gutter)));
+    max-height:min(80vh, calc(100vh - 168px));
+    max-height:min(80vh, calc(100dvh - 168px));
     -webkit-user-drag:none;user-select:none;opacity:1;transition:opacity .18s ease}
   #bf img.swap{opacity:0}
-  #bf::after{content:attr(data-artist);position:absolute;right:12px;bottom:10px;font-family:var(--sans);
-    font-size:10.5px;font-weight:400;letter-spacing:.11em;color:var(--lc,#ddd8cf);pointer-events:none}
+  #bf::after{content:attr(data-artist);position:absolute;right:12px;bottom:10px;
+    font-family:var(--sans);font-size:10.5px;font-weight:400;letter-spacing:.11em;
+    color:var(--lc,var(--boxmark));pointer-events:none;line-height:1}
   #bf[data-lbl="d"]::after{text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
   #bf[data-lbl="l"]::after{text-shadow:0 1px 1.5px rgba(255,255,255,.45)}
-  #bcap{font-style:italic;font-size:20px;color:#ece8df;text-align:center;max-width:92vw}
-  #bcap .no{font-family:var(--sans);font-style:normal;font-size:11px;letter-spacing:.18em;color:#8c867a;margin-right:10px}
-  #x{position:fixed;top:15px;right:21px;font-size:30px;line-height:1;color:#b7b2a6;background:none;border:0;cursor:pointer;font-family:var(--sans)}
-  #x:hover{color:#fff}
-  .arw{position:fixed;top:50%;transform:translateY(-50%);font-size:42px;color:#857f73;background:none;border:0;cursor:pointer;padding:10px 18px}
-  .arw:hover{color:#fff}.ap{left:8px}.an{right:8px}
-  .arw:focus-visible,#x:focus-visible{outline:1px solid #857f73;outline-offset:4px}
+
+  /* the foot: the name, then the measure */
+  #app{display:flex;flex-direction:column;align-items:center;gap:16px}
+  #bcap{margin:0;text-align:center;font-family:var(--serif);font-style:italic;
+    font-size:clamp(15px,1.2vw,17.5px);line-height:1.45;color:var(--quiet);
+    max-width:min(72vw,560px)}
+
+  /* the measure. The band is 38px tall so there is something real to
+     point at; only the hairline is drawn. */
+  #measure{position:relative;width:var(--scale);height:38px;cursor:ew-resize;
+    touch-action:none;-webkit-tap-highlight-color:transparent}
+  #measure::before{content:"";position:absolute;left:0;right:0;top:16px;height:1px;background:var(--boxrule)}
+  #measure:focus-visible{outline:1px solid var(--boxfocus);outline-offset:5px}
+  #tick{position:absolute;left:var(--at,0%);top:13px;width:1px;height:8px;background:var(--lit);
+    transition:left .45s var(--boxease)}
+  #read{position:absolute;left:var(--at,0%);top:27px;transform:translateX(-50%);
+    font-family:var(--sans);font-size:10px;letter-spacing:.14em;color:var(--apparatus);
+    white-space:nowrap;transition:left .45s var(--boxease), opacity .2s ease}
+  #read b{font-weight:400;color:var(--lit)}
+  /* where the pointer is standing, and the picture it would open. One
+     number at a time: the one you are on gives way to the one you point at. */
+  #ghost{position:absolute;left:var(--gat,0%);top:13px;width:1px;height:8px;background:var(--wake);
+    opacity:0;transition:opacity .18s ease;pointer-events:none}
+  #gread{position:absolute;left:var(--gat,0%);top:27px;transform:translateX(-50%);
+    font-family:var(--sans);font-size:10px;letter-spacing:.14em;color:var(--lit);
+    white-space:nowrap;opacity:0;transition:opacity .18s ease;pointer-events:none}
+  #measure.scrub #ghost,#measure.scrub #gread{opacity:1}
+  #measure.scrub #read{opacity:0}
+
+  /* the two step controls, pinned to the window. The number is taken out
+     of the control's own box, so the glyph never shifts when the number
+     beside it changes width. */
+  .step{position:fixed;top:50%;transform:translateY(-50%);z-index:4;
+    -webkit-appearance:none;appearance:none;background:none;border:0;margin:0;
+    padding:18px 16px;cursor:pointer;color:var(--apparatus);
+    display:flex;align-items:center;justify-content:center;transition:color .3s ease}
+  #bp{left:calc(4px + env(safe-area-inset-left))}
+  #bn{right:calc(4px + env(safe-area-inset-right));flex-direction:row-reverse}
+  .step .gl{font-family:var(--serif);font-size:19px;line-height:1;display:block}
+  .step .dest{position:relative;display:block;width:0;height:0}
+  .step .dn{position:absolute;top:50%;transform:translateY(-50%);
+    font-family:var(--sans);font-size:10px;letter-spacing:.14em;
+    font-variant-numeric:tabular-nums;color:var(--wake);line-height:1;white-space:nowrap}
+  #bp .dn{left:12px}
+  #bn .dn{right:12px}
+  .step:focus-visible{outline:1px solid var(--boxfocus);outline-offset:4px}
+
+  /* the way out */
+  #x{position:fixed;top:calc(14px + env(safe-area-inset-top));
+    right:calc(16px + env(safe-area-inset-right));
+    -webkit-appearance:none;appearance:none;background:none;border:0;margin:0;
+    padding:12px 14px;cursor:pointer;color:var(--apparatus);
+    display:flex;align-items:center;gap:12px;transition:color .3s ease;z-index:5}
+  #x .gl{font-family:var(--serif);font-size:22px;line-height:1;order:2}
+  #x .dest{font-family:var(--sans);font-size:10px;letter-spacing:.14em;order:1;display:none}
+  #x:focus-visible{outline:1px solid var(--boxfocus);outline-offset:4px}
+
+  /* the one line that is said once */
+  #hint{position:fixed;left:0;right:0;bottom:calc(20px + env(safe-area-inset-bottom));
+    margin:0;padding:0 24px;text-align:center;font-family:var(--sans);font-size:11px;
+    letter-spacing:.08em;line-height:1.5;color:var(--apparatus);pointer-events:none;
+    opacity:0;transition:opacity .7s ease;z-index:3}
+  #hint.on{opacity:1}
+  #hint[hidden]{display:none}
+
+  /* words read only by a screen reader */
+  .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
+    clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
+
+  /* where there is a pointer that can approach, the controls sleep. The
+     base rules above are the loud ones, so a touch screen, which cannot
+     tell us about hovering, shows controls that can be read at once. */
+  @media (hover:hover) and (pointer:fine){
+    .step{color:var(--sleep)}
+    .step .dn{opacity:0;transition:opacity .3s ease}
+    .step.awake{color:var(--wake)}
+    .step.awake .dn{opacity:1}
+    .step:hover,.step:focus-visible{color:var(--lit)}
+    .step:hover .dn,.step:focus-visible .dn{opacity:1}
+    #x{color:var(--sleep)}
+    #x .dest{display:block;opacity:0;transition:opacity .3s ease}
+    #x.awake{color:var(--wake)}
+    #x:hover,#x:focus-visible{color:var(--lit)}
+    #x:hover .dest,#x:focus-visible .dest{opacity:1}
+    #measure:hover::before{background:var(--wake)}
+  }
+
+  /* a phone has no room at the sides for a control that is not on the
+     picture, so the two go to the foot of the window. They are still
+     pinned and still hold still, and a thumb reaches them more easily. */
+  @media (max-width:779px){
+    #box{--scale:min(84vw,440px);--boxpad:20px;--gutter:0px}
+    #bf img{max-width:92vw;
+      max-height:min(74vh, calc(100vh - 210px));
+      max-height:min(74vh, calc(100dvh - 210px))}
+    .step{top:auto;transform:none;bottom:calc(16px + env(safe-area-inset-bottom));
+      padding:14px 18px;min-height:48px}
+    #bp{left:calc(10px + env(safe-area-inset-left))}
+    #bn{right:calc(10px + env(safe-area-inset-right))}
+    #bp .dn{left:auto;right:-4px;transform:translateY(-50%) translateX(100%)}
+    #bn .dn{right:auto;left:-4px;transform:translateY(-50%) translateX(-100%)}
+    #hint{bottom:calc(76px + env(safe-area-inset-bottom))}
+    #bcap{max-width:90vw}
+  }
+
   /* the page behind the enlargement does not scroll while it is open */
   html.hold,html.hold body{overflow:hidden}
-
   @media(prefers-reduced-motion:reduce){
     .imgwrap img,#bf img{transition:none}
     .imgwrap img{opacity:1}
@@ -159,12 +285,33 @@
 
   <p class="home"><a href="../index.html">&larr;&nbsp; Artificial Minds main page</a></p>
 
-  <div id="box" role="dialog" aria-modal="true">
-    <button id="x" aria-label="Close">&times;</button>
-    <button class="arw ap" id="bp" aria-label="Previous">&#8249;</button>
-    <div id="bf"><img id="bimg" alt=""></div>
-    <div id="bcap"></div>
-    <button class="arw an" id="bn" aria-label="Next">&#8250;</button>
+  <div id="box" role="dialog" aria-modal="true" aria-label="A picture from Still Point">
+    <button id="x" type="button" aria-label="Close the picture and go back to the full collection">
+      <span class="gl" aria-hidden="true">&times;</span>
+      <span class="dest" aria-hidden="true">Back to the full collection</span>
+    </button>
+    <button id="bp" class="step" type="button">
+      <span class="gl" aria-hidden="true">&#8592;</span>
+      <span class="dest"><span class="dn" id="pn"></span></span>
+    </button>
+    <figure id="bf" data-lbl="d" data-artist=""><img id="bimg" alt="" draggable="false"></figure>
+    <button id="bn" class="step" type="button">
+      <span class="gl" aria-hidden="true">&#8594;</span>
+      <span class="dest"><span class="dn" id="nn"></span></span>
+    </button>
+    <div id="app">
+      <p id="bcap"></p>
+      <div id="measure" tabindex="0" role="slider"
+           aria-label="Where you are in the collection. Press or drag to go to another picture."
+           aria-valuemin="1" aria-valuemax="99" aria-valuenow="1" aria-valuetext="Picture 1 of 99">
+        <span id="tick" aria-hidden="true"></span>
+        <span id="read" aria-hidden="true"><b id="num"></b> of <span id="tot"></span></span>
+        <span id="ghost" aria-hidden="true"></span>
+        <span id="gread" aria-hidden="true"></span>
+      </div>
+    </div>
+    <p id="hint" role="status" hidden></p>
+    <p id="said" class="sr" role="status" aria-live="polite"></p>
   </div>
 
   <script src="data.js"></script>
@@ -197,59 +344,265 @@
       gallery.appendChild(d);
     });
 
-    var box=document.getElementById('box'), bf=document.getElementById('bf'), bimg=document.getElementById('bimg'),
-        bcap=document.getElementById('bcap'), cur=0, pre={}, opener=null, sy=0, swapT=0, swiped=0,
-        xb=document.getElementById('x'),
-        calm=window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    function preload(i){ [i-1,i+1,i+2].forEach(function(j){ j=(j+G.length)%G.length;
-      if(!pre[j]){ var im=new Image(); im.src=G[j].src; pre[j]=im; } }); }
+    /* ---- the enlarged picture -------------------------------------
+       Opening fills the screen with one picture. The two step controls
+       are pinned to the window so they never move under the hand. The
+       hairline under the name stands for the whole run: it says where
+       you are, and pointing or dragging along it is a way through.
+       ---------------------------------------------------------------- */
+    var box   = document.getElementById('box'),
+        bf    = document.getElementById('bf'),
+        bimg  = document.getElementById('bimg'),
+        bcap  = document.getElementById('bcap'),
+        meas  = document.getElementById('measure'),
+        tickN = document.getElementById('num'),
+        totN  = document.getElementById('tot'),
+        ghost = document.getElementById('ghost'),
+        gread = document.getElementById('gread'),
+        bpB   = document.getElementById('bp'),
+        bnB   = document.getElementById('bn'),
+        pnN   = document.getElementById('pn'),
+        nnN   = document.getElementById('nn'),
+        xb    = document.getElementById('x'),
+        hint  = document.getElementById('hint'),
+        said  = document.getElementById('said'),
+        cur = 0, pre = {}, opener = null, sy = 0, swapT = 0, flashT = 0, swiped = 0,
+        TOTAL = G.length,
+        calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches,
+        fine = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+
+    totN.textContent = String(TOTAL);
+    meas.setAttribute('aria-valuemax', String(TOTAL));
+
+    function at(k){ return (k + G.length) % G.length; }
+    function pos(n){ return (((n - 0.5) / TOTAL) * 100).toFixed(3) + '%'; }
+
+    function preload(i){
+      [i-1, i+1, i+2].forEach(function(j){ j = at(j);
+        if(!pre[j]){ var im = new Image(); im.src = G[j].src; pre[j] = im; } });
+    }
+
+    function show(){ bimg.classList.remove('swap'); }
+
+    /* the frame is given its shape before the file loads, so the view
+       never resizes mid step */
+    function apply(){
+      var w = G[cur] || {}, p = G[at(cur-1)] || {}, q = G[at(cur+1)] || {};
+      if(w.w && w.h){ bimg.width = w.w; bimg.height = w.h; bimg.style.aspectRatio = w.w + ' / ' + w.h; }
+      else { bimg.removeAttribute('width'); bimg.removeAttribute('height'); bimg.style.aspectRatio = ''; }
+      bimg.onload = show; bimg.onerror = show;
+      bimg.src = w.src; bimg.alt = w.title || '';
+
+      bf.setAttribute('data-artist', label(w.artist));
+      bf.setAttribute('data-lbl', w.lbl || 'd');
+      bf.style.setProperty('--lc', w.lc || '');
+
+      bcap.textContent = w.title || '';
+
+      var n = cur + 1;
+      tickN.textContent = String(n);
+      meas.style.setProperty('--at', pos(n));
+      meas.setAttribute('aria-valuenow', String(n));
+      meas.setAttribute('aria-valuetext', 'Picture ' + n + ' of ' + TOTAL + ', ' + (w.title || ''));
+
+      pnN.textContent = String(at(cur-1) + 1);
+      nnN.textContent = String(at(cur+1) + 1);
+      bpB.setAttribute('aria-label', 'Go back to picture ' + (at(cur-1)+1) + ' of ' + TOTAL + ', ' + (p.title || ''));
+      bnB.setAttribute('aria-label', 'Go on to picture ' + (at(cur+1)+1) + ' of ' + TOTAL + ', ' + (q.title || ''));
+
+      said.textContent = 'Picture ' + n + ' of ' + TOTAL + '. ' + (w.title || '') + ', by ' + label(w.artist) + '.';
+
+      if(bimg.complete) show();
+      preload(cur);
+    }
+
+    function paint(fade){
+      clearTimeout(swapT);
+      if(calm){ show(); apply(); return; }
+      bimg.classList.add('swap');
+      if(fade) swapT = setTimeout(apply, 170); else apply();
+    }
+
+    function step(d){ cur = at(cur + d); paint(true); }
+
+    /* ---- the line said once ---------------------------------------- */
+    var KEY = 'stillpoint.taught', hintT = 0, hideT = 0, hintUp = false;
+
+    function seen(){ try { return window.localStorage.getItem(KEY) === '1'; } catch(e){ return false; } }
+    function markSeen(){ try { window.localStorage.setItem(KEY, '1'); } catch(e){} }
+
+    function teach(){
+      hint.textContent = fine
+        ? 'The arrow keys move through the 99. Drag the line under the title to go further. Escape closes.'
+        : 'Swipe to move through the 99, or drag the line under the title. Tap the ground to close.';
+      hint.hidden = false; hintUp = true;
+      requestAnimationFrame(function(){ hint.classList.add('on'); });
+      hideT = setTimeout(drop, 8500);
+    }
+    function drop(){
+      if(!hintUp) return;
+      hintUp = false; clearTimeout(hideT); hint.classList.remove('on');
+      setTimeout(function(){ hint.hidden = true; }, calm ? 0 : 800);
+    }
+    function taught(){ clearTimeout(hintT); drop(); }
+
+    /* ---- a hand coming near ----------------------------------------
+       On a real pointer the controls sleep. The outer sixth of each side
+       wakes the one on that side. A touch never runs this: there the
+       controls are already legible.
+       ---------------------------------------------------------------- */
+    function wake(el, on){ if(!fine) return; if(on) el.classList.add('awake'); else el.classList.remove('awake'); }
+
+    if(fine){
+      document.addEventListener('pointermove', function(e){
+        if(!box.classList.contains('open') || e.pointerType === 'touch') return;
+        var w = window.innerWidth, h = window.innerHeight;
+        wake(bpB, e.clientX < w * 0.17);
+        wake(bnB, e.clientX > w * 0.83);
+        wake(xb,  e.clientY < Math.min(150, h * 0.2) && e.clientX > w - 300);
+      }, {passive:true});
+    }
+
+    /* a step taken from the keyboard lights the matching glyph for a
+       moment, so the key and the mark on screen teach each other */
+    function flash(el){
+      if(!fine) return;
+      clearTimeout(flashT);
+      bpB.classList.remove('awake'); bnB.classList.remove('awake');
+      el.classList.add('awake');
+      flashT = setTimeout(function(){ el.classList.remove('awake'); }, 1100);
+    }
+
+    /* ---- the measure as a way through -------------------------------
+       The hairline stands for all 99 pictures, so a point along it is a
+       picture. Point at it to read where you would land, press or drag
+       to go there.
+       ---------------------------------------------------------------- */
+    function numberAt(clientX){
+      var r = meas.getBoundingClientRect();
+      if(!r.width) return cur + 1;
+      var f = (clientX - r.left) / r.width;
+      f = f < 0 ? 0 : (f > 1 ? 1 : f);
+      var n = Math.floor(f * TOTAL) + 1;
+      return n < 1 ? 1 : (n > TOTAL ? TOTAL : n);
+    }
+    function ghostAt(clientX){
+      var n = numberAt(clientX);
+      meas.style.setProperty('--gat', pos(n));
+      gread.textContent = n + ' of ' + TOTAL;
+      meas.classList.add('scrub');
+      return n;
+    }
+    function ghostOff(){ meas.classList.remove('scrub'); }
+    function goTo(n){ if(n - 1 === cur) return; cur = n - 1; paint(true); }
+
+    var scrubbing = false;
+
+    meas.addEventListener('pointerdown', function(e){
+      scrubbing = true;
+      try { meas.setPointerCapture(e.pointerId); } catch(err){}
+      taught(); ghostAt(e.clientX); e.preventDefault();
+    });
+    meas.addEventListener('pointermove', function(e){
+      if(!scrubbing && e.pointerType === 'touch') return;
+      ghostAt(e.clientX);
+    });
+    meas.addEventListener('pointerup', function(e){
+      if(!scrubbing) return;
+      scrubbing = false;
+      try { meas.releasePointerCapture(e.pointerId); } catch(err){}
+      goTo(numberAt(e.clientX));
+      if(e.pointerType === 'touch') ghostOff();
+    });
+    meas.addEventListener('pointercancel', function(){ scrubbing = false; ghostOff(); });
+    meas.addEventListener('pointerleave',  function(){ if(!scrubbing) ghostOff(); });
+    meas.addEventListener('keydown', function(e){
+      if(e.key === 'Home'){ e.preventDefault(); taught(); goTo(1); }
+      else if(e.key === 'End'){ e.preventDefault(); taught(); goTo(TOTAL); }
+    });
+
+    /* ---- the back button -------------------------------------------
+       Opening a picture adds one entry to the browser's history, so Back
+       closes it and returns to the collection, which is what Escape and
+       the close control do. One entry, not one per picture: stepping on
+       five pictures and pressing Back should return to the collection,
+       not walk back through five. Every way of closing goes through the
+       same door, so the entry is always spent and Back never has to be
+       pressed twice. Whether that entry is the one the browser stands on
+       is read from history itself, never remembered in a variable, which
+       would drift. If a browser will not write history, the controls
+       close the picture themselves after a moment.
+       ---------------------------------------------------------------- */
+    var backT = 0;
+
+    function ours(){ try { return !!(history.state && history.state.stillpointOpen); } catch(e){ return false; } }
+    function mark(){ if(ours()) return; try { history.pushState({ stillpointOpen:true }, ''); } catch(e){} }
+
+    function shutIt(){
+      if(!box.classList.contains('open')) return;
+      box.classList.remove('open'); bimg.removeAttribute('src');
+      clearTimeout(swapT); clearTimeout(flashT); taught(); ghostOff();
+      bpB.classList.remove('awake'); bnB.classList.remove('awake'); xb.classList.remove('awake');
+      document.documentElement.classList.remove('hold');
+      window.scrollTo(0, sy);
+      if(opener && opener.focus) opener.focus();
+      opener = null;
+    }
+
+    function close(){
+      clearTimeout(backT);
+      if(ours()){ history.back(); backT = setTimeout(shutIt, 400); return; }
+      shutIt();
+    }
+
+    window.addEventListener('popstate', function(){
+      clearTimeout(backT);
+      if(box.classList.contains('open')) shutIt();
+    });
+
     function open(i, from){
       opener = from || null; cur = i;
       sy = window.pageYOffset || document.documentElement.scrollTop || 0;
       document.documentElement.classList.add('hold');
-      box.classList.add('open'); paint(false); xb.focus();
+      box.classList.add('open');
+      mark();
+      paint(false);
+      xb.focus();
+      if(!seen()){ markSeen(); hintT = setTimeout(teach, 550); }
     }
-    function close(){
-      box.classList.remove('open'); bimg.removeAttribute('src'); clearTimeout(swapT);
-      document.documentElement.classList.remove('hold'); window.scrollTo(0, sy);
-      if(opener && opener.focus) opener.focus();
-      opener = null;
-    }
-    function show(){ bimg.classList.remove('swap'); }
-    /* the frame is given its shape before the file loads, so the box never resizes mid step */
-    function apply(){ var w=G[cur]||{};
-      if(w.w && w.h){ bimg.width=w.w; bimg.height=w.h; bimg.style.aspectRatio = w.w+' / '+w.h; }
-      else { bimg.removeAttribute('width'); bimg.removeAttribute('height'); bimg.style.aspectRatio=''; }
-      bimg.onload = show; bimg.onerror = show;
-      bimg.src=w.src; bimg.alt=w.title||'';
-      bf.setAttribute('data-artist', label(w.artist)); bf.setAttribute('data-lbl', w.lbl||'d');
-      bf.style.setProperty('--lc', w.lc||'#ddd8cf');
-      bcap.innerHTML='<span class="no">'+n2(cur)+'</span>&ldquo;'+esc(w.title)+'&rdquo;';
-      if(bimg.complete) show();
-      preload(cur); }
-    function paint(fade){ clearTimeout(swapT);
-      if(calm){ show(); apply(); return; }
-      bimg.classList.add('swap');
-      if(fade) swapT = setTimeout(apply, 170); else apply(); }
-    function step(d){ cur=(cur+d+G.length)%G.length; paint(true); }
+
     xb.onclick = close;
-    document.getElementById('bp').onclick = function(){ step(-1); };
-    document.getElementById('bn').onclick = function(){ step(1); };
-    box.addEventListener('click', function(e){ if(e.target===box && Date.now()-swiped > 400) close(); });
+    bpB.onclick = function(){ taught(); step(-1); };
+    bnB.onclick = function(){ taught(); step(1); };
+
+    /* a click on the bare ground closes. the picture, the controls and
+       the foot are all inside the view, so a click on any of them is
+       never a close, and a click that ends a swipe is never a close. */
+    box.addEventListener('click', function(e){
+      if(Date.now() - swiped < 400) return;
+      if(e.target.closest('button, #bf, #app')) return;
+      close();
+    });
+
     document.addEventListener('keydown', function(e){
       if(!box.classList.contains('open')) return;
-      if(e.key==='Escape') close(); else if(e.key==='ArrowRight') step(1); else if(e.key==='ArrowLeft') step(-1);
+      if(e.key === 'Escape'){ taught(); close(); }
+      else if(e.key === 'ArrowRight'){ taught(); step(1); flash(bnB); }
+      else if(e.key === 'ArrowLeft'){ taught(); step(-1); flash(bpB); }
     });
+
     /* swipe left or right to step, on a phone */
-    var tx=0, ty=0, tok=false;
+    var tx = 0, ty = 0, tok = false;
     box.addEventListener('touchstart', function(e){
-      if(e.touches.length!==1){ tok=false; return; }
-      tok=true; tx=e.touches[0].clientX; ty=e.touches[0].clientY;
+      if(e.touches.length !== 1){ tok = false; return; }
+      tok = true; tx = e.touches[0].clientX; ty = e.touches[0].clientY;
     }, {passive:true});
     box.addEventListener('touchend', function(e){
-      if(!tok) return; tok=false;
-      var t=e.changedTouches[0], dx=t.clientX-tx, dy=t.clientY-ty;
-      if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){ swiped = Date.now(); step(dx < 0 ? 1 : -1); }
+      if(!tok) return; tok = false;
+      var t = e.changedTouches[0], dx = t.clientX - tx, dy = t.clientY - ty;
+      if(Math.abs(dx) > 40 && Math.abs(dx) > Math.abs(dy)){
+        swiped = Date.now(); taught(); step(dx < 0 ? 1 : -1);
+      }
     }, {passive:true});
 
     document.addEventListener('contextmenu', function(e){ if(e.target.tagName==='IMG') e.preventDefault(); });
