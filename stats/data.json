@@ -1,10 +1,10 @@
 {
-  "generated": "2026-09-21T05:03:44Z",
+  "generated": "2026-09-21T18:13:31Z",
   "totals": {
-    "views_all": 12,
-    "visitors_all": 12,
-    "views_30d": 12,
-    "visitors_30d": 12
+    "views_all": 13,
+    "visitors_all": 13,
+    "views_30d": 13,
+    "visitors_30d": 13
   },
   "daily": [
     {
@@ -454,25 +454,25 @@
     },
     {
       "day": "2026-09-21",
-      "views": 0,
-      "visitors": 0
+      "views": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
     {
       "month": "2026-09",
-      "views": 12,
-      "visitors": 12
+      "views": 13,
+      "visitors": 13
     }
   ],
   "projects": [
     {
       "id": "stillpoint",
       "name": "Stillpoint",
-      "views_all": 6,
-      "visitors_all": 6,
-      "views_30d": 6,
-      "visitors_30d": 6
+      "views_all": 7,
+      "visitors_all": 7,
+      "views_30d": 7,
+      "visitors_30d": 7
     },
     {
       "id": "can-artificial-minds-feel",
@@ -531,8 +531,8 @@
     },
     {
       "path": "/stillpoint/collection.html",
-      "views_all": 3,
-      "visitors_all": 3
+      "views_all": 4,
+      "visitors_all": 4
     },
     {
       "path": "/stillpoint/stillpoint.html",
@@ -548,13 +548,13 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 12
+      "visitors": 13
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 8
+      "visitors": 9
     },
     {
       "name": "Safari",
@@ -564,7 +564,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 6
+      "visitors": 7
     },
     {
       "name": "iOS",
@@ -586,7 +586,7 @@
     },
     {
       "name": "Large screen",
-      "visitors": 2
+      "visitors": 3
     },
     {
       "name": "Tablet",
@@ -599,16 +599,16 @@
   ],
   "referrers": [
     {
+      "name": "Unknown",
+      "visitors": 3
+    },
+    {
       "name": "pundirp.github.io/artificialminds",
       "visitors": 3
     },
     {
       "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
       "visitors": 3
-    },
-    {
-      "name": "Unknown",
-      "visitors": 2
     },
     {
       "name": "pundirp.github.io",
