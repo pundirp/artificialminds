@@ -389,12 +389,12 @@
       var load = (idx < 6) ? 'eager' : 'lazy';
       var pri = (idx < 2) ? ' fetchpriority="high"' : '';
       d.innerHTML =
-        '<a class="imgwrap" role="button" tabindex="0" data-artist="'+esc(label(w.artist))+'" data-lbl="'+(w.lbl||'d')+'" style="--lc:'+(w.lc||'#ddd8cf')+'"><img loading="'+load+'" decoding="async"'+pri+dim+' src="'+w.src+'" alt=""></a>'
+        '<a class="imgwrap" role="button" tabindex="0" aria-label="'+esc(w.title)+', '+esc(label(w.artist))+'" data-artist="'+esc(label(w.artist))+'" data-lbl="'+(w.lbl||'d')+'" style="--lc:'+(w.lc||'#ddd8cf')+'"><img loading="'+load+'" decoding="async"'+pri+dim+' src="'+w.src+'" alt=""></a>'
       + '<figcaption><span class="no">'+n2(idx)+'</span><span>&ldquo;'+esc(w.title)+'&rdquo;</span></figcaption>';
       var a = d.querySelector('.imgwrap');
-      a.onclick = function(){ open(idx, a); };
+      a.onclick = function(){ openBox(idx, a); };
       a.onkeydown = function(e){
-        if(e.key==='Enter' || e.key===' ' || e.key==='Spacebar'){ e.preventDefault(); open(idx, a); }
+        if(e.key==='Enter' || e.key===' ' || e.key==='Spacebar'){ e.preventDefault(); openBox(idx, a); }
       };
       /* a picture already in the cache is shown at once, everything else fades in on arrival */
       var im = d.querySelector('img');
@@ -603,8 +603,48 @@
     function ours(){ try { return !!(history.state && history.state.stillpointOpen); } catch(e){ return false; } }
     function mark(){ if(ours()) return; try { history.pushState({ stillpointOpen:true }, ''); } catch(e){} }
 
+    /* While the view is open, the page behind it is shut off: a reader
+       tabbing forward used to walk out of the view and into the 99 thumbnails
+       underneath, which are invisible, cannot be scrolled to, and open a
+       different picture on Enter. inert removes them from the tab order and
+       from a screen reader in one word. Browsers that do not know it keep the
+       aria-hidden, and the Tab handler below turns them back at the edge. */
+    var behind = [];
+    function shield(on){
+      /* the list is taken fresh each time the view opens, not once and kept,
+         so anything added to the page later is shut off too. The same list is
+         used to undo it, so nothing else's aria-hidden is stripped by mistake. */
+      if(on){
+        behind = Array.prototype.filter.call(document.body.children, function(el){
+          return el !== box && el.tagName !== 'SCRIPT' && el.tagName !== 'NOSCRIPT';
+        });
+      }
+      behind.forEach(function(el){
+        if(on){ el.inert = true; el.setAttribute('aria-hidden', 'true'); }
+        else  { el.inert = false; el.removeAttribute('aria-hidden'); }
+      });
+      if(!on) behind = [];
+    }
+
+    /* Tab turns at each end of the view instead of leaving it. This is what
+       holds on a browser without inert, and it costs nothing where inert
+       already works. #box carries tabindex="-1", so the selector skips it. */
+    box.addEventListener('keydown', function(e){
+      if(e.key !== 'Tab') return;
+      var f = Array.prototype.filter.call(
+        box.querySelectorAll('button, [tabindex]:not([tabindex="-1"])'),
+        function(el){ return !el.disabled && el.getClientRects().length; });
+      if(!f.length) return;
+      var i = f.indexOf(document.activeElement);
+      var n = e.shiftKey ? (i <= 0 ? f.length - 1 : i - 1)
+                         : (i < 0 || i === f.length - 1 ? 0 : i + 1);
+      e.preventDefault();
+      f[n].focus();
+    });
+
     function shutIt(){
       if(!box.classList.contains('open')) return;
+      shield(false);
       box.classList.remove('open'); bimg.removeAttribute('src');
       clearTimeout(swapT); clearTimeout(flashT); taught(); ghostOff();
       bpB.classList.remove('awake'); bnB.classList.remove('awake'); xb.classList.remove('awake');
@@ -614,7 +654,11 @@
       opener = null;
     }
 
-    function close(){
+    /* openBox and closeBox, not open and close: a plain function of either
+       name at the top level of a classic script replaces window.open and
+       window.close for the whole page, and the next script or extension that
+       calls one gets this instead, with no error to show for it. */
+    function closeBox(){
       clearTimeout(backT);
       if(ours()){ history.back(); backT = setTimeout(shutIt, 400); return; }
       shutIt();
@@ -625,11 +669,12 @@
       if(box.classList.contains('open')) shutIt();
     });
 
-    function open(i, from){
+    function openBox(i, from){
       opener = from || null; cur = i;
       sy = window.pageYOffset || document.documentElement.scrollTop || 0;
       document.documentElement.classList.add('hold');
       box.classList.add('open');
+      shield(true);
       mark();
       paint(false);
       /* focus the view, not the close control: focusing a button by script
@@ -644,7 +689,7 @@
        you are: a key press reports detail 0, so it skips this. Focus goes to
        the view and not to nothing, so it stays inside the dialog. */
     function unring(e){ if(e && e.detail > 0 && box && box.focus) box.focus(); }
-    xb.onclick = function(e){ unring(e); close(); };
+    xb.onclick = function(e){ unring(e); closeBox(); };
     bpB.onclick = function(e){ unring(e); taught(); step(-1); };
     bnB.onclick = function(e){ unring(e); taught(); step(1); };
 
@@ -654,12 +699,12 @@
     box.addEventListener('click', function(e){
       if(Date.now() - swiped < 400) return;
       if(e.target.closest('button, #bf, #app')) return;
-      close();
+      closeBox();
     });
 
     document.addEventListener('keydown', function(e){
       if(!box.classList.contains('open')) return;
-      if(e.key === 'Escape'){ taught(); close(); }
+      if(e.key === 'Escape'){ taught(); closeBox(); }
       else if(e.key === 'ArrowRight'){ taught(); step(1); flash(bnB); }
       else if(e.key === 'ArrowLeft'){ taught(); step(-1); flash(bpB); }
     });
