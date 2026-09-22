@@ -105,21 +105,26 @@
      The picture fills the screen on its own ground. Nothing sits on it
      but the artist mark in its corner. The two step controls are pinned
      to the window, so they hold still while pictures of every shape come
-     and go and a visitor can press the same spot again and again. The
-     name sits under the picture. One hairline that stands for the whole
-     run of 99 is pinned to the foot of the window, at the same height for
-     a tall picture, a wide one and a square one: it shows where you are,
-     and pointing or dragging along it is a way through. Every colour of
+     and go and a visitor can press the same spot again and again. Where
+     there is a real pointer they are not drawn at all until the pointer
+     moves onto the bare ground beside the picture, and then only the one
+     on that side: looking at the picture should not mean looking at the
+     controls. The name sits under the picture. One hairline that stands
+     for the whole run of 99 is pinned to the foot of the window, at the
+     same height for a tall picture, a wide one and a square one: it
+     shows where you are, and pointing or dragging along it is a way
+     through. A control under the hand answers by growing thicker, never
+     brighter, so the eye is not pulled off the picture. Every colour of
      this view is a variable on #box.
      ---------------------------------------------------------------- */
   #box{
     --ground:#16140f;    /* the ground. it does not change. */
     --lit:#ece8df;       /* the mark on the measure, and its number */
-    --wake:#cdc7ba;      /* a control a hand has come near */
+    --wake:#cdc7ba;      /* a control that has appeared, or one a hand has come near */
     --quiet:#b6b0a3;     /* the name of the picture */
     --apparatus:#8c867a; /* the small sans words */
     --sleep:#6f6a60;     /* a control at rest */
-    --boxrule:#5b554a;   /* the measure line itself */
+    --boxrule:#3f3a33;   /* the measure line itself, faint enough to be found only by an eye looking for it */
     --boxfocus:#b7b2a6;  /* the ring a keyboard user sees */
     --boxmark:#ddd8cf;   /* the artist mark, if a picture carries no colour */
     --gutter:clamp(78px,6.5vw,108px); /* room kept clear at each side */
@@ -190,7 +195,9 @@
      is at the same height for a tall picture, a wide one and a square one.
      The band is --well tall so there is something real to point at; only
      the hairline is drawn. Its z-index is the step controls' own, so
-     nothing in the view can come over it. */
+     nothing in the view can come over it. The hairline is faint at rest,
+     just enough for an eye that goes looking for it, because the mark and
+     the number above it are what say where you are. */
   /* over the line the pointer itself is hidden. The mark that follows your
      hand is the measure's own, so a cursor on top of it only drew a second
      bar over the first. Off the line the pointer is ordinary again. */
@@ -199,7 +206,14 @@
     width:var(--scale);height:var(--well);z-index:4;
     cursor:none;
     touch-action:none;-webkit-tap-highlight-color:transparent}
-  #measure::before{content:"";position:absolute;left:0;right:0;top:16px;height:1px;background:var(--boxrule)}
+  #measure::before{content:"";position:absolute;left:0;right:0;top:16px;height:1px;background:var(--boxrule);
+    transform-origin:center;transition:transform .2s ease}
+  /* a hand on the line, or dragging along it, makes the line thicker and
+     leaves its colour alone. Growing is answer enough, and it keeps the
+     line as quiet as it was while the eye is on the picture. The scale is
+     taken from the middle of the line, so the line does not shift while it
+     thickens. */
+  #measure:hover::before,#measure:focus-visible::before,#measure.scrub::before{transform:scaleY(2)}
   #measure:focus-visible{outline:1px solid var(--boxfocus);outline-offset:5px}
   /* the picture on show: a small pointer under the line, aimed up at it,
      so it reads as "this one" and not as one more mark on a scale */
@@ -234,13 +248,18 @@
      beside it changes width. */
   .step{position:fixed;top:50%;transform:translateY(-50%);z-index:4;
     -webkit-appearance:none;appearance:none;background:none;border:0;margin:0;font:inherit;
-    padding:18px 16px;cursor:pointer;color:var(--apparatus);
+    padding:18px 12px;cursor:pointer;color:var(--apparatus);
     display:flex;align-items:center;justify-content:center;transition:color .3s ease}
   #bp{left:calc(4px + env(safe-area-inset-left))}
   #bn{right:calc(4px + env(safe-area-inset-right));flex-direction:row-reverse}
   /* the arrow is drawn, not set in a font. Neither face carries an arrow,
      so the character had to come from whatever the reader's device offered
-     and drew badly, doubled and heavy. This one is always the same. */
+     and drew badly, doubled and heavy. This one is always the same: a long
+     shaft and a small head whose two barbs sweep back, so it reads as a
+     line of travel and not as a keyboard arrow. The shaft stops a little
+     short of the point, so the three strokes never pile up there. The
+     glyph is 34 wide inside 12px of padding a side, which keeps the control
+     58px wide, the same as before, so the gutter clears it as it did. */
   .step .gl{display:block;line-height:0}
   .step .gl svg{display:block;fill:none;stroke:currentColor;stroke-width:1;
     stroke-linecap:round;stroke-linejoin:round}
@@ -285,28 +304,42 @@
   .sr{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;
     clip:rect(0 0 0 0);clip-path:inset(50%);white-space:nowrap;border:0}
 
-  /* where there is a pointer that can approach, the controls sleep. The
-     base rules above are the loud ones, so a touch screen, which cannot
+  /* Where there is a pointer that can approach, the two step controls are
+     not on the screen at all until they are wanted, so there is nothing
+     beside the picture but ground. A pointer out on the ground to the left
+     of the picture brings the back control, a pointer out to the right
+     brings the next one, and the script says which by adding .awake. Over
+     the picture, over its name, over the line at the foot, neither one is
+     there. A control keeps the one colour it appears in: a hand resting on
+     it makes its glyph thicker instead of brighter, and only then does the
+     number it would open appear. A control reached by keyboard comes out
+     the same way, so its focus ring is never drawn on an empty spot. The
+     base rules above are the plain ones, so a touch screen, which cannot
      tell us about hovering, shows controls that can be read at once. */
   @media (hover:hover) and (pointer:fine){
-    .step{color:var(--sleep)}
+    .step{color:var(--wake);opacity:0;transition:opacity .25s ease}
+    /* .awake is the pointer's doing, .flash is a key's; they are kept apart
+       so a key press never takes away a control the pointer is holding */
+    .step.awake,.step.flash,.step:focus-visible{opacity:1}
     .step .dn{opacity:0;transition:opacity .3s ease}
-    .step.awake{color:var(--wake)}
-    .step.awake .dn{opacity:1}
-    .step:hover,.step:focus-visible{color:var(--lit)}
     .step:hover .dn,.step:focus-visible .dn{opacity:1}
+    /* the stroke width is set here in CSS, not as an attribute on the svg,
+       so it can move from the one width to the other. The rule names the
+       path itself, so whatever arrow is drawn in there thickens. */
+    .step .gl svg path{transition:stroke-width .2s ease}
+    .step:hover .gl svg path,.step:focus-visible .gl svg path{stroke-width:1.75}
     #x{color:var(--sleep)}
     #x .dest{display:block;opacity:0;transition:opacity .3s ease}
     #x.awake{color:var(--wake)}
-    #x:hover,#x:focus-visible{color:var(--lit)}
+    /* the way out goes no brighter than a control a hand has come near */
+    #x:hover,#x:focus-visible{color:var(--wake)}
     #x:hover .dest,#x:focus-visible .dest{opacity:1}
-    #measure:hover::before{background:var(--wake)}
   }
 
   /* Narrow screens keep the controls where they are, at the middle of the
      two sides. They only become smaller, and the picture gives up just
      enough width to stay clear of them. Each control is 44px across here,
-     14px of padding on either side of a 16px arrow, and the gutter is 50px,
+     12px of padding on either side of a 20px arrow, and the gutter is 50px,
      which leaves the picture 6px clear of it at its widest. Moving the
      controls to the foot of the window was tried and looked wrong. */
   @media (max-width:779px){
@@ -333,10 +366,17 @@
        leaves the picture most of the screen. The number is still taken
        out of the flow, so the arrow never shifts when the number beside
        it changes width. */
-    .step{flex-direction:column;padding:14px 14px 26px}
+    .step{flex-direction:column;padding:14px 12px 26px}
     #bp{left:0}
     #bn{right:0}
-    .step .gl svg{width:16px;height:8px}
+    /* the glyph is drawn at 34 wide and shown at 20 here, so a stroke of 1
+       would come out at 0.6px and look broken. 1.7 comes out at 1px. */
+    .step .gl svg{width:20px;height:7px;stroke-width:1.7}
+    /* a mouse on a narrow window still thickens the glyph on hover; 3 at
+       this size comes out at 1.75px, the same as the wide-screen hover */
+    @media (hover:hover) and (pointer:fine){
+      .step:hover .gl svg path,.step:focus-visible .gl svg path{stroke-width:3}
+    }
     .step .dest{position:static;width:0;height:0}
     .step .dn{font-size:9.5px;letter-spacing:.1em;top:auto;bottom:8px}
     /* these two carry an id because the rules they answer do */
@@ -364,6 +404,11 @@
   @media(prefers-reduced-motion:reduce){
     .imgwrap img,#bf img{transition:none}
     .imgwrap img{opacity:1}
+    /* the step controls, their numbers, the stroke of the arrow and the
+       line at the foot do not fade or grow slowly here: a control that
+       should be seen is seen at once, and a line that should be thicker is
+       thicker at once. The other movements in the view are left as they are. */
+    .step,.step .dn,.step .gl svg path,#measure::before{transition:none}
   }
 </style>
 </head>
@@ -415,12 +460,12 @@
       <span class="dest" aria-hidden="true">Back to the full collection</span>
     </button>
     <button id="bp" class="step" type="button">
-      <span class="gl" aria-hidden="true"><svg viewBox="0 0 26 10" width="26" height="10"><path d="M25 5H1m5-4L1 5l5 4"/></svg></span>
+      <span class="gl" aria-hidden="true"><svg viewBox="0 0 34 12" width="34" height="12"><path d="M32.4 6H4.3"/><path d="M6.9 2.8Q3.75 4 1.6 6 3.75 8 6.9 9.2"/></svg></span>
       <span class="dest"><span class="dn" id="pn"></span></span>
     </button>
     <figure id="bf" data-lbl="d" data-artist=""><img id="bimg" alt="" draggable="false"></figure>
     <button id="bn" class="step" type="button">
-      <span class="gl" aria-hidden="true"><svg viewBox="0 0 26 10" width="26" height="10"><path d="M1 5h24m-5-4 5 4-5 4"/></svg></span>
+      <span class="gl" aria-hidden="true"><svg viewBox="0 0 34 12" width="34" height="12"><path d="M1.6 6H29.7"/><path d="M27.1 2.8Q30.25 4 32.4 6 30.25 8 27.1 9.2"/></svg></span>
       <span class="dest"><span class="dn" id="nn"></span></span>
     </button>
     <div id="app">
@@ -470,10 +515,11 @@
 
     /* ---- the enlarged picture -------------------------------------
        Opening fills the screen with one picture. The two step controls
-       are pinned to the window so they never move under the hand. The
-       hairline at the foot of the window stands for the whole run: it
-       says where you are, and pointing or dragging along it is a way
-       through.
+       are pinned to the window so they never move under the hand, and
+       where there is a real pointer they stay out of sight until it
+       moves onto the ground beside the picture. The hairline at the foot
+       of the window stands for the whole run: it says where you are, and
+       pointing or dragging along it is a way through.
        ---------------------------------------------------------------- */
     var box   = document.getElementById('box'),
         bf    = document.getElementById('bf'),
@@ -572,31 +618,63 @@
     }
     function taught(){ clearTimeout(hintT); drop(); }
 
-    /* ---- a hand coming near ----------------------------------------
-       On a real pointer the controls sleep. The outer sixth of each side
-       wakes the one on that side. A touch never runs this: there the
+    /* ---- the controls come only when they are wanted ----------------
+       On a real pointer the two step controls are not drawn at all. The
+       one on the left appears when the pointer is out on the ground to
+       the left of the picture, the one on the right when it is out to the
+       right of it, at any height. Over the picture, over its name, over
+       the line at the foot of the window, neither one is there, so a
+       visitor looking at the picture is not looking at controls too.
+       The picture's own edges are read again on every move, because a
+       tall picture and a wide one leave very different amounts of ground,
+       and a step changes the shape. A touch never runs this: there the
        controls are already legible.
        ---------------------------------------------------------------- */
     function wake(el, on){ if(!fine) return; if(on) el.classList.add('awake'); else el.classList.remove('awake'); }
 
+    /* the picture's own box. Its width and height attributes and the
+       aspect ratio set in apply() give it the right shape before the file
+       lands, so the edges are right from the first move. If a file fails to
+       load the box shrinks to the broken-image mark and the controls come
+       out nearer the middle; there is nothing to look at then, so that is
+       no loss. */
+    function pictureRect(){ return bimg.getBoundingClientRect(); }
+
     if(fine){
       document.addEventListener('pointermove', function(e){
         if(!box.classList.contains('open') || e.pointerType === 'touch') return;
-        var w = window.innerWidth, h = window.innerHeight;
-        wake(bpB, e.clientX < w * 0.17);
-        wake(bnB, e.clientX > w * 0.83);
+        var w = window.innerWidth, h = window.innerHeight,
+            r = pictureRect(),
+            /* the picture, its name, the measure and the way out are all
+               parts of the view, so a pointer on any of them is not on the
+               ground. Without the way out in this list, a hand reaching for
+               it brought the next control out, since the way out sits to
+               the right of the picture. */
+            on = !!(e.target && e.target.closest && e.target.closest('#bf, #app, #x'));
+        wake(bpB, !on && e.clientX < r.left);
+        wake(bnB, !on && e.clientX > r.right);
         wake(xb,  e.clientY < Math.min(150, h * 0.2) && e.clientX > w - 300);
       }, {passive:true});
+
+      /* a pointer that has left the window altogether leaves nothing
+         showing behind it. Some browsers report that as the document
+         losing the pointer, others as a mouseout with nothing to move
+         on to. */
+      function noPointer(){ wake(bpB, false); wake(bnB, false); wake(xb, false); }
+      document.documentElement.addEventListener('pointerleave', noPointer);
+      document.addEventListener('mouseout', function(e){ if(!e.relatedTarget) noPointer(); });
     }
 
-    /* a step taken from the keyboard lights the matching glyph for a
-       moment, so the key and the mark on screen teach each other */
+    /* a step taken from the keyboard brings the matching glyph out for a
+       moment, so the key and the mark on screen teach each other. It uses
+       its own class, .flash, and leaves .awake alone: a control the pointer
+       is holding out stays out through the key press and after it. */
     function flash(el){
       if(!fine) return;
       clearTimeout(flashT);
-      bpB.classList.remove('awake'); bnB.classList.remove('awake');
-      el.classList.add('awake');
-      flashT = setTimeout(function(){ el.classList.remove('awake'); }, 1100);
+      bpB.classList.remove('flash'); bnB.classList.remove('flash');
+      el.classList.add('flash');
+      flashT = setTimeout(function(){ el.classList.remove('flash'); }, 1100);
     }
 
     /* ---- the measure as a way through -------------------------------
@@ -711,7 +789,7 @@
       shield(false);
       box.classList.remove('open'); bimg.removeAttribute('src');
       clearTimeout(swapT); clearTimeout(flashT); taught(); ghostOff();
-      bpB.classList.remove('awake'); bnB.classList.remove('awake'); xb.classList.remove('awake');
+      bpB.classList.remove('awake', 'flash'); bnB.classList.remove('awake', 'flash'); xb.classList.remove('awake');
       document.documentElement.classList.remove('hold');
       window.scrollTo(0, sy);
       if(opener && opener.focus) opener.focus();
