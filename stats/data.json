@@ -1,5 +1,5 @@
 {
-  "generated": "2026-09-21T18:13:31Z",
+  "generated": "2026-09-22T05:05:05Z",
   "totals": {
     "views_all": 13,
     "visitors_all": 13,
@@ -7,11 +7,6 @@
     "visitors_30d": 13
   },
   "daily": [
-    {
-      "day": "2026-06-24",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-06-25",
       "views": 0,
@@ -456,6 +451,11 @@
       "day": "2026-09-21",
       "views": 1,
       "visitors": 1
+    },
+    {
+      "day": "2026-09-22",
+      "views": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
