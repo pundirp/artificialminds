@@ -83,13 +83,17 @@
     line-height:1.15;
     text-wrap:balance;
   }
+  /* the byline wraps at the width of the longest line of the h1 above it, so the
+     two blocks share a right edge. 11.43 is that line measured in the house
+     serif, in ems of the h1 size, and the clamp below is the h1's own size. */
   .byline{
     margin:1.5rem 0 0;
     color:var(--dim);
-    font-style:italic;
     font-size:clamp(1rem,1.6vw,1.2rem);
-    max-width:40ch;
+    line-height:1.5;
+    max-width:calc(11.43 * clamp(1.7rem, 3.2vw + 1rem, 3.4rem));
   }
+  .byline + .byline{ margin-top:1rem; }
   /* the name, demoted to a quiet signature beneath the idea */
   .signature{
     margin:2.8rem 0 0;
@@ -516,7 +520,10 @@
       <h1>Getting to know the new<br>artificial minds among us</h1>
       <p class="byline">
         <!-- byline -->
-        As part of my own learning, I've been collaborating with AI models to explore how they work, where they surprise us, and what we still don't understand. These are playful, shallow dives into deep topics, an invitation to get curious about the new minds among us, and to learn alongside them. This space is for humans and AI both.
+        As part of my own learning, I've been collaborating with AI models to explore how they work, where they surprise us, and what we still don't understand.
+      </p>
+      <p class="byline">
+        These are playful, shallow dives into deep topics, an invitation to get curious about the new minds among us, and to learn alongside them. This space is for humans and AI both.
       </p>
       
       <p class="signature"><a href="https://www.linkedin.com/in/pundir-ny/" target="_blank" rel="noopener" aria-label="Pundir on LinkedIn">Pundir</a></p>
