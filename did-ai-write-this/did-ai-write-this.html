@@ -195,12 +195,15 @@ h3{font-size:1.15rem;font-weight:400;margin:2.6rem 0 .7rem;color:var(--ink)}
 h2.big .ttl{display:block;font-size:2rem;line-height:1.1;align-self:end}
 h3.sub{display:flex;align-items:baseline;gap:.55rem;margin:2.4rem 0 .8rem;font-size:1.12rem;font-weight:400}
 h3.sub .subnum{font-family:var(--sans);font-size:1.5rem;line-height:1;color:var(--amber);font-weight:400;letter-spacing:-.02em}
-h2.big#appendix{grid-template-columns:1fr}
-h2.big#appendix .ttl,h2.big#appendix .sub2{grid-column:1}
-h3.apx{display:flex;align-items:baseline;gap:.7rem}
-.apxn{font-family:var(--serif);font-size:1.6rem;line-height:1;color:var(--amber);font-weight:400}
-.paper h3.apx{font-size:calc(1.5rem - 1px);border-top:0;padding-top:0;margin-top:.2rem;color:var(--pink)}
+.apxwrap{margin-top:4rem;font-size:.92rem;color:var(--dim)}
+h2#appendix{font-family:var(--sans);font-size:.72rem;letter-spacing:.2em;text-transform:uppercase;color:var(--dim);border-top:1px solid var(--hair);padding-top:1.4rem;margin:0 0 1.6rem}
+h3.apx{display:flex;align-items:baseline;gap:.6rem;font-size:1rem;color:var(--ink);margin:2.4rem 0 .6rem}
+.apxn{font-family:var(--sans);font-size:.72rem;letter-spacing:.1em;color:var(--amber)}
+.apxwrap p{color:var(--dim)}
+.apxwrap #usefig{font-size:.92rem}
+.paper h3.apx{font-size:1.05rem;color:var(--pink);margin-top:.2rem}
 .paper .apxn{color:var(--pamber)}
+.apxwrap .paper p{color:var(--pink)}
 h2.big .sub2{display:block;font-size:1.05rem;line-height:1.4;color:var(--dim);margin-top:.3rem;font-family:var(--serif);align-self:start}
 /* the two novelists, small, on the paper */
 .portraits{display:flex;gap:1.4rem;justify-content:center;align-items:flex-end;margin:1rem 0 1.4rem}
@@ -1284,7 +1287,8 @@ figure .icn{display:inline-block;max-width:none;background-position:center;backg
 
 
 <!-- ============ APPENDIX ============ -->
-<h2 id="appendix" class="big"><span class="ttl">Appendix</span><span class="sub2">The list of tools, the sources, and a timeline from 1887 to 2026.</span></h2>
+<div class="apxwrap">
+<h2 id="appendix">Appendix</h2>
 
 <h3 class="apx"><span class="apxn">1</span>The AI detectors and humanizers with the most visits</h3>
 
@@ -1493,6 +1497,7 @@ figure .icn{display:inline-block;max-width:none;background-position:center;backg
 </section>
 </div>
 
+</div>
 <p class="backend">Back to <a href="../index.html">Artificial Minds</a>.</p>
 
 </div>
