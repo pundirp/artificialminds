@@ -1,17 +1,12 @@
 {
-  "generated": "2026-09-30T05:39:11Z",
+  "generated": "2026-10-01T06:04:23Z",
   "totals": {
-    "views_all": 14,
-    "visitors_all": 14,
-    "views_30d": 14,
-    "visitors_30d": 14
+    "views_all": 16,
+    "visitors_all": 16,
+    "views_30d": 16,
+    "visitors_30d": 16
   },
   "daily": [
-    {
-      "day": "2026-07-03",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-07-04",
       "views": 0,
@@ -454,6 +449,11 @@
     },
     {
       "day": "2026-09-30",
+      "views": 2,
+      "visitors": 2
+    },
+    {
+      "day": "2026-10-01",
       "views": 0,
       "visitors": 0
     }
@@ -461,8 +461,8 @@
   "monthly": [
     {
       "month": "2026-09",
-      "views": 14,
-      "visitors": 14
+      "views": 16,
+      "visitors": 16
     }
   ],
   "projects": [
@@ -509,25 +509,25 @@
     {
       "id": "AI-future-canon",
       "name": "AI Future Canon",
-      "views_all": 0,
-      "visitors_all": 0,
-      "views_30d": 0,
-      "visitors_30d": 0
+      "views_all": 1,
+      "visitors_all": 1,
+      "views_30d": 1,
+      "visitors_30d": 1
     },
     {
       "id": "home",
       "name": "Home",
-      "views_all": 5,
-      "visitors_all": 5,
-      "views_30d": 5,
-      "visitors_30d": 5
+      "views_all": 6,
+      "visitors_all": 6,
+      "views_30d": 6,
+      "visitors_30d": 6
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 5,
-      "visitors_all": 5
+      "views_all": 6,
+      "visitors_all": 6
     },
     {
       "path": "/stillpoint/collection.html",
@@ -543,12 +543,17 @@
       "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
       "views_all": 2,
       "visitors_all": 2
+    },
+    {
+      "path": "/AI-future-canon/ai-future-canon.html",
+      "views_all": 1,
+      "visitors_all": 1
     }
   ],
   "countries": [
     {
       "name": "United States",
-      "visitors": 14
+      "visitors": 16
     }
   ],
   "browsers": [
@@ -558,17 +563,17 @@
     },
     {
       "name": "Safari",
-      "visitors": 5
+      "visitors": 7
     }
   ],
   "systems": [
     {
-      "name": "macOS",
+      "name": "iOS",
       "visitors": 7
     },
     {
-      "name": "iOS",
-      "visitors": 5
+      "name": "macOS",
+      "visitors": 7
     },
     {
       "name": "Windows",
@@ -577,11 +582,11 @@
   ],
   "sizes": [
     {
-      "name": "Desktop",
-      "visitors": 5
+      "name": "Phone",
+      "visitors": 7
     },
     {
-      "name": "Phone",
+      "name": "Desktop",
       "visitors": 5
     },
     {
@@ -600,11 +605,11 @@
   "referrers": [
     {
       "name": "pundirp.github.io/artificialminds",
-      "visitors": 4
+      "visitors": 5
     },
     {
       "name": "Unknown",
-      "visitors": 3
+      "visitors": 4
     },
     {
       "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
