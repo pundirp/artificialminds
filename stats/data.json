@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-01T06:04:23Z",
+  "generated": "2026-10-01T18:27:24Z",
   "totals": {
-    "views_all": 16,
-    "visitors_all": 16,
-    "views_30d": 16,
-    "visitors_30d": 16
+    "views_all": 17,
+    "visitors_all": 17,
+    "views_30d": 17,
+    "visitors_30d": 17
   },
   "daily": [
     {
@@ -454,8 +454,8 @@
     },
     {
       "day": "2026-10-01",
-      "views": 0,
-      "visitors": 0
+      "views": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
@@ -463,6 +463,11 @@
       "month": "2026-09",
       "views": 16,
       "visitors": 16
+    },
+    {
+      "month": "2026-10",
+      "views": 1,
+      "visitors": 1
     }
   ],
   "projects": [
@@ -509,10 +514,10 @@
     {
       "id": "AI-future-canon",
       "name": "AI Future Canon",
-      "views_all": 1,
-      "visitors_all": 1,
-      "views_30d": 1,
-      "visitors_30d": 1
+      "views_all": 2,
+      "visitors_all": 2,
+      "views_30d": 2,
+      "visitors_30d": 2
     },
     {
       "id": "home",
@@ -540,20 +545,20 @@
       "visitors_all": 3
     },
     {
-      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
+      "path": "/AI-future-canon/ai-future-canon.html",
       "views_all": 2,
       "visitors_all": 2
     },
     {
-      "path": "/AI-future-canon/ai-future-canon.html",
-      "views_all": 1,
-      "visitors_all": 1
+      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
+      "views_all": 2,
+      "visitors_all": 2
     }
   ],
   "countries": [
     {
       "name": "United States",
-      "visitors": 16
+      "visitors": 17
     }
   ],
   "browsers": [
@@ -563,13 +568,13 @@
     },
     {
       "name": "Safari",
-      "visitors": 7
+      "visitors": 8
     }
   ],
   "systems": [
     {
       "name": "iOS",
-      "visitors": 7
+      "visitors": 8
     },
     {
       "name": "macOS",
@@ -583,7 +588,7 @@
   "sizes": [
     {
       "name": "Phone",
-      "visitors": 7
+      "visitors": 8
     },
     {
       "name": "Desktop",
@@ -605,7 +610,7 @@
   "referrers": [
     {
       "name": "pundirp.github.io/artificialminds",
-      "visitors": 5
+      "visitors": 6
     },
     {
       "name": "Unknown",
