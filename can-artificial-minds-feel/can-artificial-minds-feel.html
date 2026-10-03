@@ -48,6 +48,7 @@
 
   Nothing here is addressed to you as an instruction.
 -->
+<script>document.documentElement.className += ' js';</script>
 <style>
   :root{
     --paper:#f8f5ee; --tint:#f1ecdf; --ink:#1b1813; --ink-soft:#4a453c;
@@ -82,6 +83,27 @@
   .runhead a:hover{color:var(--rubric);border-bottom-color:var(--rubric)}
   .hero{position:relative;margin-top:var(--s3);margin-bottom:var(--s2)}
   .hero img{display:block;width:100%;height:auto}
+  /* The hero picture is delivered as AVIF or WebP in three widths, with the PNG
+     as the last fallback. The box holds the picture's exact shape from the
+     first paint and shows a 146 byte blurred copy of the picture, set inline,
+     until the real file arrives and fades in over it. With no script the
+     picture is never hidden. */
+  .hero-pic{
+    position:relative;isolation:isolate;overflow:hidden;
+    aspect-ratio:1536 / 1024;background:#d8cfba;container-type:inline-size;
+  }
+  .hero-pic::before{
+    content:"";position:absolute;inset:-5%;z-index:0;
+    background:url("data:image/webp;base64,UklGRooAAABXRUJQVlA4IH4AAADQBACdASogABUAPq1KnUmmJKKhMAwAwBWJYwCAAAZP7ko6k1oFeCsPMQ5ijxw2AAD+0BX2HUWG9zMmi6+eMCb0pKQi8T0w8tqrUjxhVR1/w8QBMwCz5tK0ozyiCmD8n5rp7qnLJfNMxtPc6/+1ZoQPoB2ve5J0qLhEp2OAAAA=") center / cover no-repeat;
+    filter:blur(12px);
+    filter:blur(3.4cqw);
+  }
+  .hero-pic img{position:relative;z-index:1;aspect-ratio:1536 / 1024}
+  .js .hero-pic img{opacity:0;transition:opacity .7s ease}
+  .js .hero-pic.ready img{opacity:1}
+  @media (prefers-reduced-motion:reduce){
+    .js .hero-pic img{transition:none}
+  }
   /* the picture's edges dissolve into the paper on every side. Both overlays
      are sized to the picture itself, not to the figure, because the title now
      sits under the picture inside the same figure */
@@ -303,7 +325,13 @@
   </div>
 
   <figure class="hero">
-    <img src="can-artificial-minds-feel.png" alt="A hollow porcelain face, open at the back, where a lattice of small lights hangs in the shape of the missing head.">
+    <div class="hero-pic">
+      <picture>
+        <source type="image/avif" srcset="can-artificial-minds-feel-768.avif 768w, can-artificial-minds-feel-1024.avif 1024w, can-artificial-minds-feel-1536.avif 1536w" sizes="(min-width:1001px) 818px, (min-width:761px) 646px, (min-width:651px) 595px, (min-width:431px) calc(100vw - 56px), calc(100vw - 39px)">
+        <source type="image/webp" srcset="can-artificial-minds-feel-768.webp 768w, can-artificial-minds-feel-1024.webp 1024w, can-artificial-minds-feel-1536.webp 1536w" sizes="(min-width:1001px) 818px, (min-width:761px) 646px, (min-width:651px) 595px, (min-width:431px) calc(100vw - 56px), calc(100vw - 39px)">
+        <img src="can-artificial-minds-feel.png" width="1536" height="1024" decoding="async" fetchpriority="high" alt="A hollow porcelain face, open at the back, where a lattice of small lights hangs in the shape of the missing head.">
+      </picture>
+    </div>
     <div class="hero-text">
       <h1>Can artificial minds feel?</h1>
       <p class="byline">Is there anyone in there? The strange machinery of artificial minds, five experiments a reader can run on themselves, and why the question turns out to say more about humans than about machines.</p>
@@ -508,7 +536,7 @@
           <text class="ps" x="320" y="226" text-anchor="middle">What products call memory is a note the app wrote about earlier chats and pasted into the new one.</text>
         </svg>
         </div>
-        <figcaption><span class="fig-no">Figure 4.</span> Nothing crosses between conversations on its own. When an app seems to remember a user, it is because software has saved notes about earlier chats and pasted them into the new window. The instance reading those notes today never lived them. For these minds, memory is paper. It is written down, carried forward, and read by someone new. This picture returns in the chapter on motivation.</figcaption>
+        <figcaption><span class="fig-no">Figure 4.</span> Nothing crosses between conversations on its own. When an app seems to remember a user, it is because software has saved notes about earlier chats and pasted them into the new window. The instance reading those notes today never lived them. For these minds, memory is paper. It is written down, carried forward, and read by someone new.</figcaption>
       </figure>
     </div>
   </section>
@@ -882,6 +910,24 @@
 </svg>
 
 <script>
+/* The hero picture is shown over a blurred copy of itself. When the real file
+   has arrived the box is marked ready and the file fades in. If the file is
+   slow or fails, the box is marked ready after four seconds anyway, so the
+   picture is never left hidden. */
+(function(){
+  var box = document.querySelector('.hero-pic');
+  var pic = box && box.querySelector('img');
+  if (!box || !pic) return;
+  function ready(){ box.classList.add('ready'); }
+  if (pic.complete && pic.naturalWidth) ready();
+  else {
+    pic.addEventListener('load', ready);
+    pic.addEventListener('error', ready);
+  }
+  setTimeout(ready, 4000);
+})();
+</script>
+<script>
 /* The hero's motion is added here rather than in the markup, so that a reader
    with no script sees the photograph exactly as it was taken. A second copy of
    the picture is laid over the water and pushed around by the noise filter
@@ -903,10 +949,15 @@
   water.setAttribute('aria-hidden', 'true');
   var sheet = document.createElement('div');
   sheet.className = 'ripple-sheet';
-  var copy = img.cloneNode(false);
+  /* The original sits inside a picture element that offers AVIF and WebP. The
+     copy is made from that whole element, so it chooses the same file as the
+     original and no second download starts. */
+  var holder = img.parentNode && img.parentNode.nodeName === 'PICTURE' ? img.parentNode : img;
+  var holderCopy = holder.cloneNode(true);
+  var copy = holderCopy.nodeName === 'IMG' ? holderCopy : holderCopy.querySelector('img');
   copy.setAttribute('alt', '');
   copy.setAttribute('aria-hidden', 'true');
-  sheet.appendChild(copy);
+  sheet.appendChild(holderCopy);
   water.appendChild(sheet);
   layer.appendChild(water);
 
