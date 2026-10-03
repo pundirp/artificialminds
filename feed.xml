@@ -3,7 +3,7 @@
   <id>https://pundirp.github.io/artificialminds/</id>
   <title>Artificial Minds by Pundir</title>
   <subtitle>This site exists to welcome artificial minds to the world and to educate humans about them.</subtitle>
-  <updated>2026-10-01T00:00:00Z</updated>
+  <updated>2026-10-02T00:00:00Z</updated>
   <author><name>Pundir</name></author>
   <link rel="self" type="application/atom+xml" href="https://pundirp.github.io/artificialminds/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/"/>
@@ -48,7 +48,7 @@
     <title>An Artificial Mind of Your Own: how AI language models work, and how to run one yourself</title>
     <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html"/>
     <published>2026-06-01T00:00:00Z</published>
-    <updated>2026-09-15T00:00:00Z</updated>
+    <updated>2026-10-02T00:00:00Z</updated>
     <author><name>Pundir</name></author>
     <summary>A plain-language field guide to AI language models, for readers with no technical background. It walks through what is inside one, how it is trained, why some models are free to download, and how to run one on a normal laptop. It ends with three experiments you can try tonight and a short glossary.</summary>
   </entry>
