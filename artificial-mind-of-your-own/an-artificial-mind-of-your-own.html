@@ -229,10 +229,19 @@
     font-size: 1.05rem;
   }
 
-  /* ---------- glossary ---------- */
-  dl.gloss { margin: 1.4rem 0; font-size: .97rem; line-height: 1.56; }
-  dl.gloss dt { font-family: var(--serif); font-weight: 700; font-size: 1.04rem; margin-top: .9rem; }
-  dl.gloss dd { margin-left: 0; color: var(--muted); }
+  /* ---------- glossary, set as an appendix ---------- */
+  .appendix-head {
+    font-family: var(--sans); font-weight: 600; font-size: .74rem;
+    letter-spacing: .1em; text-transform: uppercase; color: var(--muted);
+    line-height: 1.5; margin: 3rem 0 .9rem; padding-top: 1.4rem; border-top: 1px solid var(--line);
+  }
+  dl.gloss { margin: 0; font-size: .88rem; line-height: 1.5; }
+  dl.gloss dt { font-family: var(--serif); font-weight: 700; font-size: 1em; color: var(--ink); margin-top: .75rem; }
+  dl.gloss dd { margin: 0; color: var(--muted); }
+  @media (min-width: 640px) {
+    dl.gloss { display: grid; grid-template-columns: 10.5rem 1fr; column-gap: 1.4rem; row-gap: .6rem; }
+    dl.gloss dt { margin-top: 0; }
+  }
 
   /* ---------- the source note, under the same label the essay uses ---------- */
   .src-label {
@@ -2066,7 +2075,7 @@
     <p>Two more doors on this site. <a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html">Who Killed Aldous Finch?</a> tells the attention idea from chapter one as a murder mystery. The story shows how attention connects information across a text. And once you know how these minds work, <a href="../can-artificial-minds-feel/can-artificial-minds-feel.html">Can Artificial Minds Feel?</a> asks the question this guide left alone: whether there is any experience inside, whether these minds can feel anything, and whether anyone can tell. It is a question about machine consciousness.</p>
     <p>And if any of this made you want to build rather than just use, that instinct is worth trusting. llama.cpp started as one person's spare-time curiosity. The field is young enough that the textbooks are still being written, some of them by people who first met these ideas in a guide like this one.</p>
 
-    <h3>Small glossary</h3>
+    <h3 class="appendix-head">Small glossary</h3>
     <dl class="gloss">
       <dt>Token</dt><dd>A small chunk of text, usually a word or part of one. Models read and write tokens, not letters.</dd>
       <dt>Weights (parameters)</dt><dd>The billions of adjustable numbers inside a model. Training sets them. After that they are frozen, and running the model just reads them.</dd>
