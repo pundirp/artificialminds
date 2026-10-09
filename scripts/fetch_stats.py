@@ -52,11 +52,12 @@ API_BASE = os.environ.get(
 # before anything is classified or written out.
 SITE_PREFIX = "/artificialminds"
 
-# The six projects, in the order the site's index lists them. The id is the
+# The seven projects, in the order the site's index lists them. The id is the
 # folder name in the repo, which is also the first path segment after the prefix.
 PROJECTS = [
     ("stillpoint", "Stillpoint"),
     ("can-artificial-minds-feel", "Can Artificial Minds Feel?"),
+    ("why-so-much-data", "Who Learns Faster, a Toddler or a Chatbot?"),
     ("artificial-mind-of-your-own", "An Artificial Mind of Your Own"),
     ("did-ai-write-this", "Did AI Write This?"),
     ("A-Salon-of-Witnesses", "A Salon of Witnesses"),

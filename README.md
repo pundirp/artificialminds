@@ -4,7 +4,7 @@ Getting to know the new artificial minds among us.
 
 Live site: https://pundirp.github.io/artificialminds/
 
-This repository holds the whole site: six hand-built projects about how AI models work,
+This repository holds the whole site: seven hand-built projects about how AI models work,
 what is strange about them, and what is still unknown. Exploring how AI models think, and
 the overlooked or misunderstood parts of their world. The quieter, stranger truth about
 the minds joining us. This space is for humans and AI both.
@@ -66,7 +66,24 @@ The five experiments:
 - Where the light begins: https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c08-where-light-begins.html
 - The Stitched Movie: https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c09-stitched-movie.html
 
-### 3. An Artificial Mind of Your Own
+### 3. Who Learns Faster, a Toddler or a Chatbot?
+
+https://pundirp.github.io/artificialminds/why-so-much-data/why-so-much-data.html
+
+An essay on why AI needs so much data, for readers with no technical background. A toddler
+starts to talk after hearing about nine million words, and Meta's Llama 3.1 read about 11.7
+trillion before it could hold a conversation. The essay follows the child and the model
+through four stages. Before birth, the child has a brain that evolution shaped for learning,
+and the model starts from random weights. Growing up, the child learns from a world she can
+see, touch and choose. In a conversation the model is faster: it holds about a novel in its
+context window and picks up a new skill from a style guide and two examples, with its weights
+unchanged. For the rest of life the child keeps learning, and the model's weights stay fixed
+until a new version ships. The essay ends with four abilities researchers say are missing,
+the researchers who work on each, and what three AI leaders say about continual learning.
+Search words: why does AI need so much data, sample efficiency, how children learn language,
+in-context learning, context window, continual learning, catastrophic forgetting.
+
+### 4. An Artificial Mind of Your Own
 
 https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html
 
@@ -80,7 +97,7 @@ away, and how to run an LLM locally with Ollama, LM Studio or llama.cpp, includi
 quantization costs you. Ends with a glossary. Search words: how LLMs work, how ChatGPT
 works, run an LLM locally, open weights, neural network explained.
 
-### 4. Did AI Write This?
+### 5. Did AI Write This?
 
 https://pundirp.github.io/artificialminds/did-ai-write-this/did-ai-write-this.html
 
@@ -94,7 +111,7 @@ list design, the Nature tournament design, who runs one today, and how one was f
 under fifty dollars. Editing history shows how words arrived, not who thought of them.
 Search words: AI detector accuracy, AI watermark, Turnitin AI detection, GPTZero, SynthID.
 
-### 5. Who Killed Aldous Finch?
+### 6. Who Killed Aldous Finch?
 
 https://pundirp.github.io/artificialminds/A-Salon-of-Witnesses/who-killed-aldous-finch.html
 
@@ -108,7 +125,7 @@ placards are stored token meanings, the empty chair is the next word, and Verity
 reading solved cases are training. Search words: how transformers work, attention is all you
 need explained, how ChatGPT works.
 
-### 6. The AI-Future Canon
+### 7. The AI-Future Canon
 
 https://pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html
 

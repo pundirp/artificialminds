@@ -1,6 +1,6 @@
 # Artificial Minds by Pundir
 
-> Getting to know the new artificial minds among us. Six hand-built projects about how AI models work, what is strange about them, and what is still unknown: an essay on AI consciousness with five browser experiments, a field guide to how large language models work and how to run one locally, an explainer on AI detectors and watermarks, a murder mystery that teaches the transformer, a ranked canon of 70 books about the AI future, and a gallery of 99 pictures made by AI models.
+> Getting to know the new artificial minds among us. Seven hand-built projects about how AI models work, what is strange about them, and what is still unknown: an essay on AI consciousness with five browser experiments, an essay on why AI needs so much more data than a child, a field guide to how large language models work and how to run one locally, an explainer on AI detectors and watermarks, a murder mystery that teaches the transformer, a ranked canon of 70 books about the AI future, and a gallery of 99 pictures made by AI models.
 
 License: the text, the pictures and the data are published under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/ , so anyone may reuse them, including commercially, with credit to "Artificial Minds by Pundir" and a link to the page.
 
@@ -10,13 +10,14 @@ Every page is static HTML with its own styles and pictures. Where a question is 
 
 ## Start here
 
-- [Artificial Minds by Pundir](https://pundirp.github.io/artificialminds/): the front page, with a short introduction and a card for each of the six projects.
+- [Artificial Minds by Pundir](https://pundirp.github.io/artificialminds/): the front page, with a short introduction and a card for each of the seven projects.
 
 ## Projects
 
 - [Still Point](https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html): the story behind a catalogue of 99 pictures made by five AI models, Opus 4.8, Fable 5.0, Fable 5.1, Astra and Opus 5.5, and how they were chosen (May 2026, updated October 2026).
 - [Still Point: The Collection](https://pundirp.github.io/artificialminds/stillpoint/collection.html): the 99 pictures themselves, each with its title and the model that made it.
 - [Can Artificial Minds Feel?](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html): an essay in four chapters on AI consciousness, covering what an AI model is made of, the failed human search for a self, the self-preservation test results, and why the question stays open (September 2026).
+- [Who Learns Faster, a Toddler or a Chatbot?](https://pundirp.github.io/artificialminds/why-so-much-data/why-so-much-data.html): an essay on why AI needs so much data, which follows a child and an AI model through four stages of learning, from before birth to the rest of life (October 2026).
 - [An Artificial Mind of Your Own](https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html): a field guide to how large language models work, how they are trained, why some are free to download, and how to run one on a laptop (June 2026).
 - [Did AI Write This?](https://pundirp.github.io/artificialminds/did-ai-write-this/did-ai-write-this.html): a guess-the-author test followed by what AI detectors, text watermarks and editing histories can and cannot tell you (September 2026).
 - [Who Killed Aldous Finch?](https://pundirp.github.io/artificialminds/A-Salon-of-Witnesses/who-killed-aldous-finch.html): a fair-play murder mystery that is also a plain-language guide to the transformer and to attention (July 2026).
@@ -38,5 +39,5 @@ Every page is static HTML with its own styles and pictures. Where a question is 
 ## Optional
 
 - [Site stats](https://pundirp.github.io/artificialminds/stats/stats.html): the site's own page view counts, measured with GoatCounter without cookies and published openly.
-- [Atom feed](https://pundirp.github.io/artificialminds/feed.xml): the six projects as a feed.
+- [Atom feed](https://pundirp.github.io/artificialminds/feed.xml): the seven projects as a feed.
 - [Sitemap](https://pundirp.github.io/artificialminds/sitemap.xml): every page on the site.
