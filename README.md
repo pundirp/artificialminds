@@ -83,21 +83,7 @@ the researchers who work on each, and what three AI leaders say about continual 
 Search words: why does AI need so much data, sample efficiency, how children learn language,
 in-context learning, context window, continual learning, catastrophic forgetting.
 
-### 4. An Artificial Mind of Your Own
-
-https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html
-
-A field guide for curious students, built around six plain questions. It explains how LLMs
-work from the ground up: tokens, weights, the transformer, and why a neural network borrows
-one idea from the brain and almost nothing else. It walks through pre-training,
-supervised fine-tuning and the three ways answers get scored in reinforcement learning
-(RLHF, RLAIF and verifiable rewards), and why models still hallucinate. It then explains
-what an open weights release contains, why Meta, Mistral, DeepSeek and Qwen give models
-away, and how to run an LLM locally with Ollama, LM Studio or llama.cpp, including what
-quantization costs you. Ends with a glossary. Search words: how LLMs work, how ChatGPT
-works, run an LLM locally, open weights, neural network explained.
-
-### 5. Did AI Write This?
+### 4. Did AI Write This?
 
 https://pundirp.github.io/artificialminds/did-ai-write-this/did-ai-write-this.html
 
@@ -110,6 +96,20 @@ are planted in the model's word choices using a secret key, and the page explain
 list design, the Nature tournament design, who runs one today, and how one was faked for
 under fifty dollars. Editing history shows how words arrived, not who thought of them.
 Search words: AI detector accuracy, AI watermark, Turnitin AI detection, GPTZero, SynthID.
+
+### 5. An Artificial Mind of Your Own
+
+https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html
+
+A field guide for curious students, built around six plain questions. It explains how LLMs
+work from the ground up: tokens, weights, the transformer, and why a neural network borrows
+one idea from the brain and almost nothing else. It walks through pre-training,
+supervised fine-tuning and the three ways answers get scored in reinforcement learning
+(RLHF, RLAIF and verifiable rewards), and why models still hallucinate. It then explains
+what an open weights release contains, why Meta, Mistral, DeepSeek and Qwen give models
+away, and how to run an LLM locally with Ollama, LM Studio or llama.cpp, including what
+quantization costs you. Ends with a glossary. Search words: how LLMs work, how ChatGPT
+works, run an LLM locally, open weights, neural network explained.
 
 ### 6. Who Killed Aldous Finch?
 

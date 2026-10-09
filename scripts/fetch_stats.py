@@ -58,8 +58,8 @@ PROJECTS = [
     ("stillpoint", "Stillpoint"),
     ("can-artificial-minds-feel", "Can Artificial Minds Feel?"),
     ("why-so-much-data", "Who Learns Faster, a Toddler or a Chatbot?"),
-    ("artificial-mind-of-your-own", "An Artificial Mind of Your Own"),
     ("did-ai-write-this", "Did AI Write This?"),
+    ("artificial-mind-of-your-own", "An Artificial Mind of Your Own"),
     ("A-Salon-of-Witnesses", "A Salon of Witnesses"),
     ("AI-future-canon", "AI Future Canon"),
 ]
