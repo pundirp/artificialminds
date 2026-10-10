@@ -1,17 +1,12 @@
 {
-  "generated": "2026-10-09T06:16:25Z",
+  "generated": "2026-10-10T05:59:22Z",
   "totals": {
-    "views_all": 26,
-    "visitors_all": 26,
-    "views_30d": 26,
-    "visitors_30d": 26
+    "views_all": 28,
+    "visitors_all": 28,
+    "views_30d": 28,
+    "visitors_30d": 28
   },
   "daily": [
-    {
-      "day": "2026-07-12",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-07-13",
       "views": 0,
@@ -454,6 +449,11 @@
     },
     {
       "day": "2026-10-09",
+      "views": 2,
+      "visitors": 2
+    },
+    {
+      "day": "2026-10-10",
       "views": 0,
       "visitors": 0
     }
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-10",
-      "views": 10,
-      "visitors": 10
+      "views": 12,
+      "visitors": 12
     }
   ],
   "projects": [
@@ -530,17 +530,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 9,
-      "visitors_all": 9,
-      "views_30d": 9,
-      "visitors_30d": 9
+      "views_all": 11,
+      "visitors_all": 11,
+      "views_30d": 11,
+      "visitors_30d": 11
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 9,
-      "visitors_all": 9
+      "views_all": 11,
+      "visitors_all": 11
     },
     {
       "path": "/stillpoint/collection.html",
@@ -576,7 +576,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 25
+      "visitors": 27
     },
     {
       "name": "France",
@@ -586,7 +586,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 14
+      "visitors": 16
     },
     {
       "name": "Safari",
@@ -603,18 +603,18 @@
       "visitors": 8
     },
     {
-      "name": "Android",
-      "visitors": 2
+      "name": "Windows",
+      "visitors": 4
     },
     {
-      "name": "Windows",
+      "name": "Android",
       "visitors": 2
     }
   ],
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 10
+      "visitors": 11
     },
     {
       "name": "Phone",
@@ -626,7 +626,7 @@
     },
     {
       "name": "Tablet",
-      "visitors": 1
+      "visitors": 2
     },
     {
       "name": "Unknown",
@@ -643,12 +643,12 @@
       "visitors": 7
     },
     {
-      "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
+      "name": "pundirp.github.io",
       "visitors": 4
     },
     {
-      "name": "pundirp.github.io",
-      "visitors": 2
+      "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
+      "visitors": 4
     },
     {
       "name": "pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html",
