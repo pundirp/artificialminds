@@ -37,10 +37,10 @@
 <link rel="stylesheet" href="../fonts/fonts.css">
 <style>
   :root{
-    --paper:#f3f1ea; --ink:#211e19; --soft:#6e675b; --faint:#a59e90; --line:#dfdacd;
-    --disp:var(--family-brygada-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
-    --serif:var(--family-brygada-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
-    --sans:var(--family-brygada-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
+    --paper:#ffffff; --ink:#111111; --ink-soft:#3a3a3a; --soft:#666666; --faint:#a8a8a8; --line:#dadada; --rubric:#c3261c;
+    --disp:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
+    --serif:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
+    --sans:var(--family-house-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
   }
   *{box-sizing:border-box}
   html,body{height:100%}
@@ -51,44 +51,44 @@
 
   .leaf{margin:auto;width:100%;max-width:1120px;text-align:center}
 
-  .kick{font-family:var(--sans);font-size:clamp(10px,1.3vh,11.5px);letter-spacing:.30em;
-    text-transform:uppercase;color:var(--soft);margin:0 0 clamp(12px,2.1vh,24px)}
+  .kick{font-family:var(--serif);font-variant:small-caps;font-size:clamp(13px,1.64vh,1rem);line-height:1.35;
+    letter-spacing:.06em;color:var(--rubric);margin:0 0 clamp(12px,2.1vh,24px)}
 
   h1{font-family:var(--disp);font-weight:400;font-size:min(7.7vw,10.2vh,88px);line-height:1;
-    letter-spacing:.06em;color:var(--ink);margin:0}
+    letter-spacing:-.005em;color:var(--ink);margin:0}
 
   .rule{width:100%;height:1px;background:var(--line);border:0;margin:clamp(15px,2.5vh,28px) 0}
 
-  .epi{font-style:italic;font-size:clamp(14.5px,1.9vh,19px);line-height:1.55;color:#403b32;
+  .epi{font-style:italic;font-size:clamp(14.5px,1.9vh,19px);line-height:1.55;color:var(--ink-soft);
     max-width:27em;margin:0 auto clamp(18px,3vh,34px)}
-  .epi .by{display:block;margin-top:10px;font-family:var(--sans);font-style:normal;
-    font-size:clamp(9.5px,1.15vh,10.5px);letter-spacing:.21em;text-transform:uppercase;color:var(--soft)}
+  .epi .by{display:block;margin-top:10px;font-family:var(--serif);font-style:normal;font-variant:small-caps;
+    font-size:clamp(11.5px,1.4vh,.82rem);line-height:1.45;letter-spacing:.06em;color:var(--soft)}
 
   .body{display:grid;grid-template-columns:1fr 1fr;gap:0 clamp(34px,4.4vw,64px);
     max-width:960px;margin:0 auto;
     text-align:justify;text-justify:inter-word;hyphens:auto;-webkit-hyphens:auto;
-    font-size:clamp(13px,1.64vh,16px);line-height:1.62;color:#2a2620}
+    font-size:clamp(13px,1.64vh,16px);line-height:1.62;color:var(--ink)}
   .body p{margin:0}
   /* the one inline span in the prose repeats the old .body size in px; keep it with the paragraph */
   .body p span{font-size:inherit!important}
 
-  .colo{margin-top:clamp(16px,2.7vh,32px);font-family:var(--sans);
-    font-size:clamp(9.5px,1.15vh,10.5px);letter-spacing:.16em;text-transform:uppercase;color:var(--soft)}
-  .colo .lab{color:var(--faint)}
+  .colo{margin-top:clamp(16px,2.7vh,32px);font-family:var(--serif);
+    font-size:clamp(13px,1.64vh,1rem);line-height:1.35;letter-spacing:.02em;color:var(--ink-soft);text-wrap:balance}
+  .colo .lab{font-variant:small-caps;letter-spacing:.06em;color:var(--soft)}
 
   .enter{margin-top:clamp(18px,3vh,38px)}
-  .enter a{display:inline-block;font-family:var(--sans);font-size:clamp(11px,1.35vh,12px);
-    letter-spacing:.23em;text-transform:uppercase;color:var(--ink);text-decoration:none;
+  .enter a{display:inline-block;font-family:var(--serif);font-variant:small-caps;font-size:clamp(13px,1.64vh,1rem);
+    line-height:1.35;letter-spacing:.06em;color:var(--ink);text-decoration:none;
     border:1px solid var(--faint);border-radius:2px;padding:11px 26px}
-  .enter a:hover{border-color:var(--ink);background:rgba(33,30,25,.03)}
+  .enter a:hover{border-color:var(--ink);background:rgba(17,17,17,.03)}
   .enter a:focus-visible{outline:1px solid var(--faint);outline-offset:5px}
   .enter .ar{margin-left:.55em}
 
   .home{margin-top:clamp(46px,8vh,92px)}
-  .home a{font-family:var(--sans);font-size:clamp(9.5px,1.15vh,10.5px);
-    letter-spacing:.23em;text-transform:uppercase;color:var(--faint);
+  .home a{font-family:var(--serif);font-variant:small-caps;font-size:clamp(13px,1.64vh,1rem);
+    line-height:1.35;letter-spacing:.06em;color:var(--soft);
     text-decoration:none;transition:color .3s}
-  .home a:hover{color:var(--soft)}
+  .home a:hover{color:var(--ink)}
   .home a:focus-visible{outline:1px solid var(--faint);outline-offset:5px}
   .home .ar{margin-right:.55em}
   /* the arrows come from the text face, which carries them; the label face does not */

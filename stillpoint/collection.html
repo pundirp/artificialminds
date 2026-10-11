@@ -37,10 +37,10 @@
 <link rel="stylesheet" href="../fonts/fonts.css">
 <style>
   :root{
-    --paper:#f3f1ea; --ink:#211e19; --soft:#6e675b; --faint:#a59e90; --line:#dfdacd;
-    --disp:var(--family-brygada-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
-    --serif:var(--family-brygada-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
-    --sans:var(--family-brygada-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
+    --paper:#ffffff; --ink:#111111; --ink-soft:#3a3a3a; --soft:#666666; --faint:#a8a8a8; --line:#dadada; --rubric:#c3261c;
+    --disp:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
+    --serif:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
+    --sans:var(--family-house-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
   }
   *{box-sizing:border-box}
   body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);-webkit-font-smoothing:antialiased}
@@ -51,26 +51,26 @@
     border-right:1px solid var(--line);
     padding:clamp(40px,6vh,72px) clamp(30px,3.4vw,58px);
     display:flex;flex-direction:column;justify-content:space-between}
-  .kick{font-family:var(--sans);font-size:11px;letter-spacing:.32em;text-transform:uppercase;color:var(--soft)}
+  .kick{font-family:var(--serif);font-variant:small-caps;font-size:1rem;line-height:1.35;letter-spacing:.06em;color:var(--rubric)}
   .mid{max-width:13em}
   h1{font-family:var(--disp);font-weight:400;font-size:clamp(49px,5.6vw,80px);line-height:1.02;
-     letter-spacing:.005em;margin:0 0 26px}
-  .epi{font-style:italic;font-size:18px;line-height:1.55;color:#403b32;margin:0;max-width:15em}
-  .epi .by{display:block;margin-top:12px;font-family:var(--sans);font-style:normal;
-    font-size:10.5px;letter-spacing:.21em;text-transform:uppercase;color:var(--soft)}
+     letter-spacing:-.005em;margin:0 0 26px}
+  .epi{font-style:italic;font-size:18px;line-height:1.55;color:var(--ink-soft);margin:0;max-width:15em}
+  .epi .by{display:block;margin-top:12px;font-family:var(--serif);font-style:normal;font-variant:small-caps;
+    font-size:.82rem;line-height:1.45;letter-spacing:.06em;color:var(--soft);white-space:nowrap}
   .bot .ln{height:1px;background:var(--line);margin-bottom:16px}
-  .credits{font-family:var(--sans);font-size:10.5px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--soft);display:grid;grid-template-columns:auto 1fr;gap:7px 18px;align-items:baseline}
-  .credits .lab{color:var(--faint)}
-  .back{display:inline-block;margin-top:20px;font-family:var(--sans);font-size:10px;
-    letter-spacing:.14em;text-transform:uppercase;color:var(--faint);text-decoration:none}
-  .back:hover{color:var(--soft)}
+  .credits{font-family:var(--serif);font-size:1rem;line-height:1.35;letter-spacing:.02em;
+    color:var(--ink-soft);display:grid;grid-template-columns:auto 1fr;gap:7px 18px;align-items:baseline}
+  .credits .lab{font-variant:small-caps;letter-spacing:.06em;color:var(--soft)}
+  .back{display:inline-block;margin-top:20px;font-family:var(--serif);font-variant:small-caps;font-size:1rem;
+    line-height:1.35;letter-spacing:.06em;color:var(--soft);text-decoration:none}
+  .back:hover{color:var(--ink)}
 
   /* ---- the pictures ---- */
   .gallery{flex:1;padding:clamp(44px,6vh,76px) clamp(22px,3.6vw,60px) 96px;column-gap:38px}
   .item{break-inside:avoid;margin:0 0 40px}
-  .imgwrap{position:relative;display:block;background:#fff;box-shadow:0 3px 18px rgba(0,0,0,.10);cursor:zoom-in}
-  .imgwrap:focus-visible{outline:1px solid var(--faint);outline-offset:4px}
+  .imgwrap{position:relative;display:block;background:var(--paper);outline:1px solid var(--line);outline-offset:0;cursor:zoom-in}
+  .imgwrap:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
   /* width/height attributes on the img reserve the right shape before the file loads,
      so the columns do not reflow. height:auto keeps them as a ratio, not a pixel size. */
   .imgwrap img{width:100%;height:auto;display:block;-webkit-user-drag:none;user-select:none;
@@ -80,16 +80,16 @@
     font-size:8.5px;font-weight:400;letter-spacing:.1em;color:var(--lc,#ddd8cf);pointer-events:none}
   .imgwrap[data-lbl="d"]::after{text-shadow:0 1px 1.5px rgba(0,0,0,.4)}
   .imgwrap[data-lbl="l"]::after{text-shadow:0 1px 1.5px rgba(255,255,255,.45)}
-  figcaption{margin-top:12px;font-style:italic;font-size:16px;color:#383329;line-height:1.38;
+  figcaption{margin-top:12px;font-style:italic;font-size:16px;color:var(--ink-soft);line-height:1.38;
     display:flex;gap:11px;align-items:baseline}
-  figcaption .no{font-family:var(--sans);font-style:normal;font-size:10px;letter-spacing:.14em;
-    color:var(--faint);flex:none;padding-top:2px}
-  .foot{font-family:var(--sans);font-size:10px;letter-spacing:.16em;text-transform:uppercase;
-    color:var(--faint);text-align:center;padding:6px 24px 44px}
-  .home{font-family:var(--sans);font-size:10px;letter-spacing:.21em;text-transform:uppercase;
-    color:var(--faint);text-align:center;padding:0 24px 52px;margin:0}
+  figcaption .no{font-family:var(--serif);font-style:normal;font-size:.82rem;font-variant-numeric:lining-nums tabular-nums;
+    letter-spacing:.06em;color:var(--rubric);flex:none;padding-top:2px}
+  .foot{font-family:var(--serif);font-variant:small-caps;font-size:1rem;line-height:1.35;letter-spacing:.06em;
+    color:var(--soft);text-align:center;padding:6px 24px 44px}
+  .home{font-family:var(--serif);font-variant:small-caps;font-size:1rem;line-height:1.35;letter-spacing:.06em;
+    color:var(--soft);text-align:center;padding:0 24px 52px;margin:0}
   .home a{color:inherit;text-decoration:none;transition:color .3s}
-  .home a:hover{color:var(--soft)}
+  .home a:hover{color:var(--ink)}
   .home a:focus-visible{outline:1px solid var(--faint);outline-offset:5px}
 
   @media(min-width:1480px){ .gallery{column-count:3} }
@@ -118,15 +118,16 @@
      this view is a variable on #box.
      ---------------------------------------------------------------- */
   #box{
-    --ground:#16140f;    /* the ground. it does not change. */
-    --lit:#ece8df;       /* the mark on the measure, and its number */
-    --wake:#cdc7ba;      /* a control that has appeared, or one a hand has come near */
-    --quiet:#b6b0a3;     /* the name of the picture */
-    --apparatus:#8c867a; /* the small sans words */
-    --sleep:#6f6a60;     /* a control at rest */
-    --boxrule:#3f3a33;   /* the measure line itself, faint enough to be found only by an eye looking for it */
-    --boxfocus:#b7b2a6;  /* the ring a keyboard user sees */
-    --boxmark:#ddd8cf;   /* the artist mark, if a picture carries no colour */
+    --ground:var(--paper);   /* the ground: white, as on the page behind it */
+    --lit:var(--ink);        /* the mark on the measure */
+    --count:var(--rubric);   /* the number of the picture on show, and of the one the pointer is on */
+    --wake:var(--ink);       /* a control that has appeared, or one a hand has come near */
+    --quiet:var(--ink-soft); /* the name of the picture */
+    --apparatus:var(--soft); /* the small words */
+    --sleep:var(--soft);     /* a control at rest */
+    --boxrule:var(--line);   /* the measure line itself, faint enough to be found only by an eye looking for it */
+    --boxfocus:var(--ink);   /* the ring a keyboard user sees */
+    --boxmark:#ddd8cf;       /* the artist mark, if a picture carries no colour */
     --gutter:clamp(78px,6.5vw,108px); /* room kept clear at each side */
     --scale:min(56vw,500px);          /* the length of the line that stands for 99 */
     --boxpad:24px;
@@ -172,7 +173,8 @@
        under the picture and the foot strip have taken theirs */
     max-height:min(86vh, calc(100vh - var(--boxpad) - var(--nameroom) - var(--footroom)));
     max-height:min(86vh, calc(100dvh - var(--boxpad) - var(--nameroom) - var(--footroom)));
-    -webkit-user-drag:none;user-select:none;opacity:1;transition:opacity .18s ease}
+    -webkit-user-drag:none;user-select:none;opacity:1;transition:opacity .18s ease;
+    outline:1px solid var(--line);outline-offset:0}
   #bf img.swap{opacity:0}
   #bf::after{content:attr(data-artist);position:absolute;right:12px;bottom:10px;
     font-family:var(--sans);font-size:10.5px;font-weight:400;letter-spacing:.11em;
@@ -222,9 +224,10 @@
     border-bottom:6px solid var(--lit);
     transition:left .45s var(--boxease)}
   #read{position:absolute;left:var(--at,0%);top:27px;transform:translateX(-50%);
-    font-family:var(--sans);font-size:10px;letter-spacing:.14em;color:var(--apparatus);
+    font-family:var(--serif);font-variant:small-caps;font-variant-numeric:lining-nums tabular-nums;
+    font-size:13px;line-height:12px;letter-spacing:.06em;color:var(--apparatus);
     white-space:nowrap;transition:left .45s var(--boxease), opacity .2s ease}
-  #read b{font-weight:400;color:var(--lit)}
+  #read b{font-weight:400;color:var(--count)}
   /* where the pointer is standing, and the picture it would open. One
      number at a time: the one you are on gives way to the one you point at. */
   /* the mark you move: a plain line crossing the rule, with the number it
@@ -235,8 +238,8 @@
     opacity:0;transition:opacity .18s ease;pointer-events:none}
   #gread{position:absolute;left:var(--gat,0%);top:25px;transform:translateX(-50%);
     text-align:center;opacity:0;transition:opacity .18s ease;pointer-events:none}
-  #gread b{display:block;font-family:var(--sans);font-size:10px;letter-spacing:.14em;
-    font-weight:400;color:var(--lit);white-space:nowrap}
+  #gread b{display:block;font-family:var(--serif);font-size:13px;line-height:12px;letter-spacing:.06em;
+    font-variant:small-caps;font-variant-numeric:lining-nums tabular-nums;font-weight:400;color:var(--count);white-space:nowrap}
   #gread i{display:block;margin-top:4px;font-family:var(--serif);font-style:italic;
     font-size:11.5px;line-height:1.2;color:var(--apparatus);
     max-width:min(46vw,300px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -265,8 +268,8 @@
     stroke-linecap:round;stroke-linejoin:round}
   .step .dest{position:relative;display:block;width:0;height:0}
   .step .dn{position:absolute;top:50%;transform:translateY(-50%);
-    font-family:var(--sans);font-size:10px;letter-spacing:.14em;
-    font-variant-numeric:tabular-nums;color:var(--wake);line-height:1;white-space:nowrap}
+    font-family:var(--serif);font-size:13px;letter-spacing:.06em;
+    font-variant-numeric:lining-nums tabular-nums;color:var(--wake);line-height:1;white-space:nowrap}
   #bp .dn{left:12px}
   #bn .dn{right:12px}
   .step:focus-visible{outline:1px solid var(--boxfocus);outline-offset:4px}
@@ -278,7 +281,7 @@
     padding:12px 14px;cursor:pointer;color:var(--apparatus);
     display:flex;align-items:center;gap:12px;transition:color .3s ease;z-index:5}
   #x .gl{font-family:var(--serif);font-size:22px;line-height:1;order:2}
-  #x .dest{font-family:var(--sans);font-size:10px;letter-spacing:.14em;order:1;display:none}
+  #x .dest{font-family:var(--serif);font-variant:small-caps;font-size:12px;letter-spacing:.04em;order:1;display:none}
   #x:focus-visible{outline:1px solid var(--boxfocus);outline-offset:4px}
   /* the view itself takes focus when it opens, so a reader's keyboard starts
      inside it. It is not a control, so it draws no ring. */
@@ -294,8 +297,8 @@
      to stay in step. */
   #hint{position:fixed;left:0;right:0;
     bottom:calc(var(--rulefoot) + var(--well) + var(--hintgap));
-    margin:0;padding:0 24px;text-align:center;font-family:var(--sans);font-size:11px;
-    letter-spacing:.08em;line-height:1.5;color:var(--apparatus);pointer-events:none;
+    margin:0;padding:0 24px;text-align:center;font-family:var(--serif);font-size:12px;
+    letter-spacing:.01em;line-height:16.5px;color:var(--apparatus);pointer-events:none;
     opacity:0;transition:opacity .7s ease;z-index:3}
   #hint.on{opacity:1}
   #hint[hidden]{display:none}
@@ -378,7 +381,7 @@
       .step:hover .gl svg path,.step:focus-visible .gl svg path{stroke-width:3}
     }
     .step .dest{position:static;width:0;height:0}
-    .step .dn{font-size:9.5px;letter-spacing:.1em;top:auto;bottom:8px}
+    .step .dn{font-size:12px;letter-spacing:.04em;top:auto;bottom:8px}
     /* these two carry an id because the rules they answer do */
     #bp .dn,#bn .dn{left:50%;right:auto;transform:translateX(-50%)}
     #bcap{max-width:88vw}

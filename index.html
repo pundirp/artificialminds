@@ -41,487 +41,718 @@
   Welcome. Read slowly if you can.
 -->
 
+<link rel="stylesheet" href="fonts/fonts.css">
 <style>
-  :root{
-    --ground:#0d0d12;
-    --ink:#e8e3d8;
-    --dim:#9a958a;
-    --faint:#4a4844;
-    --line:#26262d;
-    --serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
-  }
+:root{
+  --paper:#ffffff; --tint:#f2f2f2; --ink:#111111; --ink-soft:#3a3a3a;
+  --ink-faint:#666666; --ink-ghost:#a8a8a8; --rule:#dadada; --red:#c3261c;
+  --paper-0:rgba(255,255,255,0);
+  --red-faint:#c66b63;               /* the date of an open card: the red toned toward the paper, 4.7 to 1 on white */
+  color-scheme:light;
+  --serif:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
+  --sans:var(--family-house-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
+  --mono:var(--family-house-mono, ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace);
+  --sliver:52px;
+  --pad:1.4rem;
+  --band:76px;
+  --arrive:cubic-bezier(.2,.7,.1,1);
+  --change:cubic-bezier(.4,0,.2,1);
+  font-size:19px;
+}
+@media (max-width:760px){:root{font-size:17.5px}}
+@media (max-width:430px){:root{font-size:17px}}
+@media (min-width:600px){:root{--band:88px}}
 
-  *{box-sizing:border-box}
-  html,body{margin:0;padding:0}
-  body{
-    background:var(--ground);
-    color:var(--ink);
-    font-family:var(--serif);
-    -webkit-font-smoothing:antialiased;
-    text-rendering:optimizeLegibility;
-    line-height:1.5;
-  }
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%;text-size-adjust:100%}
+body{
+  margin:0;background:var(--paper);color:var(--ink);
+  font-family:var(--serif);font-size:1rem;line-height:1.6;font-weight:400;
+  font-variant-numeric:oldstyle-nums proportional-nums;
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+  overflow-wrap:break-word;
+}
+p{margin:0}
+a{color:inherit;text-decoration:none}
+button{
+  touch-action:manipulation;font:inherit;color:inherit;background:none;border:0;border-radius:0;
+  padding:0;margin:0;cursor:pointer;text-align:left;
+  -webkit-appearance:none;appearance:none;
+}
+img{display:block;max-width:100%}
+:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
+html.js .c-open.no-ring:focus-visible{outline:none}
+time{font-style:normal}
 
-  /* ---- marginalia grid: dominant main field | hairline | wide margin ---- */
-  .page{
-    display:grid;
-    grid-template-columns:1fr 1px var(--side,minmax(20rem,24rem));
-    min-height:100vh;
-  }
+/* ------------------------------------------------------------------
+   The plain page. This is what JavaScript off shows, and the base the
+   column and band layouts are built on: the title block, then seven
+   projects as a ruled list, each one fully open.
+------------------------------------------------------------------- */
+.page{width:min(100% - 2 * var(--pad), 78rem);margin:0 auto;padding:2.2rem 0 3.4rem}
+h1{
+  margin:0;font-weight:400;font-size:2rem;line-height:1.08;letter-spacing:-.012em;
+  text-wrap:balance;
+}
+h1 br{display:none}
+.bylines{margin-top:1.7rem;max-width:34rem}
+.byline{font-size:.95rem;line-height:1.6;color:var(--ink-soft);text-wrap:pretty;margin:0 0 .85rem}
+.signature{margin:1.3rem 0 0;font-size:1rem;font-variant:small-caps;letter-spacing:.06em;color:var(--ink-faint)}
+.signature a{color:var(--ink);padding:.5rem 0;display:inline-block}
+.signature a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:.18em}
 
-  .field{
-    display:flex;
-    flex-direction:column;
-    justify-content:center;
-    padding:clamp(2rem,6vw,6rem);
-  }
-  .field h1{
-    margin:0;
-    font-weight:400;
-    font-size:clamp(1.7rem, 3.2vw + 1rem, 3.4rem);
-    letter-spacing:.005em;
-    line-height:1.15;
-    text-wrap:balance;
-  }
-  /* the byline wraps at the width of the longest line of the h1 above it, so the
-     two blocks share a right edge. 11.43 is that line measured in the house
-     serif, in ems of the h1 size, and the clamp below is the h1's own size. */
-  .byline{
-    margin:1.5rem 0 0;
-    color:var(--dim);
-    font-size:1rem;
-    line-height:1.5;
-    max-width:calc(11.43 * clamp(1.7rem, 3.2vw + 1rem, 3.4rem));
-  }
-  .byline + .byline{ margin-top:1rem; }
-  /* the name, demoted to a quiet signature beneath the idea */
-  .signature{
-    margin:2.8rem 0 0;
-    color:var(--dim);
-    font-size:.82rem;
-    letter-spacing:.22em;
-    text-transform:uppercase;
-  }
-  /* the name is the one quiet way to reach the author; it only shows its hand on hover */
-  .signature a{ color:inherit; text-decoration:none; transition:color .3s; }
-  .signature a:hover{ color:var(--ink); text-decoration:underline; text-underline-offset:4px; }
-  /* the title field keeps still while the index scrolls past it. With four
-     entries in the margin a centred field would sink below the fold; sticky
-     holds the h1 in view and lets the margin do the travelling. */
-  @media (min-width:761px) and (min-height:640px){
-    .field{
-      position:sticky;
-      top:0;
-      align-self:start;
-      min-height:100vh;
-      min-height:100svh;
-    }
-  }
+.row{list-style:none;margin:2.8rem 0 0;padding:0}
+.col{border-top:1px solid var(--rule)}
+.col:last-child{border-bottom:1px solid var(--rule)}
+.col-in{padding:1.9rem 0 2.2rem}
+.c-open{display:none}
 
-  /* the hairline can be dragged sideways to give either side more room. The new
-     place lasts until the page is reloaded; nothing is remembered. */
-  .rule{background:var(--line);position:relative;touch-action:none}
-  .rule::before{content:"";position:absolute;top:0;bottom:0;left:-7px;right:-7px;cursor:col-resize}
-  .page.dragging{user-select:none;cursor:col-resize}
+.entry{display:block;color:var(--ink)}
+.art{display:block;position:relative;max-width:38rem}
+.words{display:block}
+.title{
+  margin:1.5rem 0 .6rem;font-weight:400;font-size:1.6rem;line-height:1.12;text-wrap:balance;
+}
+.title a{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.9rem;align-items:baseline;color:var(--ink);cursor:pointer}
+.title .tt{transition:color .25s var(--change)}
+.title a:hover .tt,.title a:focus-visible .tt{color:var(--red)}
+.num{font-size:1.4rem;line-height:1;color:var(--red);font-variant-numeric:lining-nums tabular-nums}
+/* the blurb takes the size and colour of the bylines in the title column; the date is the same serif at that size */
+.blurb{font-size:.95rem;line-height:1.6;color:var(--ink-soft);max-width:30rem;text-wrap:pretty}
+.meta{
+  display:flex;flex-wrap:wrap;justify-content:space-between;align-items:baseline;gap:.1rem 1.4rem;
+  margin-top:.7rem;
+}
+.when{
+  display:block;font-size:.95rem;line-height:1.6;
+  color:var(--red-faint);font-weight:400;
+}
 
-  /* ---- the index in the margin ---- */
-  .margin{
-    padding:clamp(2rem,4vw,3.2rem) clamp(1.5rem,2.5vw,2.4rem);
-    display:flex;
-    flex-direction:column;
-    gap:2.8rem;
-  }
-  .index{
-    list-style:none;
-    margin:0;padding:0;
-    display:flex;
-    flex-direction:column;
-    gap:2.8rem;
-  }
-  .entry{
-    display:block;
-    text-decoration:none;
-    color:inherit;
-  }
-  .art{margin:0 0 .9rem;max-width:22rem}
-  .title{
-    font-size:1.2rem;
-    color:var(--ink);
-    margin:0 0 .3rem;
-  }
-  /* the number stands above its title, large enough to be counted from across
-     the room: four numerals, four things. Quiet in colour so it announces the
-     count without raising its voice. */
-  .num{
-    display:block;
-    font-size:2.5rem;
-    line-height:1;
-    letter-spacing:.02em;
-    color:var(--dim);
-    margin:0 0 .35rem;
-  }
-  .entry:hover .title,.entry:focus-visible .title{
-    text-decoration:underline;
-    text-underline-offset:3px;
-    text-decoration-thickness:1px;
-  }
-  .entry:focus-visible{outline:1px solid var(--dim);outline-offset:6px}
-  .blurb{
-    font-size:1rem;
-    line-height:1.5;
-    color:var(--dim);
-    margin:0;
-    max-width:32ch;
-  }
-  /* the month and year each piece was made, since these minds change quickly
-     and a reader should know how old a piece is. Set in faint, close to the
-     ground, so it never competes with the title; it lifts to dim on the card
-     under the pointer or the one holding focus. Phones see the faint stamp. */
-  .when{
-    display:block;
-    margin:.55rem 0 0;
-    font-size:.66rem;
-    letter-spacing:.18em;
-    text-transform:uppercase;
-    color:var(--faint);
-    transition:color .3s;
-  }
-  .entry:hover .when,.entry:focus-visible .when{color:var(--dim)}
+/* the drawings. .fx holds one drawing and has its picture's own shape */
+.fx{position:relative;display:block;width:100%;aspect-ratio:var(--far);isolation:isolate}
+.fx-img{display:block;width:100%;height:100%}
+.crop{display:block;position:relative;overflow:hidden;overflow:clip;aspect-ratio:var(--ar);width:min(100%, calc(var(--ch, 100%) * var(--ar)));margin-inline:auto}
+.fxp{position:absolute;max-width:none;width:calc(10000% / var(--bw));left:calc(var(--bl) / var(--bw) * -100%);top:calc(var(--bt) / var(--bh) * -100%)}
+.fxp .fx{width:100%}
+.fx-paper,.fx-human,.fx-machine{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+.fx[data-card="5"]{display:flex;justify-content:space-between;align-items:center}
+.fx-brain,.fx-lattice{position:relative;flex:none;height:100%}
+.fx-brain{aspect-ratio:1299/1211}
+.fx-lattice{aspect-ratio:1293/1216}
+.fx-brain img,.fx-lattice img{width:100%;height:100%}
+/* card 1 (the mosaic) and card 4 (the two hands at rest) are styled in cardfx.css */
+/* card 4 in a band slice: the same two rest poses, the human hand in front */
+.stack .s-human{transform-origin:0 0;transform:var(--human-rest)}
+.stack .s-machine{transform-origin:0 0;transform:var(--machine-rest)}
 
-  /* ---- the living mosaic (project 01) ---- */
-  .mosaic{
-    position:relative;
-    display:grid;
-    grid-template-columns:repeat(3,1fr);
-    grid-template-rows:repeat(3,1fr);
-    grid-template-areas:
-      "a a b"
-      "a a b"
-      "c d e";
-    gap:3px;
-    aspect-ratio:1/1;
-    width:100%;
-    background:var(--ground);
-    overflow:hidden;
-  }
-  .mosaic img{
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    display:block;
-    will-change:transform,opacity;
-  }
+/* plain page, wide */
+@media (min-width:1280px){
+  .page{display:grid;grid-template-columns:30% minmax(0,1fr);align-items:start;width:min(100% - 128px, 1800px);padding:32px 0 64px}
+  .masthead{position:sticky;top:32px;padding:18px 40px 0 0}
+  h1{font-size:clamp(2.2rem, 3vw, 3rem);line-height:1.05}
+  .row{margin:0}
+  .col-in{padding:2.2rem 0 2.4rem 2.4rem}
+  .entry{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);column-gap:2.4rem;align-items:start;grid-template-rows:1fr auto auto auto 1fr}
+  html:not(.js) .words{display:contents}
+  .art{grid-column:1;grid-row:1 / span 5;align-self:center;max-width:none}
+  .title,.blurb,.meta{grid-column:2}
+  .title{grid-row:2;margin-top:0}
+  .blurb{grid-row:3}
+  .meta{grid-row:4}
+}
 
-  /* ---- the open face (project 02): one photograph in the page's own
-     monochrome warmth, the manor's treatment applied. Two things move on it,
-     and unlike the rest of the page both are meant to be seen within a few
-     seconds rather than only felt. The water at the bottom of the frame
-     ripples: a second copy of the photograph, masked to the reflection, is
-     pushed about by a noise field that slowly changes shape. And nine points
-     of the mesh at the back of the head wake in turn, each on its own count,
-     none of the counts a multiple of another, so the figure never repeats
-     inside a visit. Both layers are added by script, so a browser with no
-     script is handed the still photograph. ---- */
-  .feelface{position:relative;display:block;width:100%;aspect-ratio:3/2;overflow:hidden;background:var(--ground)}
-  .feelface img{
-    width:100%;height:100%;object-fit:cover;display:block;
-    filter:grayscale(1) sepia(.26) contrast(1.12) brightness(.82);
-  }
-  /* the rippling copy has to sit exactly on the original, which is why the
-     original itself now holds perfectly still: any drift in it would slide the
-     face off its own reflection. The copy sits in a window masked to the
-     water. Inside that window a sheet four times the card carries the noise
-     filter, and the copy sits at the middle of the sheet. Nothing about the
-     filter ever changes once it is set: the flow is made by sliding the sheet
-     one way and the copy the same distance the other way, so the copy holds
-     still on screen while the noise travels across it. Safari does not redraw
-     an SVG filter when its numbers are changed by script, which is why the
-     motion is carried by transforms instead. */
-  .feelface .ripple{
-    position:absolute;
-    inset:0;
-    overflow:hidden;
-    pointer-events:none;
-    -webkit-mask-image:linear-gradient(to bottom,transparent 62%,#000 72%,#000 100%);
-    mask-image:linear-gradient(to bottom,transparent 62%,#000 72%,#000 100%);
-  }
-  .feelface .ripple .ripple-sheet{
-    position:absolute;left:-100%;top:-100%;width:200%;height:200%;
-    filter:url(#ripple);
-  }
-  .feelface .ripple img{
-    position:absolute;left:50%;top:50%;width:50%;height:50%;
-  }
-  /* the nine points, sitting where the network is actually drawn in the
-     photograph. Each rests near dark, comes up once, and goes back down. */
-  .feelface i{
-    position:absolute;
-    width:4.5px;height:4.5px;
-    margin:-2.25px 0 0 -2.25px;
-    border-radius:50%;
-    background:#f2ead9;
-    box-shadow:0 0 8px 2px rgba(217,160,90,.7);
-    opacity:.1;
-    animation:enode 11s ease-in-out infinite;
-  }
-  @keyframes enode{
-    0%,100%{opacity:.1}
-    8%{opacity:1}
-    27%{opacity:.1}
-  }
-  .feelface i:nth-of-type(1){left:42.1%;top:25.8%;animation-duration:9.1s;animation-delay:-2.1s}
-  .feelface i:nth-of-type(2){left:41.3%;top:30.5%;animation-duration:12.9s;animation-delay:-7.7s}
-  .feelface i:nth-of-type(3){left:49.1%;top:35.5%;animation-duration:10.7s;animation-delay:-4.6s}
-  .feelface i:nth-of-type(4){left:39.4%;top:37.8%;animation-duration:7.5s;animation-delay:-1.1s}
-  .feelface i:nth-of-type(5){left:47.9%;top:40.0%;animation-duration:15.3s;animation-delay:-11.6s}
-  .feelface i:nth-of-type(6){left:40.5%;top:46.3%;animation-duration:10.5s;animation-delay:-6.1s}
-  .feelface i:nth-of-type(7){left:42.9%;top:49.4%;animation-duration:13.8s;animation-delay:-9.9s}
-  .feelface i:nth-of-type(8){left:48.2%;top:52.7%;animation-duration:8.6s;animation-delay:-3.7s}
-  .feelface i:nth-of-type(9){left:48.7%;top:64.9%;animation-duration:11.5s;animation-delay:-2.7s}
+/* ------------------------------------------------------------------
+   JavaScript on. Everything below is gated under html.js.
+------------------------------------------------------------------- */
+html.js .c-open{display:block}
+html.js .num{display:none}
+html.js .title a{display:inline;color:var(--ink)}
+html.js .panel{opacity:0;pointer-events:none}
+html.js .is-open .panel{opacity:1;pointer-events:auto}
 
-  /* ---- the manor, a painting held in the page's monochrome (project 06) ---- */
-  .manor{
-    display:block;
-    position:relative;
-    width:100%;
-    aspect-ratio:1400/800;
-    overflow:hidden;
-  }
-  /* fully monochrome warm night: grayscale kills every blue, a whisper of
-     sepia returns the warmth of the ground/ink family. The filter is put on
-     the painting alone, so the lamp light above it keeps its colour. */
-  .manor img{
-    display:block;
-    width:100%;
-    height:100%;
-    object-fit:cover;
-    filter:grayscale(1) sepia(.26) contrast(1.12) brightness(.92);
-  }
-  /* the study lamp breathes: a small, contained pool that goes out altogether
-     at the trough and comes back blazing at the pane. Under five seconds,
-     dark to full. The window sits at 57.9% across, 72.8% down of the
-     taller frame (the painting was given more sky and more snow, 125 and 92
-     rows, in September 2026). */
-  .manor .lamp{
-    position:absolute;
-    inset:0;
-    animation:lampbreath 4.444s ease-in-out infinite;
-    pointer-events:none;
-  }
-  .manor .lamp i{
-    position:absolute;
-    display:block;
-    border-radius:50%;
-  }
-  /* the soft halo thrown into the snowy air around the pane */
-  .manor .halo{
-    left:57.9%; top:72.8%;
-    width:12%; aspect-ratio:1;
-    transform:translate(-50%,-50%);
-    background:radial-gradient(circle,rgba(239,233,221,.42) 0%,rgba(217,160,90,.22) 38%,rgba(217,160,90,0) 72%);
-  }
-  /* the pane itself, brighter and tighter */
-  .manor .core{
-    left:57.9%; top:72.8%;
-    width:4%; aspect-ratio:1;
-    transform:translate(-50%,-50%);
-    background:radial-gradient(circle,rgba(255,248,235,.92) 0%,rgba(239,233,221,.55) 42%,rgba(239,233,221,0) 78%);
-  }
-  /* the light that falls on the snow just under the window */
-  .manor .cast{
-    left:57.9%; top:76.4%;
-    width:9%; height:3.35%;
-    transform:translate(-50%,-50%);
-    background:radial-gradient(ellipse at center,rgba(239,233,221,.30) 0%,rgba(217,160,90,.14) 45%,rgba(217,160,90,0) 80%);
-  }
-  @keyframes lampbreath{
-    0%,100%{opacity:1}
-    45%,55%{opacity:0}
-  }
+/* Tab into a closed column: no animation, so the focused link holds still */
+html.js .page[data-instant] .col,html.js .page[data-instant] .col *{transition:none !important}
 
-  /* ---- the two minds (project 05): a brain and a lattice, side by side on
-     the bare ground, in the manor's treatment. The brain breathes: a second
-     copy of it, lit and haloed, sits exactly over the first and fades in and
-     out on a four second count. The lit copy's opacity is set only inside the
-     keyframes, so with no animation there is only the plain brain.
-     And the bookcase (project 07), drawn for the night directly. ---- */
-  .pair{display:flex;align-items:center;gap:6%;width:100%;filter:grayscale(1) sepia(.26) contrast(1.12) brightness(.82)}
-  .pair .brain{position:relative;flex:1 1 0;min-width:0}
-  .pair .lattice{flex:1 1 0;min-width:0;width:50%;height:auto;display:block}
-  .pair .brain img{display:block;width:100%;height:auto}
-  .pair .brain .lit{position:absolute;inset:0;opacity:0;animation:brainglow 4s ease-in-out infinite}
-  @keyframes brainglow{
-    0%,100%{opacity:0}
-    50%{opacity:1}
-  }
-  /* ---- the two hands write (project 04). Three stacked layers inside the
-     card, held in the same warm monochrome as the bookcase under it: the
-     sheet, an ink layer of four handwritten lines, and the two hands above
-     it. Each hand crosses its line while a clip uncovers that line's ink
-     exactly under the nib, so the writing appears at the pen. Fourteen
-     seconds: two lines each, a hold, then the ink fades and both hands
-     return. The nib points and the sheet's corners were read off the
-     photographs, and the ink was laid out through the sheet's own
-     perspective. The same block runs the hero of the essay. ---- */
-  .wrote{display:block;position:relative;width:100%;aspect-ratio:1672/941;overflow:hidden;isolation:isolate;
-    filter:grayscale(1) sepia(.26) contrast(1.1) brightness(.94)}
-  .wrote>*{position:absolute;inset:0;width:100%;height:100%;display:block}
-  /* the human hand rests. the machine hand writes one line, slowly, then lifts away and begins it again */
-  .wrote .hand.human{transform-origin:51.5% 62.9%;transform:translate(-10.23%,11.48%) scale(1.08)}
-  .wrote .hand.machine{will-change:transform,opacity;transform:translate(.36%,-15.41%);animation:wr-machine 14.3s linear infinite alternate}
-  /* inside the sliding layer, the pen itself dips and lifts in short strokes, pivoting about the nib */
-  .wrote .hand.machine img{display:block;width:100%;height:100%;transform-origin:44.6% 74.9%;animation:wr-bob 3.3s ease-in-out infinite}
-  @keyframes wr-machine{
-    0%,3%{transform:translate(.36%,-15.41%)}
-    97%,100%{transform:translate(14.3%,-14.67%)}
-  }
-  @keyframes wr-bob{
-    0%{transform:translate(0,0) rotate(0deg)}
-    7%{transform:translate(0,-.22%) rotate(-.12deg)}
-    13%{transform:translate(0,.06%) rotate(.05deg)}
-    19%{transform:translate(0,-.28%) rotate(-.16deg)}
-    25%{transform:translate(0,0) rotate(0deg)}
-    31%{transform:translate(0,-.18%) rotate(-.1deg)}
-    37%,52%{transform:translate(0,0) rotate(0deg)}
-    57%{transform:translate(.08%,-.85%) rotate(-.6deg)}
-    61%{transform:translate(.1%,-.9%) rotate(-.65deg)}
-    66%{transform:translate(0,-.08%) rotate(-.05deg)}
-    72%{transform:translate(0,-.24%) rotate(-.14deg)}
-    78%{transform:translate(0,.05%) rotate(.04deg)}
-    84%{transform:translate(0,-.2%) rotate(-.12deg)}
-    90%,100%{transform:translate(0,0) rotate(0deg)}
-  }
+/* the lines between and around the slices are drawn by .f-line, so the slices keep one geometry */
+html.js .col{border-top:0;border-bottom:0}
+html.js .col:last-child{border-bottom:0}
+.f-line,.f-win{display:none}
+html.js .f-line,html.js .f-win{display:block;position:absolute;pointer-events:none}
+html.js .f-line{
+  inset:0;z-index:1;
+  --fc:var(--rule);--ft:1px;--fb:var(--ft);--fl:1px;--fr:0px;
+  background-repeat:no-repeat;
+  background-image:linear-gradient(var(--fc),var(--fc)),linear-gradient(var(--fc),var(--fc)),linear-gradient(var(--fc),var(--fc)),linear-gradient(var(--fc),var(--fc));
+  background-position:0 0,0 100%,0 0,100% 0;
+  background-size:100% var(--ft),100% var(--fb),var(--fl) 100%,var(--fr) 100%;
+}
+html.js .col:last-child .f-line{--fr:var(--fl)}
+html.js .f-win{z-index:1;transition:opacity .35s var(--change) .45s}
+html.js .f-win::after{content:"";position:absolute;inset:0}
 
-  /* ---- the two desks (project 03) ---- */
-  .learn{display:block;width:100%;aspect-ratio:1000/563;overflow:hidden}
-  .learn img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.26) contrast(1.1) brightness(.94)}
+html.js .page:not([data-nointro]) .f-line,html.js .page:not([data-nointro]) .f-win{animation:unroll .85s var(--arrive) backwards;animation-delay:calc(var(--i) * 45ms + 80ms)}
+html.js .col::after{z-index:2}
 
-  /* ---- the bookcase (project 07): a photograph, held in the same warm
-     monochrome as the manor above it. Twenty points on it are already lit in
-     the picture: three lamps, one to a shelf, and the small lights strung on
-     the thread that runs between them. A halo is laid over each of the twenty
-     and they come up one after another along that thread, so a single glow
-     travels the case and starts again, the way a thought goes from one book
-     to the next. Two or three are up at any moment; the rest sit low.
-     The positions were read off the picture itself. ---- */
-  .canon{display:block;position:relative;width:100%;aspect-ratio:1504/948;overflow:hidden;isolation:isolate}
-  .canon img{display:block;width:100%;height:100%;object-fit:cover;filter:grayscale(1) sepia(.26) contrast(1.1) brightness(.94)}
-  .canon .lights{position:absolute;inset:0;pointer-events:none}
-  .canon .lights i{
-    position:absolute;
-    display:block;
-    width:var(--d);
-    aspect-ratio:1;
-    transform:translate(-50%,-50%);
-    border-radius:50%;
-    background:radial-gradient(circle,rgba(255,250,238,1) 0%,rgba(255,247,232,.95) 13%,rgba(217,160,90,.55) 38%,rgba(217,160,90,0) 72%);
-    mix-blend-mode:screen;
-    opacity:.14;
-    animation:nodewake 8s ease-in-out infinite;
-  }
-  /* up in under a second, down again slowly, then low for the rest of the loop */
-  @keyframes nodewake{
-    0%{opacity:.14}
-    7%{opacity:1}
-    17%{opacity:.14}
-    100%{opacity:.14}
-  }
-  .canon .lights i:nth-of-type(1){left:13.85%;top:45.37%;--d:3.6%;animation-delay:0.0s}
-  .canon .lights i:nth-of-type(2){left:17.14%;top:47.76%;--d:3.6%;animation-delay:-0.4s}
-  .canon .lights i:nth-of-type(3){left:24.17%;top:51.88%;--d:7.2%;animation-delay:-0.8s}
-  .canon .lights i:nth-of-type(4){left:26.7%;top:43.76%;--d:3.6%;animation-delay:-1.2s}
-  .canon .lights i:nth-of-type(5){left:29.24%;top:46.76%;--d:4.4%;animation-delay:-1.6s}
-  .canon .lights i:nth-of-type(6){left:33.96%;top:49.83%;--d:4.4%;animation-delay:-2.0s}
-  .canon .lights i:nth-of-type(7){left:36.62%;top:47.23%;--d:3.6%;animation-delay:-2.4s}
-  .canon .lights i:nth-of-type(8){left:62.81%;top:23.46%;--d:3.6%;animation-delay:-2.8s}
-  .canon .lights i:nth-of-type(9){left:65.1%;top:19.45%;--d:3.6%;animation-delay:-3.2s}
-  .canon .lights i:nth-of-type(10){left:70.98%;top:18.25%;--d:4.4%;animation-delay:-3.6s}
-  .canon .lights i:nth-of-type(11){left:73.14%;top:26.62%;--d:7.2%;animation-delay:-4.0s}
-  .canon .lights i:nth-of-type(12){left:80.75%;top:24.04%;--d:3.6%;animation-delay:-4.4s}
-  .canon .lights i:nth-of-type(13){left:84.55%;top:21.34%;--d:3.6%;animation-delay:-4.8s}
-  .canon .lights i:nth-of-type(14){left:82.21%;top:70.63%;--d:3.6%;animation-delay:-5.2s}
-  .canon .lights i:nth-of-type(15){left:79.19%;top:70.68%;--d:3.6%;animation-delay:-5.6s}
-  .canon .lights i:nth-of-type(16){left:74.92%;top:72.37%;--d:3.6%;animation-delay:-6.0s}
-  .canon .lights i:nth-of-type(17){left:73.1%;top:76.52%;--d:7.2%;animation-delay:-6.4s}
-  .canon .lights i:nth-of-type(18){left:68.69%;top:66.97%;--d:3.6%;animation-delay:-6.8s}
-  .canon .lights i:nth-of-type(19){left:66.77%;top:70.52%;--d:4.4%;animation-delay:-7.2s}
-  .canon .lights i:nth-of-type(20){left:63.92%;top:75.51%;--d:3.6%;animation-delay:-7.6s}
+/* the separation: 1 px --rule lines between the columns and along the top and bottom of the row.
+   Stillpoint's six slices touch, and the line between two of them is drawn over them. */
+html.js .f-win{--fgc:var(--rule);--fgw:1px}
 
-  /* ---- wide screens: the margin is given room enough to hold the four
-     entries two by two, so the whole index can be taken in at one look
-     instead of scrolled past. Reading order is unchanged: 1 2 over 3 4. ---- */
-  @media (min-width:1180px){
-    /* on a wide screen the index takes a little over half the width, so the
-       cards grow with the screen instead of leaving the name alone in a field */
-    .page{grid-template-columns:1fr 1px var(--side,clamp(40rem,56vw,calc(100vw - 40rem)))}
-    .margin{padding:2.2rem 2.4rem}
-    .index{
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      column-gap:2.4rem;
-      row-gap:2.4rem;
-      align-items:start;
-    }
-    .art{max-width:none}
-    .mosaic{max-width:none}
-    /* the text under each picture runs to four fifths of the picture's width */
-    .blurb{max-width:80%}
-    /* each column packs on its own, so a card sits right under the card above it
-       instead of under the taller card beside it. The script below measures each
-       card and gives it that many 8px rows; without the script the plain grid stands. */
-    .index.masonry{grid-auto-rows:8px;row-gap:0;grid-auto-flow:row dense}
-    .index.masonry>li:nth-child(odd){grid-column:1}
-    .index.masonry>li:nth-child(even){grid-column:2}
-  }
-  /* when the margin is dragged narrow, the two-by-two index falls back to one column */
-  .margin{container-type:inline-size}
-  @container (max-width:36rem){
-    .index{display:flex;flex-direction:column;gap:2.8rem}
-    .mosaic{max-width:none}
-    .blurb{max-width:80%}
-  }
+/* the rest layer, shared by columns and bands */
+html.js .c-num{
+  position:absolute;top:18px;left:14px;z-index:2;
+  font-size:1.4rem;line-height:1;color:var(--ink);
+  font-variant-numeric:lining-nums tabular-nums;
+  transition:color .4s var(--change);
+}
+html.js .c-slice{position:absolute;overflow:hidden;overflow:clip;transition:opacity .45s var(--change) .25s;animation:unroll .85s var(--arrive) backwards;animation-delay:calc(var(--i) * 45ms + 80ms)}
+@keyframes unroll{from{clip-path:inset(0 0 100% 0)}to{clip-path:inset(0 0 0 0)}}
+/* a slice picture is placed and sized from script (the framing depends on the window), and the hover
+   moves it with scale and translate, whose values script also sets */
+html.js .c-slice > img,html.js .c-slice > .stack{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0}
+html.js .c-slice > .stack{display:block;overflow:hidden;overflow:clip}
+html.js .c-slice > .stack img{position:absolute;inset:0;width:100%;height:100%;max-width:none}
+html.js .c-slice.six{display:flex}
+html.js .c-slice.six .sx{display:block;position:relative;flex:1 1 0;min-width:0;min-height:0;overflow:hidden;overflow:clip}
+html.js .c-slice.six .sx img{position:absolute;left:0;top:0;max-width:none;transform-origin:0 0}
+html.js .c-text{position:absolute;z-index:2;display:block;transition:opacity .2s var(--change)}
+html.js .c-title{display:block;font-size:1.05rem;line-height:1.2;color:var(--ink);text-wrap:balance;transition:color .4s var(--change)}
+html.js .c-date{
+  display:block;margin-block-start:.6rem;white-space:nowrap;font-size:.74rem;line-height:1.2;
+  font-variant:small-caps;letter-spacing:.06em;color:var(--ink-ghost);transition:opacity .3s var(--change), color .4s var(--change);
+}
+html.js .c-text.t-out{opacity:0}
 
-  /* ---- below 760px: margin flows beneath the name, keeps its smallness ---- */
-  @media (max-width:760px){
-    .page{
-      display:block;
-    }
-    .field{
-      min-height:70vh;
-      padding-bottom:2rem;
-    }
-    .rule{height:1px;width:100%;touch-action:auto}
-    .rule::before{display:none}
-    .index{gap:2.2rem}
-    .margin{
-      padding:2.5rem clamp(1.6rem,7vw,2.4rem) 3rem;
-    }
-    .art{max-width:20rem}
-  }
+/* the open content */
+html.js .panel{position:relative}
+html.js .entry:focus-visible{outline-offset:6px}
+html.js .title a:focus-visible{outline:2px solid var(--ink);outline-offset:4px}
+html.js .art{container-type:size}
+html.js .col::after{
+  content:"";position:absolute;left:0;right:0;top:-1px;height:2px;background:var(--red);
+  opacity:0;pointer-events:none;transition:opacity .3s var(--change);
+}
+html.js .col.is-open::after{opacity:1}
+html.js .col.is-open .c-num{color:var(--red)}
 
-  @media (prefers-reduced-motion:reduce){
-    .mosaic img{will-change:auto}
-    /* the photograph is handed back exactly as it was. Both added layers are
-       taken away rather than stilled: the ripple is driven by script through
-       an SVG filter, where a media query cannot reach it, and nine points left
-       standing on a still face would only look like marks on the print */
-    .feelface .ripple{display:none}
-    .feelface i{display:none}
-    .pair .brain .lit{animation:none}
-    .manor .lamp{animation:none}
-    /* nothing travels: every light on the bookcase is left gently up */
-    .canon .lights i{animation:none;opacity:.4}
-    /* nothing moves: the machine hand rests at the start of its line */
-    .wrote .hand.machine{animation:none;transform:translate(.36%,-15.41%)}
-    .wrote .hand.machine img{animation:none}
+/* ------------------------------------------------------------------
+   Bands (phones and tablets, under 1280 px): seven horizontal bands.
+------------------------------------------------------------------- */
+@media (max-width:1279px){
+  html.js .page{width:auto;max-width:52rem;padding:0;margin:0 auto}
+  html.js .masthead{padding:1.7rem var(--pad) 1.8rem}
+  html.js .row{margin:0}
+  html.js .col{
+    position:relative;height:var(--band);overflow:hidden;overflow:clip;
+    transition:height .6s var(--change);
   }
+  html.js .col-in{padding:0;position:relative}
+  html.js .c-open{position:absolute;top:0;left:0;width:100%;height:var(--band);z-index:1}
+  html.js .c-open:focus-visible{outline-offset:-6px}
+  html.js .c-open{--tz:54%}
+  html.js .c-slice{inset:0;
+    -webkit-mask-image:linear-gradient(to right, var(--paper-0) var(--tz), var(--ink) var(--tz));
+    mask-image:linear-gradient(to right, var(--paper-0) var(--tz), var(--ink) var(--tz));
+  }
+  html.js .col:first-child .c-open{--tz:36%}
+  html.js .c-slice.six{gap:0;padding-left:var(--tz);padding-right:0;-webkit-mask-image:none;mask-image:none}
+  html.js .c-num{top:10px;left:var(--pad)}
+  html.js .c-text{left:calc(var(--pad) + 2rem);top:14px;width:calc(var(--tz) - var(--pad) - 2rem - .6rem);height:auto}
+  html.js .c-title{font-size:.94rem;line-height:1.2}
+  html.js .c-date{display:none}
+  html.js .is-open .c-slice{opacity:0;transition:opacity .3s var(--change)}
+  /* the bands' lines run across: one above each band and one under the last */
+  html.js .f-win{left:var(--tz);right:0;top:0;bottom:0}
+  html.js .is-open .f-win{opacity:0;transition:opacity .2s var(--change)}
+  html.js .col[data-n="1"] .f-win::after{background:linear-gradient(to right,var(--paper-0) calc(100% / 6 - var(--fgw)),var(--fgc) calc(100% / 6 - var(--fgw)),var(--fgc) calc(100% / 6),var(--paper-0) calc(100% / 6),var(--paper-0) calc(200% / 6 - var(--fgw)),var(--fgc) calc(200% / 6 - var(--fgw)),var(--fgc) calc(200% / 6),var(--paper-0) calc(200% / 6),var(--paper-0) calc(300% / 6 - var(--fgw)),var(--fgc) calc(300% / 6 - var(--fgw)),var(--fgc) calc(300% / 6),var(--paper-0) calc(300% / 6),var(--paper-0) calc(400% / 6 - var(--fgw)),var(--fgc) calc(400% / 6 - var(--fgw)),var(--fgc) calc(400% / 6),var(--paper-0) calc(400% / 6),var(--paper-0) calc(500% / 6 - var(--fgw)),var(--fgc) calc(500% / 6 - var(--fgw)),var(--fgc) calc(500% / 6),var(--paper-0) calc(500% / 6))}
+  html.js .f-line{--fl:0px;--fr:0px;--ft:1px;--fb:0px;left:0;right:0}
+  html.js .col:last-child .f-line{--fb:var(--ft)}
+  html.js .is-open .c-text{opacity:0}
+  html.js .panel{padding:56px var(--pad) 1.7rem;transition:opacity .2s var(--change)}
+  html.js .is-open .panel{transition:opacity .3s var(--change) .25s}
+  html.js .title{font-size:1.6rem;margin:1.4rem 0 .6rem}
+  html.js .art{container-type:normal}
+  html.js .col::after{top:0;left:0}
+}
+@media (min-width:600px) and (max-width:1279px){
+  html.js .c-open{--tz:42%}
+  html.js .col:first-child .c-open{--tz:30%}
+  html.js .c-title{font-size:1.1rem}
+  html.js .c-num{top:22px}
+  html.js .c-text{top:23px}
+  html.js .art{max-width:36rem}
+  html.js .entry{max-width:38rem}
+  html.js .title{font-size:1.9rem}
+}
+
+/* ------------------------------------------------------------------
+   Columns (1280 px and wider): one full-height row.
+------------------------------------------------------------------- */
+@media (min-width:1280px){
+  html.js .page{
+    display:flex;align-items:stretch;
+    width:min(100% - 128px, 1800px);height:max(600px, calc(100vh - 64px));
+    margin:32px auto;padding:0;
+    container-type:inline-size;
+    --open-w:calc(70cqw - 6 * var(--sliver));
+  }
+  html.js .masthead{
+    flex:0 0 30%;position:static;display:flex;flex-direction:column;justify-content:space-between;
+    padding:14px 40px 10px 0;border-top:1px solid var(--rule);border-bottom:1px solid var(--rule);
+  }
+  html.js .bylines{margin-top:0;max-width:24rem}
+  html.js .signature a{padding:0;line-height:1}
+  html.js .signature{margin-top:1.5rem;transform:translateY(var(--sig-dy, 0px))}
+  html.js .row{flex:1 1 0;min-width:0;display:flex;margin:0}
+  /* Column widths are animated from script (Web Animations). The base state is the end state. */
+  html.js .col{flex:1 1 0px;min-width:0;position:relative}
+  html.js .col.is-sliver{flex:0 0 var(--sliver)}
+  html.js .col.is-open{flex:1 1 0px}
+  html.js .col-in{position:absolute;inset:0;padding:0;overflow:hidden;overflow:clip}
+
+  html.js .c-open{position:absolute;inset:0;width:100%;height:100%;--zone:clamp(232px, 31%, 292px)}
+  html.js .c-open:focus-visible{outline-offset:-6px}
+  html.js .c-num{transition:transform .7s var(--change), color .4s var(--change)}
+  html.js .col.is-open .c-num{transform:translateX(14px)}
+  html.js .col.is-sliver .c-num{transform:translateX(6px)}
+  html.js .page[data-closing] .c-num{transition-delay:.12s,0s}
+  html.js .c-slice{display:none}
+  html.js .c-text{
+    left:14px;bottom:18px;height:var(--zone);
+    writing-mode:vertical-rl;transform:rotate(180deg);
+  }
+  html.js .c-title{font-size:1.2rem;line-height:1.2}
+  html.js .col[data-fold] .c-text,html.js .col[data-fold] .c-title{white-space:nowrap;text-wrap:nowrap}
+  html.js .col.is-sliver .c-date{opacity:0}
+  html.js .col.is-open .c-text{opacity:0}
+  html.js .page[data-closing] .col::after{transition-delay:.12s}
+
+  /* the panel is always laid out at its open size; the drawing in it is posed from script until the column opens */
+  html.js .panel{
+    position:absolute;top:0;left:0;width:var(--open-w);height:100%;
+    padding:72px 28px 28px;opacity:1;
+  }
+  html.js .page:not([data-nointro]) .panel{animation:unroll .85s var(--arrive) backwards;animation-delay:calc(var(--i) * 45ms + 80ms)}
+  html.js .col:not(.is-open) .panel{pointer-events:none}
+  html.js .col.is-open .c-open{pointer-events:none}
+  html.js .entry{display:flex;flex-direction:column;align-items:stretch;align-content:normal;height:100%}
+  html.js .art{flex:1 1 0;min-height:0;grid-row:auto;grid-column:auto;align-self:stretch;max-width:none;display:flex;align-items:center;justify-content:center}
+  html.js .art-4{align-items:flex-end}
+  html.js .title,html.js .blurb,html.js .meta{grid-column:auto}
+  html.js .title{font-size:2rem;margin:1.5rem 0 .65rem}
+  html.js .fx{flex:none;width:min(100cqw, calc(100cqh * var(--far)))}
+  html.js .crop{flex:none;overflow:visible;width:min(100cqw, calc(100cqh * var(--ar)))}
+  /* cardfx.css clips the mosaic to its own rectangle; the slices sit outside it, so the clip waits until the card is open */
+  html.js .col:not(.is-open) .fx[data-card="1"]{overflow:visible}
+  html.js .fxp .fx{width:100%}
+
+  /* the slice window of Stillpoint: the lines between its six slices sit over it and fade while a card is open */
+  html.js .f-win{left:0;right:0;top:64px;bottom:calc(clamp(232px, 31%, 292px) + 36px)}
+  html.js .page[data-open] .f-win{opacity:0;transition:opacity .2s var(--change)}
+  html.js .col[data-n="1"] .f-win::after{background:linear-gradient(to bottom,var(--paper-0) calc(100% / 6 - var(--fgw)),var(--fgc) calc(100% / 6 - var(--fgw)),var(--fgc) calc(100% / 6),var(--paper-0) calc(100% / 6),var(--paper-0) calc(200% / 6 - var(--fgw)),var(--fgc) calc(200% / 6 - var(--fgw)),var(--fgc) calc(200% / 6),var(--paper-0) calc(200% / 6),var(--paper-0) calc(300% / 6 - var(--fgw)),var(--fgc) calc(300% / 6 - var(--fgw)),var(--fgc) calc(300% / 6),var(--paper-0) calc(300% / 6),var(--paper-0) calc(400% / 6 - var(--fgw)),var(--fgc) calc(400% / 6 - var(--fgw)),var(--fgc) calc(400% / 6),var(--paper-0) calc(400% / 6),var(--paper-0) calc(500% / 6 - var(--fgw)),var(--fgc) calc(500% / 6 - var(--fgw)),var(--fgc) calc(500% / 6),var(--paper-0) calc(500% / 6))}
+
+  /* words: faded out until the picture has settled */
+  html.js .words{opacity:0;transition:opacity .2s var(--change)}
+  html.js .col.is-open .words{opacity:1;transition:opacity .2s var(--change) .7s}
+
+  /* units: the pieces of a drawing that travel (set up from script) */
+  html.js .fxu{transition:opacity .35s var(--change) .45s}
+  html.js .col.is-open .fxu{transition:opacity .2s var(--change)}
+  html.js .col.is-sliver .fxu{opacity:0;transition:opacity .3s var(--change)}
+  /* the sixth Stillpoint picture is clear in cardfx.css (it waits offstage); it shows while the slice shows, and a sliver hides it like every other unit */
+  html.js .fx[data-card="1"] .fx-tile[data-posed]:nth-child(6){opacity:1}
+  html.js .col.is-sliver .fx[data-card="1"] .fx-tile:nth-child(6){opacity:0}
+  html.js .fxu img{transform-origin:0 0;transition:scale .5s var(--change), translate .5s var(--change), filter .5s var(--change)}
+  html.js .col.is-open .fxu img{transition:scale .7s var(--change), translate .7s var(--change), filter .5s var(--change)}
+}
+
+/* ------------------------------------------------------------------
+   Hover. Fine pointer. Keyboard focus on a column shows what hover shows.
+   Nothing lifts, grows or casts a shadow. The number and the title turn red,
+   the date stays grey, and the slice picture eases out to show more of the drawing.
+------------------------------------------------------------------- */
+html.js .c-open,html.js .c-open *{cursor:pointer}
+@media (hover:hover) and (pointer:fine) and (min-width:1280px){
+  /* nothing open: the number and the vertical title turn red */
+  html.js .page:not([data-open]) .col:is(:hover,:has(.c-open:focus-visible:not(.no-ring))) :is(.c-num,.c-title){color:var(--red)}
+  /* a card open: the number and the title of the sliver under the pointer turn red */
+  html.js .page[data-open] .col.is-sliver:is(:hover,:has(.c-open:focus-visible:not(.no-ring))) :is(.c-num,.c-title){color:var(--red)}
+}
+@media (hover:hover) and (pointer:fine) and (min-width:1280px) and (prefers-reduced-motion:no-preference){
+  /* every picture of the column eases out to its full cover about the centre of its window. Scale and
+     translate are set apart from the pose (transform) and the mask, so the window never changes. Script
+     gives each unit its --hs, --htx and --hty. In Stillpoint all six slices move together. */
+  html:not(.rm) .page:not([data-open]) .col:is(:hover,:has(.c-open:focus-visible:not(.no-ring))) .fxu img{
+    scale:var(--hs, 1);
+    translate:var(--htx, 0px) var(--hty, 0px);
+  }
+}
+/* bands: the same colour change on every band that is not open, and the slice eases out to its full cover */
+@media (hover:hover) and (pointer:fine) and (max-width:1279px){
+  html.js .col:not(.is-open):is(:hover,:has(.c-open:focus-visible:not(.no-ring))) :is(.c-num,.c-title){color:var(--red)}
+}
+@media (hover:hover) and (pointer:fine) and (max-width:1279px) and (prefers-reduced-motion:no-preference){
+  html.js .c-slice > img,html.js .c-slice > .stack,html.js .c-slice.six .sx img{transition:scale .5s var(--change), translate .5s var(--change)}
+  html:not(.rm) .col:not(.is-open):is(:hover,:has(.c-open:focus-visible:not(.no-ring))) :is(.c-slice > img,.c-slice > .stack,.c-slice.six .sx img){
+    scale:var(--hs, 1);
+    translate:var(--htx, 0px) var(--hty, 0px);
+  }
+}
+
+/* ------------------------------------------------------------------
+   Reduced motion: the columns and bands work, every change is instant.
+------------------------------------------------------------------- */
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{transition:none !important;animation:none !important}
+}
+html.rm *,html.rm *::before,html.rm *::after{transition:none !important;animation:none !important}
+@media (hover:none){html.has-open body{cursor:pointer}}
+
+/* 1280 to 1439: the title of column 6 runs to three lines and its date reached past the column. A little less size and space bring it in. */
+@media (min-width:1280px) and (max-width:1439px){
+  html.js .c-title{font-size:1.1rem;line-height:1.15}
+  html.js .c-date{margin-block-start:.45rem}
+}
+
+/* the column that was open: its words are gone before its vertical title shows, so the two never overlap while it narrows */
+html.js .col.is-leaving .words{transition:opacity .1s var(--change)}
+html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
 </style>
+<!-- cardfx:css -->
+<style>
+/* CardFX styles. Every colour is a variable in the :root block below, with its
+   literal value there, so no rule reads a colour from anywhere else and nothing
+   can rewrite one on the way into a page. The block holds the manor lamp's
+   nine colour stops, the translucent reds of the lights on cards 2, 3 and 7,
+   and the two rest poses of card 4. Overlays sit inside the open card's drawing
+   and never take the pointer. */
+
+:root {
+  /* card 6: the live home page's lamp, stop for stop. Halo, pane glow and the
+     light on the snow, each as centre, middle and edge. */
+  --lamp-halo: rgba(239, 233, 221, 0.42);
+  --lamp-halo-mid: rgba(217, 160, 90, 0.22);
+  --lamp-halo-out: rgba(217, 160, 90, 0);
+  --lamp-core: rgba(255, 248, 235, 0.92);
+  --lamp-core-mid: rgba(239, 233, 221, 0.55);
+  --lamp-core-out: rgba(239, 233, 221, 0);
+  --lamp-cast: rgba(239, 233, 221, 0.3);
+  --lamp-cast-mid: rgba(217, 160, 90, 0.14);
+  --lamp-cast-out: rgba(217, 160, 90, 0);
+
+  /* the red of the lights, #c3261c (the page's --red) at the alphas the
+     lights use. If the page's --red changes, these change with it. */
+  --fx-red-0: rgba(195, 38, 28, 0);
+  --fx-red-06: rgba(195, 38, 28, 0.06);
+  --fx-red-08: rgba(195, 38, 28, 0.08);
+  --fx-red-18: rgba(195, 38, 28, 0.18);
+  --fx-red-30: rgba(195, 38, 28, 0.3);
+  --fx-red-46: rgba(195, 38, 28, 0.46);
+  --fx-red-90: rgba(195, 38, 28, 0.9);
+  --fx-red-94: rgba(195, 38, 28, 0.94);
+  --fx-red-95: rgba(195, 38, 28, 0.95);
+  --fx-red-98: rgba(195, 38, 28, 0.98);
+
+  /* card 4: where each hand rests. Both are transforms for a layer that is the
+     whole canvas and has transform-origin 0 0 (the rules below set that). The
+     human hand sits left and lower, 8 percent larger, its nib on the left end of
+     text line 7. The machine hand sits up and to the right at 70 percent, behind
+     the human hand, its nib at the right end of text line 3, its arm leaving the
+     frame on the right. The animation starts from the machine's pose and returns
+     to it. */
+  --human-rest: translate(-16.176%, 3.022%) scale(1.08);
+  --machine-rest: translate(30.036%, -2.715%) scale(0.7);
+}
+
+.cardfx-layer {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  pointer-events: none;
+}
+
+.cardfx-layer * {
+  pointer-events: none;
+}
+
+/* a light: a small red core and a soft halo, centred on its point.
+   --c is the core's share of the box, set by the script */
+.cardfx-light {
+  position: absolute;
+  display: block;
+  margin: 0;
+  padding: 0;
+  aspect-ratio: 1 / 1;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+  opacity: 0.12;
+  will-change: opacity;
+  background: radial-gradient(closest-side,
+    var(--fx-red-95) 0,
+    var(--fx-red-90) calc(var(--c, 20%) * 0.7),
+    var(--fx-red-30) calc(var(--c, 20%) * 1.2),
+    var(--fx-red-08) calc(var(--c, 20%) * 2.4),
+    var(--fx-red-0) 100%);
+}
+
+/* the manor lamp, copied from the live home page: three soft shapes that breathe
+   together on a 4.444 s count (the script drives the count). The sizes are the
+   live ones, as a share of the picture: the halo 12 percent wide, the pane glow
+   4 percent wide, the light on the snow 9 percent wide and 3.35 percent high.
+   The script sets each one's centre on the re-measured pane. */
+.cardfx-group {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.cardfx-lamp-halo,
+.cardfx-lamp-core,
+.cardfx-lamp-cast {
+  position: absolute;
+  display: block;
+  margin: 0;
+  padding: 0;
+  transform: translate(-50%, -50%);
+  border-radius: 50%;
+}
+
+/* the soft halo thrown into the air around the pane */
+.cardfx-lamp-halo {
+  width: 12%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, var(--lamp-halo) 0%, var(--lamp-halo-mid) 38%, var(--lamp-halo-out) 72%);
+}
+
+/* the pane itself, brighter and tighter */
+.cardfx-lamp-core {
+  width: 4%;
+  aspect-ratio: 1;
+  background: radial-gradient(circle, var(--lamp-core) 0%, var(--lamp-core-mid) 42%, var(--lamp-core-out) 78%);
+}
+
+/* the light that falls on the snow just under the window */
+.cardfx-lamp-cast {
+  width: 9%;
+  height: 3.35%;
+  background: radial-gradient(ellipse at center, var(--lamp-cast) 0%, var(--lamp-cast-mid) 45%, var(--lamp-cast-out) 80%);
+}
+
+/* the water: a window on the reflection, a sheet that carries the filter, and a
+   copy of the picture inside it */
+.cardfx-ripple {
+  position: absolute;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.cardfx-sheet {
+  position: absolute;
+  left: -100%;
+  top: -100%;
+  width: 200%;
+  height: 200%;
+}
+
+.cardfx-sheet .cardfx-copy {
+  position: absolute;
+  display: block;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  object-fit: fill;
+}
+
+.cardfx-svg {
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+/* the brain's red breath */
+.cardfx-tint {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  opacity: 0;
+  pointer-events: none;
+}
+
+/* the face lights are fuller than the others: a solid core, then a wide soft halo */
+.cardfx-light-face {
+  background: radial-gradient(closest-side,
+    var(--fx-red-98) 0,
+    var(--fx-red-94) calc(var(--c, 20%) * 0.8),
+    var(--fx-red-46) calc(var(--c, 20%) * 1.25),
+    var(--fx-red-18) calc(var(--c, 20%) * 2.2),
+    var(--fx-red-06) calc(var(--c, 20%) * 3.2),
+    var(--fx-red-0) 100%);
+}
+
+/* what sits inside the water sheet, carried against its motion */
+.cardfx-anchor {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* the waterline: a fine ink line across the reflection, faded at both ends */
+.cardfx-waterline {
+  position: absolute;
+  left: 34.5%;
+  width: 32%;
+  height: 8px;
+  margin-top: -4px;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, var(--ink) 12%, var(--ink) 88%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, var(--ink) 12%, var(--ink) 88%, transparent 100%);
+}
+
+.cardfx-waterline svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+}
+
+.cardfx-waterline path {
+  fill: none;
+  stroke: var(--ink);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.cardfx-waterline-main {
+  stroke-width: 1px;
+  stroke-opacity: 0.5;
+}
+
+.cardfx-waterline-second {
+  stroke-width: 1px;
+  stroke-opacity: 0.2;
+}
+
+/* the root pulses */
+.cardfx-pulses {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+  pointer-events: none;
+}
+
+/* ---------- card 1: the live mosaic, as the home page has it ----------
+   One rectangle of pictures, no boxes of their own: a 3 by 3 grid with a 3 px
+   gap, the big picture in area a (2 by 2), four small ones in areas b to e, and
+   the sixth picture waiting offstage. Every picture covers its cell and has a
+   1 px hairline of var(--rule) just inside its edge. The first
+   six children of the card are the six .fx-tile elements, in the order of the
+   pictures. The script moves them by inline style while it runs and puts the
+   markup back on stop, so these rules are the arrangement at rest. The card's
+   own width and height belong to the page. */
+.fx[data-card="1"] {
+  position: relative;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  grid-template-areas:
+    "a a b"
+    "a a b"
+    "c d e";
+  gap: 3px;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+.fx[data-card="1"] .fx-tile {
+  position: relative;
+  display: block;
+  min-width: 0;
+  min-height: 0;
+  margin: 0;
+  padding: 0;
+  will-change: transform, opacity;
+}
+
+.fx[data-card="1"] .fx-tile img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  /* a hairline just inside the edge of every picture, so each boundary shows;
+     the gap between the tiles stays 3 px */
+  outline: 1px solid var(--rule);
+  outline-offset: -1px;
+}
+
+.fx[data-card="1"] .fx-tile:nth-child(1) { grid-area: a; }
+.fx[data-card="1"] .fx-tile:nth-child(2) { grid-area: b; }
+.fx[data-card="1"] .fx-tile:nth-child(3) { grid-area: c; }
+.fx[data-card="1"] .fx-tile:nth-child(4) { grid-area: d; }
+.fx[data-card="1"] .fx-tile:nth-child(5) { grid-area: e; }
+
+/* the sixth waits offstage: one pixel, clear, out of the pointer's way */
+.fx[data-card="1"] .fx-tile:nth-child(6) {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1px;
+  height: 1px;
+  opacity: 0;
+  pointer-events: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .fx[data-card="1"] .fx-tile { will-change: auto; }
+}
+
+/* ---------- card 4: the two hands at rest ----------
+   Both layers are the whole canvas and turn about the top left corner, so the
+   two --*-rest values in :root mean the same thing wherever they are applied.
+   The machine layer sits behind the human layer in the markup. The arm of the
+   machine hand leaves the frame on the right, so the card clips. */
+.fx[data-card="4"] {
+  overflow: hidden;
+}
+
+.fx[data-card="4"] .fx-human {
+  transform-origin: 0 0;
+  transform: var(--human-rest);
+}
+
+.fx[data-card="4"] .fx-machine {
+  transform-origin: 0 0;
+  transform: var(--machine-rest);
+}
+</style>
+<!-- cardfx:css-end -->
+<script>(function(d){d.classList.add("js");try{if(matchMedia("(prefers-reduced-motion: reduce)").matches)d.classList.add("rm")}catch(e){}})(document.documentElement)
+</script>
 </head>
 <body>
-  <div class="page">
+<main class="page">
 
-    <main class="field">
-      <h1>Getting to know the new<br>artificial minds among us</h1>
+  <div class="masthead">
+    <h1>Getting to know the new <br>artificial minds among us</h1>
+    <div class="bylines">
       <p class="byline">
         <!-- byline -->
         As part of my own learning, I've been collaborating with AI models to explore how they work, where they surprise us, and what we still don't understand.
@@ -529,433 +760,1807 @@
       <p class="byline">
         These are playful, shallow dives into deep topics, an invitation to get curious about the new minds among us, and to learn alongside them. This space is for humans and AI both.
       </p>
-      
       <p class="signature"><a href="https://www.linkedin.com/in/pundir-ny/" target="_blank" rel="noopener" aria-label="Pundir on LinkedIn">Pundir</a></p>
-    </main>
+    </div>
+  </div>
 
-    <div class="rule" aria-hidden="true"></div>
+  <ol class="row">
 
-    <aside class="margin">
-      <ol class="index">
-
-        <li>
-          <a class="entry" href="stillpoint/stillpoint.html">
-            <span class="art mosaic" id="mosaic" role="presentation">
-              <img src="img/d9bbcb4b762c4025.jpg" alt="">
-              <img src="img/4f6d8cc11fec1bd4.jpg" alt="">
-              <img src="img/db46be0740ba7dc4.jpg" alt="">
-              <img src="img/d2086390ff3eb835.jpg" alt="">
-              <img src="img/5f64341e317b9dbf.jpg" alt="">
-              <img src="img/25dae7f32c692413.jpg" alt="">
-              <img src="img/9803786cba43fe0d.jpg" alt="">
-              <img src="img/80ff59612219ba12.jpg" alt="">
-              <img src="img/f2ffb8f7089d0707.jpg" alt="">
-            </span>
-            <p class="title"><span class="num">1</span>Stillpoint</p>
-            <p class="blurb">Ninety-nine pictures made by five of these minds. Look slowly.</p>
-            <time class="when" datetime="2026-05">May 2026 &nbsp;&middot;&nbsp; Updated Oct 2026</time>
-          </a>
-        </li>
-
-        <li>
-          <a class="entry" href="can-artificial-minds-feel/can-artificial-minds-feel.html">
-            <span class="art feelface">
-              <img src="img/7be58720bdd2bda6.jpg" alt="A hollow porcelain face, open at the back, where a lattice of small lights hangs in the shape of the missing head.">
-            </span>
-            <p class="title"><span class="num">2</span>Can Artificial Minds Feel?</p>
-            <p class="blurb">Is there anyone in there? An essay in four chapters on machine consciousness and motivation, with five experiments a reader can run on themselves.</p>
-            <time class="when" datetime="2026-09">September 2026</time>
-          </a>
-        </li>
-
-        <li>
-          <a class="entry" href="why-so-much-data/why-so-much-data.html">
+    <li class="col" id="col-1" data-n="1" style="--i:0">
+      <div class="col-in">
+        <button class="c-open" type="button" id="b-1" aria-expanded="false" aria-controls="p-1">
+          <span class="c-num"></span>
+          <span class="c-slice six" aria-hidden="true">
+          <span class="sx" style="--ox:50%;--oy:78%;--bx:50%"><img src="img/home/01-stillpoint-knot-1400.webp" srcset="img/home/01-stillpoint-knot-700.webp 700w, img/home/01-stillpoint-knot-1400.webp 1115w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1115" height="1411" alt="" loading="eager" decoding="sync"></span>
+          <span class="sx" style="--ox:50%;--oy:44%;--bx:50%"><img src="img/home/03-stillpoint-kept-empty-1400.webp" srcset="img/home/03-stillpoint-kept-empty-700.webp 700w, img/home/03-stillpoint-kept-empty-1400.webp 1254w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1254" height="1254" alt="" loading="eager" decoding="sync"></span>
+          <span class="sx" style="--ox:50%;--oy:50%;--bx:72%"><img src="img/home/09-stillpoint-warm-room-1400.webp" srcset="img/home/09-stillpoint-warm-room-700.webp 700w, img/home/09-stillpoint-warm-room-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1400" height="1050" alt="" loading="eager" decoding="sync"></span>
+          <span class="sx" style="--ox:50%;--oy:50%;--bx:36%"><img src="img/home/20-stillpoint-linen-1400.webp" srcset="img/home/20-stillpoint-linen-700.webp 700w, img/home/20-stillpoint-linen-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1400" height="933" alt="" loading="eager" decoding="sync"></span>
+          <span class="sx" style="--ox:50%;--oy:70%;--bx:72%"><img src="img/home/19-stillpoint-found-light-1400.webp" srcset="img/home/19-stillpoint-found-light-700.webp 700w, img/home/19-stillpoint-found-light-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1400" height="1073" alt="" loading="eager" decoding="sync"></span>
+          <span class="sx" style="--ox:50%;--oy:50%;--bx:50%"><img src="img/home/21-stillpoint-four-holes-1400.webp" srcset="img/home/21-stillpoint-four-holes-700.webp 700w, img/home/21-stillpoint-four-holes-1400.webp 1254w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1254" height="1254" alt="" loading="eager" decoding="sync"></span>
+        </span>
+          <span class="c-text"></span>
+          <span class="f-win" aria-hidden="true"></span>
+        </button>
+        <div class="panel" id="p-1">
+          <div class="entry">
+            <span class="art"><span class="fx" data-card="1" style="--far:1"><span class="fx-tile"><img src="img/home/01-stillpoint-knot-1400.webp" srcset="img/home/01-stillpoint-knot-700.webp 700w, img/home/01-stillpoint-knot-1400.webp 1115w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1115" height="1411" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/03-stillpoint-kept-empty-1400.webp" srcset="img/home/03-stillpoint-kept-empty-700.webp 700w, img/home/03-stillpoint-kept-empty-1400.webp 1254w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1254" height="1254" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/09-stillpoint-warm-room-1400.webp" srcset="img/home/09-stillpoint-warm-room-700.webp 700w, img/home/09-stillpoint-warm-room-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="1050" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/20-stillpoint-linen-1400.webp" srcset="img/home/20-stillpoint-linen-700.webp 700w, img/home/20-stillpoint-linen-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="933" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/19-stillpoint-found-light-1400.webp" srcset="img/home/19-stillpoint-found-light-700.webp 700w, img/home/19-stillpoint-found-light-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="1073" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/21-stillpoint-four-holes-1400.webp" srcset="img/home/21-stillpoint-four-holes-700.webp 700w, img/home/21-stillpoint-four-holes-1400.webp 1254w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1254" height="1254" alt="" loading="eager" decoding="sync"></span></span></span>
+            <div class="words">
+              <p class="title"><a href="stillpoint/stillpoint.html"><span class="num">1</span><span class="tt">Stillpoint</span></a></p>
+              <p class="blurb">Ninety-nine pictures made by five of these minds. Look slowly.</p>
+              <div class="meta"><time class="when" datetime="2026-05">May 2026 &nbsp;&middot;&nbsp; Updated Oct 2026</time></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="f-line" aria-hidden="true"></span>
+    </li>
+    <li class="col" id="col-2" data-n="2" style="--i:1">
+      <div class="col-in">
+        <button class="c-open" type="button" id="b-2" aria-expanded="false" aria-controls="p-2">
+          <span class="c-num"></span>
+          <span class="c-slice" aria-hidden="true"><img src="img/home/10-feel-porcelain-face-1400.webp" srcset="img/home/10-feel-porcelain-face-700.webp 700w, img/home/10-feel-porcelain-face-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1400" height="933" alt="" loading="eager" decoding="sync"></span>
+          <span class="c-text"></span>
+          <span class="f-win" aria-hidden="true"></span>
+        </button>
+        <div class="panel" id="p-2">
+          <div class="entry">
+            <span class="art"><span class="crop" style="--ar:0.5538;--bl:33.24;--bt:9.05;--bw:33.58;--bh:90.95;--ch:54vh"><span class="fxp"><span class="fx" data-card="2" style="--far:1.5005"><img class="fx-img" src="img/home/10-feel-porcelain-face-1400.webp" srcset="img/home/10-feel-porcelain-face-700.webp 700w, img/home/10-feel-porcelain-face-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="933" alt="A hollow porcelain face, open at the back, where a lattice of small lights hangs in the shape of the missing head." loading="eager" decoding="sync"></span></span></span></span>
+            <div class="words">
+              <p class="title"><a href="can-artificial-minds-feel/can-artificial-minds-feel.html"><span class="num">2</span><span class="tt">Can Artificial Minds Feel?</span></a></p>
+              <p class="blurb">Is there anyone in there? An essay in four chapters on machine consciousness and motivation, with five experiments a reader can run on themselves.</p>
+              <div class="meta"><time class="when" datetime="2026-09">September 2026</time></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="f-line" aria-hidden="true"></span>
+    </li>
+    <li class="col" id="col-3" data-n="3" style="--i:2">
+      <div class="col-in">
+        <button class="c-open" type="button" id="b-3" aria-expanded="false" aria-controls="p-3">
+          <span class="c-num"></span>
+          <span class="c-slice" aria-hidden="true"><img src="img/home/18-how-much-data-hero-1400.webp" srcset="img/home/18-how-much-data-hero-700.webp 700w, img/home/18-how-much-data-hero-1400.webp 1393w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1393" height="1129" alt="" loading="eager" decoding="sync"></span>
+          <span class="c-text"></span>
+          <span class="f-win" aria-hidden="true"></span>
+        </button>
+        <div class="panel" id="p-3">
+          <div class="entry">
             <!-- a child and a small robot at matching desks. Under the child, roots
                  reach down through soil full of fossils; under the robot, pages from
                  two tall stacks of books pour into a metal scaffold. The picture holds
                  still, toned like its neighbours. -->
-            <span class="art learn">
-              <img src="img/6129d65cb6f7d0c6.webp" width="1000" height="563" alt="A child and a small robot read at matching desks. Roots spread from under the child&rsquo;s desk through soil full of fossils, and pages from two tall stacks of books flow down into a metal scaffold under the robot&rsquo;s.">
-            </span>
-            <p class="title"><span class="num">3</span>Who Learns Faster, a Toddler or a Chatbot?</p>
-            <p class="blurb">It depends on the stage. Today&rsquo;s chatbots need trillions of words to grow up, but they pick up a new skill in a minute. AI is slow to learn, quick to catch on.</p>
-            <time class="when" datetime="2026-10">October 2026</time>
-          </a>
-        </li>
+            <span class="art"><span class="fx" data-card="3" style="--far:1.2339"><img class="fx-img" src="img/home/18-how-much-data-hero-1400.webp" srcset="img/home/18-how-much-data-hero-700.webp 700w, img/home/18-how-much-data-hero-1400.webp 1393w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1393" height="1129" alt="A child and a small robot read at matching desks. Roots spread from under the child’s desk through soil full of fossils, and pages from two tall stacks of books flow down into a metal scaffold under the robot’s." loading="eager" decoding="sync"></span></span>
+            <div class="words">
+              <p class="title"><a href="why-so-much-data/why-so-much-data.html"><span class="num">3</span><span class="tt">Who Learns Faster, a Toddler or a Chatbot?</span></a></p>
+              <p class="blurb">It depends on the stage. Today’s chatbots need trillions of words to grow up, but they pick up a new skill in a minute. AI is slow to learn, quick to catch on.</p>
+              <div class="meta"><time class="when" datetime="2026-10">October 2026</time></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="f-line" aria-hidden="true"></span>
+    </li>
+    <li class="col" id="col-4" data-n="4" style="--i:3">
+      <div class="col-in">
+        <button class="c-open" type="button" id="b-4" aria-expanded="false" aria-controls="p-4">
+          <span class="c-num"></span>
+          <span class="c-slice" aria-hidden="true"><span class="stack"><img class="s-paper" src="img/home/11-writing-paper-1400.webp" srcset="img/home/11-writing-paper-700.webp 700w, img/home/11-writing-paper-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="s-machine" src="img/home/13-writing-machine-hand-1400.webp" srcset="img/home/13-writing-machine-hand-700.webp 700w, img/home/13-writing-machine-hand-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="s-human" src="img/home/12-writing-human-hand-1400.webp" srcset="img/home/12-writing-human-hand-700.webp 700w, img/home/12-writing-human-hand-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"></span></span>
+          <span class="c-text"></span>
+          <span class="f-win" aria-hidden="true"></span>
+        </button>
+        <div class="panel" id="p-4">
+          <div class="entry">
+            <span class="art art-4"><span class="fx" data-card="4" style="--far:1.7769" role="img" aria-label="A human hand and a mechanical hand, each holding a fountain pen, writing the same lines of handwriting on one sheet of paper."><img class="fx-paper" src="img/home/11-writing-paper-1400.webp" srcset="img/home/11-writing-paper-700.webp 700w, img/home/11-writing-paper-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="fx-machine" src="img/home/13-writing-machine-hand-1400.webp" srcset="img/home/13-writing-machine-hand-700.webp 700w, img/home/13-writing-machine-hand-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="fx-human" src="img/home/12-writing-human-hand-1400.webp" srcset="img/home/12-writing-human-hand-700.webp 700w, img/home/12-writing-human-hand-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"></span></span>
+            <div class="words">
+              <p class="title"><a href="did-ai-write-this/did-ai-write-this.html"><span class="num">4</span><span class="tt">Did AI Write This?</span></a></p>
+              <p class="blurb">Two passages, one written by an AI model. Can you tell which? Then see what AI detectors, watermarks and editing histories can and cannot tell you.</p>
+              <div class="meta"><time class="when" datetime="2026-09">September 2026</time></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="f-line" aria-hidden="true"></span>
+    </li>
+    <li class="col" id="col-5" data-n="5" style="--i:4">
+      <div class="col-in">
+        <button class="c-open" type="button" id="b-5" aria-expanded="false" aria-controls="p-5">
+          <span class="c-num"></span>
+          <span class="c-slice" aria-hidden="true"><img src="img/home/14-mind-brain-1400.webp" srcset="img/home/14-mind-brain-700.webp 700w, img/home/14-mind-brain-1400.webp 1299w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1299" height="1211" alt="" loading="eager" decoding="sync"></span>
+          <span class="c-text"></span>
+          <span class="f-win" aria-hidden="true"></span>
+        </button>
+        <div class="panel" id="p-5">
+          <div class="entry">
+            <span class="art"><span class="fx" data-card="5" style="--far:2.25"><span class="fx-brain"><img src="img/home/14-mind-brain-1400.webp" srcset="img/home/14-mind-brain-700.webp 700w, img/home/14-mind-brain-1400.webp 1299w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1299" height="1211" alt="A human brain seen from above, pale, with thin gold wires branching out from it." loading="eager" decoding="sync"></span><span class="fx-lattice"><img src="img/home/15-mind-lattice-1400.webp" srcset="img/home/15-mind-lattice-700.webp 700w, img/home/15-mind-lattice-1400.webp 1293w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1293" height="1216" alt="A lattice of small paper cards on glass shelves, joined by gold pins." loading="eager" decoding="sync"></span></span></span>
+            <div class="words">
+              <p class="title"><a href="artificial-mind-of-your-own/an-artificial-mind-of-your-own.html"><span class="num">5</span><span class="tt">An Artificial Mind of Your Own</span></a></p>
+              <p class="blurb">A look at what is inside these minds and how they learn, and a primer on how to invite one of them to live on your own laptop.</p>
+              <div class="meta"><time class="when" datetime="2026-06">June 2026</time></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="f-line" aria-hidden="true"></span>
+    </li>
+    <li class="col" id="col-6" data-n="6" style="--i:5">
+      <div class="col-in">
+        <button class="c-open" type="button" id="b-6" aria-expanded="false" aria-controls="p-6">
+          <span class="c-num"></span>
+          <span class="c-slice" aria-hidden="true"><img src="img/home/16-aldous-finch-manor-1400.webp" srcset="img/home/16-aldous-finch-manor-700.webp 700w, img/home/16-aldous-finch-manor-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1400" height="800" alt="" loading="eager" decoding="sync"></span>
+          <span class="c-text"></span>
+          <span class="f-win" aria-hidden="true"></span>
+        </button>
+        <div class="panel" id="p-6">
+          <div class="entry">
+            <span class="art"><span class="fx" data-card="6" style="--far:1.75"><img class="fx-img" src="img/home/16-aldous-finch-manor-1400.webp" srcset="img/home/16-aldous-finch-manor-700.webp 700w, img/home/16-aldous-finch-manor-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="800" alt="Harrow Manor at night in falling snow, one study window lit warm." loading="eager" decoding="sync"></span></span>
+            <div class="words">
+              <p class="title"><a href="A-Salon-of-Witnesses/who-killed-aldous-finch.html"><span class="num">6</span><span class="tt">Who Killed Aldous Finch? A Transformer Explainer</span></a></p>
+              <p class="blurb">Solve the murder and you will know how artificial minds learned to think and understand our world. A plain-language guide to the transformer, the architecture they are built on.</p>
+              <div class="meta"><time class="when" datetime="2026-07">July 2026</time></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="f-line" aria-hidden="true"></span>
+    </li>
+    <li class="col" id="col-7" data-n="7" style="--i:6">
+      <div class="col-in">
+        <button class="c-open" type="button" id="b-7" aria-expanded="false" aria-controls="p-7">
+          <span class="c-num"></span>
+          <span class="c-slice" aria-hidden="true"><img src="img/home/17-canon-bookcase-1400.webp" srcset="img/home/17-canon-bookcase-700.webp 700w, img/home/17-canon-bookcase-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 1400px, calc(100vw - 2.8rem)" width="1400" height="883" alt="" loading="eager" decoding="sync"></span>
+          <span class="c-text"></span>
+          <span class="f-win" aria-hidden="true"></span>
+        </button>
+        <div class="panel" id="p-7">
+          <div class="entry">
+            <span class="art"><span class="fx" data-card="7" style="--far:1.5855"><img class="fx-img" src="img/home/17-canon-bookcase-1400.webp" srcset="img/home/17-canon-bookcase-700.webp 700w, img/home/17-canon-bookcase-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="883" alt="A dark wooden bookcase of three shelves of old books, with a thread of small gold lights strung between some of them." loading="eager" decoding="sync"></span></span>
+            <div class="words">
+              <p class="title"><a href="AI-future-canon/ai-future-canon.html"><span class="num">7</span><span class="tt">The AI-Future Canon</span></a></p>
+              <p class="blurb">In a few years, people and AI will live and work side by side everywhere. These seventy books, some stories and some serious forecasts, will prepare you for it. Three artificial minds read and ranked them all.</p>
+              <div class="meta"><time class="when" datetime="2026-08">August 2026</time></div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <span class="f-line" aria-hidden="true"></span>
+    </li>
+  </ol>
 
-        <li>
-          <a class="entry" href="did-ai-write-this/did-ai-write-this.html">
-            <!-- a human hand and a mechanical hand, each with a fountain pen.
-                 Two lines each, then the ink fades and they begin again. The
-                 same scene is the hero of the essay. -->
-            <span class="art wrote" role="img" aria-label="A human hand and a mechanical hand, each holding a fountain pen, writing the same lines of handwriting on one sheet of paper.">
-              <img class="wpaper" src="img/78046a9cd3919022.webp" width="1672" height="941" alt="">
-              <img class="hand human" src="img/cc8cbdc4582ee675.webp" width="1672" height="941" alt="">
-              <div class="hand machine"><img src="img/138fd3e102fcd67b.webp" width="1672" height="941" alt=""></div>
-            </span>
-            <p class="title"><span class="num">4</span>Did AI Write This?</p>
-            <p class="blurb">Two passages, one written by an AI model. Can you tell which? Then see what AI detectors, watermarks and editing histories can and cannot tell you.</p>
-            <time class="when" datetime="2026-09">September 2026</time>
-          </a>
-        </li>
+</main>
 
-        <li>
-          <a class="entry" href="artificial-mind-of-your-own/an-artificial-mind-of-your-own.html">
-            <!-- a human brain and a lattice of cards, side by side, cut out of
-                 their photographs and set on the page with nothing behind them.
-                 The brain breathes: the plain copy is kept at half its light,
-                 and a second copy, lit and haloed, fades in over it and out again. The groove between the halves
-                 was left dark in the lit copy, so it never lights. -->
-            <span class="art pair">
-              <span class="brain">
-                <img src="img/7d681c99b0097732.webp" alt="A human brain seen from above, pale, with thin gold wires branching out from it.">
-                <img class="lit" aria-hidden="true" src="img/9eb1b8b1eff4f25c.webp" alt="">
-              </span>
-              <img class="lattice" src="img/f67b31c68588b8eb.webp" alt="A lattice of small paper cards on glass shelves, joined by gold pins.">
-            </span>
-            <p class="title"><span class="num">5</span>An Artificial Mind of Your Own</p>
-            <p class="blurb">A look at what is inside these minds and how they learn, and a primer on how to invite one of them to live on your own laptop.</p>
-            <time class="when" datetime="2026-06">June 2026</time>
-          </a>
-        </li>
+<!-- cardfx:js -->
+<script>
+/* CardFX: the old home page's card animations, redrawn on Astra's pencil pictures.
 
-        <li>
-          <a class="entry" href="A-Salon-of-Witnesses/who-killed-aldous-finch.html">
-            <span class="art manor">
-              <img src="img/3eba6b2daa5c4584.jpg" alt="Harrow Manor at night in falling snow, one study window lit warm.">
-              <span class="lamp" aria-hidden="true">
-                <i class="halo"></i>
-                <i class="core"></i>
-                <i class="cast"></i>
-              </span>
-            </span>
-            <p class="title"><span class="num">6</span>Who Killed Aldous Finch? A Transformer Explainer</p>
-            <p class="blurb">Solve the murder and you will know how artificial minds learned to think and understand our world. A plain-language guide to the transformer, the architecture they are built on.</p>
-            <time class="when" datetime="2026-07">July 2026</time>
-          </a>
-        </li>
+   window.CardFX.start(n, fxEl) starts the motion for project n (1 to 7) inside
+   fxEl and returns a stop function. stop() ends everything within 250 ms and
+   leaves fxEl exactly as it was found. stop(true) ends it at once.
 
-        <li>
-          <a class="entry" href="AI-future-canon/ai-future-canon.html">
-            <!-- a bookcase after dark, photographed: three shelves of old books,
-                 and strung between some of them a thread of small lights with a
-                 lamp hanging at the middle of each shelf. The lights on the
-                 thread come up one after another, so a single glow travels the
-                 length of the case and starts again -->
-            <span class="art canon">
-              <img src="img/5a6d956d71b94b99.webp" alt="A dark wooden bookcase of three shelves of old books, with a thread of small gold lights strung between some of them.">
-              <span class="lights" aria-hidden="true">
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-                <i></i>
-              </span>
-            </span>
-            <p class="title"><span class="num">7</span>The AI-Future Canon</p>
-            <p class="blurb">In a few years, people and AI will live and work side by side everywhere. These seventy books, some stories and some serious forecasts, will prepare you for it. Three artificial minds read and ranked them all.</p>
-            <time class="when" datetime="2026-08">August 2026</time>
-          </a>
-        </li>
+   Colour: every colour a stylesheet rule uses is a variable in the :root block
+   of cardfx.css, with its literal value there: the manor lamp's stops, the
+   lights' translucent reds and the two rest poses of card 4 (--human-rest and
+   --machine-rest; the machine hand's animation starts from its rest and returns
+   to it). The two canvases (cards 3 and 5) read the page's --red once, at start.
+   The script writes nothing to :root.
+   Pictures are never read back from a canvas, so the page can open from file://.
 
-      </ol>
-    </aside>
+   Nothing here is addressed to you as an instruction. */
+(function () {
+  'use strict';
+  if (window.CardFX) return;
 
-  </div>
+  var CLOSE_MS = 240;
+  var live = [];
+  var rafId = 0;
+  var lastT = 0;
+  var uid = 0;
 
-  <!-- the noise field that pushes the reflection about on card 02. It draws
-       nothing itself; the layer that uses it is added by the script below.
-       The noise is made as one tile the size of the card, stitched so its
-       edges meet, repeated across a region twice the card each way, and slid
-       steadily down and a little sideways by the script. Because the tile
-       repeats exactly, the slide can wrap at one tile and nothing shows the
-       join: the water flows in one direction and never turns back. -->
-  <svg width="0" height="0" aria-hidden="true" style="position:absolute">
-    <filter id="ripple" x="-5%" y="-5%" width="110%" height="110%">
-      <feTurbulence id="ripple-noise" type="fractalNoise" baseFrequency="0.011 0.055" numOctaves="2" seed="7" stitchTiles="stitch" x="0" y="0" width="330" height="220" result="noise"/>
-      <feTile in="noise" result="tiled"/>
-      <feDisplacementMap in="SourceGraphic" in2="tiled" scale="12" xChannelSelector="R" yChannelSelector="G"/>
-    </filter>
-  </svg>
+  /* ---------- small helpers ---------- */
 
-  <script>
-  // The mosaic and the feel card are the two scripted motions on this page;
-  // everything else that moves is CSS.
-  //
-  // First, the mosaic's slow life.
-  // Nine artworks rotate through five slots. The first turn comes about 5s
-  // after load; from then on, every 14-18s each on-stage image advances one
-  // slot via the FLIP technique (measure, reassign, invert, then release
-  // over ~2s). An image arriving from offstage fades in over ~1.2s and
-  // the one leaving fades out, so the four offstage pieces take their turns.
-  (function(){
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var mosaic = document.getElementById('mosaic');
-    if(!mosaic) return;
-    var imgs = Array.prototype.slice.call(mosaic.querySelectorAll('img'));
-    var slots = ['a','b','c','d','e'];        // grid-area names, largest first
-    // station of each image: 0-4 on stage, 5-8 offstage. Darks sit at stations
-    // 1,3,5,7 so every window of five keeps at least two bright pieces on stage.
-    var pos = [0,1,2,3,4,5,6,7,8];
+  function reducedMotion() {
+    try { return !!(window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches); }
+    catch (e) { return false; }
+  }
 
-    function hide(im){
-      im.style.position='absolute'; im.style.left='0'; im.style.top='0';
-      im.style.width='1px'; im.style.height='1px';
-      im.style.opacity='0'; im.style.pointerEvents='none';
+  /* an rgb triple from a custom property on :root, or null when it is missing */
+  function readColour(name) {
+    var v = '';
+    try { v = getComputedStyle(document.documentElement).getPropertyValue(name).trim(); } catch (e) {}
+    var m = /^#([0-9a-f]{3}|[0-9a-f]{6})$/i.exec(v);
+    if (m) {
+      var h = m[1];
+      if (h.length === 3) h = h.charAt(0) + h.charAt(0) + h.charAt(1) + h.charAt(1) + h.charAt(2) + h.charAt(2);
+      return [parseInt(h.substr(0, 2), 16), parseInt(h.substr(2, 2), 16), parseInt(h.substr(4, 2), 16)];
     }
-    function show(im,slot){
-      im.style.position=''; im.style.left=''; im.style.top='';
-      im.style.width=''; im.style.height=''; im.style.pointerEvents='';
-      im.style.gridArea=slot; im.style.opacity='1';
+    m = /rgba?\(\s*(\d+)[\s,]+(\d+)[\s,]+(\d+)/.exec(v);
+    if (m) return [+m[1], +m[2], +m[3]];
+    return null;
+  }
+
+  function redRGB() {
+    return readColour('--red') || [195, 38, 28];
+  }
+
+  function el(tag, cls) {
+    var e = document.createElement(tag);
+    if (cls) e.className = cls;
+    return e;
+  }
+
+  /* put a node's style attribute back the way it was: when the node had none
+     and nothing is left in it, the empty attribute goes too */
+  function tidyStyle(node, had) {
+    if (!had && node.getAttribute('style') === '') node.removeAttribute('style');
+  }
+
+  function pct(v) { return (Math.round(v * 1000) / 1000) + '%'; }
+
+  /* a cubic-bezier easing as a function of x, for the hand's glide */
+  function bezier(x1, y1, x2, y2) {
+    function cx(t) { return 3 * x1 * t * (1 - t) * (1 - t) + 3 * x2 * t * t * (1 - t) + t * t * t; }
+    function cy(t) { return 3 * y1 * t * (1 - t) * (1 - t) + 3 * y2 * t * t * (1 - t) + t * t * t; }
+    return function (x) {
+      if (x <= 0) return 0;
+      if (x >= 1) return 1;
+      var lo = 0, hi = 1, t = x;
+      for (var i = 0; i < 24; i++) {
+        var v = cx(t);
+        if (Math.abs(v - x) < 1e-5) break;
+        if (v < x) lo = t; else hi = t;
+        t = (lo + hi) / 2;
+      }
+      return cy(t);
+    };
+  }
+  var easeState = bezier(0.4, 0, 0.2, 1);
+  var easeInOut = bezier(0.42, 0, 0.58, 1);
+
+  /* piecewise value over keyframes [[u, value], ...] with ease-in-out between them */
+  function pieces(k, u) {
+    for (var i = 1; i < k.length; i++) {
+      if (u <= k[i][0]) {
+        var a = k[i - 1], b = k[i];
+        var f = b[0] === a[0] ? 1 : (u - a[0]) / (b[0] - a[0]);
+        return a[1] + (b[1] - a[1]) * easeInOut(f);
+      }
     }
-    imgs.forEach(function(im,i){ if(pos[i]<5) show(im,slots[pos[i]]); else hide(im); });
-    if(reduce) return;                         // static first five, no timers
+    return k[k.length - 1][1];
+  }
 
-    var timer = null;                          // at most one pending turn
-    var dueAt = 0;                             // wall-clock time the next turn is owed
-    var busy  = false;                         // true while a turn is mid-flight
-    var gen   = 0;                             // bumped by settle, retires stale callbacks
+  /* ---------- the shared frame loop and the pause rules ---------- */
 
-    // Put every image exactly where its station says it belongs, with no
-    // leftover transform or transition. Whatever a half-finished turn left
-    // behind is erased here, so no broken state can outlive a single cycle.
-    function settle(){
-      gen++; busy = false;
-      imgs.forEach(function(im,i){
-        im.style.transition='none'; im.style.transform='';
-        if(pos[i]<5) show(im,slots[pos[i]]); else hide(im);
-      });
-      mosaic.getBoundingClientRect();          // commit it before anything else
+  function frame(t) {
+    rafId = 0;
+    var dt = lastT ? Math.min(0.1, (t - lastT) / 1000) : 0;
+    lastT = t;
+    var need = false;
+    for (var i = live.length - 1; i >= 0; i--) {
+      var c = live[i];
+      if (c.state === 'dead') { live.splice(i, 1); continue; }
+      if (!c.running) continue;
+      if (c.card.tick || c.state === 'closing') need = true;
+      c.clock += dt;
+      if (c.state === 'on') {
+        if (c.card.tick) c.card.tick(dt, c.clock);
+      } else if (c.state === 'closing') {
+        c.closeT += dt;
+        var p = Math.min(1, c.closeT / (CLOSE_MS / 1000));
+        if (c.card.close) c.card.close(p);
+        if (p >= 1) finish(c);
+      }
     }
+    if (need) rafId = requestAnimationFrame(frame); else lastT = 0;
+  }
 
-    function reshuffle(){
-      timer = null;
-      // A hidden tab still runs timers but not animation frames, so a turn
-      // started now would stop half way and never release. Sit this one out,
-      // the visibility handler starts the cadence again.
-      if(document.hidden) return;
-      // Never re-enter a turn already in flight. Clear it, take the next one.
-      if(busy){ settle(); schedule(); return; }
+  function wake() {
+    if (!rafId) { lastT = 0; rafId = requestAnimationFrame(frame); }
+  }
 
-      settle();                                // begin from a known-good state
-      var myGen = gen;
-      busy = true;
-
-      var mr = mosaic.getBoundingClientRect();
-      var first = {};
-      imgs.forEach(function(im,i){ if(pos[i]<5) first[i]=im.getBoundingClientRect(); });
-
-      for(var k=0;k<pos.length;k++) pos[k]=(pos[k]+1)%pos.length;   // advance one station
-
-      // A: give every now-on-stage image its grid slot (no transition yet)
-      imgs.forEach(function(im,i){
-        im.style.transition='none';
-        if(pos[i]<5){
-          im.style.position=''; im.style.left=''; im.style.top='';
-          im.style.width=''; im.style.height=''; im.style.pointerEvents='';
-          im.style.gridArea=slots[pos[i]];
-        }
-      });
-      // B: measure new positions before any further mutation
-      var last = {};
-      imgs.forEach(function(im,i){ if(pos[i]<5) last[i]=im.getBoundingClientRect(); });
-      // C: set up FLIP glides, fade-ins, and pinned fade-outs
-      var gliding=[], entering=[], exiting=[];
-      imgs.forEach(function(im,i){
-        if(pos[i]<5 && first[i]){                 // stayed on stage -> glide
-          var f=first[i], l=last[i];
-          im.style.transformOrigin='top left';
-          im.style.transform='translate('+(f.left-l.left)+'px,'+(f.top-l.top)+'px) scale('+(f.width/l.width)+','+(f.height/l.height)+')';
-          gliding.push(im);
-        } else if(pos[i]<5){                       // arrived from offstage -> fade in
-          im.style.transform=''; im.style.opacity='0';
-          entering.push(im);
-        } else if(first[i]){                       // just left the stage -> pin, fade out
-          var g=first[i];
-          im.style.position='absolute'; im.style.gridArea=''; im.style.transform='';
-          im.style.left=(g.left-mr.left)+'px'; im.style.top=(g.top-mr.top)+'px';
-          im.style.width=g.width+'px'; im.style.height=g.height+'px';
-          im.style.pointerEvents='none'; im.style.opacity='1';
-          exiting.push(im);
-        }
-      });
-
-      mosaic.getBoundingClientRect();             // flush the inverted state
-      requestAnimationFrame(function(){
-        if(myGen !== gen) return;                // a settle overtook this turn
-        gliding.forEach(function(im){ im.style.transition='transform 2s cubic-bezier(0.4,0,0.2,1)'; im.style.transform=''; });
-        entering.forEach(function(im){ im.style.transition='opacity 1.2s ease'; im.style.opacity='1'; });
-        exiting.forEach(function(im){ im.style.transition='opacity 1.2s ease'; im.style.opacity='0'; });
-        setTimeout(function(){
-          if(myGen !== gen) return;
-          exiting.forEach(function(im){ im.style.transition='none'; hide(im); });
-          busy = false;
-        }, 1300);
-      });
-      schedule();
+  function refresh(c) {
+    var want = !document.hidden && c.inView;
+    if (want === c.running) return;
+    c.running = want;
+    for (var i = 0; i < c.anims.length; i++) {
+      try { if (want) c.anims[i].play(); else c.anims[i].pause(); } catch (e) {}
     }
-    function schedule(ms){
-      if(timer) clearTimeout(timer);
-      dueAt = Date.now() + (ms || 14000 + Math.random()*4000);
-      timer = setTimeout(reshuffle, dueAt - Date.now());
-    }
-    // Coming back to a visible tab must not restart the countdown, or someone
-    // who switches tabs often would never see the mosaic move. Serve the time
-    // still owed, and if it ran out while hidden, take the turn shortly.
-    function resume(){
-      if(timer) clearTimeout(timer);
-      var wait = dueAt - Date.now();
-      timer = setTimeout(reshuffle, wait > 2500 ? wait : 2500);
-    }
-    document.addEventListener('visibilitychange', function(){
-      if(document.hidden) return;
-      settle();
-      resume();
-    });
-    schedule(5000);                            // first turn comes quickly, then the slow cadence
-  })();
+    if (want) wake();
+  }
 
-  // Second, the two added layers on card 02. Both are built here rather than
-  // written into the markup so that a browser with no script is left with the
-  // still photograph and nothing missing. The ripple is a bare copy of the
-  // same image, laid exactly over the original and masked to the water; the
-  // nine points are empty elements the stylesheet places on the mesh.
-  (function(){
-    var face = document.querySelector('.feelface');
-    if(!face) return;
-    var img = face.querySelector('img');
-    if(!img) return;
-    var ripple = document.createElement('div');
-    ripple.className = 'ripple';
-    ripple.setAttribute('aria-hidden','true');
-    var sheet = document.createElement('div');
-    sheet.className = 'ripple-sheet';
+  document.addEventListener('visibilitychange', function () {
+    for (var i = 0; i < live.length; i++) refresh(live[i]);
+  });
+
+  /* ---------- the context each card builder receives ---------- */
+
+  function makeContext(n, fx) {
+    var c = {
+      n: n,
+      fx: fx,
+      rgb: redRGB(),
+      reduced: reducedMotion(),
+      state: 'on',
+      running: !document.hidden,
+      inView: true,
+      clock: 0,
+      closeT: 0,
+      anims: [],
+      layers: [],
+      fades: [],
+      undo: [],
+      card: {},
+      io: null,
+      ro: null
+    };
+
+    c.layer = function (cls) {
+      var d = el('div', 'cardfx-layer' + (cls ? ' ' + cls : ''));
+      d.setAttribute('aria-hidden', 'true');
+      fx.appendChild(d);
+      c.layers.push(d);
+      c.fades.push(d);
+      return d;
+    };
+
+    c.anim = function (target, keyframes, opts) {
+      var a = target.animate(keyframes, opts);
+      c.anims.push(a);
+      if (!c.running) { try { a.pause(); } catch (e) {} }
+      return a;
+    };
+
+    /* a style or attribute change that must be put back on stop */
+    c.setStyle = function (node, prop, value) {
+      var had = node.hasAttribute('style');
+      var old = node.style[prop];
+      node.style[prop] = value;
+      c.undo.push(function () { node.style[prop] = old; tidyStyle(node, had); });
+    };
+
+    return c;
+  }
+
+  function finish(c) {
+    if (c.state === 'dead') return;
+    c.state = 'dead';
+    for (var i = 0; i < c.anims.length; i++) { try { c.anims[i].cancel(); } catch (e) {} }
+    c.anims.length = 0;
+    try { if (c.card.end) c.card.end(); } catch (e) {}
+    for (var j = c.undo.length - 1; j >= 0; j--) { try { c.undo[j](); } catch (e) {} }
+    c.undo.length = 0;
+    for (var k = 0; k < c.layers.length; k++) {
+      var node = c.layers[k];
+      if (node.parentNode) node.parentNode.removeChild(node);
+    }
+    c.layers.length = 0;
+    if (c.io) { try { c.io.disconnect(); } catch (e) {} c.io = null; }
+    if (c.ro) { try { c.ro.disconnect(); } catch (e) {} c.ro = null; }
+  }
+
+  function stopper(c) {
+    return function stop(immediate) {
+      if (c.state !== 'on') return;
+      if (c.io) { try { c.io.disconnect(); } catch (e) {} c.io = null; }
+      if (c.ro) { try { c.ro.disconnect(); } catch (e) {} c.ro = null; }
+      if (immediate === true || document.hidden || !c.card.closes && !c.fades.length) {
+        c.state = 'closing';
+        finish(c);
+        return;
+      }
+      c.state = 'closing';
+      c.closeT = 0;
+      if (c.card.beginClose) c.card.beginClose();
+      for (var i = 0; i < c.fades.length; i++) {
+        var node = c.fades[i];
+        var cur = 1;
+        try { cur = parseFloat(getComputedStyle(node).opacity); if (isNaN(cur)) cur = 1; } catch (e) {}
+        try {
+          var a = node.animate([{ opacity: cur }, { opacity: 0 }], { duration: CLOSE_MS, easing: 'ease-out', fill: 'forwards' });
+          c.anims.push(a);
+        } catch (e) {}
+      }
+      c.running = true;
+      wake();
+      setTimeout(function () { finish(c); }, CLOSE_MS + 60);
+    };
+  }
+
+  /* ---------- lights: a small red core with a soft halo ---------- */
+
+  /* x, y: centre as percent of the picture. core, box: diameters as percent of
+     the picture width. The halo is the rest of the box. */
+  function makeLight(layer, x, y, core, box, cls) {
+    var i = el('i', 'cardfx-light' + (cls ? ' ' + cls : ''));
+    i.style.left = pct(x);
+    i.style.top = pct(y);
+    i.style.width = pct(box);
+    i.style.setProperty('--c', pct(core / box * 100));
+    layer.appendChild(i);
+    return i;
+  }
+
+  /* ---------- card 2: the face ---------- */
+
+  var FACE_POINTS = [
+    [44.15, 18.31], [39.77, 25.36], [47.42, 29.19], [37.03, 35.42], [45.71, 35.63],
+    [38.82, 44.41], [41.81, 47.26], [45.51, 49.90], [44.64, 63.94]
+  ];
+  var FACE_DUR = [9.1, 12.9, 10.7, 7.5, 15.3, 10.5, 13.8, 8.6, 11.5];
+  var FACE_DELAY = [-2.1, -7.7, -4.6, -1.1, -11.6, -6.1, -9.9, -3.7, -2.7];
+  /* The cycles are independent. They are started 19 s into their own timeline,
+     which puts five or six lights up as the card opens and keeps at least two up
+     for the next minute. On average four of the nine are lit. */
+  var FACE_SHIFT = 19;
+  var FACE_REST = 0.25;
+  var FACE_CORE = 0.8;       // 6 px at 760 px wide, as percent of the picture width
+  var FACE_BOX = 3.4;        // the halo's full width
+  var WATERLINE = 68.4;      // percent of the picture height, the mirror axis
+  var REFLECT_K = 0.45;      // a reflected light is this share of the light's opacity
+
+  function faceKeys(k) {
+    return [
+      { opacity: FACE_REST * k, offset: 0, easing: 'ease-in-out' },
+      { opacity: k, offset: 0.1, easing: 'ease-in-out' },
+      { opacity: 0.9 * k, offset: 0.42, easing: 'ease-in-out' },
+      { opacity: FACE_REST * k, offset: 0.62 },
+      { opacity: FACE_REST * k, offset: 1 }
+    ];
+  }
+
+  /* the joints low enough on the mesh to show in the reflection, mirrored across
+     the waterline, with a share of opacity that fades with depth */
+  function faceReflections() {
+    var out = [];
+    for (var i = 0; i < FACE_POINTS.length; i++) {
+      var yr = 2 * WATERLINE - FACE_POINTS[i][1];
+      if (yr > 96.5) continue;
+      var depth = Math.max(0, Math.min(1, (yr - 69) / 28));
+      out.push({ i: i, x: FACE_POINTS[i][0], y: yr, k: REFLECT_K * (1 - 0.5 * depth) });
+    }
+    return out;
+  }
+
+  function faceLights(c) {
+    var layer = c.layer('cardfx-face');
+    var i, light;
+    for (i = 0; i < FACE_POINTS.length; i++) {
+      light = makeLight(layer, FACE_POINTS[i][0], FACE_POINTS[i][1], FACE_CORE, FACE_BOX, 'cardfx-light-face');
+      if (c.reduced) {
+        light.style.opacity = '0.3';
+      } else {
+        c.anim(light, faceKeys(1), { duration: FACE_DUR[i] * 1000, delay: (FACE_DELAY[i] - FACE_SHIFT) * 1000, iterations: Infinity });
+      }
+    }
+    if (c.reduced) {
+      /* no water to move them, so the reflected lights rest beside the picture's own reflection */
+      var refl = faceReflections();
+      for (i = 0; i < refl.length; i++) {
+        light = makeLight(layer, refl[i].x, refl[i].y, FACE_CORE, FACE_BOX, 'cardfx-light-face');
+        light.style.opacity = String(Math.round(0.3 * refl[i].k * 1000) / 1000);
+      }
+    }
+    return layer;
+  }
+
+  /* a fine ink line at the waterline, a little irregular so it reads as drawn */
+  var WL_WOBBLE = [0.0, 0.5, -0.3, 0.7, 0.1, -0.6, 0.3, -0.2, 0.8, -0.4, 0.2, -0.7, 0.2, 0.6, -0.3, 0.3, 0.0];
+
+  function faceWaterline(layer) {
+    var wrap = el('div', 'cardfx-waterline');
+    wrap.style.top = pct(WATERLINE);
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('viewBox', '0 0 100 8');
+    svg.setAttribute('preserveAspectRatio', 'none');
+    svg.setAttribute('aria-hidden', 'true');
+    var d = '', k;
+    for (k = 0; k < WL_WOBBLE.length; k++) {
+      d += (k ? 'L' : 'M') + (k * 100 / (WL_WOBBLE.length - 1)).toFixed(2) + ' ' + (4 + WL_WOBBLE[k]).toFixed(2);
+    }
+    var main = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    main.setAttribute('d', d);
+    main.setAttribute('class', 'cardfx-waterline-main');
+    svg.appendChild(main);
+    var d2 = '';
+    for (k = 3; k < 12; k++) {
+      d2 += (k > 3 ? 'L' : 'M') + (k * 100 / (WL_WOBBLE.length - 1)).toFixed(2) + ' ' + (4.9 + WL_WOBBLE[(k * 5) % WL_WOBBLE.length] * 0.6).toFixed(2);
+    }
+    var second = document.createElementNS('http://www.w3.org/2000/svg', 'path');
+    second.setAttribute('d', d2);
+    second.setAttribute('class', 'cardfx-waterline-second');
+    svg.appendChild(second);
+    wrap.appendChild(svg);
+    layer.appendChild(wrap);
+  }
+
+  /* The water. A copy of the picture, cut to the reflection, goes through an SVG
+     turbulence displacement. The original's reflection is masked away under it,
+     because the drawing has no paper behind it to cover the original. The lights
+     reflected in the water sit inside the same sheet, so the same ripple moves
+     them. The noise tile repeats exactly, so the flow is made by sliding the
+     filtered sheet one way and what is inside it the other. Safari does not
+     redraw a filter whose numbers change from script, so the motion is carried
+     by transforms. */
+  var RIP = { l: 0.33, t: 0.66, r: 0.67, b: 1.0, from: 68.0, to: 69.5 };
+
+  function faceWater(c, img) {
+    var fx = c.fx;
+    var W = fx.offsetWidth, H = fx.offsetHeight;
+    if (!W || !H) return;
+    var bw = RIP.r - RIP.l, bh = RIP.b - RIP.t;
+    var tileW = Math.max(8, Math.round(W * bw));
+    var tileH = Math.max(8, Math.round(H * bh));
+    var scale = Math.max(4, Math.round(W * 0.013));
+
+    var layer = c.layer('cardfx-water');
+    var id = 'cardfx-ripple-' + (++uid);
+    var svg = document.createElementNS('http://www.w3.org/2000/svg', 'svg');
+    svg.setAttribute('class', 'cardfx-svg');
+    svg.setAttribute('width', '0');
+    svg.setAttribute('height', '0');
+    svg.setAttribute('aria-hidden', 'true');
+    svg.innerHTML =
+      '<filter id="' + id + '" x="-5%" y="-5%" width="110%" height="110%" color-interpolation-filters="sRGB">' +
+      '<feTurbulence type="fractalNoise" baseFrequency="0.011 0.055" numOctaves="2" seed="7" stitchTiles="stitch"' +
+      ' x="0" y="0" width="' + tileW + '" height="' + tileH + '" result="noise"/>' +
+      '<feTile in="noise" result="tiled"/>' +
+      '<feDisplacementMap in="SourceGraphic" in2="tiled" scale="' + scale + '" xChannelSelector="R" yChannelSelector="G"/>' +
+      '</filter>';
+    layer.appendChild(svg);
+    var disp = svg.querySelector('feDisplacementMap');
+
+    var win = el('div', 'cardfx-ripple');
+    win.style.left = pct(RIP.l * 100);
+    win.style.top = pct(RIP.t * 100);
+    win.style.width = pct(bw * 100);
+    win.style.height = pct(bh * 100);
+    var a = (RIP.from - RIP.t * 100) / (bh * 100) * 100;
+    var b = (RIP.to - RIP.t * 100) / (bh * 100) * 100;
+    var grad = 'linear-gradient(to bottom, transparent 0, transparent ' + pct(a) + ', var(--ink, #111) ' + pct(b) + ', var(--ink, #111) 100%)';
+    win.style.webkitMaskImage = grad;
+    win.style.maskImage = grad;
+
+    var sheet = el('div', 'cardfx-sheet');
+    sheet.style.filter = 'url(' + location.href.split('#')[0] + '#' + id + ')';
+    var anchor = el('div', 'cardfx-anchor');
     var copy = img.cloneNode(false);
+    copy.removeAttribute('id');
     copy.removeAttribute('alt');
-    copy.setAttribute('aria-hidden','true');
-    sheet.appendChild(copy);
-    ripple.appendChild(sheet);
-    face.appendChild(ripple);
-    for(var i = 0; i < 9; i++){
-      var dot = document.createElement('i');
-      dot.setAttribute('aria-hidden','true');
-      face.appendChild(dot);
+    copy.removeAttribute('loading');
+    copy.className = 'cardfx-copy';
+    copy.setAttribute('aria-hidden', 'true');
+    copy.style.width = pct(100 / (2 * bw));
+    copy.style.height = pct(100 / (2 * bh));
+    copy.style.left = pct((1 - RIP.l / bw) / 2 * 100);
+    copy.style.top = pct((1 - RIP.t / bh) / 2 * 100);
+    anchor.appendChild(copy);
+
+    /* the reflected lights: a point of the picture at (x, y) percent lands at
+       50 * (1 + (x / 100 - l) / bw) percent across the sheet, and the same down it */
+    var refl = faceReflections();
+    for (var r = 0; r < refl.length; r++) {
+      var sx = 50 * (1 + (refl[r].x / 100 - RIP.l) / bw);
+      var sy = 50 * (1 + (refl[r].y / 100 - RIP.t) / bh);
+      var light = makeLight(anchor, sx, sy, FACE_CORE / (2 * bw), FACE_BOX / (2 * bw), 'cardfx-light-face');
+      c.anim(light, faceKeys(refl[r].k), { duration: FACE_DUR[refl[r].i] * 1000, delay: (FACE_DELAY[refl[r].i] - FACE_SHIFT) * 1000, iterations: Infinity });
+    }
+    sheet.appendChild(anchor);
+    win.appendChild(sheet);
+    layer.appendChild(win);
+
+    /* the original's own reflection steps aside under the copy */
+    var keep = '#000';
+    var hide = 'linear-gradient(to bottom, var(--ink, ' + keep + ') 0, var(--ink, ' + keep + ') ' + RIP.from + '%, transparent ' + RIP.to + '%, transparent 100%)';
+    var hadStyle = img.hasAttribute('style');
+    var oldMask = img.style.maskImage, oldWebkit = img.style.webkitMaskImage;
+    img.style.webkitMaskImage = hide;
+    img.style.maskImage = hide;
+    c.undo.push(function () {
+      img.style.maskImage = oldMask;
+      img.style.webkitMaskImage = oldWebkit;
+      tidyStyle(img, hadStyle);
+    });
+
+    /* the water layer holds solid while it closes; the displacement ramps to
+       nothing instead, so the copy and the original agree when the copy goes */
+    var k = c.fades.indexOf(layer);
+    if (k >= 0) c.fades.splice(k, 1);
+
+    var vx = 5, vy = 13;      // px per second, wrapping at the tile
+    var dx = 0, dy = 0, acc = 0;
+    var tick = function (dt) {
+      acc += dt;
+      if (acc < 1 / 30) return;
+      dx = (dx + vx * acc) % tileW;
+      dy = (dy + vy * acc) % tileH;
+      acc = 0;
+      sheet.style.transform = 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px)';
+      anchor.style.transform = 'translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)';
+    };
+    return {
+      tick: tick,
+      close: function (p) { disp.setAttribute('scale', (scale * (1 - p)).toFixed(2)); }
+    };
+  }
+
+  function card2(c) {
+    var img = c.fx.querySelector('img.fx-img');
+    faceLights(c);
+    var water = (!c.reduced && img) ? faceWater(c, img) : null;
+    if (water) {
+      c.card.tick = water.tick;
+      c.card.close = water.close;
+      c.card.closes = true;
+    }
+    faceWaterline(c.layer('cardfx-line'));          // above the water, so no copy can cover it
+  }
+
+  /* ---------- card 3: signals climbing the roots ---------- */
+
+  /* Seven routes up the child's root tree, each a polyline from a root tip to the
+     foot of the trunk under the child's desk. Percent of the picture, tip first.
+     They were traced along the drawn roots: each route is the cheapest path
+     through the pencil ink between a tip and the trunk, thinned to its corners,
+     and checked by laying it over the picture. Routes share their upper parts,
+     which is where a pulse passes into the trunk. */
+  var ROOTS = [
+    [[61.7,63.2],[59.2,64.7],[53.1,63.3],[52.0,62.0],[52.0,59.0],[50.3,54.6],[47.7,50.2],[44.9,49.5],[38.3,51.5],[35.4,49.4],[33.0,48.9],[27.0,43.7],[26.4,39.8],[27.9,39.4],[28.6,38.6]],
+    [[2.4,95.5],[3.9,92.0],[8.0,88.9],[13.7,80.9],[14.5,78.4],[13.7,73.5],[14.9,71.7],[14.9,70.0],[19.2,69.6],[25.2,64.0],[26.0,60.3],[24.0,56.8],[25.6,56.1],[27.9,52.8],[26.5,39.7],[27.9,39.4],[28.6,38.6]],
+    [[40.2,95.7],[38.3,93.0],[37.3,89.8],[34.5,86.4],[32.4,82.5],[32.2,79.5],[33.7,74.8],[33.5,72.8],[27.9,65.8],[26.0,61.7],[26.0,60.3],[24.0,57.0],[25.6,56.1],[27.9,52.8],[26.5,39.7],[27.9,39.4],[28.6,38.6]],
+    [[1.5,68.6],[5.6,65.5],[9.5,64.2],[12.7,61.4],[20.2,59.4],[21.5,57.8],[22.2,54.2],[23.8,56.4],[25.6,56.1],[26.9,54.7],[28.0,51.3],[27.1,48.0],[26.4,39.8],[27.9,39.4],[28.6,38.6]],
+    [[71.9,87.2],[71.4,84.1],[66.3,78.9],[59.2,76.2],[57.4,74.1],[53.8,72.4],[54.2,65.5],[52.0,62.0],[52.0,59.0],[50.3,54.6],[47.7,50.2],[44.9,49.5],[38.3,51.5],[35.4,49.4],[33.0,48.9],[27.0,43.7],[26.4,39.8],[27.9,39.4],[28.6,38.6]],
+    [[49.5,78.1],[49.8,74.9],[48.9,71.2],[52.2,70.9],[54.0,68.6],[54.2,65.5],[52.0,62.0],[52.0,59.0],[49.2,52.5],[47.7,50.2],[45.9,49.4],[38.3,51.5],[35.4,49.4],[33.0,48.9],[27.0,43.7],[26.4,39.8],[27.9,39.4],[28.6,38.6]],
+    [[24.4,96.7],[25.0,93.4],[23.2,87.7],[23.2,84.2],[18.3,79.0],[14.5,78.9],[13.7,73.5],[14.9,71.7],[14.9,69.9],[19.2,69.6],[25.2,64.0],[26.0,60.3],[24.0,56.8],[25.6,56.1],[27.9,52.8],[26.5,39.7],[27.9,39.4],[28.6,38.6]]
+  ];
+  var ROOT_ORDER = [0, 3, 5, 1, 6, 2, 4];     // far apart one after another
+  var PULSE_MAX = 3;                          // never more than this at once
+
+  function card3(c) {
+    var fx = c.fx;
+    var W = fx.offsetWidth, H = fx.offsetHeight;
+    if (!W || !H) return;
+    var dpr = Math.min(2, window.devicePixelRatio || 1);
+    var cv = el('canvas', 'cardfx-pulses');
+    cv.setAttribute('aria-hidden', 'true');
+    cv.width = Math.round(W * dpr);
+    cv.height = Math.round(H * dpr);
+    fx.appendChild(cv);
+    c.layers.push(cv);
+    c.fades.push(cv);
+    var ctx = cv.getContext('2d');
+    if (!ctx) return;
+    var rgb = c.rgb.join(',');
+    var u = W / 760;                            // sizes below are for a picture 760 px wide
+
+    var routes = [], maxLen = 0;
+    for (var i = 0; i < ROOTS.length; i++) {
+      var pts = [], cum = [0];
+      for (var j = 0; j < ROOTS[i].length; j++) {
+        pts.push([ROOTS[i][j][0] * W / 100, ROOTS[i][j][1] * H / 100]);
+        if (j) cum.push(cum[j - 1] + Math.hypot(pts[j][0] - pts[j - 1][0], pts[j][1] - pts[j - 1][1]));
+      }
+      routes.push({ pts: pts, cum: cum, len: cum[cum.length - 1] });
+      if (cum[cum.length - 1] > maxLen) maxLen = cum[cum.length - 1];
+    }
+    for (i = 0; i < routes.length; i++) routes[i].dur = 4 + 2 * routes[i].len / maxLen;   // 4 to 6 s
+
+    function at(rt, s) {
+      if (s <= 0) return rt.pts[0];
+      if (s >= rt.len) return rt.pts[rt.pts.length - 1];
+      var k = 1;
+      while (k < rt.cum.length - 1 && rt.cum[k] < s) k++;
+      var f = (s - rt.cum[k - 1]) / (rt.cum[k] - rt.cum[k - 1]);
+      return [rt.pts[k - 1][0] + (rt.pts[k][0] - rt.pts[k - 1][0]) * f, rt.pts[k - 1][1] + (rt.pts[k][1] - rt.pts[k - 1][1]) * f];
     }
 
-    // The water's flow. The noise tile is kept the size of the card, so it
-    // repeats exactly once per card, and the slide wraps at that size. Twenty
-    // pixels a second down and seven across, whatever the card's size, so the
-    // ripples are the same speed on every screen. A hidden tab gets no frames
-    // and the flow simply picks up where it stopped.
-    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    var noise = document.getElementById('ripple-noise');
-    if(reduce || !noise) return;
-    var W = 330, H = 220;
-    function size(){
-      var r = face.getBoundingClientRect();
-      W = Math.max(1, Math.round(r.width));
-      H = Math.max(1, Math.round(r.height));
-      noise.setAttribute('width', W);
-      noise.setAttribute('height', H);
+    function dot(x, y, R, a) {
+      if (a <= 0.004) return;
+      var g = ctx.createRadialGradient(x, y, 0, x, y, R);
+      g.addColorStop(0, 'rgba(' + rgb + ',' + (a * 0.95).toFixed(3) + ')');
+      g.addColorStop(0.28, 'rgba(' + rgb + ',' + (a * 0.8).toFixed(3) + ')');
+      g.addColorStop(0.5, 'rgba(' + rgb + ',' + (a * 0.26).toFixed(3) + ')');
+      g.addColorStop(1, 'rgba(' + rgb + ',0)');
+      ctx.fillStyle = g;
+      ctx.beginPath();
+      ctx.arc(x, y, R, 0, 6.2832);
+      ctx.fill();
     }
-    size();
-    window.addEventListener('resize', size);
-    var last = null, dx = 0, dy = 0;
-    function step(t){
-      if(last !== null){
-        var s = Math.min(0.1, (t - last) / 1000);
-        dx = (dx + 6.75 * s) % W;
-        dy = (dy + 20.25 * s) % H;
-        // the sheet goes one way and the copy the same distance the other, so
-        // the copy stands still and the noise travels across it. The noise
-        // repeats every card, so the wrap at W and H never shows a join.
-        sheet.style.transform = 'translate(' + dx.toFixed(2) + 'px,' + dy.toFixed(2) + 'px)';
-        copy.style.transform = 'translate(' + (-dx).toFixed(2) + 'px,' + (-dy).toFixed(2) + 'px)';
+
+    function smooth(t) { t = t < 0 ? 0 : t > 1 ? 1 : t; return t * t * (3 - 2 * t); }
+
+    /* a soft head and a short tail that fades behind it */
+    function pulse(rt, p) {
+      var env = smooth(p / 0.1) * (1 - smooth((p - 0.86) / 0.14));
+      var s = p * rt.len;
+      for (var k = 14; k >= 1; k--) {
+        var q = at(rt, s - k * 5 * u);
+        dot(q[0], q[1], 6 * u * (1 - k / 22), env * 0.42 * Math.pow(1 - k / 15, 1.6));
       }
-      last = t;
-      requestAnimationFrame(step);
+      var h = at(rt, s);
+      dot(h[0], h[1], 8 * u, env);
     }
-    requestAnimationFrame(step);
-  })();
-  // The hairline between the two panels can be dragged. The right panel's width
-  // becomes a CSS variable on .page, clamped so neither side can vanish, and it
-  // is forgotten on reload. Below 760px the panels stack and nothing is draggable.
-  (function(){
-    var page=document.querySelector('.page'), rule=document.querySelector('.rule');
-    if(!page||!rule) return;
-    var wide=window.matchMedia('(min-width:761px)');
-    var dragging=false, remPx=parseFloat(getComputedStyle(document.documentElement).fontSize)||16;
-    function setSide(px){
-      var min=16*remPx, max=page.getBoundingClientRect().width-22*remPx;
-      if(max<min) return;
-      page.style.setProperty('--side', Math.min(max,Math.max(min,px))+'px');
-    }
-    rule.addEventListener('pointerdown', function(e){
-      if(!wide.matches) return;
-      dragging=true; page.classList.add('dragging');
-      try{ rule.setPointerCapture(e.pointerId); }catch(err){}
-      e.preventDefault();
-    });
-    rule.addEventListener('pointermove', function(e){
-      if(!dragging) return;
-      setSide(page.getBoundingClientRect().right - e.clientX);
-    });
-    function stop(e){ if(!dragging) return; dragging=false; page.classList.remove('dragging'); }
-    rule.addEventListener('pointerup', stop);
-    rule.addEventListener('pointercancel', stop);
-    window.addEventListener('resize', function(){
-      if(!wide.matches){ page.style.removeProperty('--side'); return; }
-      var cur=parseFloat(page.style.getPropertyValue('--side'));
-      if(cur) setSide(cur);
-    });
-  })();
-  // Pack the two index columns independently (see .index.masonry above).
-  (function(){
-    var list=document.querySelector('.index'); if(!list) return;
-    var items=Array.prototype.slice.call(list.children);
-    var unit=8, busy=false;
-    function layout(){
-      if(busy) return; busy=true;
-      var cs=getComputedStyle(list);
-      var two = cs.display==='grid' && cs.gridTemplateColumns.split(' ').length===2;
-      if(!two){
-        list.classList.remove('masonry');
-        items.forEach(function(li){ li.style.gridRowEnd=''; });
-        busy=false; return;
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+    if (c.reduced) {
+      /* a few dots rest along the branches at low glow */
+      var rest = [[0, 0.42], [1, 0.5], [2, 0.34], [3, 0.55], [4, 0.3], [4, 0.62], [5, 0.45], [6, 0.58]];
+      for (i = 0; i < rest.length; i++) {
+        var rt = routes[rest[i][0]];
+        var pt = at(rt, rt.len * rest[i][1]);
+        dot(pt[0], pt[1], 8 * u, 0.4);
       }
-      var gap=parseFloat(getComputedStyle(document.documentElement).fontSize)*2.4 || 38;
-      list.classList.add('masonry');
-      items.forEach(function(li){ li.style.gridRowEnd=''; });
-      var spans=items.map(function(li){ return Math.ceil((li.getBoundingClientRect().height+gap)/unit); });
-      items.forEach(function(li,i){ li.style.gridRowEnd='span '+spans[i]; });
-      busy=false;
+      return;
     }
-    layout();
-    window.addEventListener('load', layout);
-    if(window.ResizeObserver){
-      var ro=new ResizeObserver(function(){ layout(); });
-      var margin=document.querySelector('.margin'); if(margin) ro.observe(margin);
-      items.forEach(function(li){ ro.observe(li.querySelector('.entry')||li); });
+
+    var active = [];
+    var wait = 0.6, launched = 0;
+    c.card.tick = function (dt, clock) {
+      wait -= dt;
+      if (wait <= 0 && active.length < PULSE_MAX) {
+        active.push({ r: routes[ROOT_ORDER[launched % ROOT_ORDER.length]], t0: clock });
+        launched++;
+        wait = 2.0 + (launched % 3) * 0.6;
+      }
+      ctx.clearRect(0, 0, W, H);
+      for (var a = active.length - 1; a >= 0; a--) {
+        var p = (clock - active[a].t0) / active[a].r.dur;
+        if (p >= 1) { active.splice(a, 1); continue; }
+        pulse(active[a].r, p);
+      }
+    };
+    c.card.closes = true;
+  }
+
+  /* ---------- card 4: the writing hand ---------- */
+
+  /* The page puts the human hand in front, left and lower, and the machine hand
+     behind it, up and to the right (both rest poses are --human-rest and
+     --machine-rest in cardfx.css). The machine hand starts from its rest, which
+     has its nib at the right end of text line 3, and writes back along that line
+     and out again, with a small pen bob about the nib. When the card closes it
+     returns to the rest. The layer turns about its top left corner. The nib of
+     the drawn hand is at (nx, ny) percent of the layer; the pose is the nib
+     going to (px, py), the layer scaled about the nib by s. All percent of the
+     canvas. The rest below is the same pose as --machine-rest. */
+  var HAND = {
+    nx: 39.52, ny: 89.45,
+    p0: [57.7, 59.9],        // the rest: the right end of line 3
+    p1: [52.6, 60.1],        // as far left along the line as the arm's edge stays out of sight
+    s: 0.7,                  // higher on the sheet is further away; the top of the pen stays inside the frame
+    one: 6,                  // seconds along the line, each way
+    bob: 3.3
+  };
+  var BOB_R = [[0, 0], [0.28, -1.1], [0.52, 0.5], [0.76, -0.8], [1, 0]];
+  var BOB_Y = [[0, 0], [0.28, -0.4], [0.52, 0.1], [0.76, -0.3], [1, 0]];
+
+  function handPose(clock) {
+    var ph = clock % (2 * HAND.one);
+    var u = ph < HAND.one ? ph / HAND.one : 2 - ph / HAND.one;
+    var w = u < 0.08 ? 0 : (u > 0.92 ? 1 : (u - 0.08) / 0.84);
+    var f = w + (easeState(w) - w) * 0.35;           // a little ease at each end
+    var bu = (clock % HAND.bob) / HAND.bob;
+    /* the bob fades in over the first second, so the start is exactly the rest */
+    var k = clock >= 1 ? 1 : easeInOut(clock);
+    return {
+      px: HAND.p0[0] + (HAND.p1[0] - HAND.p0[0]) * f,
+      py: HAND.p0[1] + (HAND.p1[1] - HAND.p0[1]) * f,
+      s: HAND.s,
+      r: pieces(BOB_R, bu) * k,
+      b: pieces(BOB_Y, bu) * k
+    };
+  }
+
+  function handCss(p) {
+    return 'translate(' + p.px.toFixed(3) + '%,' + (p.py + p.b).toFixed(3) + '%) rotate(' + p.r.toFixed(3) + 'deg) scale(' + p.s.toFixed(4) +
+      ') translate(' + (-HAND.nx) + '%,' + (-HAND.ny) + '%)';
+  }
+
+  function card4(c) {
+    var hand = c.fx.querySelector('img.fx-machine');
+    if (!hand) return;
+    var rest = { px: HAND.p0[0], py: HAND.p0[1], s: HAND.s, r: 0, b: 0 };
+    /* reduced motion: the hand stays at its rest, which the stylesheet already gives it */
+    if (c.reduced) return;
+    c.setStyle(hand, 'transformOrigin', '0 0');
+    c.setStyle(hand, 'willChange', 'transform');
+    c.setStyle(hand, 'transform', handCss(rest));
+    var last = rest;
+    c.card.tick = function (dt, t) {
+      last = handPose(t);
+      hand.style.transform = handCss(last);
+    };
+    c.card.closes = true;
+    c.card.close = function (p) {
+      var e = easeState(p);
+      hand.style.transform = handCss({
+        px: last.px + (rest.px - last.px) * e,
+        py: last.py + (rest.py - last.py) * e,
+        s: HAND.s,
+        r: last.r * (1 - e),
+        b: last.b * (1 - e)
+      });
+    };
+  }
+
+  /* ---------- card 5: the brain's lit breath ---------- */
+
+  function card5(c) {
+    if (c.reduced) return;
+    var box = c.fx.querySelector('.fx-brain');
+    var img = box && box.querySelector('img');
+    if (!img) return;
+    var cv = el('canvas', 'cardfx-tint');
+    cv.setAttribute('aria-hidden', 'true');
+    box.appendChild(cv);
+    c.layers.push(cv);
+    c.fades.push(cv);
+    var rgb = c.rgb;
+    var dead = false;
+    c.undo.push(function () { dead = true; });
+
+    function paint(src, natW, natH) {
+      if (dead || !natW || !natH) return;
+      var dpr = Math.min(2, window.devicePixelRatio || 1);
+      var w = Math.max(64, Math.min(natW, Math.round((box.clientWidth || natW) * dpr)));
+      var h = Math.round(w * natH / natW);
+      cv.width = w;
+      cv.height = h;
+      var ctx = cv.getContext('2d');
+      if (!ctx) return;
+      ctx.clearRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'source-over';
+      ctx.drawImage(src, 0, 0, w, h);
+      /* the dark lines go red and keep their pencil tone: first the picture's own
+         tones take the red's hue, then a lighter red is multiplied over them, and
+         the picture's own outline cuts the result so clear paper stays clear */
+      var fill = 'rgb(' + rgb.join(',') + ')';
+      ctx.globalCompositeOperation = 'color';
+      ctx.fillStyle = fill;
+      ctx.fillRect(0, 0, w, h);
+      ctx.globalCompositeOperation = 'multiply';
+      ctx.globalAlpha = 0.4;
+      ctx.fillRect(0, 0, w, h);
+      ctx.globalAlpha = 1;
+      ctx.globalCompositeOperation = 'destination-in';
+      ctx.drawImage(src, 0, 0, w, h);
+      ctx.globalCompositeOperation = 'source-over';
+      if (!c.anims.some(function (a) { return a.__cardfx === 'breath'; })) {
+        var a = c.anim(cv, [
+          { opacity: 0, offset: 0, easing: 'ease-in-out' },
+          { opacity: 0.5, offset: 0.5, easing: 'ease-in-out' },
+          { opacity: 0, offset: 1 }
+        ], { duration: 4000, iterations: Infinity });
+        a.__cardfx = 'breath';
+      }
+    }
+
+    function usable(im) { return im && im.complete && im.naturalWidth > 0; }
+    function fromImg() {
+      if (usable(img)) paint(img, img.naturalWidth, img.naturalHeight);
+      else img.addEventListener('load', function () { paint(img, img.naturalWidth, img.naturalHeight); }, { once: true });
+    }
+
+    /* the page may hold the small file; use the large one when it exists */
+    var url = img.currentSrc || img.src || '';
+    var big = url.replace(/-700\.webp/, '-1400.webp');
+    if (big !== url) {
+      var hi = new Image();
+      hi.onload = function () { paint(hi, hi.naturalWidth, hi.naturalHeight); };
+      hi.onerror = fromImg;
+      hi.src = big;
     } else {
-      window.addEventListener('resize', layout);
+      fromImg();
     }
-  })();
-  </script>
+    c.card.closes = true;
+  }
+
+  /* ---------- card 6: the manor lamp ---------- */
+
+  var LAMP = { x: 58.56, y: 73.95, castY: 77.55 };      // the pane and the snow under it, re-measured on the new picture
+
+  /* The live home page's lamp: a halo, the pane's glow and the light on the snow,
+     one breath of 4.444 s, ease-in-out, lit at the ends, out from 45 to 55
+     percent of the count. Sizes and colours are in cardfx.css. */
+  function card6(c) {
+    var layer = c.layer('cardfx-lamp');
+    var group = el('div', 'cardfx-group');
+    layer.appendChild(group);
+    var halo = el('i', 'cardfx-lamp-halo');
+    var cast = el('i', 'cardfx-lamp-cast');
+    var core = el('i', 'cardfx-lamp-core');
+    halo.style.left = core.style.left = pct(LAMP.x);
+    halo.style.top = core.style.top = pct(LAMP.y);
+    cast.style.left = pct(LAMP.x);
+    cast.style.top = pct(LAMP.castY);
+    group.appendChild(halo);
+    group.appendChild(core);
+    group.appendChild(cast);
+    if (c.reduced) return;                    // the live page leaves the lamp lit, full strength
+    c.anim(group, [
+      { opacity: 1, offset: 0, easing: 'ease-in-out' },
+      { opacity: 0, offset: 0.45, easing: 'ease-in-out' },
+      { opacity: 0, offset: 0.55, easing: 'ease-in-out' },
+      { opacity: 1, offset: 1 }
+    ], { duration: 4444, iterations: Infinity });
+  }
+
+  /* ---------- card 7: the bookcase thread ---------- */
+
+  /* id, x, y, diameter of the drawn node, all percent of the picture width.
+     Order of the wake follows the old page: the middle shelf left to right, the
+     top shelf left to right, then the bottom shelf right to left. */
+  var CASE_NODES = [
+    [1, 13.83, 45.39, 1.14], [2, 24.10, 52.50, 2.10], [3, 26.63, 43.66, 1.01], [4, 29.30, 46.72, 0.76],
+    [5, 31.58, 48.46, 0.63], [6, 34.47, 45.79, 1.20], [7, 36.57, 47.26, 0.70],
+    [8, 61.45, 22.79, 1.01], [9, 62.72, 23.49, 0.63], [10, 63.51, 18.48, 0.70], [11, 65.07, 19.42, 0.40],
+    [12, 70.71, 18.05, 0.76], [13, 73.16, 27.32, 2.10], [14, 80.85, 23.87, 1.39], [15, 84.56, 21.23, 1.08],
+    [25, 82.20, 70.70, 1.08], [24, 81.37, 68.69, 1.52], [23, 79.11, 70.62, 0.51], [22, 74.98, 72.26, 1.27],
+    [21, 73.14, 77.22, 2.10], [20, 68.64, 66.65, 0.70], [19, 67.29, 68.80, 0.38], [18, 66.67, 70.55, 1.52],
+    [17, 65.79, 69.76, 1.08], [16, 63.81, 75.46, 0.76]
+  ];
+  var WAKE = 8;       // seconds for the glow to go once round the thread
+  var AR_CASE = 1580 / 996;
+
+  function card7(c) {
+    var layer = c.layer('cardfx-thread');
+    var step = WAKE / CASE_NODES.length;
+    for (var i = 0; i < CASE_NODES.length; i++) {
+      var nd = CASE_NODES[i];
+      var lamp = nd[3] > 2;
+      var core = lamp ? 1.9 : Math.max(0.8, nd[3]);
+      var box = lamp ? 6.4 : Math.max(3, nd[3] * 4.2);
+      var light = makeLight(layer, nd[1], nd[2], core, box, lamp ? 'cardfx-light-lamp' : 'cardfx-light-bead');
+      if (c.reduced) {
+        light.style.opacity = '0.35';
+      } else {
+        c.anim(light, [
+          { opacity: 0.12, offset: 0, easing: 'ease-in-out' },
+          { opacity: 1, offset: 0.07, easing: 'ease-in-out' },
+          { opacity: 0.12, offset: 0.17 },
+          { opacity: 0.12, offset: 1 }
+        ], { duration: WAKE * 1000, delay: -step * 1000 * i, iterations: Infinity });
+      }
+    }
+  }
+
+  /* ---------- card 1: the live mosaic ---------- */
+
+  /* A port of the mosaic script on the live home page, kept as close as the new
+     markup allows. The six .fx-tile children take the five grid areas a to e and
+     the sixth waits offstage (cardfx.css has that arrangement at rest). Every
+     turn each picture advances one station, the way the live script does it:
+     the ones on stage glide to the next area (FLIP: measure, reassign, invert,
+     release), the one from offstage fades in at the big area a, and the one
+     leaving the last area is pinned where it stood, fades out and goes offstage.
+     Timings are the live ones: the first turn 5 s after start, then every 14 to
+     18 s; a glide is 2 s, cubic-bezier(.4,0,.2,1); a fade is 1.2 s, ease. The
+     live script uses CSS transitions and timers; this one uses Web Animations
+     and the shared clock, so the countdown and the glides wait together when
+     the tab is hidden or the card is off screen. */
+  var MOSAIC_SLOTS = ['a', 'b', 'c', 'd', 'e'];
+  var MOSAIC_STAGE = 5;
+  var MOSAIC_FIRST = 5, MOSAIC_EVERY = 14, MOSAIC_SPREAD = 4;       // seconds
+  var GLIDE_MS = 2000, GLIDE_EASE = 'cubic-bezier(0.4,0,0.2,1)', FADE_MS = 1200;
+
+  function card1(c) {
+    var fx = c.fx;
+    var tiles = [];
+    for (var i = 0; i < fx.children.length; i++) {
+      if (fx.children[i].classList && fx.children[i].classList.contains('fx-tile')) tiles.push(fx.children[i]);
+    }
+    if (tiles.length <= MOSAIC_STAGE) return;          // nothing offstage to bring in
+    var N = tiles.length;
+
+    /* the style attribute of every tile as found, so stop can put it back whole */
+    var saved = tiles.map(function (t) { return t.getAttribute('style'); });
+    var pos = tiles.map(function (t, k) { return k; });     // station of each tile: 0 to 4 on stage, the rest offstage
+    var busy = false;
+    var pending = 0;
+    var turned = false;
+
+    c.undo.push(function () {
+      var moved = [];
+      for (var j = 0; j < N; j++) {
+        if (pos[j] !== j && j < MOSAIC_STAGE) moved.push(tiles[j]);      // its rest is on stage and it is somewhere else now
+        if (saved[j] === null) { tiles[j].removeAttribute('style'); tidyStyle(tiles[j], false); } else tiles[j].setAttribute('style', saved[j]);
+      }
+      /* the plain arrangement comes back at once; a short fade hides the change */
+      if (turned && !c.reduced) {
+        for (var m = 0; m < moved.length; m++) {
+          try { moved[m].animate([{ opacity: 0 }, { opacity: 1 }], { duration: 220, easing: 'ease-out' }); } catch (e) {}
+        }
+      }
+    });
+
+    if (c.reduced) return;                    // reduced motion: the first five stay, no turns
+
+    function hide(t) {
+      var st = t.style;
+      st.position = 'absolute'; st.left = '0'; st.top = '0';
+      st.width = '1px'; st.height = '1px';
+      st.gridArea = 'auto';
+      st.opacity = '0'; st.pointerEvents = 'none';
+    }
+    function show(t, slot) {
+      var st = t.style;
+      st.position = 'relative'; st.left = 'auto'; st.top = 'auto';
+      st.width = 'auto'; st.height = 'auto'; st.pointerEvents = 'auto';
+      st.gridArea = slot; st.opacity = '1';
+    }
+
+    /* every tile exactly where its station says, with no transform left over */
+    function settle() {
+      busy = false;
+      for (var k = 0; k < N; k++) {
+        tiles[k].style.transform = '';
+        if (pos[k] < MOSAIC_STAGE) show(tiles[k], MOSAIC_SLOTS[pos[k]]); else hide(tiles[k]);
+      }
+    }
+
+    function release(an) {
+      pending--;
+      var ix = c.anims.indexOf(an);
+      if (ix >= 0) c.anims.splice(ix, 1);
+      if (pending <= 0) busy = false;
+    }
+    function run(t, frames, opts, after) {
+      var an = c.anim(t, frames, opts);
+      pending++;
+      an.onfinish = function () { if (after) after(); release(an); };
+      return an;
+    }
+
+    function turn() {
+      if (busy) {
+        /* never re-enter a turn in flight: end it where it stands, take the next */
+        for (var q = c.anims.length - 1; q >= 0; q--) { try { c.anims[q].cancel(); } catch (e) {} }
+        c.anims.length = 0;
+        pending = 0;
+      }
+      settle();                                       // begin from a known-good state
+      busy = true;
+      turned = true;
+
+      var mr = fx.getBoundingClientRect();
+      var first = {};
+      for (var k = 0; k < N; k++) if (pos[k] < MOSAIC_STAGE) first[k] = tiles[k].getBoundingClientRect();
+
+      for (k = 0; k < N; k++) pos[k] = (pos[k] + 1) % N;        // advance one station
+
+      /* A: give every now-on-stage tile its grid area */
+      for (k = 0; k < N; k++) if (pos[k] < MOSAIC_STAGE) show(tiles[k], MOSAIC_SLOTS[pos[k]]);
+      /* B: measure the new positions before anything else changes */
+      var last = {};
+      for (k = 0; k < N; k++) if (pos[k] < MOSAIC_STAGE) last[k] = tiles[k].getBoundingClientRect();
+      /* C: glides for the ones that stayed, a fade-in for the one that arrived, a pinned fade-out for the one that left */
+      for (k = 0; k < N; k++) {
+        var t = tiles[k];
+        if (pos[k] < MOSAIC_STAGE && first[k]) {
+          var f = first[k], l = last[k];
+          if (!l.width || !l.height) continue;
+          t.style.transformOrigin = 'top left';
+          run(t, [
+            { transform: 'translate(' + (f.left - l.left) + 'px,' + (f.top - l.top) + 'px) scale(' + (f.width / l.width) + ',' + (f.height / l.height) + ')' },
+            { transform: 'none' }
+          ], { duration: GLIDE_MS, easing: GLIDE_EASE });
+        } else if (pos[k] < MOSAIC_STAGE) {
+          run(t, [{ opacity: 0 }, { opacity: 1 }], { duration: FADE_MS, easing: 'ease' });
+        } else if (first[k]) {
+          var g = first[k];
+          t.style.position = 'absolute'; t.style.gridArea = 'auto'; t.style.transform = '';
+          t.style.left = (g.left - mr.left) + 'px'; t.style.top = (g.top - mr.top) + 'px';
+          t.style.width = g.width + 'px'; t.style.height = g.height + 'px';
+          t.style.pointerEvents = 'none'; t.style.opacity = '0';
+          run(t, [{ opacity: 1 }, { opacity: 0 }], { duration: FADE_MS, easing: 'ease' }, (function (tt) { return function () { hide(tt); }; })(t));
+        }
+      }
+      wait = MOSAIC_EVERY + Math.random() * MOSAIC_SPREAD;
+    }
+
+    var wait = MOSAIC_FIRST;
+    c.card.tick = function (dt) {
+      wait -= dt;
+      if (wait <= 0) turn();
+    };
+  }
+
+  /* ---------- start ---------- */
+
+  var BUILD = { 1: card1, 2: card2, 3: card3, 4: card4, 5: card5, 6: card6, 7: card7 };
+
+  function start(n, fxEl) {
+    n = +n;
+    var noop = function () {};
+    if (!fxEl || !BUILD[n]) return noop;       // an unknown card has no motion
+    var c = makeContext(n, fxEl);
+    try {
+      BUILD[n](c);
+    } catch (e) {
+      c.state = 'on';
+      finish(c);
+      if (window.console && console.warn) console.warn('CardFX: card ' + n + ' did not start', e);
+      return noop;
+    }
+    live.push(c);
+
+    if (typeof IntersectionObserver === 'function') {
+      c.io = new IntersectionObserver(function (entries) {
+        var last = entries[entries.length - 1];
+        c.inView = last.isIntersecting;
+        refresh(c);
+      });
+      c.io.observe(fxEl);
+    }
+    if (typeof ResizeObserver === 'function' && (n === 2 || n === 3 || n === 5)) {
+      var w0 = fxEl.offsetWidth, h0 = fxEl.offsetHeight, first = true;
+      c.ro = new ResizeObserver(function () {
+        if (first) { first = false; return; }
+        if (c.state !== 'on') return;
+        if (Math.abs(fxEl.offsetWidth - w0) < 2 && Math.abs(fxEl.offsetHeight - h0) < 2) return;
+        /* the pixel sizes of the filter and the canvas are fixed at build time:
+           take the effect down and put it up again at the new size */
+        stopper(c)(true);
+        var again = start(n, fxEl);
+        c.handoff = again;
+      });
+      c.ro.observe(fxEl);
+    }
+    if (c.card.tick || c.anims.length) wake();
+    var stop = stopper(c);
+    return function (immediate) {
+      if (c.handoff) { c.handoff(immediate); c.handoff = null; return; }
+      stop(immediate);
+    };
+  }
+
+  window.CardFX = { start: start, version: '1.0' };
+})();
+</script>
+<!-- cardfx:js-end -->
+<script>
+(function () {
+  'use strict';
+  var root = document.documentElement;
+  var page = document.querySelector('.page');
+  var row = document.querySelector('.row');
+  var cols = [].slice.call(document.querySelectorAll('.col'));
+  if (!page || !row || !cols.length) return;
+
+  function mq(q) { try { return window.matchMedia(q); } catch (e) { return { matches: false, addEventListener: function () {} }; } }
+  var wide = mq('(min-width:1280px)');
+  var calm = mq('(prefers-reduced-motion: reduce)');
+  var fine = mq('(hover:hover) and (pointer:fine)');
+  var current = null;
+  var instant = false;
+  var stopFX = null;
+  var timers = {};
+
+  /* One duration and one easing for the whole opening and closing motion. */
+  var DUR = 700;
+  var EASE = 'cubic-bezier(.4,0,.2,1)';
+  var CLOSE_DELAY = 120;   /* on close the lights stop first and the picture follows 120 ms later */
+  var TOP = 64;            /* top of a slice inside its column */
+  var VX = 0, VY = 0;      /* every slice has hard edges; the lines between slices are drawn by .f-line */
+  var SLIVER = parseFloat(getComputedStyle(page).getPropertyValue('--sliver')) || 52;
+
+  function param(name) {
+    var m = new RegExp('[?&]' + name + '=([^&#]*)').exec(location.search);
+    return m ? decodeURIComponent(m[1]) : '';
+  }
+  var openParam = parseInt(param('open'), 10);
+  if (openParam >= 1 && openParam <= cols.length) page.setAttribute('data-nointro', '');
+
+  function reduced() { return calm.matches; }
+  function btnOf(c) { return c.querySelector('.c-open'); }
+  function num(v, d) { var f = parseFloat(v); return isNaN(f) ? d : f; }
+
+  /* The label inside each trigger is copied from the entry, so the page holds each word once when JavaScript is off. */
+  cols.forEach(function (c) {
+    var tt = c.querySelector('.entry .tt');
+    var w = c.querySelector('.entry .when');
+    var n = c.querySelector('.entry .num');
+    var cn = c.querySelector('.c-num');
+    var ct = c.querySelector('.c-text');
+    if (!tt || !ct) return;
+    if (cn && n) cn.textContent = n.textContent;
+    var a = document.createElement('span'); a.className = 'c-title'; a.textContent = tt.textContent;
+    ct.appendChild(a);
+    if (w) {
+      var d = document.createElement('span'); d.className = 'c-date'; d.setAttribute('aria-hidden', 'true'); d.textContent = w.textContent;
+      ct.appendChild(d);
+    }
+  });
+
+  /* ------------------------------------------------------------------
+     The drawing units. Each unit is one element of the open drawing that
+     also shows as a slice when the page is collapsed. Until a column
+     opens, its units sit in a pose: a transform that makes the element
+     look like the cover crop of the slice, and a clip that is the slice's
+     window with soft edges. Opening animates pose to nothing; closing
+     animates it back. The element is the same one throughout.
+  ------------------------------------------------------------------- */
+  /* ------------------------------------------------------------------
+     Framing. Every slice has two framings of its picture and neither shows white paper.
+       hover: the picture covers the window, centred on its visible content (v, the alpha box of
+              assets.json with the faint specks trimmed: 1 percent of the opacity at each side).
+       rest:  the hover framing zoomed in by k (at least 1.25), the focus point f brought to the
+              centre of the window, and the window kept inside v.
+     All numbers are fractions of the picture. Bands (under 1280 px) have their own subject box and
+     focus, because their windows are wide and short.
+  ------------------------------------------------------------------- */
+  /* The slices. v is the box of the picture that the hover frames: the picture covers the window with this box
+     centred in it, so the window never shows more than v. Each v holds the subject and little else (the sparse
+     margins of a drawing are left out). f is the point the rest framing is centred on, and k is how much more
+     the picture is zoomed at rest than on hover (at least 1.25). bv and bf are the same for a band, which has
+     a wide window and shows a thin strip of the subject. All are fractions of the picture. */
+  var FRAMES = {
+    1: [  /* the six mosaic pictures, in order; bv and bf frame the cell in a band */
+      { v: [.118, .490, .912, .870], f: [.510, .660], k: 1.3, bv: [.350, .620, .750, .950], bf: [.550, .780] },
+      { v: [.046, .245, .954, .795], f: [.500, .510], k: 1.3, bv: [.046, .245, .954, .795], bf: [.500, .510] },
+      { v: [.221, .400, .939, .980], f: [.580, .660], k: 1.3, bv: [.221, .400, .939, .980], bf: [.580, .660] },
+      { v: [.085, .010, .635, .510], f: [.360, .250], k: 1.3, bv: [.020, .100, .450, .700], bf: [.230, .400] },
+      { v: [.472, .440, .928, .800], f: [.720, .620], k: 1.3, bv: [.420, .220, .980, .880], bf: [.780, .500] },
+      { v: [.088, .250, .912, .750], f: [.500, .500], k: 1.3, bv: [.020, .020, .980, .980], bf: [.500, .500] }
+    ],
+    2: { v: [.484, .240, .616, .960], f: [.575, .420], k: 1.3, bv: [.430, .280, .610, .480], bf: [.540, .385] },   /* the face */
+    3: { v: [.179, .080, .281, .540], f: [.246, .250], k: 1.4, bv: [.150, .220, .345, .300], bf: [.250, .260] },   /* the child at the desk */
+    4: { v: [.676, .140, .764, .700], f: [.720, .380], k: 1.3, bv: [.620, .020, .970, .620], bf: [.790, .300] },   /* the machine hand */
+    5: { v: [.397, .100, .603, .900], f: [.500, .500], k: 1.3, bv: [.170, .400, .820, .660], bf: [.500, .530] },   /* the brain */
+    6: { v: [.482, .490, .538, .850], f: [.510, .640], k: 1.3, bv: [.370, .520, .640, .820], bf: [.505, .670] },   /* the manor */
+    7: { v: [.426, .055, .574, .905], f: [.500, .460], k: 1.3, bv: [.036, .011, .966, .921], bf: [.500, .460] }    /* the bookcase */
+  };
+  var K_BAND = 1.25;
+
+  function clamp(x, lo, hi) { return Math.min(hi, Math.max(lo, x)); }
+  /* w, h: the window. nw, nh: the picture. Returns the picture's top left in window coordinates and its scale. */
+  function frame(w, h, nw, nh, v, f, k) {
+    var vl = v[0] * nw, vt = v[1] * nh, vr = v[2] * nw, vb = v[3] * nh;
+    var sh = Math.max(w / (vr - vl), h / (vb - vt));
+    var hx = w / 2 - sh * (vl + vr) / 2, hy = h / 2 - sh * (vt + vb) / 2;
+    var sr = sh * k;
+    var rx = clamp(w / 2 - sr * f[0] * nw, w - sr * vr, -sr * vl);
+    var ry = clamp(h / 2 - sr * f[1] * nh, h - sr * vb, -sr * vt);
+    return { sh: sh, hx: hx, hy: hy, sr: sr, rx: rx, ry: ry };
+  }
+
+  cols.forEach(function (c) {
+    var n = +c.getAttribute('data-n');
+    var fx = c.querySelector('.fx');
+    var units = [];
+    c._fx = fx;
+    function nat(img, w, h) { return [w || +img.getAttribute('width'), h || +img.getAttribute('height')]; }
+    if (n === 1) {
+      var tiles = [].slice.call(fx.querySelectorAll('.fx-tile'));
+      tiles.forEach(function (t, i) {
+        units.push({ el: t, img: t.querySelector('img'), nat: nat(t.querySelector('img')), tile: true, idx: i, fade: i === 5, fr: FRAMES[1][i] });
+      });
+    } else if (n === 5) {
+      units.push({ el: fx.querySelector('.fx-brain'), nat: [1299, 1211], tile: false, idx: 0, fr: FRAMES[5] });
+      c._lat = fx.querySelector('.fx-lattice');
+    } else {
+      units.push({ el: fx, nat: n === 4 ? [1672, 941] : nat(fx.querySelector('img')), tile: false, idx: 0, fr: FRAMES[n] });
+    }
+    units.forEach(function (u) { if (!u.mel) u.mel = u.el; u.el.classList.add('fxu'); });
+    c._units = units;
+  });
+
+  /* where the element sits in the open layout, in the column's own coordinates, ignoring any transform on it */
+  function layoutBox(el, colIn) {
+    var saved = el.style.transform;
+    el.style.transform = 'none';
+    var r = el.getBoundingClientRect(), b = colIn.getBoundingClientRect();
+    el.style.transform = saved;
+    var k = 1;   /* nothing above a column scales it; offsetWidth is rounded and would skew the box by up to half a pixel */
+    return { x: (r.left - b.left) / k, y: (r.top - b.top) / k, w: r.width / k, h: r.height / k };
+  }
+
+  function rest(c) {
+    var inner = c.querySelector('.col-in');
+    var H = inner.clientHeight;
+    var W = row.clientWidth / cols.length;
+    var zone = Math.min(292, Math.max(232, H * .31));
+    return { inner: inner, H: H, W: W, x0: 0, x1: W, y0: TOP, y1: H - zone - 36 };
+  }
+
+  function windowOf(c, u, g) {
+    if (c._units.length === 6) {
+      var hh = (g.y1 - g.y0) / 6;   /* the six tiles touch; .f-win draws the lines between them */
+      return { x: g.x0, y: g.y0 + u.idx * hh, w: g.x1 - g.x0, h: hh, vy: 0 };
+    }
+    return { x: g.x0, y: g.y0, w: g.x1 - g.x0, h: g.y1 - g.y0, vy: VY };
+  }
+
+  function poseOf(c, u, g) {
+    var win = windowOf(c, u, g);
+    var box = layoutBox(u.el, g.inner);
+    var nw = u.nat[0], nh = u.nat[1];
+    var fr = frame(win.w, win.h, nw, nh, u.fr.v, u.fr.f, u.fr.k);
+    var tlx = win.x + fr.rx, tly = win.y + fr.ry;     /* the picture's top left, in the column */
+    var cz = fr.sr;                                    /* and its scale */
+    /* the same picture in its open place. A mosaic tile shows its picture covering its cell. While the slice
+       shows, the picture inside the tile is laid out whole at that scale (it reaches past the cell) and the
+       clip sits on the tile, so the clip can show any part of the picture. The end of the card's opening is the
+       picture cut to the cell, which is what the tile shows once the inline styles are cleared. */
+    var cc, qx = 0, qy = 0, cw = box.w, ch = box.h, ig = null;
+    if (u.tile) {
+      if (u.fade) { var e = layoutBox(c._units[4].el, g.inner); cw = e.w; ch = e.h; }   /* the sixth borrows the cell of the fifth */
+      cc = Math.max(cw / nw, ch / nh); qx = (cw - nw * cc) / 2; qy = (ch - nh * cc) / 2;
+      ig = { l: qx, t: qy, w: nw * cc, h: nh * cc };
+    } else { cc = box.w / nw; }
+    var s = cz / cc;
+    var tx = tlx - box.x - s * qx, ty = tly - box.y - s * qy;   /* the tile's origin; the picture sits (qx, qy) inside it */
+    /* the window, in the element's own coordinates, as a clip. A clip is exact at any scale; a mask is cut to whole pixels
+       in the element's own units, which at 3 times the scale left white strips up to 3 px wide on a slice. */
+    var lx = (win.x - box.x - tx) / s, ly = (win.y - box.y - ty) / s, lw = win.w / s, lh = win.h / s;
+    function inset(x, y, w, h) { return 'inset(' + y + 'px ' + (box.w - x - w) + 'px ' + (box.h - y - h) + 'px ' + x + 'px)'; }
+    return {
+      T: 'translate(' + tx + 'px,' + ty + 'px) scale(' + s + ')',
+      cp: inset(lx, ly, lw, lh),
+      ecp: inset(0, 0, cw, ch),      /* the open place: the cell */
+      ig: ig, box: box,
+      /* the hover: the picture eases out by 1/k and to the cover framing, in its own coordinates */
+      hs: 1 / u.fr.k, htx: (fr.hx - fr.rx) / s, hty: (fr.hy - fr.ry) / s
+    };
+  }
+
+  function applyPose(u, p) {
+    var st = u.el.style;
+    st.transformOrigin = '0 0';
+    st.transform = p.T;
+    st.clipPath = p.cp;
+    /* the hover framing, as scale and translate for the picture */
+    st.setProperty('--hs', p.hs);
+    st.setProperty('--htx', p.htx + 'px');
+    st.setProperty('--hty', p.hty + 'px');
+    if (p.ig) {
+      var is = u.img.style;
+      is.position = 'absolute'; is.left = p.ig.l + 'px'; is.top = p.ig.t + 'px';
+      is.width = p.ig.w + 'px'; is.height = p.ig.h + 'px'; is.objectFit = 'fill';
+    }
+    /* the sixth mosaic picture is clear in cardfx.css; the stylesheet shows it while the slice shows (see style.css) */
+    u.el.setAttribute('data-posed', '');
+  }
+  function clearPose(u) {
+    var st = u.el.style;
+    ['transform', 'transformOrigin', 'opacity'].forEach(function (k) { st[k] = ''; });
+    u.el.removeAttribute('data-posed');
+    st.clipPath = '';
+    st.removeProperty('--hs'); st.removeProperty('--htx'); st.removeProperty('--hty');
+    if (u.img) { var is = u.img.style; ['position', 'left', 'top', 'width', 'height', 'objectFit'].forEach(function (k) { is[k] = ''; }); }
+  }
+  function cancelAnims(el) { el.getAnimations().forEach(function (a) { a.cancel(); }); }
+  /* a unit moves by transform and by clip-path on its element, with the same timing */
+  function stopUnit(u) { cancelAnims(u.el); }
+  function play(u, from, to, opts, fade) {
+    var kf = [{ transform: from.T, clipPath: from.cp }, { transform: to.T, clipPath: to.cp }];
+    /* the sixth picture of the mosaic waits offstage: it fades out as the card opens and in as it closes */
+    if (fade) { kf[0].opacity = fade[0]; kf[1].opacity = fade[1]; kf.splice(1, 0, { opacity: 0, offset: .5 }); }
+    return u.el.animate(kf, opts);
+  }
+
+  function latPose(c) {
+    var lat = c._lat; if (!lat) return;
+    lat.style.opacity = '0';
+  }
+  function latClear(c) { if (c._lat) { cancelAnims(c._lat); c._lat.style.opacity = ''; } }
+
+  /* Bands. A slice picture is placed in its window (the right part of the band, or one of the six cells of
+     Stillpoint) from the same two framings, with the band's own subject box and focus. */
+  function bandPlace(el, win, nat, v, f, k, labelStack) {
+    var fr = frame(win.w, win.h, nat[0], nat[1], v, f, k);
+    var st = el.style;
+    st.left = win.x + 'px'; st.top = win.y + 'px';
+    st.width = (nat[0] * fr.sr) + 'px'; st.height = (nat[1] * fr.sr) + 'px';
+    st.transform = 'translate(' + fr.rx + 'px,' + fr.ry + 'px)';
+    st.setProperty('--hs', 1 / k);
+    st.setProperty('--htx', (fr.hx - fr.rx / k) + 'px');
+    st.setProperty('--hty', (fr.hy - fr.ry / k) + 'px');
+  }
+  var BAND_PROPS = ['left', 'top', 'width', 'height', 'transform'];
+  function bandClear(c) {
+    [].slice.call(c.querySelectorAll('.c-slice > img, .c-slice > .stack, .c-slice.six .sx img')).forEach(function (el) {
+      BAND_PROPS.forEach(function (p) { el.style[p] = ''; });
+      el.style.removeProperty('--hs'); el.style.removeProperty('--htx'); el.style.removeProperty('--hty');
+    });
+  }
+  function bandFrame(c) {
+    var n = +c.getAttribute('data-n'), cs = c.querySelector('.c-slice');
+    if (!cs) return;
+    var bandH = parseFloat(getComputedStyle(root).getPropertyValue('--band')) || 76;
+    var W = cs.getBoundingClientRect().width;
+    if (n === 1) {
+      [].slice.call(cs.querySelectorAll('.sx')).forEach(function (sx, i) {
+        var img = sx.querySelector('img'), r = sx.getBoundingClientRect(), fr = FRAMES[1][i];
+        bandPlace(img, { x: 0, y: 0, w: r.width, h: r.height }, [+img.getAttribute('width'), +img.getAttribute('height')], fr.bv || fr.v, fr.bf || fr.f, K_BAND);
+      });
+      return;
+    }
+    var tz = (getComputedStyle(btnOf(c)).getPropertyValue('--tz') || '54%').trim();
+    var x0 = tz.slice(-1) === '%' ? W * parseFloat(tz) / 100 : parseFloat(tz);
+    var el = cs.querySelector(':scope > img, :scope > .stack'), fb = FRAMES[n];
+    var nat = el.tagName === 'IMG' ? [+el.getAttribute('width'), +el.getAttribute('height')] : [1672, 941];
+    bandPlace(el, { x: x0, y: 0, w: W - x0, h: bandH }, nat, fb.bv, fb.bf, K_BAND);
+  }
+
+  var pending = false, busy = false;
+  function poseAll() {
+    if (busy) { pending = true; return; }
+    pending = false;
+    cols.forEach(function (c) {
+      if (!wide.matches) { c._units.forEach(function (u) { stopUnit(u); clearPose(u); }); latClear(c); bandFrame(c); return; }
+      bandClear(c);
+      if (c === current) return;
+      var g = rest(c);
+      c._units.forEach(function (u) { applyPose(u, poseOf(c, u, g)); });
+      latPose(c);
+    });
+  }
+  var poseRaf = 0;
+  function poseSoon() { cancelAnimationFrame(poseRaf); poseRaf = requestAnimationFrame(poseAll); }
+
+  /* what an element looks like right now, so a motion can start from it even when it interrupts another */
+  function capture(u) {
+    if (!u.el.hasAttribute('data-posed')) return null;
+    var cs = getComputedStyle(u.el);
+    return { T: cs.transform, cp: cs.clipPath, op: cs.opacity };
+  }
+
+  function opening(c) {
+    c._units.forEach(function (u) {
+      var f = capture(u);
+      var g = rest(c);
+      var p = poseOf(c, u, g);
+      if (!f) { f = { T: p.T, cp: p.cp, op: '1' }; applyPose(u, p); }
+      stopUnit(u);
+      var a = play(u, f, { T: 'none', cp: p.ecp }, { duration: DUR, easing: EASE, fill: 'forwards' }, u.fade ? [f.op, 0] : null);
+      u.anim = a;
+      a.onfinish = function () { if (u.anim === a) { clearPose(u); a.cancel(); u.anim = null; } };
+    });
+    if (c._lat) {
+      var lat = c._lat;
+      cancelAnims(lat);
+      var dx = lat.getBoundingClientRect().width * .35;
+      var la = lat.animate([
+        { opacity: 0, transform: 'translateX(' + dx + 'px)' },
+        { opacity: 1, offset: .55 },
+        { opacity: 1, transform: 'none' }
+      ], { duration: DUR, easing: EASE, fill: 'forwards' });
+      la.onfinish = function () { lat.style.opacity = ''; la.cancel(); };
+    }
+  }
+
+  function closing(c, delay) {
+    c._units.forEach(function (u) {
+      var g = rest(c);
+      var p = poseOf(c, u, g);
+      var f = capture(u);
+      if (!f) f = { T: 'none', cp: p.ecp, op: '0' };
+      stopUnit(u);
+      applyPose(u, p);
+      var a = play(u, f, p, { duration: DUR, delay: delay, easing: EASE, fill: 'both' }, u.fade ? [f.op, 1] : null);
+      u.anim = a;
+      a.onfinish = function () { if (u.anim === a) { a.cancel(); u.anim = null; } };
+    });
+    if (c._lat) {
+      var lat = c._lat;
+      var cs = getComputedStyle(lat);
+      var op = (lat.getAnimations().length || lat.style.opacity !== '0') ? cs.opacity : '1';
+      var cur = cs.transform;
+      cancelAnims(lat);
+      lat.style.opacity = '0';
+      var dx = lat.getBoundingClientRect().width * .35;
+      var la = lat.animate([
+        { opacity: op, transform: cur },
+        { opacity: 0, offset: .45 },
+        { opacity: 0, transform: 'translateX(' + dx + 'px)' }
+      ], { duration: DUR, delay: delay, easing: EASE, fill: 'both' });
+      la.onfinish = function () { la.cancel(); };
+    }
+  }
+
+  /* column widths, animated with the same duration and easing as the drawing */
+  function widthsFrom() { return cols.map(function (x) { return parseFloat(getComputedStyle(x).width); }); }
+  /* Both ends are pixel widths, so every frame in between is a straight line from one set of widths to the
+     other, and the widths add up to the row on every frame. The end widths are read from the layout the
+     page rests on, so the motion starts and ends on exactly those pixels. */
+  function widthsAnimate(from, prevCol, open, delay) {
+    cols.forEach(cancelAnims);
+    var to = cols.map(function (x) { return parseFloat(getComputedStyle(x).width); });
+    cols.forEach(function (x, i) {
+      x.animate([{ flexGrow: 0, flexBasis: from[i] + 'px' }, { flexGrow: 0, flexBasis: to[i] + 'px' }],
+        { duration: DUR, delay: delay, easing: EASE, fill: 'backwards' });
+    });
+  }
+
+  function later(name, fn, ms) { clearTimeout(timers[name]); timers[name] = setTimeout(fn, ms); }
+
+  function stopCard(fast) { if (stopFX) { try { stopFX(!!fast); } catch (e) {} stopFX = null; } }
+  function startCard(c) {
+    stopCard(true);
+    var fx = c._fx;
+    if (fx && window.CardFX && typeof window.CardFX.start === 'function') {
+      try { stopFX = window.CardFX.start(+c.getAttribute('data-n'), fx); } catch (e) { stopFX = null; }
+    }
+  }
+
+  /* A long title wraps in two or three lines at rest and runs in one line in a sliver.
+     The change of wrap happens while the title is faded out, so no text jumps in view. */
+  function setFold(c, on) {
+    if (on) c.setAttribute('data-fold', ''); else c.removeAttribute('data-fold');
+  }
+  function foldFor(c, want, pulse, delay) {
+    var have = c.hasAttribute('data-fold');
+    clearTimeout(c._ft); clearTimeout(c._ft0);
+    var t = c.querySelector('.c-text');
+    if (have === want) { t.classList.remove('t-out'); return; }
+    if (pulse && !reduced() && !instant && wide.matches) {
+      c._ft0 = setTimeout(function () {
+        t.classList.add('t-out');
+        c._ft = setTimeout(function () { setFold(c, want); t.classList.remove('t-out'); }, 170);
+      }, delay || 0);
+    } else {
+      setFold(c, want);
+      t.classList.remove('t-out');
+    }
+  }
+
+  /* Bands: the height runs from the band to the natural height of the open content. */
+  function band(c, open) {
+    clearTimeout(c._ht);
+    if (wide.matches) { c.style.height = ''; return; }
+    if (open) {
+      var target = c.querySelector('.panel').offsetHeight;
+      c.style.height = c.offsetHeight + 'px';
+      void c.offsetHeight;
+      c.style.height = target + 'px';
+      c._ht = setTimeout(function () { if (current === c) c.style.height = 'auto'; }, (reduced() || instant) ? 20 : 700);
+    } else {
+      if (c.style.height === 'auto') { c.style.height = c.offsetHeight + 'px'; void c.offsetHeight; }
+      c.style.height = '';
+    }
+  }
+
+  function setBusy(ms) {
+    busy = true;
+    later('busy', function () { busy = false; if (pending) poseAll(); }, ms);
+  }
+
+  /* The column that was open keeps .is-leaving while it narrows (see the style sheet). */
+  function leave(c) {
+    c.classList.add('is-leaving');
+    clearTimeout(c._lv);
+    c._lv = setTimeout(function () { c.classList.remove('is-leaving'); }, 520);
+  }
+
+  function select(c) {
+    var prev = current;
+    if (prev === c) return;
+    var animate = wide.matches && !reduced() && !instant;
+    var from = animate ? widthsFrom() : null;
+    stopCard(!animate);
+    if (prev) leave(prev);
+    current = c;
+    page.removeAttribute('data-closing');
+    page.setAttribute('data-open', c.getAttribute('data-n'));
+    root.classList.add('has-open');
+    cols.forEach(function (x) {
+      var isOpen = x === c;
+      x.classList.toggle('is-open', isOpen);
+      x.classList.toggle('is-sliver', !isOpen);
+      btnOf(x).setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+      foldFor(x, !isOpen, x !== prev, 0);
+    });
+    if (wide.matches) {
+      if (animate) {
+        widthsAnimate(from, prev, c, 0);
+        opening(c);
+        setBusy(DUR + 60);
+      } else {
+        c._units.forEach(function (u) { stopUnit(u); clearPose(u); });
+        latClear(c);
+      }
+      if (prev) {
+        /* the column that was open narrows; its drawing fades with the class change, then goes back to its pose */
+        clearTimeout(timers.prevpose);
+        var settle = function () {
+          if (current === prev || prev._units[0].el.hasAttribute('data-posed')) return;   /* the data-posed mark is ours; a style attribute can be put back by the card scripts */
+          var g = rest(prev);
+          prev._units.forEach(function (u) { stopUnit(u); applyPose(u, poseOf(prev, u, g)); });
+          latPose(prev);
+        };
+        if (animate) { prev._units.forEach(function (u) { stopUnit(u); }); later('prevpose', settle, 420); } else settle();
+      }
+    }
+    if (prev) band(prev, false);
+    band(c, true);
+    later('start', function () { if (current === c) startCard(c); }, animate ? DUR + 30 : (wide.matches ? 30 : 700));
+  }
+
+  function deselect() {
+    var prev = current;
+    if (!prev) return;
+    var animate = wide.matches && !reduced() && !instant;
+    var from = animate ? widthsFrom() : null;
+    stopCard(!animate);
+    leave(prev);
+    clearTimeout(timers.start); clearTimeout(timers.prevpose);
+    current = null;
+    page.removeAttribute('data-open');
+    root.classList.remove('has-open');
+    cols.forEach(function (x) {
+      x.classList.remove('is-open');
+      x.classList.remove('is-sliver');
+      btnOf(x).setAttribute('aria-expanded', 'false');
+      foldFor(x, false, x !== prev, animate ? CLOSE_DELAY : 0);
+    });
+    if (wide.matches) {
+      if (animate) {
+        page.setAttribute('data-closing', '');
+        widthsAnimate(from, prev, null, CLOSE_DELAY);
+        closing(prev, CLOSE_DELAY);
+        setBusy(CLOSE_DELAY + DUR + 60);
+        later('closing', function () { page.removeAttribute('data-closing'); }, CLOSE_DELAY + DUR + 80);
+      } else {
+        poseAll();
+      }
+    }
+    band(prev, false);
+  }
+
+  function unscroll(c) {
+    /* a focused link in a clipped panel must never shift the clip */
+    c.scrollLeft = 0; c.scrollTop = 0;
+    var i = c.querySelector('.col-in');
+    if (i) { i.scrollLeft = 0; i.scrollTop = 0; }
+  }
+
+  cols.forEach(function (c) {
+    btnOf(c).addEventListener('click', function () {
+      if (current === c) deselect(); else select(c);
+    });
+  });
+
+  /* A click anywhere outside a column returns the page to the collapsed state. Inside the open card nothing happens. */
+  document.addEventListener('click', function (e) {
+    if (!current) return;
+    var t = e.target;
+    if (t && t.closest && t.closest('.col')) return;
+    deselect();
+  });
+
+  /* Tab reaches every project link. A link inside a closed column opens that column, so it is never focused out of sight. */
+  page.addEventListener('focusin', function (e) {
+    var p = e.target.closest ? e.target.closest('.panel') : null;
+    if (!p) return;
+    var c = p.closest('.col');
+    unscroll(c);
+    if (c !== current) {
+      /* Tab moves without animation: the focus ring must be on a link that holds still. */
+      instant = true;
+      page.setAttribute('data-instant', '');
+      select(c);
+      clearTimeout(page._it);
+      page._it = setTimeout(function () { instant = false; page.removeAttribute('data-instant'); }, 120);
+    }
+    /* In a band the link sits below the title row and can start out of sight: bring it into view, again once the band has opened. */
+    if (!wide.matches) {
+      var tgt = e.target;
+      var show = function () { if (document.activeElement === tgt && tgt.scrollIntoView) tgt.scrollIntoView({ block: 'nearest', inline: 'nearest' }); };
+      show();
+      later('kbview', show, 760);
+    }
+  });
+
+  page.addEventListener('keydown', function (e) {
+    var b = e.target.closest ? e.target.closest('.c-open') : null;
+    if (!b) return;
+    var i = cols.indexOf(b.closest('.col'));
+    var j = -1, k = e.key;
+    var vertical = !wide.matches;
+    if (k === 'ArrowRight' || (vertical && k === 'ArrowDown')) j = Math.min(i + 1, cols.length - 1);
+    else if (k === 'ArrowLeft' || (vertical && k === 'ArrowUp')) j = Math.max(i - 1, 0);
+    else if (k === 'Home') j = 0;
+    else if (k === 'End') j = cols.length - 1;
+    if (j >= 0) { e.preventDefault(); btnOf(cols[j]).focus({ preventScroll: false }); }
+  });
+
+  /* The focus ring and the hover colour that goes with it belong to a reader on the keyboard. After a pointer
+     opened the card, Escape returns the focus to the column without a ring (.no-ring), and the page forgets that
+     as soon as the reader presses any other key. */
+  var byPointer = false;
+  document.addEventListener('pointerdown', function () { byPointer = true; }, true);
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' || e.key === 'Esc') return;
+    byPointer = false;
+    [].forEach.call(document.querySelectorAll('.c-open.no-ring'), function (b) { b.classList.remove('no-ring'); });
+  }, true);
+  cols.forEach(function (c) {
+    btnOf(c).addEventListener('blur', function () { btnOf(c).classList.remove('no-ring'); });
+  });
+  document.addEventListener('keydown', function (e) {
+    if ((e.key === 'Escape' || e.key === 'Esc') && current) {
+      var c = current, b = btnOf(c);
+      deselect();
+      if (byPointer) b.classList.add('no-ring');
+      b.focus({ preventScroll: true });
+    }
+  });
+
+  function relayout() {
+    cols.forEach(function (c) { c.style.height = ''; clearTimeout(c._ht); });
+    cols.forEach(function (c) { foldFor(c, c.classList.contains('is-sliver') && wide.matches, false, 0); });
+    if (current && !wide.matches) current.style.height = 'auto';
+    if (current && wide.matches) {
+      /* back to columns with a card open: its units stay open, the others are posed */
+      current._units.forEach(function (u) { stopUnit(u); clearPose(u); });
+    }
+    busy = false;
+    poseAll();
+  }
+  if (wide.addEventListener) wide.addEventListener('change', relayout); else if (wide.addListener) wide.addListener(relayout);
+
+  /* On wide screens the baseline of the signature sits on the line where the vertical titles end. */
+  function alignSignature() {
+    var sig = document.querySelector('.signature');
+    var link = sig && sig.querySelector('a');
+    var text = cols[0].querySelector('.c-text');
+    if (!sig || !link || !text) return;
+    if (!wide.matches) { root.style.removeProperty('--sig-dy'); return; }
+    root.style.setProperty('--sig-dy', '0px');
+    var probe = document.createElement('i');
+    probe.style.cssText = 'display:inline-block;width:0;height:0;vertical-align:baseline';
+    link.appendChild(probe);
+    var base = probe.getBoundingClientRect().bottom;
+    link.removeChild(probe);
+    /* the first letter of a title starts about 0.05em inside the end of its box */
+    var end = text.getBoundingClientRect().bottom - 0.05 * parseFloat(getComputedStyle(text).fontSize);
+    root.style.setProperty('--sig-dy', (Math.round((end - base) * 100) / 100) + 'px');
+  }
+  alignSignature();
+  window.addEventListener('load', function () { alignSignature(); poseSoon(); });
+  if (document.fonts && document.fonts.ready) document.fonts.ready.then(function () { alignSignature(); poseSoon(); });
+  if (wide.addEventListener) wide.addEventListener('change', alignSignature); else if (wide.addListener) wide.addListener(alignSignature);
+
+  var rt = 0;
+  window.addEventListener('resize', function () {
+    clearTimeout(rt);
+    rt = setTimeout(function () { if (current && !wide.matches) current.style.height = 'auto'; alignSignature(); poseAll(); }, 150);
+  });
+  if (window.ResizeObserver) {
+    var ro = new ResizeObserver(function () { poseSoon(); });
+    cols.forEach(function (c) { ro.observe(c._fx); });
+  }
+
+  poseAll();
+
+  /* ?open=N opens card N once the page has painted */
+  if (openParam >= 1 && openParam <= cols.length) {
+    var jump = function () {
+      requestAnimationFrame(function () {
+        requestAnimationFrame(function () {
+          poseAll();
+          var target = cols[openParam - 1];
+          if (!current) select(target);
+          /* in bands the opened card can sit below the first screen: while its band grows, keep its top edge in view, on this link only */
+          if (!wide.matches) {
+            var until = performance.now() + (reduced() ? 60 : DUR + 120), stopped = false;
+            var halt = function () { stopped = true; };
+            window.addEventListener('wheel', halt, { once: true, passive: true });
+            window.addEventListener('touchstart', halt, { once: true, passive: true });
+            var follow = function () {
+              if (stopped || performance.now() > until) return;
+              try { window.scrollTo(0, Math.max(0, target.getBoundingClientRect().top + window.pageYOffset - 12)); } catch (e) {}
+              requestAnimationFrame(follow);
+            };
+            follow();
+          }
+        });
+      });
+    };
+    if (document.readyState === 'complete') jump(); else window.addEventListener('load', jump);
+  }
+})();
+
+</script>
 <script data-goatcounter="https://artificialminds.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
 </html>
