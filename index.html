@@ -47,7 +47,6 @@
   --paper:#ffffff; --tint:#f2f2f2; --ink:#111111; --ink-soft:#3a3a3a;
   --ink-faint:#666666; --ink-ghost:#a8a8a8; --rule:#dadada; --red:#c3261c;
   --paper-0:rgba(255,255,255,0);
-  --red-faint:#c66b63;               /* the date of an open card: the red toned toward the paper, 4.7 to 1 on white */
   color-scheme:light;
   --serif:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
   --sans:var(--family-house-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
@@ -125,11 +124,14 @@ h1 br{display:none}
 }
 .when{
   display:block;font-size:.95rem;line-height:1.6;
-  color:var(--red-faint);font-weight:400;
+  color:var(--ink-ghost);font-weight:400;
 }
 
 /* the drawings. .fx holds one drawing and has its picture's own shape */
 .fx{position:relative;display:block;width:100%;aspect-ratio:var(--far);isolation:isolate}
+/* the picture of an open card links to the project page; the link is a block with the size of the picture, so the layout is the one without it */
+.fx-link{display:block;flex:none}
+html.js .col.is-open .fx-link,html.js .col.is-open .fx-link *{cursor:pointer}
 .fx-img{display:block;width:100%;height:100%}
 .crop{display:block;position:relative;overflow:hidden;overflow:clip;aspect-ratio:var(--ar);width:min(100%, calc(var(--ch, 100%) * var(--ar)));margin-inline:auto}
 .fxp{position:absolute;max-width:none;width:calc(10000% / var(--bw));left:calc(var(--bl) / var(--bw) * -100%);top:calc(var(--bt) / var(--bh) * -100%)}
@@ -344,7 +346,12 @@ html.js .col.is-open .c-num{color:var(--red)}
   html.js .fx{flex:none;width:min(100cqw, calc(100cqh * var(--far)))}
   html.js .crop{flex:none;overflow:visible;width:min(100cqw, calc(100cqh * var(--ar)))}
   /* cardfx.css clips the mosaic to its own rectangle; the slices sit outside it, so the clip waits until the card is open */
-  html.js .col:not(.is-open) .fx[data-card="1"]{overflow:visible}
+  /* the mosaic of the open card draws its lines as a background and a border on .fx; a collapsed column shows only the six slices */
+  html.js .col:not(.is-open) .fx[data-card="1"]{overflow:visible;background:transparent;border-color:transparent}
+  html.js .col.is-open .fx[data-card="1"]{transition:background-color .2s var(--change) .7s, border-color .2s var(--change) .7s}
+  /* a collapsed slice keeps the hairline round its picture; it fades out while the card opens, where the card's own lines take over */
+  html.js .fx[data-card="1"] .fx-tile img{outline:1px solid var(--rule);outline-offset:-1px}
+  html.js .col.is-open .fx[data-card="1"] .fx-tile img{outline-color:transparent}
   html.js .fxp .fx{width:100%}
 
   /* the slice window of Stillpoint: the lines between its six slices sit over it and fade while a card is open */
@@ -363,38 +370,38 @@ html.js .col.is-open .c-num{color:var(--red)}
   /* the sixth Stillpoint picture is clear in cardfx.css (it waits offstage); it shows while the slice shows, and a sliver hides it like every other unit */
   html.js .fx[data-card="1"] .fx-tile[data-posed]:nth-child(6){opacity:1}
   html.js .col.is-sliver .fx[data-card="1"] .fx-tile:nth-child(6){opacity:0}
-  html.js .fxu img{transform-origin:0 0;transition:scale .5s var(--change), translate .5s var(--change), filter .5s var(--change)}
-  html.js .col.is-open .fxu img{transition:scale .7s var(--change), translate .7s var(--change), filter .5s var(--change)}
+  html.js .fxu img{transform-origin:0 0;transition:scale .5s var(--change), translate .5s var(--change), filter .5s var(--change), outline-color .3s var(--change) .4s}
+  html.js .col.is-open .fxu img{transition:scale .7s var(--change), translate .7s var(--change), filter .5s var(--change), outline-color .2s var(--change)}
 }
 
 /* ------------------------------------------------------------------
-   Hover. Fine pointer. Keyboard focus on a column shows what hover shows.
+   Hover. Fine pointer. Keyboard focus on a column shows what hover shows (script puts .kbf on that column).
    Nothing lifts, grows or casts a shadow. The number and the title turn red,
    the date stays grey, and the slice picture eases out to show more of the drawing.
 ------------------------------------------------------------------- */
 html.js .c-open,html.js .c-open *{cursor:pointer}
 @media (hover:hover) and (pointer:fine) and (min-width:1280px){
   /* nothing open: the number and the vertical title turn red */
-  html.js .page:not([data-open]) .col:is(:hover,:has(.c-open:focus-visible:not(.no-ring))) :is(.c-num,.c-title){color:var(--red)}
+  html.js .page:not([data-open]) .col:is(:hover,.kbf) :is(.c-num,.c-title){color:var(--red)}
   /* a card open: the number and the title of the sliver under the pointer turn red */
-  html.js .page[data-open] .col.is-sliver:is(:hover,:has(.c-open:focus-visible:not(.no-ring))) :is(.c-num,.c-title){color:var(--red)}
+  html.js .page[data-open] .col.is-sliver:is(:hover,.kbf) :is(.c-num,.c-title){color:var(--red)}
 }
 @media (hover:hover) and (pointer:fine) and (min-width:1280px) and (prefers-reduced-motion:no-preference){
   /* every picture of the column eases out to its full cover about the centre of its window. Scale and
      translate are set apart from the pose (transform) and the mask, so the window never changes. Script
      gives each unit its --hs, --htx and --hty. In Stillpoint all six slices move together. */
-  html:not(.rm) .page:not([data-open]) .col:is(:hover,:has(.c-open:focus-visible:not(.no-ring))) .fxu img{
+  html:not(.rm) .page:not([data-open]) .col:is(:hover,.kbf) .fxu img{
     scale:var(--hs, 1);
     translate:var(--htx, 0px) var(--hty, 0px);
   }
 }
 /* bands: the same colour change on every band that is not open, and the slice eases out to its full cover */
 @media (hover:hover) and (pointer:fine) and (max-width:1279px){
-  html.js .col:not(.is-open):is(:hover,:has(.c-open:focus-visible:not(.no-ring))) :is(.c-num,.c-title){color:var(--red)}
+  html.js .col:not(.is-open):is(:hover,.kbf) :is(.c-num,.c-title){color:var(--red)}
 }
 @media (hover:hover) and (pointer:fine) and (max-width:1279px) and (prefers-reduced-motion:no-preference){
   html.js .c-slice > img,html.js .c-slice > .stack,html.js .c-slice.six .sx img{transition:scale .5s var(--change), translate .5s var(--change)}
-  html:not(.rm) .col:not(.is-open):is(:hover,:has(.c-open:focus-visible:not(.no-ring))) :is(.c-slice > img,.c-slice > .stack,.c-slice.six .sx img){
+  html:not(.rm) .col:not(.is-open):is(:hover,.kbf) :is(.c-slice > img,.c-slice > .stack,.c-slice.six .sx img){
     scale:var(--hs, 1);
     translate:var(--htx, 0px) var(--hty, 0px);
   }
@@ -603,6 +610,17 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     var(--fx-red-0) 100%);
 }
 
+/* a reflected light sits in a box that holds its share of the original's opacity,
+   so the light inside runs the same cycle as the original */
+.cardfx-reflk {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
 /* what sits inside the water sheet, carried against its motion */
 .cardfx-anchor {
   position: absolute;
@@ -660,16 +678,20 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
 }
 
 /* ---------- card 1: the live mosaic, as the home page has it ----------
-   One rectangle of pictures, no boxes of their own: a 3 by 3 grid with a 3 px
-   gap, the big picture in area a (2 by 2), four small ones in areas b to e, and
-   the sixth picture waiting offstage. Every picture covers its cell and has a
-   1 px hairline of var(--rule) just inside its edge. The first
-   six children of the card are the six .fx-tile elements, in the order of the
-   pictures. The script moves them by inline style while it runs and puts the
-   markup back on stop, so these rules are the arrangement at rest. The card's
-   own width and height belong to the page. */
+   One rectangle of pictures, no boxes of their own: a 3 by 3 grid, the big
+   picture in area a (2 by 2), four small ones in areas b to e, and the sixth
+   picture waiting offstage. Every picture covers its cell. The lines are the
+   card's own: the grid gap is 1 px over a var(--rule) background, so one line
+   of var(--rule) runs between neighbouring pictures with no gap beside it, and
+   a 1 px border of var(--rule) runs round the outside. The pictures sit on
+   var(--paper) with no border of their own, so the line stays single whatever
+   moves over it. The first six children of the card are the six .fx-tile
+   elements, in the order of the pictures. The script moves them by inline
+   style while it runs and puts the markup back on stop, so these rules are the
+   arrangement at rest. The card's own width and height belong to the page. */
 .fx[data-card="1"] {
   position: relative;
+  box-sizing: border-box;
   display: grid;
   grid-template-columns: repeat(3, 1fr);
   grid-template-rows: repeat(3, 1fr);
@@ -677,9 +699,22 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     "a a b"
     "a a b"
     "c d e";
-  gap: 3px;
-  background: var(--paper);
+  gap: 1px;
+  background: var(--rule);
+  border: 1px solid var(--rule);
   overflow: hidden;
+  isolation: isolate;
+}
+
+/* while the card runs, the script lays one still cell of paper under each of
+   the five areas. A picture that fades in or out then shows paper behind it,
+   and the only place the line colour shows is the 1 px gap between the cells */
+.fx[data-card="1"] .cardfx-cell {
+  min-width: 0;
+  min-height: 0;
+  background: var(--paper);
+  z-index: -1;
+  pointer-events: none;
 }
 
 .fx[data-card="1"] .fx-tile {
@@ -689,6 +724,8 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   min-height: 0;
   margin: 0;
   padding: 0;
+  border: 0;
+  background: var(--paper);
   will-change: transform, opacity;
 }
 
@@ -699,10 +736,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   max-width: none;
   max-height: none;
   object-fit: cover;
-  /* a hairline just inside the edge of every picture, so each boundary shows;
-     the gap between the tiles stays 3 px */
-  outline: 1px solid var(--rule);
-  outline-offset: -1px;
+  outline: 0;
 }
 
 .fx[data-card="1"] .fx-tile:nth-child(1) { grid-area: a; }
@@ -743,6 +777,48 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
 .fx[data-card="4"] .fx-machine {
   transform-origin: 0 0;
   transform: var(--machine-rest);
+}
+
+/* The endless cycles, written as plain keyframes with fixed values. The script
+   sets each element's animation (name, length, a negative delay that puts the
+   cycle part-way through at the start) in its style attribute. */
+
+/* a light on the face: dim, a quick rise, a long fade, a long rest */
+@keyframes cardfx-face {
+  0% { opacity: 0.25; animation-timing-function: ease-in-out; }
+  10% { opacity: 1; animation-timing-function: ease-in-out; }
+  42% { opacity: 0.9; animation-timing-function: ease-in-out; }
+  62% { opacity: 0.25; }
+  100% { opacity: 0.25; }
+}
+
+/* the manor lamp going out and coming back */
+@keyframes cardfx-lamp {
+  0% { opacity: 1; animation-timing-function: ease-in-out; }
+  45% { opacity: 0; animation-timing-function: ease-in-out; }
+  55% { opacity: 0; animation-timing-function: ease-in-out; }
+  100% { opacity: 1; }
+}
+
+/* one bead of the pulse on card 7 */
+@keyframes cardfx-bead {
+  0% { opacity: 0.12; animation-timing-function: ease-in-out; }
+  7% { opacity: 1; animation-timing-function: ease-in-out; }
+  17% { opacity: 0.12; }
+  100% { opacity: 0.12; }
+}
+
+/* the red pencil lines of card 5 rising and sinking */
+@keyframes cardfx-breath {
+  0% { opacity: 0; animation-timing-function: ease-in-out; }
+  50% { opacity: 0.5; animation-timing-function: ease-in-out; }
+  100% { opacity: 0; }
+}
+
+/* a layer on a hidden tab or off screen holds every cycle inside it */
+.cardfx-paused,
+.cardfx-paused * {
+  animation-play-state: paused !important;
 }
 </style>
 <!-- cardfx:css-end -->
@@ -785,7 +861,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
         </button>
         <div class="panel" id="p-1">
           <div class="entry">
-            <span class="art"><span class="fx" data-card="1" style="--far:1"><span class="fx-tile"><img src="img/home/01-stillpoint-knot-1400.webp" srcset="img/home/01-stillpoint-knot-700.webp 700w, img/home/01-stillpoint-knot-1400.webp 1115w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1115" height="1411" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/03-stillpoint-kept-empty-1400.webp" srcset="img/home/03-stillpoint-kept-empty-700.webp 700w, img/home/03-stillpoint-kept-empty-1400.webp 1254w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1254" height="1254" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/09-stillpoint-warm-room-1400.webp" srcset="img/home/09-stillpoint-warm-room-700.webp 700w, img/home/09-stillpoint-warm-room-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="1050" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/20-stillpoint-linen-1400.webp" srcset="img/home/20-stillpoint-linen-700.webp 700w, img/home/20-stillpoint-linen-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="933" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/19-stillpoint-found-light-1400.webp" srcset="img/home/19-stillpoint-found-light-700.webp 700w, img/home/19-stillpoint-found-light-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="1073" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/21-stillpoint-four-holes-1400.webp" srcset="img/home/21-stillpoint-four-holes-700.webp 700w, img/home/21-stillpoint-four-holes-1400.webp 1254w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1254" height="1254" alt="" loading="eager" decoding="sync"></span></span></span>
+            <span class="art"><a class="fx-link" href="stillpoint/stillpoint.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="1" style="--far:1"><span class="fx-tile"><img src="img/home/01-stillpoint-knot-1400.webp" srcset="img/home/01-stillpoint-knot-700.webp 700w, img/home/01-stillpoint-knot-1400.webp 1115w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1115" height="1411" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/03-stillpoint-kept-empty-1400.webp" srcset="img/home/03-stillpoint-kept-empty-700.webp 700w, img/home/03-stillpoint-kept-empty-1400.webp 1254w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1254" height="1254" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/09-stillpoint-warm-room-1400.webp" srcset="img/home/09-stillpoint-warm-room-700.webp 700w, img/home/09-stillpoint-warm-room-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="1050" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/20-stillpoint-linen-1400.webp" srcset="img/home/20-stillpoint-linen-700.webp 700w, img/home/20-stillpoint-linen-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="933" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/19-stillpoint-found-light-1400.webp" srcset="img/home/19-stillpoint-found-light-700.webp 700w, img/home/19-stillpoint-found-light-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="1073" alt="" loading="eager" decoding="sync"></span><span class="fx-tile"><img src="img/home/21-stillpoint-four-holes-1400.webp" srcset="img/home/21-stillpoint-four-holes-700.webp 700w, img/home/21-stillpoint-four-holes-1400.webp 1254w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1254" height="1254" alt="" loading="eager" decoding="sync"></span></span></a></span>
             <div class="words">
               <p class="title"><a href="stillpoint/stillpoint.html"><span class="num">1</span><span class="tt">Stillpoint</span></a></p>
               <p class="blurb">Ninety-nine pictures made by five of these minds. Look slowly.</p>
@@ -806,7 +882,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
         </button>
         <div class="panel" id="p-2">
           <div class="entry">
-            <span class="art"><span class="crop" style="--ar:0.5538;--bl:33.24;--bt:9.05;--bw:33.58;--bh:90.95;--ch:54vh"><span class="fxp"><span class="fx" data-card="2" style="--far:1.5005"><img class="fx-img" src="img/home/10-feel-porcelain-face-1400.webp" srcset="img/home/10-feel-porcelain-face-700.webp 700w, img/home/10-feel-porcelain-face-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="933" alt="A hollow porcelain face, open at the back, where a lattice of small lights hangs in the shape of the missing head." loading="eager" decoding="sync"></span></span></span></span>
+            <span class="art"><span class="crop" style="--ar:0.5538;--bl:33.24;--bt:9.05;--bw:33.58;--bh:90.95;--ch:54vh"><span class="fxp"><a class="fx-link" href="can-artificial-minds-feel/can-artificial-minds-feel.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="2" style="--far:1.5005"><img class="fx-img" src="img/home/10-feel-porcelain-face-1400.webp" srcset="img/home/10-feel-porcelain-face-700.webp 700w, img/home/10-feel-porcelain-face-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="933" alt="A hollow porcelain face, open at the back, where a lattice of small lights hangs in the shape of the missing head." loading="eager" decoding="sync"></span></a></span></span></span>
             <div class="words">
               <p class="title"><a href="can-artificial-minds-feel/can-artificial-minds-feel.html"><span class="num">2</span><span class="tt">Can Artificial Minds Feel?</span></a></p>
               <p class="blurb">Is there anyone in there? An essay in four chapters on machine consciousness and motivation, with five experiments a reader can run on themselves.</p>
@@ -831,7 +907,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
                  reach down through soil full of fossils; under the robot, pages from
                  two tall stacks of books pour into a metal scaffold. The picture holds
                  still, toned like its neighbours. -->
-            <span class="art"><span class="fx" data-card="3" style="--far:1.2339"><img class="fx-img" src="img/home/18-how-much-data-hero-1400.webp" srcset="img/home/18-how-much-data-hero-700.webp 700w, img/home/18-how-much-data-hero-1400.webp 1393w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1393" height="1129" alt="A child and a small robot read at matching desks. Roots spread from under the child’s desk through soil full of fossils, and pages from two tall stacks of books flow down into a metal scaffold under the robot’s." loading="eager" decoding="sync"></span></span>
+            <span class="art"><a class="fx-link" href="why-so-much-data/why-so-much-data.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="3" style="--far:1.2339"><img class="fx-img" src="img/home/18-how-much-data-hero-1400.webp" srcset="img/home/18-how-much-data-hero-700.webp 700w, img/home/18-how-much-data-hero-1400.webp 1393w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1393" height="1129" alt="A child and a small robot read at matching desks. Roots spread from under the child’s desk through soil full of fossils, and pages from two tall stacks of books flow down into a metal scaffold under the robot’s." loading="eager" decoding="sync"></span></a></span>
             <div class="words">
               <p class="title"><a href="why-so-much-data/why-so-much-data.html"><span class="num">3</span><span class="tt">Who Learns Faster, a Toddler or a Chatbot?</span></a></p>
               <p class="blurb">It depends on the stage. Today’s chatbots need trillions of words to grow up, but they pick up a new skill in a minute. AI is slow to learn, quick to catch on.</p>
@@ -852,7 +928,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
         </button>
         <div class="panel" id="p-4">
           <div class="entry">
-            <span class="art art-4"><span class="fx" data-card="4" style="--far:1.7769" role="img" aria-label="A human hand and a mechanical hand, each holding a fountain pen, writing the same lines of handwriting on one sheet of paper."><img class="fx-paper" src="img/home/11-writing-paper-1400.webp" srcset="img/home/11-writing-paper-700.webp 700w, img/home/11-writing-paper-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="fx-machine" src="img/home/13-writing-machine-hand-1400.webp" srcset="img/home/13-writing-machine-hand-700.webp 700w, img/home/13-writing-machine-hand-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="fx-human" src="img/home/12-writing-human-hand-1400.webp" srcset="img/home/12-writing-human-hand-700.webp 700w, img/home/12-writing-human-hand-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"></span></span>
+            <span class="art art-4"><a class="fx-link" href="did-ai-write-this/did-ai-write-this.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="4" style="--far:1.7769" role="img" aria-label="A human hand and a mechanical hand, each holding a fountain pen, writing the same lines of handwriting on one sheet of paper."><img class="fx-paper" src="img/home/11-writing-paper-1400.webp" srcset="img/home/11-writing-paper-700.webp 700w, img/home/11-writing-paper-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="fx-machine" src="img/home/13-writing-machine-hand-1400.webp" srcset="img/home/13-writing-machine-hand-700.webp 700w, img/home/13-writing-machine-hand-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="fx-human" src="img/home/12-writing-human-hand-1400.webp" srcset="img/home/12-writing-human-hand-700.webp 700w, img/home/12-writing-human-hand-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"></span></a></span>
             <div class="words">
               <p class="title"><a href="did-ai-write-this/did-ai-write-this.html"><span class="num">4</span><span class="tt">Did AI Write This?</span></a></p>
               <p class="blurb">Two passages, one written by an AI model. Can you tell which? Then see what AI detectors, watermarks and editing histories can and cannot tell you.</p>
@@ -873,7 +949,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
         </button>
         <div class="panel" id="p-5">
           <div class="entry">
-            <span class="art"><span class="fx" data-card="5" style="--far:2.25"><span class="fx-brain"><img src="img/home/14-mind-brain-1400.webp" srcset="img/home/14-mind-brain-700.webp 700w, img/home/14-mind-brain-1400.webp 1299w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1299" height="1211" alt="A human brain seen from above, pale, with thin gold wires branching out from it." loading="eager" decoding="sync"></span><span class="fx-lattice"><img src="img/home/15-mind-lattice-1400.webp" srcset="img/home/15-mind-lattice-700.webp 700w, img/home/15-mind-lattice-1400.webp 1293w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1293" height="1216" alt="A lattice of small paper cards on glass shelves, joined by gold pins." loading="eager" decoding="sync"></span></span></span>
+            <span class="art"><a class="fx-link" href="artificial-mind-of-your-own/an-artificial-mind-of-your-own.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="5" style="--far:2.25"><span class="fx-brain"><img src="img/home/14-mind-brain-1400.webp" srcset="img/home/14-mind-brain-700.webp 700w, img/home/14-mind-brain-1400.webp 1299w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1299" height="1211" alt="A human brain seen from above, pale, with thin gold wires branching out from it." loading="eager" decoding="sync"></span><span class="fx-lattice"><img src="img/home/15-mind-lattice-1400.webp" srcset="img/home/15-mind-lattice-700.webp 700w, img/home/15-mind-lattice-1400.webp 1293w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1293" height="1216" alt="A lattice of small paper cards on glass shelves, joined by gold pins." loading="eager" decoding="sync"></span></span></a></span>
             <div class="words">
               <p class="title"><a href="artificial-mind-of-your-own/an-artificial-mind-of-your-own.html"><span class="num">5</span><span class="tt">An Artificial Mind of Your Own</span></a></p>
               <p class="blurb">A look at what is inside these minds and how they learn, and a primer on how to invite one of them to live on your own laptop.</p>
@@ -894,7 +970,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
         </button>
         <div class="panel" id="p-6">
           <div class="entry">
-            <span class="art"><span class="fx" data-card="6" style="--far:1.75"><img class="fx-img" src="img/home/16-aldous-finch-manor-1400.webp" srcset="img/home/16-aldous-finch-manor-700.webp 700w, img/home/16-aldous-finch-manor-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="800" alt="Harrow Manor at night in falling snow, one study window lit warm." loading="eager" decoding="sync"></span></span>
+            <span class="art"><a class="fx-link" href="A-Salon-of-Witnesses/who-killed-aldous-finch.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="6" style="--far:1.75"><img class="fx-img" src="img/home/16-aldous-finch-manor-1400.webp" srcset="img/home/16-aldous-finch-manor-700.webp 700w, img/home/16-aldous-finch-manor-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="800" alt="Harrow Manor at night in falling snow, one study window lit warm." loading="eager" decoding="sync"></span></a></span>
             <div class="words">
               <p class="title"><a href="A-Salon-of-Witnesses/who-killed-aldous-finch.html"><span class="num">6</span><span class="tt">Who Killed Aldous Finch? A Transformer Explainer</span></a></p>
               <p class="blurb">Solve the murder and you will know how artificial minds learned to think and understand our world. A plain-language guide to the transformer, the architecture they are built on.</p>
@@ -915,7 +991,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
         </button>
         <div class="panel" id="p-7">
           <div class="entry">
-            <span class="art"><span class="fx" data-card="7" style="--far:1.5855"><img class="fx-img" src="img/home/17-canon-bookcase-1400.webp" srcset="img/home/17-canon-bookcase-700.webp 700w, img/home/17-canon-bookcase-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="883" alt="A dark wooden bookcase of three shelves of old books, with a thread of small gold lights strung between some of them." loading="eager" decoding="sync"></span></span>
+            <span class="art"><a class="fx-link" href="AI-future-canon/ai-future-canon.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="7" style="--far:1.5855"><img class="fx-img" src="img/home/17-canon-bookcase-1400.webp" srcset="img/home/17-canon-bookcase-700.webp 700w, img/home/17-canon-bookcase-1400.webp 1400w" sizes="(min-width:1280px) 60vw, (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="883" alt="A dark wooden bookcase of three shelves of old books, with a thread of small gold lights strung between some of them." loading="eager" decoding="sync"></span></a></span>
             <div class="words">
               <p class="title"><a href="AI-future-canon/ai-future-canon.html"><span class="num">7</span><span class="tt">The AI-Future Canon</span></a></p>
               <p class="blurb">In a few years, people and AI will live and work side by side everywhere. These seventy books, some stories and some serious forecasts, will prepare you for it. Three artificial minds read and ranked them all.</p>
@@ -1065,7 +1141,28 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     for (var i = 0; i < c.anims.length; i++) {
       try { if (want) c.anims[i].play(); else c.anims[i].pause(); } catch (e) {}
     }
+    setPaused(c, !want);
     if (want) wake();
+  }
+
+  /* the cycles drawn by the stylesheet's keyframes wait while a layer carries
+     the class cardfx-paused */
+  function setPaused(c, on) {
+    for (var i = 0; i < c.layers.length; i++) {
+      var cl = c.layers[i].classList;
+      if (on) cl.add('cardfx-paused'); else cl.remove('cardfx-paused');
+    }
+  }
+
+  /* a box of the page is on screen when any part of it is inside the window */
+  function onScreen(node) {
+    try {
+      var r = node.getBoundingClientRect();
+      var vw = window.innerWidth || document.documentElement.clientWidth;
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      if (!r.width || !r.height) return true;
+      return r.bottom > 0 && r.right > 0 && r.top < vh && r.left < vw;
+    } catch (e) { return true; }
   }
 
   document.addEventListener('visibilitychange', function () {
@@ -1101,6 +1198,13 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
       c.layers.push(d);
       c.fades.push(d);
       return d;
+    };
+
+    /* an endless cycle drawn by the stylesheet's @keyframes (the way the old
+       home page ran its lights), started 'delay' seconds into its own timeline:
+       a negative delay is a cycle that is already under way */
+    c.cycle = function (node, name, dur, delay, timing) {
+      node.style.animation = name + ' ' + dur + 's ' + (timing || 'linear') + ' ' + delay + 's infinite';
     };
 
     c.anim = function (target, keyframes, opts) {
@@ -1198,16 +1302,6 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   var WATERLINE = 68.4;      // percent of the picture height, the mirror axis
   var REFLECT_K = 0.45;      // a reflected light is this share of the light's opacity
 
-  function faceKeys(k) {
-    return [
-      { opacity: FACE_REST * k, offset: 0, easing: 'ease-in-out' },
-      { opacity: k, offset: 0.1, easing: 'ease-in-out' },
-      { opacity: 0.9 * k, offset: 0.42, easing: 'ease-in-out' },
-      { opacity: FACE_REST * k, offset: 0.62 },
-      { opacity: FACE_REST * k, offset: 1 }
-    ];
-  }
-
   /* the joints low enough on the mesh to show in the reflection, mirrored across
      the waterline, with a share of opacity that fades with depth */
   function faceReflections() {
@@ -1229,7 +1323,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
       if (c.reduced) {
         light.style.opacity = '0.3';
       } else {
-        c.anim(light, faceKeys(1), { duration: FACE_DUR[i] * 1000, delay: (FACE_DELAY[i] - FACE_SHIFT) * 1000, iterations: Infinity });
+        c.cycle(light, 'cardfx-face', FACE_DUR[i], FACE_DELAY[i] - FACE_SHIFT);
       }
     }
     if (c.reduced) {
@@ -1341,8 +1435,12 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     for (var r = 0; r < refl.length; r++) {
       var sx = 50 * (1 + (refl[r].x / 100 - RIP.l) / bw);
       var sy = 50 * (1 + (refl[r].y / 100 - RIP.t) / bh);
-      var light = makeLight(anchor, sx, sy, FACE_CORE / (2 * bw), FACE_BOX / (2 * bw), 'cardfx-light-face');
-      c.anim(light, faceKeys(refl[r].k), { duration: FACE_DUR[refl[r].i] * 1000, delay: (FACE_DELAY[refl[r].i] - FACE_SHIFT) * 1000, iterations: Infinity });
+      /* the wrapper holds the reflection's share of the light, so the light's own cycle is the same as the original's */
+      var wrap = el('div', 'cardfx-reflk');
+      wrap.style.opacity = String(Math.round(refl[r].k * 1000) / 1000);
+      anchor.appendChild(wrap);
+      var light = makeLight(wrap, sx, sy, FACE_CORE / (2 * bw), FACE_BOX / (2 * bw), 'cardfx-light-face');
+      c.cycle(light, 'cardfx-face', FACE_DUR[refl[r].i], FACE_DELAY[refl[r].i] - FACE_SHIFT);
     }
     sheet.appendChild(anchor);
     win.appendChild(sheet);
@@ -1386,7 +1484,21 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   function card2(c) {
     var img = c.fx.querySelector('img.fx-img');
     faceLights(c);
-    var water = (!c.reduced && img) ? faceWater(c, img) : null;
+    var water = null;
+    if (!c.reduced && img) {
+      var nL = c.layers.length, nF = c.fades.length, nU = c.undo.length;
+      try {
+        water = faceWater(c, img);
+      } catch (e) {
+        /* a browser that refuses the filter keeps the lights and the waterline */
+        for (var q = nL; q < c.layers.length; q++) { if (c.layers[q].parentNode) c.layers[q].parentNode.removeChild(c.layers[q]); }
+        c.layers.length = nL;
+        c.fades.length = nF;
+        while (c.undo.length > nU) { try { c.undo.pop()(); } catch (e2) {} }      // the picture's own reflection comes back
+        water = null;
+        if (window.console && console.warn) console.warn('CardFX: the water of card 2 did not start', e);
+      }
+    }
     if (water) {
       c.card.tick = water.tick;
       c.card.close = water.close;
@@ -1625,13 +1737,9 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
       ctx.globalCompositeOperation = 'destination-in';
       ctx.drawImage(src, 0, 0, w, h);
       ctx.globalCompositeOperation = 'source-over';
-      if (!c.anims.some(function (a) { return a.__cardfx === 'breath'; })) {
-        var a = c.anim(cv, [
-          { opacity: 0, offset: 0, easing: 'ease-in-out' },
-          { opacity: 0.5, offset: 0.5, easing: 'ease-in-out' },
-          { opacity: 0, offset: 1 }
-        ], { duration: 4000, iterations: Infinity });
-        a.__cardfx = 'breath';
+      if (!cv.style.animation) {
+        c.cycle(cv, 'cardfx-breath', 4, 0);
+        if (!c.running) cv.classList.add('cardfx-paused');
       }
     }
 
@@ -1677,12 +1785,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     group.appendChild(core);
     group.appendChild(cast);
     if (c.reduced) return;                    // the live page leaves the lamp lit, full strength
-    c.anim(group, [
-      { opacity: 1, offset: 0, easing: 'ease-in-out' },
-      { opacity: 0, offset: 0.45, easing: 'ease-in-out' },
-      { opacity: 0, offset: 0.55, easing: 'ease-in-out' },
-      { opacity: 1, offset: 1 }
-    ], { duration: 4444, iterations: Infinity });
+    c.cycle(group, 'cardfx-lamp', 4.444, 0, 'ease-in-out');
   }
 
   /* ---------- card 7: the bookcase thread ---------- */
@@ -1714,12 +1817,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
       if (c.reduced) {
         light.style.opacity = '0.35';
       } else {
-        c.anim(light, [
-          { opacity: 0.12, offset: 0, easing: 'ease-in-out' },
-          { opacity: 1, offset: 0.07, easing: 'ease-in-out' },
-          { opacity: 0.12, offset: 0.17 },
-          { opacity: 0.12, offset: 1 }
-        ], { duration: WAKE * 1000, delay: -step * 1000 * i, iterations: Infinity });
+        c.cycle(light, 'cardfx-bead', WAKE, -step * i);
       }
     }
   }
@@ -1774,6 +1872,17 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     });
 
     if (c.reduced) return;                    // reduced motion: the first five stay, no turns
+
+    /* a still cell of paper under each area. The gaps between the pictures
+       show the line colour of the card's background, and a picture fading in
+       or out would let that colour through; the cells keep paper behind it. */
+    for (var q0 = 0; q0 < MOSAIC_STAGE; q0++) {
+      var cell = el('div', 'cardfx-cell');
+      cell.setAttribute('aria-hidden', 'true');
+      cell.style.gridArea = MOSAIC_SLOTS[q0];
+      fx.appendChild(cell);
+      c.layers.push(cell);
+    }
 
     function hide(t) {
       var st = t.style;
@@ -1849,7 +1958,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
         } else if (first[k]) {
           var g = first[k];
           t.style.position = 'absolute'; t.style.gridArea = 'auto'; t.style.transform = '';
-          t.style.left = (g.left - mr.left) + 'px'; t.style.top = (g.top - mr.top) + 'px';
+          t.style.left = (g.left - mr.left - fx.clientLeft) + 'px'; t.style.top = (g.top - mr.top - fx.clientTop) + 'px';   // measured from the inside of the card's border
           t.style.width = g.width + 'px'; t.style.height = g.height + 'px';
           t.style.pointerEvents = 'none'; t.style.opacity = '0';
           run(t, [{ opacity: 1 }, { opacity: 0 }], { duration: FADE_MS, easing: 'ease' }, (function (tt) { return function () { hide(tt); }; })(t));
@@ -1883,11 +1992,12 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
       return noop;
     }
     live.push(c);
+    if (!c.running) setPaused(c, true);
 
     if (typeof IntersectionObserver === 'function') {
       c.io = new IntersectionObserver(function (entries) {
         var last = entries[entries.length - 1];
-        c.inView = last.isIntersecting;
+        c.inView = last.isIntersecting || onScreen(fxEl);      // a browser that reports a clipped box as hidden does not freeze the lights
         refresh(c);
       });
       c.io.observe(fxEl);
@@ -1989,11 +2099,14 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
      All numbers are fractions of the picture. Bands (under 1280 px) have their own subject box and
      focus, because their windows are wide and short.
   ------------------------------------------------------------------- */
-  /* The slices. v is the box of the picture that the hover frames: the picture covers the window with this box
-     centred in it, so the window never shows more than v. Each v holds the subject and little else (the sparse
-     margins of a drawing are left out). f is the point the rest framing is centred on, and k is how much more
-     the picture is zoomed at rest than on hover (at least 1.25). bv and bf are the same for a band, which has
-     a wide window and shows a thin strip of the subject. All are fractions of the picture. */
+  /* The slices. Column 1 (Stillpoint, its six slices and its band) rests on the framing below and its hover covers the window:
+     v is the box of the picture the hover frames (the picture covers the window with v centred in it), f is the point the rest
+     framing is centred on, and k is how much more the picture is zoomed at rest than on hover. Columns 2 to 7 and their bands
+     (round 19) rest where that hover used to end: the picture covers the window with v (bv in a band) centred. A column then
+     zooms out to ZOUT (.8) of that scale about the centre of v, and its sides stay inside ink, the box of the picture that holds
+     drawing; its top and bottom may show paper. A band zooms out to zb of the rest scale: zb is the farthest zoom-out at which no
+     edge of the strip is more than about a third paper, measured on the pictures (a band is a thin strip, so a long zoom-out
+     reaches the white around the drawing at both ends). All numbers are fractions of the picture. */
   var FRAMES = {
     1: [  /* the six mosaic pictures, in order; bv and bf frame the cell in a band */
       { v: [.118, .490, .912, .870], f: [.510, .660], k: 1.3, bv: [.350, .660, .650, .842], bf: [.500, .742] },
@@ -2003,12 +2116,12 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
       { v: [.472, .440, .928, .800], f: [.720, .620], k: 1.3, bv: [.740, .585, .940, .800], bf: [.840, .690] },
       { v: [.088, .250, .912, .750], f: [.500, .500], k: 1.3, bv: [.140, .150, .840, .850], bf: [.490, .500] }
     ],
-    2: { v: [.484, .240, .616, .960], f: [.575, .420], k: 1.3, bv: [.420, .340, .700, .430], bf: [.555, .375] },   /* the face */
-    3: { v: [.179, .080, .281, .540], f: [.246, .250], k: 1.4, bv: [.710, .192, .930, .328], bf: [.820, .270] },   /* the child at the desk; bands show the chatbot at its desk */
-    4: { v: [.676, .140, .764, .700], f: [.720, .380], k: 1.3, bv: [.630, .030, .970, .630], bf: [.790, .300] },   /* the machine hand */
-    5: { v: [.397, .100, .603, .900], f: [.500, .500], k: 1.3, bv: [.170, .400, .820, .660], bf: [.500, .530] },   /* the brain */
-    6: { v: [.482, .490, .538, .850], f: [.510, .640], k: 1.3, bv: [.320, .591, .660, .889], bf: [.490, .740] },   /* the manor */
-    7: { v: [.426, .055, .574, .905], f: [.500, .460], k: 1.3, bv: [.036, .011, .966, .921], bf: [.500, .460] }    /* the bookcase */
+    2: { v: [.484, .240, .616, .960], f: [.575, .420], k: 1.3, bv: [.420, .340, .700, .430], bf: [.555, .375], ink: [.344, .103, .656, .991], zb: .95 },   /* the face */
+    3: { v: [.179, .080, .281, .540], f: [.246, .250], k: 1.4, bv: [.710, .192, .930, .328], bf: [.820, .270], ink: [0, 0, 1, .989], zb: .96 },   /* the child at the desk; bands show the chatbot at its desk */
+    4: { v: [.676, .140, .764, .700], f: [.720, .380], k: 1.3, bv: [.630, .030, .970, .630], bf: [.790, .300], ink: [0, .039, 1, 1], zb: .92 },   /* the machine hand */
+    5: { v: [.397, .100, .603, .900], f: [.500, .500], k: 1.3, bv: [.170, .400, .820, .660], bf: [.500, .530], ink: [.007, .015, .999, .990], zb: .96 },   /* the brain */
+    6: { v: [.482, .490, .538, .850], f: [.510, .640], k: 1.3, bv: [.320, .591, .660, .889], bf: [.490, .740], ink: [0, .033, 1, .998], zb: .95 },   /* the manor */
+    7: { v: [.426, .055, .574, .905], f: [.500, .460], k: 1.3, bv: [.036, .011, .966, .921], bf: [.500, .460], ink: [.001, 0, .999, .998], zb: .99 }    /* the bookcase */
   };
   var K_BAND = 1.25;
 
@@ -2021,7 +2134,27 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     var sr = sh * k;
     var rx = clamp(w / 2 - sr * f[0] * nw, w - sr * vr, -sr * vl);
     var ry = clamp(h / 2 - sr * f[1] * nh, h - sr * vb, -sr * vt);
-    return { sh: sh, hx: hx, hy: hy, sr: sr, rx: rx, ry: ry };
+    /* hs, hox, hoy: the hover is the cover framing, which is the rest framing eased out by 1/k */
+    return { sh: sh, hx: hx, hy: hy, sr: sr, rx: rx, ry: ry, hs: 1 / k, hox: hx, hoy: hy };
+  }
+  /* Columns 2 to 7 and their bands. Rest: the picture covers the window with v centred (the old hover end).
+     Hover: z times that scale, about the centre of v. With an ink box, an axis whose rest window lies inside it keeps the hover window inside it too. */
+  var ZOUT = 0.8;
+  function frame2(w, h, nw, nh, v, z, ink) {
+    var vl = v[0] * nw, vt = v[1] * nh, vr = v[2] * nw, vb = v[3] * nh;
+    var sh = Math.max(w / (vr - vl), h / (vb - vt));
+    var hx = w / 2 - sh * (vl + vr) / 2, hy = h / 2 - sh * (vt + vb) / 2;
+    var c = [(v[0] + v[2]) / 2, (v[1] + v[3]) / 2], s2 = sh * z;
+    if (ink) {
+      var size = [w], N = [nw], i0 = [ink[0]], i1 = [ink[2]];
+      var half = size[0] / (2 * sh * N[0]);
+      if (c[0] - half >= i0[0] - .002 && c[0] + half <= i1[0] + .002) {   /* the rest window is inside the ink box across */
+        s2 = Math.min(sh, Math.max(s2, w / ((i1[0] - i0[0]) * nw)));
+        var h2 = w / (2 * s2 * nw);
+        c[0] = clamp(c[0], i0[0] + h2, i1[0] - h2);
+      }
+    }
+    return { sh: sh, hx: hx, hy: hy, sr: sh, rx: hx, ry: hy, hs: s2 / sh, hox: w / 2 - s2 * c[0] * nw, hoy: h / 2 - s2 * c[1] * nh };
   }
 
   cols.forEach(function (c) {
@@ -2075,7 +2208,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     var win = windowOf(c, u, g);
     var box = layoutBox(u.el, g.inner);
     var nw = u.nat[0], nh = u.nat[1];
-    var fr = frame(win.w, win.h, nw, nh, u.fr.v, u.fr.f, u.fr.k);
+    var fr = u.tile ? frame(win.w, win.h, nw, nh, u.fr.v, u.fr.f, u.fr.k) : frame2(win.w, win.h, nw, nh, u.fr.v, ZOUT, u.fr.ink);
     var tlx = win.x + fr.rx, tly = win.y + fr.ry;     /* the picture's top left, in the column */
     var cz = fr.sr;                                    /* and its scale */
     /* the same picture in its open place. A mosaic tile shows its picture covering its cell. While the slice
@@ -2099,8 +2232,8 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
       cp: inset(lx, ly, lw, lh),
       ecp: inset(0, 0, cw, ch),      /* the open place: the cell */
       ig: ig, box: box,
-      /* the hover: the picture eases out by 1/k and to the cover framing, in its own coordinates */
-      hs: 1 / u.fr.k, htx: (fr.hx - fr.rx) / s, hty: (fr.hy - fr.ry) / s
+      /* the hover: the picture eases out to its hover framing, in its own coordinates */
+      hs: fr.hs, htx: (fr.hox - fr.rx) / s, hty: (fr.hoy - fr.ry) / s
     };
   }
 
@@ -2147,15 +2280,15 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
 
   /* Bands. A slice picture is placed in its window (the right part of the band, or one of the six cells of
      Stillpoint) from the same two framings, with the band's own subject box and focus. */
-  function bandPlace(el, win, nat, v, f, k, labelStack) {
-    var fr = frame(win.w, win.h, nat[0], nat[1], v, f, k);
+  function bandPlace(el, win, nat, v, f, k, zb) {
+    var fr = zb ? frame2(win.w, win.h, nat[0], nat[1], v, zb, null) : frame(win.w, win.h, nat[0], nat[1], v, f, k);
     var st = el.style;
     st.left = win.x + 'px'; st.top = win.y + 'px';
     st.width = (nat[0] * fr.sr) + 'px'; st.height = (nat[1] * fr.sr) + 'px';
     st.transform = 'translate(' + fr.rx + 'px,' + fr.ry + 'px)';
-    st.setProperty('--hs', 1 / k);
-    st.setProperty('--htx', (fr.hx - fr.rx / k) + 'px');
-    st.setProperty('--hty', (fr.hy - fr.ry / k) + 'px');
+    st.setProperty('--hs', fr.hs);
+    st.setProperty('--htx', (fr.hox - fr.hs * fr.rx) + 'px');
+    st.setProperty('--hty', (fr.hoy - fr.hs * fr.ry) + 'px');
   }
   var BAND_PROPS = ['left', 'top', 'width', 'height', 'transform'];
   function bandClear(c) {
@@ -2180,7 +2313,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     var x0 = tz.slice(-1) === '%' ? W * parseFloat(tz) / 100 : parseFloat(tz);
     var el = cs.querySelector(':scope > img, :scope > .stack'), fb = FRAMES[n];
     var nat = el.tagName === 'IMG' ? [+el.getAttribute('width'), +el.getAttribute('height')] : [1672, 941];
-    bandPlace(el, { x: x0, y: 0, w: W - x0, h: bandH }, nat, fb.bv, fb.bf, K_BAND);
+    bandPlace(el, { x: x0, y: 0, w: W - x0, h: bandH }, nat, fb.bv, fb.bf, K_BAND, fb.zb);
   }
 
   var pending = false, busy = false;
@@ -2432,7 +2565,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   /* Tab reaches every project link. A link inside a closed column opens that column, so it is never focused out of sight. */
   page.addEventListener('focusin', function (e) {
     var p = e.target.closest ? e.target.closest('.panel') : null;
-    if (!p) return;
+    if (!p || e.target.closest('.fx-link')) return;   /* a click on the picture focuses its link; that is no Tab stop */
     var c = p.closest('.col');
     unscroll(c);
     if (c !== current) {
@@ -2486,6 +2619,21 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   cols.forEach(function (c) {
     btnOf(c).addEventListener('blur', function () { btnOf(c).classList.remove('no-ring'); });
   });
+  /* The column that has the keyboard focus, with its ring, shows what hover shows. The class .kbf on the column does this, so no selector needs :has(). */
+  function syncKb() {
+    cols.forEach(function (c) {
+      var b = btnOf(c), on = false;
+      try { on = document.activeElement === b && !b.classList.contains('no-ring') && b.matches(':focus-visible'); } catch (err) { on = false; }
+      c.classList.toggle('kbf', on);
+    });
+  }
+  document.addEventListener('focusin', syncKb);
+  document.addEventListener('focusout', function () { setTimeout(syncKb, 0); });
+  document.addEventListener('keydown', function () { setTimeout(syncKb, 0); }, true);
+  if (window.MutationObserver) {
+    var kbo = new MutationObserver(syncKb);
+    cols.forEach(function (c) { kbo.observe(btnOf(c), { attributes: true, attributeFilter: ['class'] }); });
+  }
   document.addEventListener('keydown', function (e) {
     if ((e.key === 'Escape' || e.key === 'Esc') && current) {
       var c = current, b = btnOf(c);

@@ -55,6 +55,7 @@
     --paper:#ffffff; --tint:#f2f2f2; --ink:#111111; --ink-soft:#3a3a3a;
     --ink-faint:#666666; --ink-ghost:#a8a8a8; --rule:#dadada; --rubric:#c3261c;
     --engrave:#555555;
+    --fig-box-line:#cccccc;
     --serif:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
     --margin-col:10rem; --gutter:2.25rem; --measure:34rem;
     --sheet:calc(var(--margin-col) + var(--gutter) + var(--measure));
@@ -230,7 +231,10 @@
   }
   h3.shoulder::before{content:"";display:block;width:1.9rem;height:1px;background:var(--rubric);margin:0 0 .22rem auto}
   figure{margin:0}
-  .plate-frame{background:var(--tint);border:1px solid var(--rule);padding:1.1rem 1.2rem}
+  /* a thin box with room inside, no grey ground: the same border and padding as the figure frames of Did AI Write This? */
+  .plate-frame{background:none;border:1px solid var(--fig-box-line);padding:1rem 1.2rem 1rem}
+  @media (max-width:1000px){ .plate-frame{padding:.85rem .9rem .85rem} }
+  @media (max-width:560px){ .plate-frame{padding:.75rem .7rem .75rem} }
   .plate-frame svg{display:block;width:100%;height:auto}
   .plate-frame svg text{font-family:var(--serif)}
   .plate-frame svg .pt{font-size:10.5px;letter-spacing:.13em;text-transform:uppercase;fill:var(--ink-faint)}
@@ -317,14 +321,13 @@
     .sheet{padding:var(--s3) 1.15rem var(--s5)}
     h1{font-size:2rem}
     .cards{grid-template-columns:1fr}
-    .plate-frame{padding:.8rem .7rem}
   }
 
   /* ===== Theme: white page, black text, grey boxes; red only for the AI ===== */
   :root{
     --paper:#ffffff; --tint:#f2f2f2; --ink:#111111; --ink-soft:#3a3a3a;
     --ink-faint:#666666; --ink-ghost:#a8a8a8; --rule:#dadada;
-    --rubric:#c3261c; --engrave:#555555;
+    --rubric:#c3261c; --engrave:#555555; --fig-box-line:#cccccc;
   }
   html,body{background:var(--paper);color:var(--ink)}
   .runhead a:hover{color:var(--ink);border-bottom-color:var(--ink)}
@@ -334,7 +337,6 @@
   .ornament i{background:var(--ink)}
   .chap-num{color:var(--ink-faint)}
   h3.shoulder::before{background:var(--ink)}
-  .plate-frame{border-color:transparent}
   figcaption{color:var(--ink-faint)}
   .fig-no{color:var(--ink-faint)}
   .card .no{color:var(--ink-faint)}
