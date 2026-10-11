@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-11T05:55:02Z",
+  "generated": "2026-10-11T22:03:20Z",
   "totals": {
-    "views_all": 28,
-    "visitors_all": 28,
-    "views_30d": 28,
-    "visitors_30d": 28
+    "views_all": 31,
+    "visitors_all": 31,
+    "views_30d": 31,
+    "visitors_30d": 31
   },
   "daily": [
     {
@@ -454,8 +454,8 @@
     },
     {
       "day": "2026-10-11",
-      "views": 0,
-      "visitors": 0
+      "views": 3,
+      "visitors": 3
     }
   ],
   "monthly": [
@@ -466,18 +466,18 @@
     },
     {
       "month": "2026-10",
-      "views": 12,
-      "visitors": 12
+      "views": 15,
+      "visitors": 15
     }
   ],
   "projects": [
     {
       "id": "stillpoint",
       "name": "Stillpoint",
-      "views_all": 9,
-      "visitors_all": 9,
-      "views_30d": 9,
-      "visitors_30d": 9
+      "views_all": 10,
+      "visitors_all": 10,
+      "views_30d": 10,
+      "visitors_30d": 10
     },
     {
       "id": "can-artificial-minds-feel",
@@ -530,17 +530,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 11,
-      "visitors_all": 11,
-      "views_30d": 11,
-      "visitors_30d": 11
+      "views_all": 13,
+      "visitors_all": 13,
+      "views_30d": 13,
+      "visitors_30d": 13
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 11,
-      "visitors_all": 11
+      "views_all": 13,
+      "visitors_all": 13
     },
     {
       "path": "/stillpoint/collection.html",
@@ -548,12 +548,12 @@
       "visitors_all": 5
     },
     {
-      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
-      "views_all": 4,
-      "visitors_all": 4
+      "path": "/stillpoint/stillpoint.html",
+      "views_all": 5,
+      "visitors_all": 5
     },
     {
-      "path": "/stillpoint/stillpoint.html",
+      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
       "views_all": 4,
       "visitors_all": 4
     },
@@ -576,27 +576,31 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 27
+      "visitors": 29
     },
     {
       "name": "France",
-      "visitors": 1
+      "visitors": 2
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 16
+      "visitors": 17
     },
     {
       "name": "Safari",
-      "visitors": 12
+      "visitors": 13
+    },
+    {
+      "name": "Firefox",
+      "visitors": 1
     }
   ],
   "systems": [
     {
       "name": "macOS",
-      "visitors": 14
+      "visitors": 16
     },
     {
       "name": "iOS",
@@ -609,12 +613,16 @@
     {
       "name": "Android",
       "visitors": 2
+    },
+    {
+      "name": "Linux",
+      "visitors": 1
     }
   ],
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 11
+      "visitors": 13
     },
     {
       "name": "Phone",
@@ -626,7 +634,7 @@
     },
     {
       "name": "Tablet",
-      "visitors": 2
+      "visitors": 3
     },
     {
       "name": "Unknown",
@@ -636,15 +644,15 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 9
+      "visitors": 10
     },
     {
       "name": "pundirp.github.io/artificialminds",
-      "visitors": 7
+      "visitors": 8
     },
     {
       "name": "pundirp.github.io",
-      "visitors": 4
+      "visitors": 5
     },
     {
       "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
