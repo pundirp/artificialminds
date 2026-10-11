@@ -726,7 +726,6 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   padding: 0;
   border: 0;
   background: var(--paper);
-  will-change: transform, opacity;
 }
 
 .fx[data-card="1"] .fx-tile img {
@@ -754,10 +753,6 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   height: 1px;
   opacity: 0;
   pointer-events: none;
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .fx[data-card="1"] .fx-tile { will-change: auto; }
 }
 
 /* ---------- card 4: the two hands at rest ----------
