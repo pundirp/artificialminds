@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-12T06:06:03Z",
+  "generated": "2026-10-12T21:18:05Z",
   "totals": {
-    "views_all": 31,
-    "visitors_all": 31,
-    "views_30d": 31,
-    "visitors_30d": 31
+    "views_all": 32,
+    "visitors_all": 32,
+    "views_30d": 32,
+    "visitors_30d": 32
   },
   "daily": [
     {
@@ -454,8 +454,8 @@
     },
     {
       "day": "2026-10-12",
-      "views": 0,
-      "visitors": 0
+      "views": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-10",
-      "views": 15,
-      "visitors": 15
+      "views": 16,
+      "visitors": 16
     }
   ],
   "projects": [
@@ -498,10 +498,10 @@
     {
       "id": "did-ai-write-this",
       "name": "Did AI Write This?",
-      "views_all": 1,
-      "visitors_all": 1,
-      "views_30d": 1,
-      "visitors_30d": 1
+      "views_all": 2,
+      "visitors_all": 2,
+      "views_30d": 2,
+      "visitors_30d": 2
     },
     {
       "id": "artificial-mind-of-your-own",
@@ -564,8 +564,8 @@
     },
     {
       "path": "/did-ai-write-this/did-ai-write-this.html",
-      "views_all": 1,
-      "visitors_all": 1
+      "views_all": 2,
+      "visitors_all": 2
     },
     {
       "path": "/why-so-much-data/why-so-much-data.html",
@@ -580,13 +580,13 @@
     },
     {
       "name": "France",
-      "visitors": 2
+      "visitors": 3
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 17
+      "visitors": 18
     },
     {
       "name": "Safari",
@@ -600,7 +600,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 16
+      "visitors": 17
     },
     {
       "name": "iOS",
@@ -622,7 +622,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 13
+      "visitors": 14
     },
     {
       "name": "Phone",
@@ -644,7 +644,7 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 10
+      "visitors": 11
     },
     {
       "name": "pundirp.github.io/artificialminds",
