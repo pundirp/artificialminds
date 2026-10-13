@@ -2261,6 +2261,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
      shows more of the picture at its sides and the drawing keeps its size. A window too narrow for v at that scale takes the scale
      that fits the width of v, so v stays whole. A window wider than the drawing (ink) takes the scale that covers it. Round 21: the
      rest is that framing at ZREST (.85) of its scale and the hover zooms out to ZOUT (.6) of it, about the middle of the window.
+     Round 23: a column with hl moves its hover window left until the window's left edge is at hl, so column 4 shows the pen's nib.
      Bands (under 1280 px) show the whole subject (bs) of each picture: the scale is the one at which bs fits the picture area in
      both directions, the picture is centred on bs, and the area shows paper around it where the drawing is smaller than the area.
      The six Stillpoint pictures fill the cells of a 3 by 2 grid, each cell on the subject of its picture (never smaller than the
@@ -2277,7 +2278,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     ],
     2: { v: [.484, .103, .656, .991], ink: [.344, .103, .656, .991], bs: [.344, .103, .656, .991] },   /* the face: the whole head and its reflection in a band */
     3: { v: [.179, .080, .281, .540], ink: [0, 0, 1, .989], bs: [.140, .100, .360, .400], bclip: [0, 0, .560, 1], bink: [0, 0, .560, .989] },   /* the child at the desk: the chair, the desk and the stones under them in a band, which shows nothing of the robot's side */
-    4: { v: [.676, .140, .764, .700], ink: [0, .039, 1, 1], bs: [.400, .030, .940, .900] },          /* the machine hand with its pen */
+    4: { v: [.636, .140, .724, .700], ink: [0, .039, 1, 1], hl: .56, bs: [.400, .030, .940, .900] },   /* the machine hand with its pen; hl: on hover the window reaches the nib, at canvas x .575 */
     5: { v: [.397, .100, .603, .900], ink: [.007, .015, .999, .990], bs: [.007, .015, .999, .990] },  /* the brain */
     6: { v: [.482, .490, .538, .850], ink: [0, .033, 1, .998], bs: [.310, .500, .700, .790] },       /* the manor: the central gable; the whole house in a band */
     7: { v: [.426, .055, .574, .905], ink: [.001, 0, .999, .998], bs: [.001, 0, .999, .998] }        /* the bookcase: three shelves; the whole case in a band */
@@ -2302,7 +2303,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
      Rest: ZREST of s0. Hover: ZOUT of s0, about the same centre; across, the window stays inside ink, and down it stays inside ink
      where it can. Above and below, paper shows where the drawing is smaller than the window. */
   var ZREST = 0.85, ZOUT = 0.6;
-  function frameH(w, h, nw, nh, v, ink) {
+  function frameH(w, h, nw, nh, v, ink, hl) {
     var vw = (v[2] - v[0]) * nw, vh = (v[3] - v[1]) * nh;
     var iw = (ink[2] - ink[0]) * nw, ih = (ink[3] - ink[1]) * nh;
     var s0 = Math.max(Math.min(h / vh, w / vw), w / iw);
@@ -2313,6 +2314,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     function at(z, down) {
       var s = Math.max(s0 * z, w / iw), hx = w / (2 * s * nw), hy = h / (2 * s * nh), cy = cy0;
       var cx = clamp(cx0, ink[0] + hx, ink[2] - hx);
+      if (down && hl != null) cx = Math.max(ink[0] + hx, Math.min(cx, hl + hx));   /* the hover window's left edge sits at hl or further left */
       if (down) cy = (2 * hy >= ih / nh) ? (ink[1] + ink[3]) / 2 : clamp(cy0, ink[1] + hy, ink[3] - hy);
       return { s: s, cx: cx, cy: cy };
     }
@@ -2392,7 +2394,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     var win = windowOf(c, u, g);
     var box = layoutBox(u.el, g.inner);
     var nw = u.nat[0], nh = u.nat[1];
-    var fr = u.tile ? frame(win.w, win.h, nw, nh, u.fr.v, u.fr.f, u.fr.k) : frameH(win.w, win.h, nw, nh, u.fr.v, u.fr.ink);
+    var fr = u.tile ? frame(win.w, win.h, nw, nh, u.fr.v, u.fr.f, u.fr.k) : frameH(win.w, win.h, nw, nh, u.fr.v, u.fr.ink, u.fr.hl);
     var tlx = win.x + fr.rx, tly = win.y + fr.ry;     /* the picture's top left, in the column */
     var cz = fr.sr;                                    /* and its scale */
     /* the same picture in its open place. A mosaic tile shows its picture covering its cell. While the slice
