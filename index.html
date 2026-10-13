@@ -601,6 +601,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
 
 /* the face lights are fuller than the others: a solid core, then a wide soft halo */
 .cardfx-light-face {
+  opacity: 0.04;
   background: radial-gradient(closest-side,
     var(--fx-red-98) 0,
     var(--fx-red-94) calc(var(--c, 20%) * 0.8),
@@ -778,13 +779,22 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
    sets each element's animation (name, length, a negative delay that puts the
    cycle part-way through at the start) in its style attribute. */
 
-/* a light on the face: dim, a quick rise, a long fade, a long rest */
-@keyframes cardfx-face {
-  0% { opacity: 0.25; animation-timing-function: ease-in-out; }
-  10% { opacity: 1; animation-timing-function: ease-in-out; }
-  42% { opacity: 0.9; animation-timing-function: ease-in-out; }
-  62% { opacity: 0.25; }
-  100% { opacity: 0.25; }
+/* a light on the face glows once: dark, a 1.2 s rise to full, a 0.4 s hold and a
+   1.5 s fade, 3.1 s in all (38.71, 51.61 and 100 percent). The script starts it
+   by giving the element this animation, and gives the next glow of the same
+   light the other name, so the animation restarts. */
+@keyframes cardfx-glow-a {
+  0% { opacity: 0.04; animation-timing-function: ease-in-out; }
+  38.71% { opacity: 1; }
+  51.61% { opacity: 1; animation-timing-function: ease-in-out; }
+  100% { opacity: 0.04; }
+}
+
+@keyframes cardfx-glow-b {
+  0% { opacity: 0.04; animation-timing-function: ease-in-out; }
+  38.71% { opacity: 1; }
+  51.61% { opacity: 1; animation-timing-function: ease-in-out; }
+  100% { opacity: 0.04; }
 }
 
 /* the manor lamp going out and coming back */
@@ -1285,13 +1295,17 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     [44.15, 18.31], [39.77, 25.36], [47.42, 29.19], [37.03, 35.42], [45.71, 35.63],
     [38.82, 44.41], [41.81, 47.26], [45.51, 49.90], [44.64, 63.94]
   ];
-  var FACE_DUR = [9.1, 12.9, 10.7, 7.5, 15.3, 10.5, 13.8, 8.6, 11.5];
-  var FACE_DELAY = [-2.1, -7.7, -4.6, -1.1, -11.6, -6.1, -9.9, -3.7, -2.7];
-  /* The cycles are independent. They are started 19 s into their own timeline,
-     which puts five or six lights up as the card opens and keeps at least two up
-     for the next minute. On average four of the nine are lit. */
-  var FACE_SHIFT = 19;
-  var FACE_REST = 0.25;
+  /* The lights are dark at rest. One at a time rises to full over 1.2 s, holds
+     for 0.4 s and fades over 1.5 s (the keyframes cardfx-glow-a and -b, 3.1 s
+     in all). A new light starts every 1.5 to 2.5 s. Above .3 a light is lit for
+     2.1 s, so with gaps of at least 1.5 s a third light never starts before
+     the first has dropped below .3: at most two are lit at once. */
+  var FACE_REST = 0.04;
+  var FACE_LIFE = 3.1;        // seconds from the start of a glow to its end
+  var FACE_LIT = 2.6;         // seconds a glow stays above .3, with a margin
+  var FACE_FIRST = 0.15;      // the first glow starts this long after start
+  var FACE_GAP = 1.5, FACE_GAP_SPAN = 1.0;
+  var FACE_STEADY = 6;        // under reduced motion this one light rests at .5
   var FACE_CORE = 0.8;       // 6 px at 760 px wide, as percent of the picture width
   var FACE_BOX = 3.4;        // the halo's full width
   var WATERLINE = 68.4;      // percent of the picture height, the mirror axis
@@ -1313,23 +1327,59 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   function faceLights(c) {
     var layer = c.layer('cardfx-face');
     var i, light;
+    /* sets[i] holds a light and, when the water shows one, its reflection */
+    c.face = { sets: [], flip: [] };
     for (i = 0; i < FACE_POINTS.length; i++) {
       light = makeLight(layer, FACE_POINTS[i][0], FACE_POINTS[i][1], FACE_CORE, FACE_BOX, 'cardfx-light-face');
-      if (c.reduced) {
-        light.style.opacity = '0.3';
-      } else {
-        c.cycle(light, 'cardfx-face', FACE_DUR[i], FACE_DELAY[i] - FACE_SHIFT);
-      }
+      c.face.sets.push([light]);
+      c.face.flip.push(false);
+      if (c.reduced && i === FACE_STEADY) light.style.opacity = '0.5';
     }
     if (c.reduced) {
       /* no water to move them, so the reflected lights rest beside the picture's own reflection */
       var refl = faceReflections();
       for (i = 0; i < refl.length; i++) {
         light = makeLight(layer, refl[i].x, refl[i].y, FACE_CORE, FACE_BOX, 'cardfx-light-face');
-        light.style.opacity = String(Math.round(0.3 * refl[i].k * 1000) / 1000);
+        light.style.opacity = String(Math.round((refl[i].i === FACE_STEADY ? 0.5 : FACE_REST) * refl[i].k * 1000) / 1000);
       }
     }
     return layer;
+  }
+
+  /* the timer: every 1.5 to 2.5 s a light that is not still glowing and is not
+     the last one picked starts its glow, together with its reflection. The
+     clock is the shared frame loop's, so it waits while the tab is hidden or
+     the card is off screen, as the glows do. */
+  function faceSchedule(c) {
+    var sets = c.face.sets;
+    var n = sets.length;
+    var now = 0, wait = FACE_FIRST, last = -1;
+    var busyUntil = [], litUntil = [];
+    for (var i = 0; i < n; i++) { busyUntil.push(0); litUntil.push(0); }
+
+    function start(k) {
+      var set = sets[k];
+      c.face.flip[k] = !c.face.flip[k];
+      var name = c.face.flip[k] ? 'cardfx-glow-a' : 'cardfx-glow-b';      // a new name restarts the animation
+      for (var j = 0; j < set.length; j++) set[j].style.animation = name + ' ' + FACE_LIFE + 's linear 0s 1 none';
+      busyUntil[k] = now + FACE_LIFE + 0.1;
+      litUntil[k] = now + FACE_LIT;
+    }
+
+    return function (dt) {
+      now += dt;
+      wait -= dt;
+      if (wait > 0) return;
+      var lit = 0, free = [];
+      for (var k = 0; k < n; k++) {
+        if (litUntil[k] > now) lit++;
+        if (busyUntil[k] <= now && k !== last) free.push(k);
+      }
+      if (lit >= 2 || !free.length) { wait = 0.1; return; }          // never a third above .3
+      last = free[Math.floor(Math.random() * free.length)];
+      start(last);
+      wait = FACE_GAP + Math.random() * FACE_GAP_SPAN;
+    };
   }
 
   /* a fine ink line at the waterline, a little irregular so it reads as drawn */
@@ -1430,12 +1480,12 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     for (var r = 0; r < refl.length; r++) {
       var sx = 50 * (1 + (refl[r].x / 100 - RIP.l) / bw);
       var sy = 50 * (1 + (refl[r].y / 100 - RIP.t) / bh);
-      /* the wrapper holds the reflection's share of the light, so the light's own cycle is the same as the original's */
+      /* the wrapper holds the reflection's share of the light, so the light inside runs the original's glow */
       var wrap = el('div', 'cardfx-reflk');
       wrap.style.opacity = String(Math.round(refl[r].k * 1000) / 1000);
       anchor.appendChild(wrap);
       var light = makeLight(wrap, sx, sy, FACE_CORE / (2 * bw), FACE_BOX / (2 * bw), 'cardfx-light-face');
-      c.cycle(light, 'cardfx-face', FACE_DUR[refl[r].i], FACE_DELAY[refl[r].i] - FACE_SHIFT);
+      c.face.sets[refl[r].i].push(light);                // it follows its source light
     }
     sheet.appendChild(anchor);
     win.appendChild(sheet);
@@ -1494,10 +1544,13 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
         if (window.console && console.warn) console.warn('CardFX: the water of card 2 did not start', e);
       }
     }
+    var glow = c.reduced ? null : faceSchedule(c);
     if (water) {
-      c.card.tick = water.tick;
+      c.card.tick = function (dt) { if (glow) glow(dt); water.tick(dt); };
       c.card.close = water.close;
       c.card.closes = true;
+    } else if (glow) {
+      c.card.tick = glow;
     }
     faceWaterline(c.layer('cardfx-line'));          // above the water, so no copy can cover it
   }
@@ -2096,12 +2149,16 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   ------------------------------------------------------------------- */
   /* The slices. Column 1 (Stillpoint, its six slices and its band) rests on the framing below and its hover covers the window:
      v is the box of the picture the hover frames (the picture covers the window with v centred in it), f is the point the rest
-     framing is centred on, and k is how much more the picture is zoomed at rest than on hover. Columns 2 to 7 and their bands
-     (round 19) rest where that hover used to end: the picture covers the window with v (bv in a band) centred. A column then
-     zooms out to ZOUT (.8) of that scale about the centre of v, and its sides stay inside ink, the box of the picture that holds
-     drawing; its top and bottom may show paper. A band zooms out to zb of the rest scale: zb is the farthest zoom-out at which no
-     edge of the strip is more than about a third paper, measured on the pictures (a band is a thin strip, so a long zoom-out
-     reaches the white around the drawing at both ends). All numbers are fractions of the picture. */
+     framing is centred on, and k is how much more the picture is zoomed at rest than on hover.
+     Columns 2 to 7 (round 20) rest on the height of their subject box: v is the box that must always be whole (the face with its
+     nose, the child, the central gable of the manor, the middle of the brain, the hand, three shelves), and the picture is scaled so
+     that the height of v is the height of the slice. The scale then depends on the slice height alone, so a wider column shows more
+     of the picture at the sides and the drawing keeps its size. A window too narrow for v at that scale takes the scale that fits
+     the width of v, so v stays whole. A window wider than the drawing (ink) takes the scale that covers it. The hover zooms out to
+     ZOUT (.85) of the rest scale about the middle of the window.
+     Bands under 1280 px (round 19) rest where the old hover ended: the picture covers the window with bv centred, and the hover
+     zooms out to zb of that scale; zb is the farthest zoom-out at which no edge of the strip is more than about a third paper,
+     measured on the pictures. All numbers are fractions of the picture. */
   var FRAMES = {
     1: [  /* the six mosaic pictures, in order; bv and bf frame the cell in a band */
       { v: [.118, .490, .912, .870], f: [.510, .660], k: 1.3, bv: [.350, .660, .650, .842], bf: [.500, .742] },
@@ -2111,7 +2168,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
       { v: [.472, .440, .928, .800], f: [.720, .620], k: 1.3, bv: [.740, .585, .940, .800], bf: [.840, .690] },
       { v: [.088, .250, .912, .750], f: [.500, .500], k: 1.3, bv: [.140, .150, .840, .850], bf: [.490, .500] }
     ],
-    2: { v: [.484, .240, .616, .960], f: [.575, .420], k: 1.3, bv: [.420, .340, .700, .430], bf: [.555, .375], ink: [.344, .103, .656, .991], zb: .95 },   /* the face */
+    2: { v: [.484, .103, .656, .991], f: [.575, .420], k: 1.3, bv: [.420, .340, .700, .430], bf: [.555, .375], ink: [.344, .103, .656, .991], zb: .95 },   /* the face */
     3: { v: [.179, .080, .281, .540], f: [.246, .250], k: 1.4, bv: [.710, .192, .930, .328], bf: [.820, .270], ink: [0, 0, 1, .989], zb: .96 },   /* the child at the desk; bands show the chatbot at its desk */
     4: { v: [.676, .140, .764, .700], f: [.720, .380], k: 1.3, bv: [.630, .030, .970, .630], bf: [.790, .300], ink: [0, .039, 1, 1], zb: .92 },   /* the machine hand */
     5: { v: [.397, .100, .603, .900], f: [.500, .500], k: 1.3, bv: [.170, .400, .820, .660], bf: [.500, .530], ink: [.007, .015, .999, .990], zb: .96 },   /* the brain */
@@ -2132,9 +2189,8 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     /* hs, hox, hoy: the hover is the cover framing, which is the rest framing eased out by 1/k */
     return { sh: sh, hx: hx, hy: hy, sr: sr, rx: rx, ry: ry, hs: 1 / k, hox: hx, hoy: hy };
   }
-  /* Columns 2 to 7 and their bands. Rest: the picture covers the window with v centred (the old hover end).
-     Hover: z times that scale, about the centre of v. With an ink box, an axis whose rest window lies inside it keeps the hover window inside it too. */
-  var ZOUT = 0.8;
+  /* Bands (under 1280 px). Rest: the picture covers the window with v centred (the old hover end).
+     Hover: z times that scale, about the centre of v. */
   function frame2(w, h, nw, nh, v, z, ink) {
     var vl = v[0] * nw, vt = v[1] * nh, vr = v[2] * nw, vb = v[3] * nh;
     var sh = Math.max(w / (vr - vl), h / (vb - vt));
@@ -2150,6 +2206,28 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
       }
     }
     return { sh: sh, hx: hx, hy: hy, sr: sh, rx: hx, ry: hy, hs: s2 / sh, hox: w / 2 - s2 * c[0] * nw, hoy: h / 2 - s2 * c[1] * nh };
+  }
+
+  /* Columns 2 to 7 (1280 px and wider). w, h: the slice window. nw, nh: the picture. v: the subject box. ink: the box of the drawing.
+     Rest: the height of v fills the height of the window; if v is wider than the window at that scale, its width fills the window
+     instead. A window wider than the drawing takes the scale that covers it. The window is centred on v and kept inside ink
+     across (and down, when ink is taller than the window; a drawing shorter than the window sits in the middle of it).
+     Hover: ZOUT of the rest scale about the middle of the window; across, the window stays inside ink. */
+  var ZOUT = 0.85;
+  function frameH(w, h, nw, nh, v, z, ink) {
+    var vw = (v[2] - v[0]) * nw, vh = (v[3] - v[1]) * nh;
+    var s = Math.min(h / vh, w / vw);
+    var iw = (ink[2] - ink[0]) * nw, ih = (ink[3] - ink[1]) * nh;
+    s = Math.max(s, w / iw);
+    var cx = (v[0] + v[2]) / 2, cy = (v[1] + v[3]) / 2;
+    var hx = w / (2 * s * nw), hy = h / (2 * s * nh);        /* half the window, in fractions of the picture */
+    cx = clamp(cx, ink[0] + hx, ink[2] - hx);
+    if (2 * hy >= ih / nh) cy = (ink[1] + ink[3]) / 2;
+    else cy = clamp(cy, ink[1] + hy, ink[3] - hy);
+    var s2 = Math.max(s * z, w / iw), hx2 = w / (2 * s2 * nw);
+    var cx2 = clamp(cx, ink[0] + hx2, ink[2] - hx2);
+    return { sr: s, rx: w / 2 - s * cx * nw, ry: h / 2 - s * cy * nh,
+             hs: s2 / s, hox: w / 2 - s2 * cx2 * nw, hoy: h / 2 - s2 * cy * nh };
   }
 
   cols.forEach(function (c) {
@@ -2203,7 +2281,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     var win = windowOf(c, u, g);
     var box = layoutBox(u.el, g.inner);
     var nw = u.nat[0], nh = u.nat[1];
-    var fr = u.tile ? frame(win.w, win.h, nw, nh, u.fr.v, u.fr.f, u.fr.k) : frame2(win.w, win.h, nw, nh, u.fr.v, ZOUT, u.fr.ink);
+    var fr = u.tile ? frame(win.w, win.h, nw, nh, u.fr.v, u.fr.f, u.fr.k) : frameH(win.w, win.h, nw, nh, u.fr.v, ZOUT, u.fr.ink);
     var tlx = win.x + fr.rx, tly = win.y + fr.ry;     /* the picture's top left, in the column */
     var cz = fr.sr;                                    /* and its scale */
     /* the same picture in its open place. A mosaic tile shows its picture covering its cell. While the slice
