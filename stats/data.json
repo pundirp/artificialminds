@@ -1,17 +1,12 @@
 {
-  "generated": "2026-10-14T04:59:48Z",
+  "generated": "2026-10-15T17:06:44Z",
   "totals": {
-    "views_all": 33,
-    "visitors_all": 33,
-    "views_30d": 33,
-    "visitors_30d": 33
+    "views_all": 34,
+    "visitors_all": 34,
+    "views_30d": 34,
+    "visitors_30d": 34
   },
   "daily": [
-    {
-      "day": "2026-07-17",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-07-18",
       "views": 0,
@@ -454,6 +449,11 @@
     },
     {
       "day": "2026-10-14",
+      "views": 1,
+      "visitors": 1
+    },
+    {
+      "day": "2026-10-15",
       "views": 0,
       "visitors": 0
     }
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-10",
-      "views": 17,
-      "visitors": 17
+      "views": 18,
+      "visitors": 18
     }
   ],
   "projects": [
@@ -522,10 +522,10 @@
     {
       "id": "AI-future-canon",
       "name": "AI Future Canon",
-      "views_all": 3,
-      "visitors_all": 3,
-      "views_30d": 3,
-      "visitors_30d": 3
+      "views_all": 4,
+      "visitors_all": 4,
+      "views_30d": 4,
+      "visitors_30d": 4
     },
     {
       "id": "home",
@@ -553,14 +553,14 @@
       "visitors_all": 5
     },
     {
-      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
+      "path": "/AI-future-canon/ai-future-canon.html",
       "views_all": 4,
       "visitors_all": 4
     },
     {
-      "path": "/AI-future-canon/ai-future-canon.html",
-      "views_all": 3,
-      "visitors_all": 3
+      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
+      "views_all": 4,
+      "visitors_all": 4
     },
     {
       "path": "/did-ai-write-this/did-ai-write-this.html",
@@ -576,7 +576,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 30
+      "visitors": 31
     },
     {
       "name": "France",
@@ -590,7 +590,7 @@
     },
     {
       "name": "Safari",
-      "visitors": 14
+      "visitors": 15
     },
     {
       "name": "Firefox",
@@ -604,7 +604,7 @@
     },
     {
       "name": "iOS",
-      "visitors": 9
+      "visitors": 10
     },
     {
       "name": "Windows",
@@ -626,7 +626,7 @@
     },
     {
       "name": "Phone",
-      "visitors": 11
+      "visitors": 12
     },
     {
       "name": "Large screen",
@@ -659,16 +659,16 @@
       "visitors": 4
     },
     {
+      "name": "Google",
+      "visitors": 2
+    },
+    {
       "name": "pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html",
       "visitors": 2
     },
     {
       "name": "www.linkedin.com",
       "visitors": 2
-    },
-    {
-      "name": "Google",
-      "visitors": 1
     }
   ]
 }
