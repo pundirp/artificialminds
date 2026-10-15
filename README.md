@@ -35,7 +35,7 @@ LinkedIn: https://www.linkedin.com/in/pundir-ny/
 https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html
 
 A catalogue of ninety-nine pictures made by six artificial minds: Opus 4.8, Fable 5.0,
-Fable 5.1, Astra, Opus 5.5 and Gemini. Every image began with one question put to the model, what would make
+Fable 5.1, Astra, Opus 5.5 and Nano Banana. Every image began with one question put to the model, what would make
 someone stop and look, and each candidate was set beside the existing archive of human
 pictures and kept only when it did not lean on a single image, style or familiar gesture.
 Many more were made and let go. Pundir selected the works, set their order and designed the
