@@ -1,17 +1,12 @@
 {
-  "generated": "2026-10-16T16:44:08Z",
+  "generated": "2026-10-17T04:36:01Z",
   "totals": {
     "views_all": 35,
     "visitors_all": 35,
-    "views_30d": 35,
-    "visitors_30d": 35
+    "views_30d": 30,
+    "visitors_30d": 30
   },
   "daily": [
-    {
-      "day": "2026-07-19",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-07-20",
       "views": 0,
@@ -456,6 +451,11 @@
       "day": "2026-10-16",
       "views": 1,
       "visitors": 1
+    },
+    {
+      "day": "2026-10-17",
+      "views": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -476,8 +476,8 @@
       "name": "Stillpoint",
       "views_all": 10,
       "visitors_all": 10,
-      "views_30d": 10,
-      "visitors_30d": 10
+      "views_30d": 8,
+      "visitors_30d": 8
     },
     {
       "id": "can-artificial-minds-feel",
@@ -532,8 +532,8 @@
       "name": "Home",
       "views_all": 14,
       "visitors_all": 14,
-      "views_30d": 14,
-      "visitors_30d": 14
+      "views_30d": 11,
+      "visitors_30d": 11
     }
   ],
   "pages": [
@@ -648,15 +648,15 @@
     },
     {
       "name": "pundirp.github.io/artificialminds",
-      "visitors": 8
+      "visitors": 7
     },
     {
       "name": "pundirp.github.io",
-      "visitors": 5
+      "visitors": 4
     },
     {
       "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
-      "visitors": 4
+      "visitors": 3
     },
     {
       "name": "Google",
@@ -664,10 +664,6 @@
     },
     {
       "name": "pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html",
-      "visitors": 2
-    },
-    {
-      "name": "www.linkedin.com",
       "visitors": 2
     }
   ]
