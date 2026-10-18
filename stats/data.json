@@ -1,17 +1,12 @@
 {
-  "generated": "2026-10-17T04:36:01Z",
+  "generated": "2026-10-18T04:41:24Z",
   "totals": {
-    "views_all": 35,
-    "visitors_all": 35,
-    "views_30d": 30,
-    "visitors_30d": 30
+    "views_all": 36,
+    "visitors_all": 36,
+    "views_30d": 29,
+    "visitors_30d": 29
   },
   "daily": [
-    {
-      "day": "2026-07-20",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-07-21",
       "views": 0,
@@ -454,6 +449,11 @@
     },
     {
       "day": "2026-10-17",
+      "views": 1,
+      "visitors": 1
+    },
+    {
+      "day": "2026-10-18",
       "views": 0,
       "visitors": 0
     }
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-10",
-      "views": 19,
-      "visitors": 19
+      "views": 20,
+      "visitors": 20
     }
   ],
   "projects": [
@@ -476,8 +476,8 @@
       "name": "Stillpoint",
       "views_all": 10,
       "visitors_all": 10,
-      "views_30d": 8,
-      "visitors_30d": 8
+      "views_30d": 6,
+      "visitors_30d": 6
     },
     {
       "id": "can-artificial-minds-feel",
@@ -530,17 +530,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 14,
-      "visitors_all": 14,
-      "views_30d": 11,
-      "visitors_30d": 11
+      "views_all": 15,
+      "visitors_all": 15,
+      "views_30d": 12,
+      "visitors_30d": 12
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 14,
-      "visitors_all": 14
+      "views_all": 15,
+      "visitors_all": 15
     },
     {
       "path": "/stillpoint/collection.html",
@@ -576,21 +576,25 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 32
+      "visitors": 27
     },
     {
       "name": "France",
       "visitors": 3
+    },
+    {
+      "name": "Canada",
+      "visitors": 1
     }
   ],
   "browsers": [
     {
-      "name": "Chrome",
-      "visitors": 19
+      "name": "Safari",
+      "visitors": 16
     },
     {
-      "name": "Safari",
-      "visitors": 15
+      "name": "Chrome",
+      "visitors": 14
     },
     {
       "name": "Firefox",
@@ -600,15 +604,15 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 18
+      "visitors": 14
     },
     {
       "name": "iOS",
-      "visitors": 10
+      "visitors": 11
     },
     {
       "name": "Windows",
-      "visitors": 4
+      "visitors": 3
     },
     {
       "name": "Android",
@@ -621,12 +625,12 @@
   ],
   "sizes": [
     {
-      "name": "Desktop",
-      "visitors": 15
+      "name": "Phone",
+      "visitors": 13
     },
     {
-      "name": "Phone",
-      "visitors": 12
+      "name": "Desktop",
+      "visitors": 11
     },
     {
       "name": "Large screen",
@@ -634,7 +638,7 @@
     },
     {
       "name": "Tablet",
-      "visitors": 3
+      "visitors": 2
     },
     {
       "name": "Unknown",
@@ -655,15 +659,15 @@
       "visitors": 4
     },
     {
-      "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
-      "visitors": 3
-    },
-    {
       "name": "Google",
       "visitors": 2
     },
     {
       "name": "pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html",
+      "visitors": 2
+    },
+    {
+      "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
       "visitors": 2
     }
   ]
