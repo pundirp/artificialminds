@@ -1,17 +1,12 @@
 {
-  "generated": "2026-10-21T21:47:23Z",
+  "generated": "2026-10-22T04:57:28Z",
   "totals": {
     "views_all": 41,
     "visitors_all": 41,
-    "views_30d": 28,
-    "visitors_30d": 28
+    "views_30d": 27,
+    "visitors_30d": 27
   },
   "daily": [
-    {
-      "day": "2026-07-24",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-07-25",
       "views": 0,
@@ -456,6 +451,11 @@
       "day": "2026-10-21",
       "views": 2,
       "visitors": 2
+    },
+    {
+      "day": "2026-10-22",
+      "views": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -484,8 +484,8 @@
       "name": "Can Artificial Minds Feel?",
       "views_all": 4,
       "visitors_all": 4,
-      "views_30d": 3,
-      "visitors_30d": 3
+      "views_30d": 2,
+      "visitors_30d": 2
     },
     {
       "id": "why-so-much-data",
@@ -576,7 +576,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 24
+      "visitors": 23
     },
     {
       "name": "France",
@@ -594,7 +594,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 14
+      "visitors": 13
     },
     {
       "name": "Safari",
@@ -608,7 +608,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 16
+      "visitors": 15
     },
     {
       "name": "iOS",
@@ -638,7 +638,7 @@
     },
     {
       "name": "Large screen",
-      "visitors": 6
+      "visitors": 5
     },
     {
       "name": "Tablet",
@@ -656,7 +656,7 @@
     },
     {
       "name": "pundirp.github.io/artificialminds",
-      "visitors": 5
+      "visitors": 4
     },
     {
       "name": "Google",
