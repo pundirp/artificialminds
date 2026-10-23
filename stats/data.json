@@ -1,5 +1,5 @@
 {
-  "generated": "2026-10-22T17:15:52Z",
+  "generated": "2026-10-23T04:59:04Z",
   "totals": {
     "views_all": 44,
     "visitors_all": 44,
@@ -7,11 +7,6 @@
     "visitors_30d": 30
   },
   "daily": [
-    {
-      "day": "2026-07-25",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-07-26",
       "views": 0,
@@ -456,6 +451,11 @@
       "day": "2026-10-22",
       "views": 3,
       "visitors": 3
+    },
+    {
+      "day": "2026-10-23",
+      "views": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -581,7 +581,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 26
+      "visitors": 25
     },
     {
       "name": "France",
@@ -603,7 +603,7 @@
     },
     {
       "name": "Safari",
-      "visitors": 13
+      "visitors": 12
     },
     {
       "name": "Firefox",
@@ -617,7 +617,7 @@
     },
     {
       "name": "iOS",
-      "visitors": 7
+      "visitors": 6
     },
     {
       "name": "Windows",
@@ -639,7 +639,7 @@
     },
     {
       "name": "Phone",
-      "visitors": 9
+      "visitors": 8
     },
     {
       "name": "Large screen",
