@@ -367,6 +367,10 @@ p.has-thumb { display: flow-root; }
 .thumb { float: left; width: 200px; margin: .3rem 1rem .3rem 0; }
 .thumb img { display: block; width: 100%; height: auto; }
 @media (max-width: 680px) { .thumb { width: 40%; margin-right: .8rem; } }
+.has-thumb.fr { display: flex; align-items: center; gap: 1.1rem; margin: 0 0 1rem; }
+.has-thumb.fr .thumb { float: none; flex: 0 0 16rem; width: auto; margin: 0; }
+.has-thumb.fr p { margin: 0; }
+@media (max-width: 680px) { .has-thumb.fr .thumb { flex-basis: 40%; } }
 @media (max-width: 430px) {
   .tm-r { padding: .35rem .45rem; }
   .tm-wrap { margin-bottom: 4.6rem; }
@@ -848,7 +852,7 @@ footer .home .col p { margin: 0 0 .5rem; font-size: .82rem; color: var(--ink); }
 </div>
 <div class="leaf"><div class="col">
   <p class="drop">We started with three words, &ldquo;the Golden Gate&rdquo;. Each one became a list of numbers. Attention brought information from the earlier words into the residual stream of &ldquo;Gate&rdquo;. Feed-forward then worked on that stream with its learned patterns. After 12 layers, the output step gave &ldquo;Bridge&rdquo; an 84.8% chance of coming next.</p>
-  <p>The transformer comes from a 2017 paper, <a href="https://arxiv.org/abs/1706.03762">Attention Is All You Need</a>. With attention, every token reaches every earlier token in a single step. During training, the calculations for all the tokens in a text can run at the same time. Graphics chips run that kind of work fast, so researchers could train much larger models on much more text. Researchers have kept changing the design since then.</p>
+  <p>The transformer comes from a 2017 paper, <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Attention Is All You Need</a>. With attention, every token reaches every earlier token in a single step. During training, the calculations for all the tokens in a text can run at the same time. Graphics chips run that kind of work fast, so researchers could train much larger models on much more text. Researchers have kept changing the design since then.</p>
   <p>&ldquo;Golden Gate&rdquo; is a familiar phrase, so &ldquo;Bridge&rdquo; may seem an easy guess. <span class="nb">GPT-2</span> was trained on one task, guessing the next word, across billions of words of text. From that one task, models like it learn a great deal about language and about the world. The chatbots in wide use today, the new artificial minds this site is about, start from that same task.</p>
 </div></div>
 
@@ -922,14 +926,14 @@ footer .home .col p { margin: 0 0 .5rem; font-size: .82rem; color: var(--ink); }
 </div>
 <div class="leaf"><div class="col">
   <p class="drop"><span class="lead">If this felt too dry</span> and you&rsquo;d like an intuitive feel for attention, <a href="who-killed-aldous-finch.html">Who Killed Aldous Finch?</a> explains the same ideas through a country house murder mystery. Each new witness reads every placard already pinned in the room and then pins up one more. At the end, each clue gets matched to a part of the transformer.</p>
-  <p class="has-thumb"><a class="thumb" href="../why-so-much-data/why-so-much-data.html"><img src="img/25f7c682b11b6ede.jpg" width="480" height="389" alt="A pencil drawing of a boy and a small robot, each reading at a desk. Roots with small animals spread under the boy, and tall stacks of paper rise beside the robot."></a>Two more pieces on this site are about how artificial minds learn. In <a href="../why-so-much-data/why-so-much-data.html">Who Learns Faster, a Toddler or a Chatbot?</a>, a child and Meta&rsquo;s Llama 3.1 go side by side through four stages of learning. The model read trillions of words before it could hold a conversation. Inside one chat, it picks up a new skill in a minute.</p>
+  <div class="has-thumb fr"><a class="thumb" href="../why-so-much-data/why-so-much-data.html"><img src="img/25f7c682b11b6ede.jpg" width="480" height="389" alt="A pencil drawing of a boy and a small robot, each reading at a desk. Roots with small animals spread under the boy, and tall stacks of paper rise beside the robot."></a><p>Two more pieces on this site are about how artificial minds learn. In <a href="../why-so-much-data/why-so-much-data.html">Who Learns Faster, a Toddler or a Chatbot?</a>, a child and Meta&rsquo;s Llama 3.1 go side by side through four stages of learning. The model read trillions of words before it could hold a conversation. Inside one chat, it picks up a new skill in a minute.</p></div>
   <p><a href="../artificial-mind-of-your-own/an-artificial-mind-of-your-own.html">An Artificial Mind of Your Own</a> explains how an artificial mind is trained and how to run one on a laptop.</p>
 </div></div>
 
 <footer>
   <div class="leaf"><div class="col">
-    <p>Sources: <a href="https://arxiv.org/abs/1706.03762">Vaswani et al., Attention Is All You Need (Google, 2017)</a>; <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf">Radford et al., Language Models are Unsupervised Multitask Learners (OpenAI, 2019)</a>; and the <a href="https://huggingface.co/openai-community/gpt2"><span class="nb">GPT-2</span> model files on Hugging Face</a>.</p>
-    <p>Every number about <span class="nb">GPT-2</span> in the figures comes from the model itself. We downloaded <span class="nb">GPT-2</span> small from <a href="https://huggingface.co">Hugging Face</a>, a website where people share AI models. We ran it ourselves on two texts: &ldquo;the Golden Gate&rdquo; and &ldquo;the Gate&rdquo;. The guesses after each layer, the shares, the vectors and the pattern counts come from those two runs, and the parameter counts come from the model file.</p>
+    <p>Sources: <a href="https://arxiv.org/abs/1706.03762" target="_blank" rel="noopener">Vaswani et al., Attention Is All You Need (Google, 2017)</a>; <a href="https://cdn.openai.com/better-language-models/language_models_are_unsupervised_multitask_learners.pdf" target="_blank" rel="noopener">Radford et al., Language Models are Unsupervised Multitask Learners (OpenAI, 2019)</a>; and the <a href="https://huggingface.co/openai-community/gpt2" target="_blank" rel="noopener"><span class="nb">GPT-2</span> model files on Hugging Face</a>.</p>
+    <p>Every number about <span class="nb">GPT-2</span> in the figures comes from the model itself. We downloaded <span class="nb">GPT-2</span> small from <a href="https://huggingface.co" target="_blank" rel="noopener">Hugging Face</a>, a website where people share AI models. We ran it ourselves on two texts: &ldquo;the Golden Gate&rdquo; and &ldquo;the Gate&rdquo;. The guesses after each layer, the shares, the vectors and the pattern counts come from those two runs, and the parameter counts come from the model file.</p>
   </div></div>
   <nav class="leaf home" aria-label="Ways back"><div class="col">
     <p><a href="who-killed-aldous-finch.html">&larr;&nbsp; Who Killed Aldous Finch?</a></p>
