@@ -147,7 +147,8 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 }
 .runhead a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
 .runhead a:hover{color:var(--ink)}
-@media (max-width:480px){ .runhead{flex-direction:column;align-items:flex-start;gap:.15rem} }
+.runhead a.rh-comp{font-size:.85rem;white-space:normal;text-align:right}
+@media (max-width:480px){ .runhead{flex-direction:column;align-items:flex-start;gap:.15rem} .runhead a.rh-comp{text-align:left} }
 
 /* ---------- 5. The painting and the title ---------- */
 /* The painting is shown whole, in colour, at the width it has on the live
@@ -403,7 +404,7 @@ footer .col p{margin:0;font-size:.82rem}
 
 <header class="runhead">
   <a href="../index.html">&larr;&nbsp; Artificial Minds</a>
-  <span>Artificial Minds, project 06</span>
+  <a class="rh-comp" href="how-attention-works-in-a-transformer.html">Companion: How Attention Works in a Transformer</a>
 </header>
 
 </div>
