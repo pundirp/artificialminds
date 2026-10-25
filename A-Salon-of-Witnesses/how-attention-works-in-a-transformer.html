@@ -79,6 +79,9 @@
   --tok-n: #ffffff;   --tok-n-edge: #7b7b7b;
   --frame: #cccccc;
   --on-fill: #ababab;   --on-edge: #8c8c8c;   --d-q-on: #d9a7a1;   --hm-base: #a8a8a8;
+  --note-shadow: rgba(17, 17, 17, .18);   /* the small shadow under each intuition box */
+  --bulb-glass: 255 208 20;   /* red green blue of the yellow inside the lit glass of the bulb */
+  --bulb-ray: 98 62 18;   /* red green blue of the dark brown rays beside the lit bulb */
 
   --serif: var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
   --sans: var(--family-house-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
@@ -495,6 +498,75 @@ svg .dim, svg .brkt, svg .ax-line, svg .head-lead, svg .zoom { stroke: var(--ln-
   .chap-num { margin: 0 0 .5rem; }
   .side { margin: 0 0 .3rem; }
 }
+/* Draft 25: the intuition box with a small shadow, and the fisherman's bulb that glows slowly on and off.
+   The frame is one small picture cut into nine parts (border-image): four corners, four edges and
+   an empty middle. The corners are drawn at a fixed size and the edges repeat along the sides, so
+   the line stays 1.5px thick whatever the size of the box. The paper is the white background.
+   The line sits flush with the outer edge of the 8px border, so a box-shadow on the box follows it.
+   The corner radius below matches the rounded corners of the line, and the shadow falls mostly
+   below and to the right.
+   The fisherman is a second picture on ::before, and his whole size follows one variable,
+   --fisher, the height from the top of his hat to the bottom of his book (28px on a desktop,
+   24px on a phone). Change that one number to make him larger or smaller. He sits at the left
+   corner with the book on the top edge, and the box keeps room above it for his hat, rod and
+   bulb. Text and label sit 1.2rem inside the edge, and the label sits .8rem below the top edge.
+   The picture on ::before shows the bulb unlit: soft white glass inside a dark outline, and no rays. ::after has
+   the same box and carries the light. Its picture is a mask drawn on the same grid as the man, so
+   the two cannot drift apart. The mask is solid inside the glass and along the three rays, and clear
+   everywhere else. It stops at the inner edge of the glass outline. The outline, the filament, the
+   cap and the base are not covered by it, so they stay dark and crisp, and no yellow lies outside the
+   glass. The colour comes from CSS. A round gradient with a hard edge holds the whole glass and none
+   of the rays: inside it the colour is --bulb-glass, outside it the colour is --bulb-ray.
+   The one thing that changes is the opacity of ::after. It rises from 0 to 1 in 2 seconds and falls
+   back to 0 in 2 seconds, with soft turns at the top and the bottom, so one cycle lasts 4 seconds and
+   has no pause. The glass goes from white to yellow and back. If a browser has no mask support, the
+   light layer is switched off and the bulb stays white.
+   Boxes start at different points in the cycle. With reduced motion the bulb stays lit and still. */
+.note {
+  --fisher: 28px;
+  --u: calc(var(--fisher) / 86);
+  --bw: 8px;
+  position: relative;
+  margin: calc(var(--u) * 72.2 + .4rem) 0 .5rem;
+  padding: calc(.8rem - var(--bw)) calc(1.2rem - var(--bw)) calc(.8rem - var(--bw));
+  border: var(--bw) solid transparent;
+  border-image: url(img/a837e567623dd9f4.webp) 24 / var(--bw) round;
+  border-radius: 2.4px;
+  box-shadow: 1px 2px 4px -1px var(--note-shadow);
+  background: var(--paper);
+  background-clip: padding-box;
+}
+.note::before,
+.note::after {
+  content: "";
+  position: absolute;
+  left: calc(var(--u) * 13.6 - var(--bw));
+  top: calc(var(--u) * -88.9 - var(--bw));
+  width: calc(var(--u) * 192);
+  height: calc(var(--u) * 105);
+  pointer-events: none;
+}
+.note::before { background: url(img/7b5b0748fccbbc69.webp) 0 0 / 100% 100% no-repeat; }
+.note::after {
+  background: radial-gradient(circle calc(var(--u) * 14.8) at calc(var(--u) * 161) calc(var(--u) * 47),
+    rgb(var(--bulb-glass)) 100%, rgb(var(--bulb-ray)) 100%);
+  -webkit-mask: url(img/e2f14b53045558de.webp) 0 0 / 100% 100% no-repeat;
+  mask: url(img/e2f14b53045558de.webp) 0 0 / 100% 100% no-repeat;
+  animation: bulb-light 2s ease-in-out infinite alternate;
+}
+@supports not ((mask: url(a.png)) or (-webkit-mask: url(a.png))) { .note::after { display: none; } }
+@keyframes bulb-light {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+/* The delay follows the place of the box's block among its neighbours in the article, so that
+   neighbouring boxes are out of step. Nothing in the HTML changes. */
+main > .leaf:nth-child(5n + 1) .note::after { animation-delay: -.8s; }
+main > .leaf:nth-child(5n + 2) .note::after { animation-delay: -1.6s; }
+main > .leaf:nth-child(5n + 3) .note::after { animation-delay: -2.4s; }
+main > .leaf:nth-child(5n + 4) .note::after { animation-delay: -3.2s; }
+@media (max-width: 600px) { .note { --fisher: 24px; } }
+@media (prefers-reduced-motion: reduce) { .note::after { animation: none; opacity: 1; } }
 </style>
 </head>
 <body>
