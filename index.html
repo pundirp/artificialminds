@@ -611,9 +611,10 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   pointer-events: none;
 }
 
-/* a firing joint on the face: a solid red dot as wide as the drawn joint (the
-   script adds 2 px for the rim), solid to 62 percent of its radius and soft
-   to the edge, with no halo. Dark until it flashes. */
+/* a light on the face: a solid red dot as wide as a drawn joint (the script
+   adds 2 px for the rim), solid to 62 percent of its radius and soft to the
+   edge, with no halo. It rests at 10 percent opacity, as the essay's lights do,
+   and the keyframes cardfx-feel-light lift it to full. */
 .cardfx-dot {
   position: absolute;
   display: block;
@@ -623,23 +624,12 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   aspect-ratio: 1 / 1;
   transform: translate(-50%, -50%);
   border-radius: 50%;
-  opacity: 0;
+  opacity: 0.1;
   background: radial-gradient(closest-side,
     var(--fx-red-98) 0,
     var(--fx-red-98) 62%,
     var(--fx-red-46) 82%,
     var(--fx-red-0) 100%);
-}
-
-/* a reflected dot sits in a box that holds its share of the original's opacity,
-   so the dot inside flashes with the original */
-.cardfx-reflk {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  pointer-events: none;
 }
 
 /* what sits inside the water sheet, carried against its motion */
@@ -843,22 +833,15 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
    sets each element's animation (name, length, a negative delay that puts the
    cycle part-way through at the start) in its style attribute. */
 
-/* a joint of the face flashes once: on in 40 ms, held 112 ms, faded in 208 ms
-   (0.36 s; the script scales the length a little). The script starts a flash by
-   giving the element this animation, and gives the next flash of the same
-   joint the other name, so the animation restarts. */
-@keyframes cardfx-zap-a {
-  0% { opacity: 0; animation-timing-function: ease-out; }
-  11% { opacity: 1; }
-  42% { opacity: 1; animation-timing-function: linear; }
-  100% { opacity: 0; }
-}
-
-@keyframes cardfx-zap-b {
-  0% { opacity: 0; animation-timing-function: ease-out; }
-  11% { opacity: 1; }
-  42% { opacity: 1; animation-timing-function: linear; }
-  100% { opacity: 0; }
+/* a light of the face rising and sinking: the curve of the lights in the essay's
+   picture, copied value for value. A light rests at 10 percent, is at full 8
+   percent of the way through its cycle and is back at 10 percent by 27 percent.
+   The script gives each light its own length, a negative delay and ease-in-out,
+   which eases each stretch between these points. */
+@keyframes cardfx-feel-light {
+  0%, 100% { opacity: 0.1; }
+  8% { opacity: 1; }
+  27% { opacity: 0.1; }
 }
 
 /* the manor lamp going out and coming back */
@@ -1355,54 +1338,42 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
 
   /* ---------- card 2: the face ---------- */
 
-  /* The drawn joints of the mesh that fire: x and y as percent of the picture,
-     d the drawn joint's diameter as percent of the picture width. They were
-     found on the picture (10-feel-porcelain-face): every dark blob wider than
-     the mesh lines, inside the mesh and clear of the dividing line, the 42
-     largest with at least 24 px (at 1400 wide) between neighbours, each placed
-     over its drawn joint. */
-  var FACE_NODES = [
-    [48, 14.15, 0.291], [43.81, 14.5, 0.369], [46.31, 15.25, 0.369], [44.15, 18.32, 0.592],
-    [40.92, 19.34, 0.624], [46.83, 20.49, 0.587], [45, 22.45, 0.426], [47.77, 23.3, 0.547],
-    [42.7, 23.31, 0.547], [37.64, 24.32, 0.395], [39.76, 25.33, 0.674], [45.38, 25.4, 0.449],
-    [44.93, 28.36, 0.547], [47.43, 29.2, 0.49], [36.73, 29.66, 0.529], [45.38, 30.9, 0.369],
-    [42.38, 31.26, 0.734], [39.62, 33.46, 0.419], [37.01, 35.39, 0.67], [45.68, 35.64, 0.609],
-    [39.72, 38.28, 0.665], [42.75, 39.76, 0.598], [35.76, 41.41, 0.598], [46.07, 41.53, 0.535],
-    [44.46, 43.84, 0.441], [38.81, 44.38, 0.679], [46.07, 45.77, 0.291], [41.82, 47.22, 0.598],
-    [36.71, 48.37, 0.64], [45.51, 49.92, 0.522], [39.87, 51.73, 0.65], [47.5, 52.52, 0.291],
-    [41.8, 56.19, 0.66], [48.36, 56.81, 0.291], [38.63, 57.51, 0.629], [45.96, 57.62, 0.441],
-    [44.45, 59.13, 0.503], [47.47, 61.09, 0.387], [42, 61.98, 0.57], [44.65, 63.92, 0.441],
-    [45.38, 66.38, 0.369], [41.81, 66.7, 0.369]
+  /* The motion is the essay's. The picture at the top of Can Artificial Minds
+     Feel? has nine lights in its mesh. Each rises from faint to full and sinks
+     back on a cycle of its own length, and each began its cycle at a different
+     point, so the lights rise at different times. The face here has the same
+     nine lights, with the essay's lengths, head starts, curve and easing. The
+     curve is the keyframes cardfx-feel-light: a light rests at 10 percent, is at
+     full 8 percent of the way through its cycle and is back at 10 percent by 27
+     percent. The easing is ease-in-out. The lights have no reflections in the
+     water, and under reduced motion the face has no lights, as in the essay.
+
+     The drawing is the pencil version of the essay's photograph and was drawn at
+     another size: its head is 24 percent wider and 17 percent taller. Round 26
+     measured how the drawing fits onto the photograph and moved each of the
+     essay's nine positions onto the drawing. Each light then went onto the nearest
+     drawn joint, so all nine sit on a joint of the drawing. Seven lay within 2
+     percent of the picture width of their joint. The fifth and the ninth lay 2.1
+     and 2.2 percent away and went onto their nearest joints as well.
+
+     One row per light: x and y as percent of the picture, d the diameter of its
+     joint as percent of the picture width, then the length of the cycle and its
+     head start in seconds. */
+  var FACE_LIGHTS = [
+    [40.92, 19.34, 0.624, 9.1, -2.1],
+    [39.76, 25.33, 0.674, 12.9, -7.7],
+    [47.43, 29.2, 0.49, 10.7, -4.6],
+    [36.73, 29.66, 0.529, 7.5, -1.1],
+    [45.68, 35.64, 0.609, 15.3, -11.6],
+    [38.81, 44.38, 0.679, 10.5, -6.1],
+    [41.82, 47.22, 0.598, 13.8, -9.9],
+    [47.5, 52.52, 0.291, 8.6, -3.7],
+    [47.47, 61.09, 0.387, 11.5, -2.7]
   ];
-  var WATERLINE = 68.4;      // percent of the picture height, the mirror axis
-  var REFLECT_K = 0.45;      // a reflected dot is this share of the dot's opacity at the waterline
+  var WATERLINE = 68.4;      // percent of the picture height, where the waterline is drawn
 
-  /* A flash: on in 40 ms, held 112 ms, faded in 208 ms (0.36 s, set by the
-     keyframes cardfx-zap-a and -b; each flash scales the length by .83 to 1.17,
-     so the hold runs 93 to 131 ms). A dot is above .3 for 79 percent of its
-     length. Flashes come in cascades: a joint fires and one or two of its
-     neighbours follow 50 to 120 ms apart, each from the one before. A new
-     cascade starts whenever fewer than five dots will be lit 100 ms from now
-     (counting the flashes waiting their turn), and never when eight could
-     be lit, so three to eight are lit at any instant. */
-  var ZAP_LEN = 0.36, ZAP_VARY = 0.17, ZAP_LIT = 0.79;
-  var ZAP_STEP = 0.05, ZAP_STEP_SPAN = 0.07;
-  var ZAP_WANT = 5, ZAP_MAX = 8, ZAP_AHEAD = 0.1;
-  var ZAP_STEADY = [4, 14, 24, 32, 39];   // under reduced motion these rest lit
-
-  function faceReflections() {
-    var out = [];
-    for (var i = 0; i < FACE_NODES.length; i++) {
-      var yr = 2 * WATERLINE - FACE_NODES[i][1];
-      if (yr > 96.5) continue;
-      var depth = Math.max(0, Math.min(1, (yr - 69) / 28));
-      out.push({ i: i, x: FACE_NODES[i][0], y: yr, k: REFLECT_K * (1 - 0.5 * depth) });
-    }
-    return out;
-  }
-
-  /* a dot as wide as its drawn joint plus a 2 px soft rim, centred on the joint.
-     w is a percent of the box it sits in. */
+  /* a dot centred on (x, y), as wide as a drawn joint plus a 2 px soft rim. x, y
+     and w are percents of the box it sits in. */
   function makeDot(layer, x, y, w) {
     var i = el('i', 'cardfx-dot');
     i.style.left = pct(x);
@@ -1412,128 +1383,15 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     return i;
   }
 
+  /* the nine lights, each on its own cycle. The stylesheet draws the cycles, so
+     the class cardfx-paused holds them. */
   function faceLights(c) {
+    if (c.reduced) return;
     var layer = c.layer('cardfx-face');
-    var i, dot;
-    /* sets[i] holds a joint's dot and, when the water shows one, its reflection */
-    c.face = { sets: [], flip: [] };
-    for (i = 0; i < FACE_NODES.length; i++) {
-      dot = makeDot(layer, FACE_NODES[i][0], FACE_NODES[i][1], FACE_NODES[i][2]);
-      c.face.sets.push([dot]);
-      c.face.flip.push(false);
-      if (c.reduced && ZAP_STEADY.indexOf(i) >= 0) dot.style.opacity = '1';
+    for (var i = 0; i < FACE_LIGHTS.length; i++) {
+      var f = FACE_LIGHTS[i];
+      c.cycle(makeDot(layer, f[0], f[1], f[2]), 'cardfx-feel-light', f[3], f[4], 'ease-in-out');
     }
-    if (c.reduced) {
-      /* no water to move them, so the reflected dots rest beside the picture's own reflection */
-      var refl = faceReflections();
-      for (i = 0; i < refl.length; i++) {
-        if (ZAP_STEADY.indexOf(refl[i].i) < 0) continue;
-        dot = makeDot(layer, refl[i].x, refl[i].y, FACE_NODES[refl[i].i][2]);
-        dot.style.opacity = String(Math.round(refl[i].k * 1000) / 1000);
-      }
-    }
-    return layer;
-  }
-
-  /* the neighbours of each joint: the four nearest, by distance in picture pixels */
-  var faceNeighbours = null;
-  function faceNear() {
-    if (faceNeighbours) return faceNeighbours;
-    faceNeighbours = [];
-    for (var i = 0; i < FACE_NODES.length; i++) {
-      var ds = [];
-      for (var j = 0; j < FACE_NODES.length; j++) {
-        if (j === i) continue;
-        var dx = (FACE_NODES[i][0] - FACE_NODES[j][0]) * 14, dy = (FACE_NODES[i][1] - FACE_NODES[j][1]) * 9.33;
-        ds.push([dx * dx + dy * dy, j]);
-      }
-      ds.sort(function (a, b) { return a[0] - b[0]; });
-      faceNeighbours.push(ds.slice(0, 4).map(function (d) { return d[1]; }));
-    }
-    return faceNeighbours;
-  }
-
-  /* The timer, on the shared frame loop's clock: it waits while the tab is
-     hidden or the card is off screen, as the flashes do. fire(k, seconds)
-     starts joint k's flash; rand is Math.random. */
-  function faceScheduler(n, near, pos, fire, rand) {
-    var now = 0, events = [], busyUntil = [], litUntil = [];
-    var last = -1;
-    for (var i = 0; i < n; i++) { busyUntil.push(0); litUntil.push(0); }
-
-    function planned(k) {
-      for (var e = 0; e < events.length; e++) if (events[e][1] === k) return true;
-      return false;
-    }
-    function free(k) { return busyUntil[k] <= now && !planned(k); }
-
-    function cascade() {
-      /* the start: of five joints picked at random, the one farthest from every dot that is lit or about to be */
-      var best = -1, bestD = -1, pool = [];
-      for (var f = 0; f < n; f++) if (f !== last && free(f)) pool.push(f);
-      for (var t = 0; t < 5 && pool.length; t++) {
-        var k = pool.splice(Math.floor(rand() * pool.length), 1)[0];
-        var dmin = 1e9;
-        for (var j = 0; j < n; j++) {
-          if (litUntil[j] > now || planned(j)) {
-            var dx = pos[k][0] - pos[j][0], dy = (pos[k][1] - pos[j][1]) * 0.667;
-            dmin = Math.min(dmin, dx * dx + dy * dy);
-          }
-        }
-        if (dmin > bestD) { bestD = dmin; best = k; }
-      }
-      if (best < 0) return;
-      last = best;
-      var chain = [best], at = now, len = rand() < 0.5 ? 2 : 3;
-      events.push([now, best]);
-      while (chain.length < len) {
-        var cur = chain[chain.length - 1], opts = [];
-        for (var q = 0; q < near[cur].length; q++) {
-          var nb = near[cur][q];
-          if (chain.indexOf(nb) < 0 && free(nb)) opts.push(nb);
-        }
-        if (!opts.length) break;
-        var nx = opts[Math.floor(rand() * opts.length)];
-        at += ZAP_STEP + rand() * ZAP_STEP_SPAN;
-        events.push([at, nx]);
-        chain.push(nx);
-      }
-    }
-
-    return function (dt) {
-      now += dt;
-      /* a cascade starts when the dots that will still be lit in 100 ms, with the flashes
-         waiting their turn, number fewer than ZAP_WANT. The first flash fires at once. */
-      var ahead = 0, lit = 0;
-      for (var j = 0; j < n; j++) {
-        if (litUntil[j] > now + ZAP_AHEAD) ahead++;
-        if (litUntil[j] > now) lit++;
-      }
-      /* a cascade adds at most three, so with room for three the count stays at eight or fewer */
-      if ((ahead + events.length < ZAP_WANT || lit + events.length < 5) && lit + events.length + 3 <= ZAP_MAX) cascade();
-      /* the flashes whose time has come */
-      for (var e = events.length - 1; e >= 0; e--) {
-        if (events[e][0] <= now) {
-          var k = events[e][1];
-          events.splice(e, 1);
-          var len = ZAP_LEN * (1 - ZAP_VARY + 2 * ZAP_VARY * rand());
-          fire(k, len);
-          busyUntil[k] = now + len + 0.05;
-          litUntil[k] = now + len * ZAP_LIT;
-        }
-      }
-    };
-  }
-
-  function faceSchedule(c) {
-    var sets = c.face.sets;
-    var pos = FACE_NODES.map(function (nd) { return [nd[0], nd[1]]; });
-    return faceScheduler(sets.length, faceNear(), pos, function (k, len) {
-      var set = sets[k];
-      c.face.flip[k] = !c.face.flip[k];
-      var name = c.face.flip[k] ? 'cardfx-zap-a' : 'cardfx-zap-b';      // a new name restarts the animation
-      for (var j = 0; j < set.length; j++) set[j].style.animation = name + ' ' + len.toFixed(3) + 's linear 0s 1 none';
-    }, Math.random);
   }
 
   /* a fine ink line at the waterline, a little irregular so it reads as drawn */
@@ -1568,12 +1426,10 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
 
   /* The water. A copy of the picture, cut to the reflection, goes through an SVG
      turbulence displacement. The original's reflection is masked away under it,
-     because the drawing has no paper behind it to cover the original. The lights
-     reflected in the water sit inside the same sheet, so the same ripple moves
-     them. The noise tile repeats exactly, so the flow is made by sliding the
-     filtered sheet one way and what is inside it the other. Safari does not
-     redraw a filter whose numbers change from script, so the motion is carried
-     by transforms. */
+     because the drawing has no paper behind it to cover the original. The noise
+     tile repeats exactly, so the flow is made by sliding the filtered sheet one
+     way and the copy inside it the other. Safari does not redraw a filter whose
+     numbers change from script, so the motion is carried by transforms. */
   var RIP = { l: 0.33, t: 0.66, r: 0.67, b: 1.0, from: 68.0, to: 69.5 };
 
   function faceWater(c, img) {
@@ -1628,19 +1484,6 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     copy.style.top = pct((1 - RIP.t / bh) / 2 * 100);
     anchor.appendChild(copy);
 
-    /* the reflected lights: a point of the picture at (x, y) percent lands at
-       50 * (1 + (x / 100 - l) / bw) percent across the sheet, and the same down it */
-    var refl = faceReflections();
-    for (var r = 0; r < refl.length; r++) {
-      var sx = 50 * (1 + (refl[r].x / 100 - RIP.l) / bw);
-      var sy = 50 * (1 + (refl[r].y / 100 - RIP.t) / bh);
-      /* the wrapper holds the reflection's share of the light, so the light inside runs the original's glow */
-      var wrap = el('div', 'cardfx-reflk');
-      wrap.style.opacity = String(Math.round(refl[r].k * 1000) / 1000);
-      anchor.appendChild(wrap);
-      var dot = makeDot(wrap, sx, sy, FACE_NODES[refl[r].i][2] / (2 * bw));
-      c.face.sets[refl[r].i].push(dot);                  // it flashes with its source joint
-    }
     sheet.appendChild(anchor);
     win.appendChild(sheet);
     layer.appendChild(win);
@@ -1698,13 +1541,10 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
         if (window.console && console.warn) console.warn('CardFX: the water of card 2 did not start', e);
       }
     }
-    var glow = c.reduced ? null : faceSchedule(c);
     if (water) {
-      c.card.tick = function (dt) { if (glow) glow(dt); water.tick(dt); };
+      c.card.tick = water.tick;
       c.card.close = water.close;
       c.card.closes = true;
-    } else if (glow) {
-      c.card.tick = glow;
     }
     faceWaterline(c.layer('cardfx-line'));          // above the water, so no copy can cover it
   }
