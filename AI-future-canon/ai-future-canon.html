@@ -292,9 +292,12 @@ h1{font-weight:400;font-size:27px;line-height:1.2;letter-spacing:-.01em;margin:0
 .shelf-sticky h3{font-weight:400;font-size:20px;line-height:1.3;color:var(--ink)}
 .shelf-sticky p{font-size:12.5px}
 .shelf-card{margin-top:.6rem;padding:.85rem 1.1rem 1.1rem}
-.shelf-head{display:grid;grid-template-columns:2rem 4.4rem minmax(0,1fr);gap:.9rem;align-items:start}
+/* cover column 7.4rem, 68% wider than the earlier 4.4rem */
+.shelf-head{display:grid;grid-template-columns:2rem 7.4rem minmax(0,1fr);gap:.9rem;align-items:start}
 .shelf-rank{font-size:1.6rem;line-height:1.1;color:var(--red);padding-top:.1rem}
 .shelf-cover img{width:100%;border:1px solid var(--rule);display:block}
+/* a word longer than the title column wraps inside it and stays within the card */
+.shelf-title-wrap{overflow-wrap:break-word}
 
 /* next 50 */
 .controls{display:flex;justify-content:center;gap:.5rem;margin-top:var(--s2);flex-wrap:wrap}
@@ -310,7 +313,8 @@ h1{font-weight:400;font-size:27px;line-height:1.2;letter-spacing:-.01em;margin:0
 .mini-card .open-hint{margin-top:auto;padding-top:.6rem}
 /* the cover box hugs the cover, so the book under it is the same size */
 .mini-cover{display:block;width:fit-content;margin:0 auto .7rem}
-.mini-cover img{display:block;height:7rem;width:auto;max-width:100%;border:1px solid var(--rule)}
+/* cover height 11.75rem, 68% taller than the earlier 7rem */
+.mini-cover img{display:block;height:11.75rem;width:auto;max-width:100%;border:1px solid var(--rule)}
 
 /* the three notes: a credit line each, set in ink */
 .counsel-wrap{display:grid;grid-template-columns:repeat(3,1fr);gap:0 2.6rem;margin-top:var(--s3)}
@@ -385,7 +389,9 @@ footer p.gap{margin-top:.9rem}
   position:relative;isolation:isolate;border-radius:4px;
   perspective:var(--book-depth,420px);perspective-origin:72% 50%;
   transition:transform .24s ease,box-shadow .24s ease}
-.mini-cover{--book-depth:520px;border-radius:3px}
+/* the opening depth grows with the covers: 520px to 874px, and 420px (the default) to 706px */
+.shelf-cover{--book-depth:706px}
+.mini-cover{--book-depth:874px;border-radius:3px}
 .modal-book{--book-depth:1700px;border-radius:6px;box-shadow:var(--cover-shadow)}
 .shelf-cover img,.mini-cover img,.modal-book img{
   position:relative;z-index:1;transform-origin:0 50%;
@@ -503,6 +509,8 @@ footer p.gap{margin-top:.9rem}
   .modal-dialog{padding:1.4rem 1.2rem}
 }
 @media (max-width:460px){ .grid{grid-template-columns:1fr} }
+/* phones: a tighter gap in the shelf head keeps the title column at 140px or more beside the bigger cover */
+@media (max-width:430px){ .shelf-head{gap:.5rem} }
 </style>
 </head>
 <body>
