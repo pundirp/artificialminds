@@ -276,18 +276,21 @@
   .card-solo{max-width:15rem;margin-top:var(--s3)}
   .quiet{font-size:.82rem;color:var(--ink-faint);margin-top:1rem;font-style:italic}
   /* testimony: the quote inside is set exactly as a human quote is set, wrapped
-     in the tinted panel, and attributed below in the rubric. The panel carries
+     in the tinted panel, and attributed below in the same face, size and grey as the
+     source line under a human quote, in ordinary lowercase letters. The panel carries
      enough left padding for the hanging quotation mark to sit inside it. */
   .testimony{background:var(--tint);border-top:1px solid var(--rubric);border-bottom:1px solid var(--rubric);padding:1rem 1.2rem 1.05rem 2.4rem;margin:var(--s3) 0 0}
   .testimony .say{margin:0;padding-right:0}
   .testimony .who{
     text-align:left;font-size:.78rem;line-height:1.45;letter-spacing:.012em;
-    color:var(--rubric);margin:.35rem 0 0;
+    color:var(--ink-faint);margin:.35rem 0 0;
   }
   .testimony .who::before{
     content:"";display:inline-block;width:1.1rem;height:1px;
     background:var(--ink-ghost);vertical-align:.28em;margin-right:.55rem;
   }
+  /* the attribution words are plain lowercase with a capital W, at the letter spacing of the line around them */
+  .testimony .who .sc{font-variant:normal;letter-spacing:inherit}
   .prov{font-size:.78rem;font-style:italic;color:var(--ink-faint);margin-top:.6rem}
   .contents{margin-top:var(--s4);border:1px solid var(--rule);padding:1rem 1.2rem}
   .contents .ct{font-variant:small-caps;letter-spacing:.08em;margin-bottom:.5rem;color:var(--ink-soft)}
