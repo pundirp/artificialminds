@@ -1,17 +1,12 @@
 {
-  "generated": "2026-10-26T04:55:28Z",
+  "generated": "2026-10-27T05:12:59Z",
   "totals": {
-    "views_all": 48,
-    "visitors_all": 48,
-    "views_30d": 34,
-    "visitors_30d": 34
+    "views_all": 50,
+    "visitors_all": 50,
+    "views_30d": 36,
+    "visitors_30d": 36
   },
   "daily": [
-    {
-      "day": "2026-07-29",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-07-30",
       "views": 0,
@@ -454,6 +449,11 @@
     },
     {
       "day": "2026-10-26",
+      "views": 2,
+      "visitors": 2
+    },
+    {
+      "day": "2026-10-27",
       "views": 0,
       "visitors": 0
     }
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-10",
-      "views": 32,
-      "visitors": 32
+      "views": 34,
+      "visitors": 34
     }
   ],
   "projects": [
@@ -514,10 +514,10 @@
     {
       "id": "A-Salon-of-Witnesses",
       "name": "A Salon of Witnesses",
-      "views_all": 1,
-      "visitors_all": 1,
-      "views_30d": 1,
-      "visitors_30d": 1
+      "views_all": 2,
+      "visitors_all": 2,
+      "views_30d": 2,
+      "visitors_30d": 2
     },
     {
       "id": "AI-future-canon",
@@ -530,17 +530,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 23,
-      "visitors_all": 23,
-      "views_30d": 18,
-      "visitors_30d": 18
+      "views_all": 24,
+      "visitors_all": 24,
+      "views_30d": 19,
+      "visitors_30d": 19
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 23,
-      "visitors_all": 23
+      "views_all": 24,
+      "visitors_all": 24
     },
     {
       "path": "/stillpoint/collection.html",
@@ -573,6 +573,11 @@
       "visitors_all": 1
     },
     {
+      "path": "/A-Salon-of-Witnesses/who-killed-aldous-finch.html",
+      "views_all": 1,
+      "visitors_all": 1
+    },
+    {
       "path": "/why-so-much-data/why-so-much-data.html",
       "views_all": 1,
       "visitors_all": 1
@@ -581,7 +586,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 29
+      "visitors": 31
     },
     {
       "name": "France",
@@ -599,7 +604,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 19
+      "visitors": 21
     },
     {
       "name": "Safari",
@@ -616,12 +621,12 @@
       "visitors": 19
     },
     {
-      "name": "iOS",
+      "name": "Windows",
       "visitors": 7
     },
     {
-      "name": "Windows",
-      "visitors": 5
+      "name": "iOS",
+      "visitors": 7
     },
     {
       "name": "Android",
@@ -635,7 +640,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 14
+      "visitors": 16
     },
     {
       "name": "Phone",
@@ -657,7 +662,7 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 18
+      "visitors": 20
     },
     {
       "name": "pundirp.github.io",
