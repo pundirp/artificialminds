@@ -68,7 +68,7 @@ The five experiments:
 
 ### 3. Who Learns Faster, a Toddler or a Chatbot?
 
-https://pundirp.github.io/artificialminds/why-so-much-data/why-so-much-data.html
+https://pundirp.github.io/artificialminds/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html
 
 An essay on why AI needs so much data, for readers with no technical background. A toddler
 starts to talk after hearing about nine million words, and Meta's Llama 3.1 read about 11.7
@@ -97,9 +97,9 @@ list design, the Nature tournament design, who runs one today, and how one was f
 under fifty dollars. Editing history shows how words arrived, not who thought of them.
 Search words: AI detector accuracy, AI watermark, Turnitin AI detection, GPTZero, SynthID.
 
-### 5. An Artificial Mind of Your Own
+### 5. A Talking Machine of Your Own
 
-https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html
+https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/a-talking-machine-of-your-own.html
 
 A field guide for curious students, built around six plain questions. It explains how LLMs
 work from the ground up: tokens, weights, the transformer, and why a neural network borrows
