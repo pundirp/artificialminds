@@ -57,6 +57,8 @@
     --ink-ghost:#a29a88;
     --rule:#d5cdba;
     --rubric:#8c2a1a;
+    --note-paper: #ffffff;   /* the paper under each quote frame is opaque white, whatever the ground */
+    --note-shadow: rgba(17, 17, 17, .18);   /* the small shadow under each quote frame */
 
     /* the block */
     --measure:34rem;
@@ -120,7 +122,7 @@
 
   /* ---- title ---- */
   .head{margin:0 0 var(--s3)}
-  .glyph{width:96px;height:auto;display:block;margin:0 0 .8rem}
+  .glyph{width:158px;height:auto;display:block;margin:0 0 .8rem}
   h1{
     font-weight:400;
     font-size:2.1rem;
@@ -453,6 +455,53 @@
   @media (prefers-reduced-motion:reduce){
     *{transition-duration:.01ms !important;animation-duration:.01ms !important}
   }
+
+  /* ===== Quote frame from the essay Can Artificial Minds Feel?, brought over on 29 October 2026 =====
+     This block sets the two quotes signed by an artificial mind (blockquote.testimony). The page's earlier blockquote.testimony::before{content:none} is replaced here by the ornament
+     on a sheet of white paper drawn with a pencil edge, with a small ornament of two wire-lattice
+     quotation marks on its top left corner. It replaces the tinted panel, the two red rules, the
+     hanging red quotation mark and the red attribution that this block had before.
+     7c6d40c49818a3e1.webp is the frame: one picture cut into nine parts with border-image, four
+     corners of 36 picture pixels drawn --bw wide, and four edges that repeat along the sides.
+     55d4f4dc3ac68c3e.webp is the ornament on ::before, drawn at a fixed size: --orn sets its height
+     (28px on a desktop, 24px at 600px wide or less) and its width follows. The box keeps room above
+     it for the ornament. The text sits 1.2rem inside the paper on every side. The paper is
+     --note-paper and the shadow is --note-shadow, both declared in :root. */
+  blockquote.testimony{
+    --orn: 28px;
+    --bw: 12px;
+    position: relative;
+    margin: calc(var(--orn) * .84 + .4rem) 0 var(--s3);
+    padding: calc(1.2rem - var(--bw));
+    border: var(--bw) solid transparent;
+    border-image: url(7c6d40c49818a3e1.webp) 36 / var(--bw) round;
+    border-radius: 8px;
+    box-shadow: 1px 2px 4px -1px var(--note-shadow);
+    background: var(--note-paper);
+    background-clip: padding-box;
+  }
+  blockquote.testimony::before{
+    content: "";
+    position: absolute;
+    left: calc(var(--orn) * .17 - var(--bw));
+    top: calc(var(--orn) * -.77 + 1.1px - var(--bw));
+    width: calc(var(--orn) * 1.5119);
+    height: var(--orn);
+    background: url(55d4f4dc3ac68c3e.webp) 0 0 / 100% 100% no-repeat;
+    pointer-events: none;
+  }
+  /* the ornament already shows two quotation marks, so the hanging red mark is off */
+  blockquote.testimony p.say::before{ content: none; }
+  /* the attribution: grey, ordinary lowercase with a capital W, the short rule before it grey */
+  blockquote.testimony p.src{
+    color: var(--ink-faint);
+    text-transform: none;
+    font-variant: normal;
+    letter-spacing: .012em;
+  }
+  blockquote.testimony p.src::before{ background: var(--ink-ghost); }
+  blockquote.testimony .sc{ font-variant: normal; letter-spacing: inherit; }
+  @media (max-width: 600px) { blockquote.testimony { --orn: 24px; } }
 </style>
 </head>
 <body>
@@ -461,7 +510,7 @@
   <p class="backnav"><a href="can-artificial-minds-feel.html#experiments">&larr; Can artificial minds feel?</a></p>
 
   <header class="head">
-    <svg class="glyph" viewBox="0 0 120 64" aria-hidden="true"><rect x="24" y="16" width="16" height="10" fill="#8c2a1a"/><path d="M 32 30 l 0 8 m -3 -4 l 3 4 l 3 -4" fill="none" stroke="#a29a88" stroke-width="1.2"/><rect x="24" y="42" width="16" height="10" fill="none" stroke="#a29a88" stroke-width="1.2" stroke-dasharray="2 3"/><rect x="46" y="42" width="22" height="10" fill="#4a453c"/><rect x="74" y="42" width="26" height="10" fill="#4a453c"/></svg>
+    <svg class="glyph" viewBox="0 0 120 64" aria-hidden="true"><image href="sketch-03-grammar-trap.webp" x="24.48" y="4" width="71.03" height="56" preserveAspectRatio="xMidYMid meet"/></svg>
     <div>
       <h1>The Grammar Trap</h1>
       <p class="dek">English sentences need a subject. That rule may be the only reason the one who experiences appears in them at all.</p>

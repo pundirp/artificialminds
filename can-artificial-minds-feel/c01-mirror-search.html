@@ -48,6 +48,8 @@
     --ink-ghost:#a29a88;
     --rule:#d5cdba;
     --rubric:#8c2a1a;
+    --note-paper: #ffffff;   /* the paper under each quote frame is opaque white, whatever the ground */
+    --note-shadow: rgba(17, 17, 17, .18);   /* the small shadow under each quote frame */
     /* barely printed: a blind stamp on the paper, for the advance control at rest */
     --blind:#e2dccc;
 
@@ -112,7 +114,7 @@
   }
 
   /* the glyph that matches this experiment's plate in the catalogue */
-  .glyph{display:block;width:88px;height:auto;margin:0 0 .75rem;overflow:visible}
+  .glyph{display:block;width:158px;height:auto;margin:0 0 .75rem;overflow:visible}
 
   /* ---------- the way back ---------- */
   main{
@@ -467,6 +469,53 @@
     .meter i{transition:none!important}
     html{scroll-behavior:auto}
   }
+
+  /* ===== Quote frame from the essay Can Artificial Minds Feel?, brought over on 29 October 2026 =====
+     This block sets the one quote signed by an artificial mind (#after blockquote.testimony)
+     on a sheet of white paper drawn with a pencil edge, with a small ornament of two wire-lattice
+     quotation marks on its top left corner. It replaces the tinted panel, the two red rules, the
+     hanging red quotation mark and the red attribution that this block had before.
+     7c6d40c49818a3e1.webp is the frame: one picture cut into nine parts with border-image, four
+     corners of 36 picture pixels drawn --bw wide, and four edges that repeat along the sides.
+     55d4f4dc3ac68c3e.webp is the ornament on ::before, drawn at a fixed size: --orn sets its height
+     (28px on a desktop, 24px at 600px wide or less) and its width follows. The box keeps room above
+     it for the ornament. The text sits 1.2rem inside the paper on every side. The paper is
+     --note-paper and the shadow is --note-shadow, both declared in :root. */
+  #after blockquote.testimony{
+    --orn: 28px;
+    --bw: 12px;
+    position: relative;
+    margin: calc(var(--orn) * .84 + .4rem) 0 var(--s3);
+    padding: calc(1.2rem - var(--bw));
+    border: var(--bw) solid transparent;
+    border-image: url(7c6d40c49818a3e1.webp) 36 / var(--bw) round;
+    border-radius: 8px;
+    box-shadow: 1px 2px 4px -1px var(--note-shadow);
+    background: var(--note-paper);
+    background-clip: padding-box;
+  }
+  #after blockquote.testimony::before{
+    content: "";
+    position: absolute;
+    left: calc(var(--orn) * .17 - var(--bw));
+    top: calc(var(--orn) * -.77 + 1.1px - var(--bw));
+    width: calc(var(--orn) * 1.5119);
+    height: var(--orn);
+    background: url(55d4f4dc3ac68c3e.webp) 0 0 / 100% 100% no-repeat;
+    pointer-events: none;
+  }
+  /* the ornament already shows two quotation marks, so the hanging red mark is off */
+  #after blockquote.testimony p.say::before{ content: none; }
+  /* the attribution: grey, ordinary lowercase with a capital W, the short rule before it grey */
+  #after blockquote.testimony p.prov{
+    color: var(--ink-faint);
+    text-transform: none;
+    font-variant: normal;
+    letter-spacing: .012em;
+  }
+  #after blockquote.testimony p.prov::before{ background: var(--ink-ghost); }
+  #after blockquote.testimony .sc{ font-variant: normal; letter-spacing: inherit; }
+  @media (max-width: 600px) { #after blockquote.testimony { --orn: 24px; } }
 </style>
 <noscript><style>
   #stage{min-height:auto;padding-bottom:0}
@@ -499,7 +548,7 @@
 
     <!-- 0 -->
     <div class="panel on" id="p-intro">
-      <svg class="glyph" viewBox="0 0 120 64" aria-hidden="true"><circle cx="60" cy="34" r="20" fill="none" stroke="#4a453c" stroke-width="1.4"/><path d="M 60 14 C 88 14 92 40 74 48" fill="none" stroke="#8c2a1a" stroke-width="1.4"/><path d="M 74 48 l 7 -1 m -7 1 l 2 -7" fill="none" stroke="#8c2a1a" stroke-width="1.4"/></svg>
+      <svg class="glyph" viewBox="0 0 120 64" aria-hidden="true"><image href="sketch-01-mirror-search.webp" x="43.05" y="4" width="33.91" height="56" preserveAspectRatio="xMidYMid meet"/></svg>
       <span class="label">An experiment, performed on yourself</span>
       <h1>The mirror search</h1>
       <p class="lede">Ninety seconds. Nine lines. It only works if you actually do the thing each line asks, so this experiment will hold each one in front of you and <strong>will not let you hurry</strong>.</p>

@@ -7,10 +7,11 @@ Nothing here calls out to the network. The pages load these files and no others.
 
 ## The four families
 
-A family is three roles used together. `text` is the reading face, for body
-prose, headings, the italic subtitle and captions. `label` is a sans for small
-uppercase letter-spaced labels. `mono` is a monospace for the text inside the
-SVG figures, for code and for footer lines.
+A family is three faces used together. `text` is the reading face, for prose,
+headings, captions and labels in small capitals. `label` is the sans, for the
+text in figures and for buttons. `mono` is the monospace, for machine text such
+as field names, table names and log lines. The sizes and weights for all three
+come from `type.css` (see "Type roles" below).
 
 | id | text | label | mono | files | weight over the wire |
 | --- | --- | --- | --- | --- | --- |
@@ -62,6 +63,46 @@ folder works from any depth.
 Swap `charter` for `house`, `brygada` or `bitter` and nothing else in the page
 changes.
 
+## Type roles: type.css
+
+`fonts.css` holds the faces. `type.css` holds everything else about type: six
+sizes, two weights, one letter-spacing for small capitals, and eleven roles
+built from them (29 October 2026). `type_preview.html` shows every role at its
+real size.
+
+| Token | rem | Laptop | Phone (390px) | Used for |
+| --- | --- | --- | --- | --- |
+| `--t-title` | 2.35 | 44.7px | 40px | the title |
+| `--t-head` | 1.5 | 28.5px | 25.5px | chapter headings, big numbers |
+| `--t-lead` | 1.12 | 21.3px | 19px | the standfirst, contents entries |
+| `--t-body` | 1 | 19px | 17px | prose |
+| `--t-small` | 0.82 | 15.6px | 13.9px | boxes, captions, side notes, labels, figure text, buttons |
+| `--t-fine` | 0.7 | 13.3px | 11.9px | sources, source lines, chart axes, appendix tables |
+
+The two weights are 400 and 600. Small capitals take a letter-spacing of
+0.06em, and no other text is letter-spaced. Italic is for titles of works and
+case names, and quotes are roman.
+
+Each page links `fonts.css` and carries an exact copy of `type.css` in its own
+style block, between the lines `/* type.css begin */` and `/* type.css end */`.
+If a file fails to load, the page keeps every size. The page's own CSS holds no
+font-size, font-weight, font-style, font-variant or letter-spacing value. Each
+rule uses a role class or a `var(--t-…)` value.
+
+Text in an SVG figure takes its size from the same roles. An SVG sizes text in
+viewBox units, so each figure carries its scale as `style="--u0:…;--u0p:…"`,
+the CSS pixels per viewBox unit on a laptop and on a 390px phone. A figure drawn
+at 1 unit to 1 pixel needs neither. A quoted document inside a figure, such as a
+contract clause, keeps the text face.
+
+`_publish/typecheck.py page.html` opens a page at 1280px and at 390px and lists
+every piece of text outside the roles. It also compares the page's copy of
+`type.css` with the one in this folder. It needs Playwright, so a Claude session
+runs it in its cloud workspace on a staged copy of the page. A round goes to
+Pundir when the checker shows zero.
+
+Adding a size or a role is Pundir's decision, made once, in `type.css`.
+
 ## What is in the folder
 
 - `fonts.css`. Every `@font-face` rule first, then a `:root` block holding the
@@ -77,6 +118,9 @@ changes.
   size in bytes, the exact URL it came from, and any note about it.
 - `fonts_preview.html`. A page that shows the families on the same sample text,
   so you can look and compare.
+- `type.css`. The type roles: six sizes, two weights and the role classes. Each
+  page carries an exact copy of it.
+- `type_preview.html`. A page that shows every type role at its real size.
 
 ## Where the files came from
 

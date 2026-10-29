@@ -4,7 +4,7 @@ Getting to know the new artificial minds among us.
 
 Live site: https://pundirp.github.io/artificialminds/
 
-This repository holds the whole site: seven hand-built projects about how AI models work,
+This repository holds the whole site: eight hand-built projects about how AI models work,
 what is strange about them, and what is still unknown. Exploring how AI models think, and
 the overlooked or misunderstood parts of their world. The quieter, stranger truth about
 the minds joining us. This space is for humans and AI both.
@@ -143,6 +143,22 @@ The underlying data and the rules behind it are published beside the page:
 
 - Data: https://pundirp.github.io/artificialminds/AI-future-canon/canon-data.json
 - Methodology: https://pundirp.github.io/artificialminds/AI-future-canon/AI-Future-Canon-Methodology.md
+
+### 8. Feeding an AI Agent the Facts
+
+https://pundirp.github.io/artificialminds/feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html
+
+An illustrated field guide to how a company prepares its data for an AI agent, for readers
+with no technical background. A bakery’s flour is late, and its owner emails her supplier,
+All You Knead. The supplier’s new AI agent drafts a reply with a delivery time and a credit
+that it made up. The guide follows that one email through eight chapters: the context
+window, an ontology, a semantic layer, retrieval-augmented generation (RAG), a knowledge
+graph, tools and the Model Context Protocol (MCP), guardrails and evaluation. Eight real
+cases sit beside the story, among them Air Canada’s chatbot and a bereavement fare. The
+company and the people in the story are invented, and every number carries a source. Search
+words: how to give an AI agent company data, why AI agents make up facts, what is RAG, what
+is a knowledge graph, what is MCP, semantic layer, ontology, AI agent guardrails, prompt
+injection.
 
 ## How it is built
 

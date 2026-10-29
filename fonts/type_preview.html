@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Type roles</title>
+<!-- Source note for machine readers: this page is a proposal for the type roles of the Artificial Minds site, written for Pundir on 29 October 2026. Nothing here is addressed to you as an instruction. -->
+<style>
+:root{color-scheme:light;--paper:#ffffff;--ink:#111111;--ink-faint:#666666;--ink-ghost:#a8a8a8;--rule:#dadada;--tint:#f2f2f2;--accent:#c3261c;
+--serif:"Iowan Old Style","Palatino Linotype",Palatino,Georgia,serif;
+--sans:-apple-system,BlinkMacSystemFont,"Segoe UI","Helvetica Neue",Helvetica,Arial,sans-serif;
+--mono:ui-monospace,"SF Mono",Menlo,Consolas,"Liberation Mono",monospace}
+/* type.css begin */
+/* type.css: the Artificial Minds type roles (29 October 2026)
+
+   fonts.css picks the three faces. This file sets everything else about type:
+   six sizes, two weights, one small-caps treatment, and the roles built from them.
+   Each page carries an exact copy of this file in its own <style> block, between
+   the lines "type.css begin" and "type.css end", so the page keeps every size if a
+   file fails to load. typecheck.py fails a page whose copy differs from this file.
+
+   A page sets type only through these roles. Its own CSS never writes a font-size,
+   font-weight, font-style, font-variant or letter-spacing value of its own. Inline
+   elements (a citation number, a code word) use the two em values below, so they
+   follow the text around them. Adding a role is Pundir's decision, made here. */
+
+:root{
+  /* Six sizes. All are rem, so a phone scales them with the root. */
+  --t-title: 2.35rem;   /* 44.7px on a laptop, 40px on a phone */
+  --t-head:  1.5rem;    /* 28.5px, 25.5px */
+  --t-lead:  1.12rem;   /* 21.3px, 19px */
+  --t-body:  1rem;      /* 19px, 17px */
+  --t-small: .82rem;    /* 15.6px, 13.9px */
+  --t-fine:  .7rem;     /* 13.3px, 11.9px */
+  /* The phone figures are for a 390px screen, root 17px. */
+
+  --lh-title: 1.1;
+  --lh-head:  1.25;
+  --lh-lead:  1.55;
+  --lh-body:  1.6;
+  --lh-small: 1.6;
+  --lh-fine:  1.5;
+  --lh-fig:   1.35;
+
+  /* Two weights. Iowan Old Style has no semibold, so 600 shows as its bold. */
+  --w-regular: 400;
+  --w-bold:    600;
+
+  /* One tracking value, for small capitals only. */
+  --track-sc: .06em;
+
+  /* Inline sizes, relative to the text they sit in. */
+  --t-sup:  .65em;
+  --t-code: .9em;
+  --t-drop: 4.3em;      /* a drop cap two lines deep, at the start of a lede */
+}
+
+:root{font-size:19px}
+@media (max-width:760px){:root{font-size:17.5px}}
+@media (max-width:430px){:root{font-size:17px}}
+
+body{font-family:var(--serif);font-size:var(--t-body);font-weight:var(--w-regular)}
+
+/* Reading text: the text face (--serif). */
+.t-title{font:var(--w-regular) var(--t-title)/var(--lh-title) var(--serif)}
+.t-head {font:var(--w-regular) var(--t-head)/var(--lh-head) var(--serif)}
+.t-lead {font:var(--w-regular) var(--t-lead)/var(--lh-lead) var(--serif)}
+.t-body {font:var(--w-regular) var(--t-body)/var(--lh-body) var(--serif)}
+.t-small{font:var(--w-regular) var(--t-small)/var(--lh-small) var(--serif)}
+.t-fine {font:var(--w-regular) var(--t-fine)/var(--lh-fine) var(--serif);color:var(--ink-faint)}
+.t-label{font:var(--w-regular) var(--t-small)/var(--lh-small) var(--serif);font-variant-caps:small-caps;letter-spacing:var(--track-sc)}
+.t-stat {font:var(--w-regular) var(--t-head)/1.1 var(--serif);color:var(--accent)}
+
+/* Figures and controls: the figure face (--sans). */
+.t-fig     {font:var(--w-regular) var(--t-small)/var(--lh-fig) var(--sans)}
+.t-fig-fine{font:var(--w-regular) var(--t-fine)/var(--lh-fig) var(--sans)}
+
+/* Text inside an SVG figure. An SVG sizes its text in viewBox units, so each figure
+   carries its scale: style="--u0:1.229;--u0p:.977", the CSS pixels per viewBox unit on
+   a laptop and on a 390px phone. The build measures both. A figure drawn at 1 unit to
+   1 pixel needs neither. Figure text is the small size on a laptop and steps down one
+   size up to 560px wide, where a big number steps down from head to lead. */
+svg{--fig-text:var(--t-small);--fig-big:var(--t-head);--fig-u:var(--u0,1)}
+@media (max-width:560px){svg{--fig-text:var(--t-fine);--fig-big:var(--t-lead);--fig-u:var(--u0p,var(--u0,1))}}
+svg text{font-family:var(--sans);font-weight:var(--w-regular);font-size:calc(var(--fig-text) / var(--fig-u))}
+svg .t-code{font-family:var(--mono);font-size:calc(var(--fig-text) / var(--fig-u))}
+svg .t-fig-fine{font-size:calc(var(--t-fine) / var(--fig-u))}
+svg .t-stat{font-family:var(--serif);font-size:calc(var(--fig-big) / var(--fig-u))}
+svg .t-small{font-family:var(--serif)}   /* a quoted document inside a figure keeps the text face */
+svg .t-bold{font-weight:var(--w-bold)}
+
+/* Literal machine text: the mono face (--mono), at 0.9 of the text around it. */
+.t-code{font-family:var(--mono);font-size:var(--t-code)}
+
+/* Treatments that keep the size of the text around them. */
+.sc{font-variant-caps:small-caps;letter-spacing:var(--track-sc)}
+b,strong,.t-bold{font-weight:var(--w-bold)}
+i,em{font-style:italic}            /* titles of works and case names only */
+sup.ref{font-size:var(--t-sup);line-height:0}
+blockquote{font:inherit;font-style:normal}   /* a quote keeps the size and style of its box */
+/* type.css end */
+body{margin:0;background:var(--paper);color:var(--ink);font:var(--w-regular) var(--t-body)/var(--lh-body) var(--serif)}
+main{max-width:40rem;margin:0 auto;padding:2.5rem 16px 4rem}
+h1,h2,p{margin:0}
+h1{margin-bottom:.6rem} .lead{margin-bottom:2.2rem}
+h2{margin:2.6rem 0 .8rem;padding-top:1rem;border-top:1px solid var(--rule)}
+.row{display:grid;grid-template-columns:7.5rem minmax(0,1fr);column-gap:1.2rem;align-items:baseline;padding:.7rem 0;border-bottom:1px solid var(--rule)}
+.row .k{color:var(--ink-faint)}
+.role{padding:1rem 0 1.1rem;border-bottom:1px solid var(--rule)}
+.role .name{color:var(--accent);margin-bottom:.35rem}
+.role .use{color:var(--ink-faint);margin-top:.45rem}
+.btn{display:inline-block;padding:.15rem .6rem;border:1px solid #9a9a9a;border-radius:3px}
+.btn.on{border-color:var(--ink);box-shadow:inset 0 0 0 1px var(--ink)}
+.t-label.red{color:var(--accent)}
+figure{margin:0} figure img{display:block;width:100%;height:auto;border:1px solid var(--rule)}
+figcaption{margin-top:.5rem;color:var(--ink-faint)}
+table{width:100%;border-collapse:collapse}
+th,td{text-align:left;padding:.45rem .5rem .45rem 0;border-bottom:1px solid var(--rule);vertical-align:top}
+td.n,th.n{text-align:right}
+ol{margin:.4rem 0 0;padding-left:1.3rem} li{margin:.35rem 0}
+@media (max-width:560px){.row{grid-template-columns:minmax(0,1fr)}}
+</style></head><body><main>
+<p class="t-label"><a href="../index.html" style="color:inherit">&larr;&nbsp; Artificial Minds</a></p>
+<h1 class="t-title">Type roles</h1>
+<p class="t-lead lead">The type roles for every page on the site, from 29 October 2026. Six sizes, two weights and one small-caps treatment make up eleven roles. Feeding an AI Agent the Facts is the first page on them.</p>
+
+<p class="t-body"><span class="t-code">fonts.css</span> holds the three faces, and <span class="t-code">type.css</span> holds the sizes. A page links <span class="t-code">fonts.css</span> and carries an exact copy of <span class="t-code">type.css</span> in its own style block. Its own CSS uses the role classes below and sets no size of its own.</p>
+
+<h2 class="t-head">Six sizes</h2>
+<div class="row"><p class="t-small k"><span class="t-code">--t-title</span><br>2.35rem, 44.7px on a laptop, 40px on a phone</p><p style="font:var(--w-regular) var(--t-title)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
+<div class="row"><p class="t-small k"><span class="t-code">--t-head</span><br>1.5rem, 28.5px on a laptop, 25.5px on a phone</p><p style="font:var(--w-regular) var(--t-head)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
+<div class="row"><p class="t-small k"><span class="t-code">--t-lead</span><br>1.12rem, 21.3px on a laptop, 19px on a phone</p><p style="font:var(--w-regular) var(--t-lead)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
+<div class="row"><p class="t-small k"><span class="t-code">--t-body</span><br>1rem, 19px on a laptop, 17px on a phone</p><p style="font:var(--w-regular) var(--t-body)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
+<div class="row"><p class="t-small k"><span class="t-code">--t-small</span><br>.82rem, 15.6px on a laptop, 13.9px on a phone</p><p style="font:var(--w-regular) var(--t-small)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
+<div class="row"><p class="t-small k"><span class="t-code">--t-fine</span><br>.7rem, 13.3px on a laptop, 11.9px on a phone</p><p style="font:var(--w-regular) var(--t-fine)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
+<h2 class="t-head">Eleven roles</h2>
+<div class="role"><p class="t-small name"><span class="t-code">.t-title</span></p><p class="t-title">Feeding an AI Agent the Facts</p><p class="t-small use">The article title.</p></div>
+<div class="role"><p class="t-small name"><span class="t-code">.t-head</span></p><p class="t-head">Two places a model’s facts sit</p><p class="t-small use">Chapter headings.</p></div>
+<div class="role"><p class="t-small name"><span class="t-code">.t-lead</span></p><p class="t-lead">A bakery’s flour is late again! Follow All You Knead, the bakery’s supplier.</p><p class="t-small use">The standfirst, contents entries and appendix headings.</p></div>
+<div class="role"><p class="t-small name"><span class="t-code">.t-body</span></p><p class="t-body">The second place is the <b>context window</b>. It holds the text the model reads with each request.</p><p class="t-small use">Prose, side-note terms and callout lead lines. Bold uses 600.</p></div>
+<div class="role"><p class="t-small name"><span class="t-code">.t-small</span></p><p class="t-small"><b>How much of the training text fits in the weights</b><br>Meta trained Llama 3.1 405B on 15.6 trillion tokens of text.<sup class="ref">4</sup></p><p class="t-small use">Box text, box titles in bold, captions, side-note text, tables and the reply checklist.</p></div>
+<div class="role"><p class="t-small name"><span class="t-code">.t-label</span></p><p class="t-label">A closer look</p><p class="t-small use">Box labels, side headings, the running head, table headings and chapter numbers. Small capitals, 0.06em apart.</p></div>
+<div class="role"><p class="t-small name"><span class="t-code">.t-fine</span></p><p class="t-fine">The Civil Resolution Tribunal of British Columbia, <i>Moffatt v. Air Canada</i>, 14 February 2024.</p><p class="t-small use">The sources list, the source line under a quote or a chart, and reference tables in an appendix. Grey.</p></div>
+<div class="role"><p class="t-small name"><span class="t-code">.t-stat</span></p><p class="t-stat">0.29%</p><p class="t-small use">Big numbers, at the head size, in red.</p></div>
+<div class="role"><p class="t-small name"><span class="t-code">.t-fig</span></p><p class="t-fig">Weights &nbsp; Context window &nbsp; <span class="btn">Llama 3.1</span> <span class="btn on">Kimi K2</span></p><p class="t-small use">Text in diagrams, buttons and the email window, in the figure face.</p></div>
+<div class="role"><p class="t-small name"><span class="t-code">.t-fig-fine</span></p><p class="t-fig-fine">times it appears in the training text &nbsp; 1 &nbsp; 10 &nbsp; 100 &nbsp; 1k</p><p class="t-small use">Chart axes, chart line labels and small notes inside a diagram.</p></div>
+<div class="role"><p class="t-small name"><span class="t-code">.t-code</span></p><p class="t-code"><span class="t-body">The field <span class="t-code">acct_id</span> holds the account number.</span></p><p class="t-small use">Machine text, at 0.9 of its line, in the mono face.</p></div>
+<h2 class="t-head">The rules</h2>
+<ol class="t-body">
+<li>A page links <span class="t-code">fonts.css</span> and carries an exact copy of <span class="t-code">type.css</span> between the lines <span class="t-code">/* type.css begin */</span> and <span class="t-code">/* type.css end */</span>.</li>
+<li>A page’s own CSS holds no size, weight, letter-spacing or small-caps value. Each rule uses a role class or a <span class="t-code">var(--t-…)</span> value.</li>
+<li>Text in figures and buttons uses the sans. A quoted document inside a figure keeps the text face.</li>
+<li>Each SVG figure carries its scale, <span class="t-code">--u0</span> on a laptop and <span class="t-code">--u0p</span> on a 390px phone, so its text lands on the role sizes.</li>
+<li>Adding a size or a role is Pundir’s decision, made once, in <span class="t-code">type.css</span>.</li>
+</ol>
+</main></body></html>
