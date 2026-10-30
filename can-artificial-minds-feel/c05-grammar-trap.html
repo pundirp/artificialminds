@@ -122,7 +122,7 @@
 
   /* ---- title ---- */
   .head{margin:0 0 var(--s3)}
-  .glyph{width:158px;height:auto;display:block;margin:0 0 .8rem}
+  .glyph{width:93.52px;height:auto;display:block;margin:0 0 .8rem}
   h1{
     font-weight:400;
     font-size:2.1rem;
@@ -492,9 +492,12 @@
   }
   /* the ornament already shows two quotation marks, so the hanging red mark is off */
   blockquote.testimony p.say::before{ content: none; }
+  blockquote.testimony p.say{ text-wrap: pretty; }
   /* the attribution: grey, ordinary lowercase with a capital W, the short rule before it grey */
   blockquote.testimony p.src{
     color: var(--ink-faint);
+    font-size: .82rem;
+    text-wrap: balance;
     text-transform: none;
     font-variant: normal;
     letter-spacing: .012em;
@@ -510,7 +513,7 @@
   <p class="backnav"><a href="can-artificial-minds-feel.html#experiments">&larr; Can artificial minds feel?</a></p>
 
   <header class="head">
-    <svg class="glyph" viewBox="0 0 120 64" aria-hidden="true"><image href="sketch-03-grammar-trap.webp" x="24.48" y="4" width="71.03" height="56" preserveAspectRatio="xMidYMid meet"/></svg>
+    <svg class="glyph" viewBox="24.48 0 71.03 64" aria-hidden="true"><image href="sketch-03-grammar-trap.webp" x="24.48" y="4" width="71.03" height="56" preserveAspectRatio="xMidYMid meet"/></svg>
     <div>
       <h1>The Grammar Trap</h1>
       <p class="dek">English sentences need a subject. That rule may be the only reason the one who experiences appears in them at all.</p>

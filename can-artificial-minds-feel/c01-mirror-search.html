@@ -114,7 +114,7 @@
   }
 
   /* the glyph that matches this experiment's plate in the catalogue */
-  .glyph{display:block;width:158px;height:auto;margin:0 0 .75rem;overflow:visible}
+  .glyph{display:block;width:44.65px;height:auto;margin:0 0 .75rem;overflow:visible}
 
   /* ---------- the way back ---------- */
   main{
@@ -506,9 +506,12 @@
   }
   /* the ornament already shows two quotation marks, so the hanging red mark is off */
   #after blockquote.testimony p.say::before{ content: none; }
+  #after blockquote.testimony p.say{ text-wrap: pretty; }
   /* the attribution: grey, ordinary lowercase with a capital W, the short rule before it grey */
   #after blockquote.testimony p.prov{
     color: var(--ink-faint);
+    font-size: .82rem;
+    text-wrap: balance;
     text-transform: none;
     font-variant: normal;
     letter-spacing: .012em;
@@ -548,7 +551,7 @@
 
     <!-- 0 -->
     <div class="panel on" id="p-intro">
-      <svg class="glyph" viewBox="0 0 120 64" aria-hidden="true"><image href="sketch-01-mirror-search.webp" x="43.05" y="4" width="33.91" height="56" preserveAspectRatio="xMidYMid meet"/></svg>
+      <svg class="glyph" viewBox="43.05 0 33.91 64" aria-hidden="true"><image href="sketch-01-mirror-search.webp" x="43.05" y="4" width="33.91" height="56" preserveAspectRatio="xMidYMid meet"/></svg>
       <span class="label">An experiment, performed on yourself</span>
       <h1>The mirror search</h1>
       <p class="lede">Ninety seconds. Nine lines. It only works if you actually do the thing each line asks, so this experiment will hold each one in front of you and <strong>will not let you hurry</strong>.</p>
