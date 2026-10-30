@@ -1,17 +1,12 @@
 {
-  "generated": "2026-10-29T18:31:08Z",
+  "generated": "2026-10-30T05:56:10Z",
   "totals": {
-    "views_all": 67,
-    "visitors_all": 67,
-    "views_30d": 53,
-    "visitors_30d": 53
+    "views_all": 68,
+    "visitors_all": 68,
+    "views_30d": 54,
+    "visitors_30d": 54
   },
   "daily": [
-    {
-      "day": "2026-08-01",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-02",
       "views": 0,
@@ -454,8 +449,13 @@
     },
     {
       "day": "2026-10-29",
-      "views": 7,
-      "visitors": 7
+      "views": 8,
+      "visitors": 8
+    },
+    {
+      "day": "2026-10-30",
+      "views": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-10",
-      "views": 51,
-      "visitors": 51
+      "views": 52,
+      "visitors": 52
     }
   ],
   "projects": [
@@ -482,10 +482,10 @@
     {
       "id": "can-artificial-minds-feel",
       "name": "Can Artificial Minds Feel?",
-      "views_all": 4,
-      "visitors_all": 4,
-      "views_30d": 2,
-      "visitors_30d": 2
+      "views_all": 5,
+      "visitors_all": 5,
+      "views_30d": 3,
+      "visitors_30d": 3
     },
     {
       "id": "why-so-much-data",
@@ -526,6 +526,14 @@
       "visitors_all": 6,
       "views_30d": 6,
       "visitors_30d": 6
+    },
+    {
+      "id": "feeding-an-ai-agent-the-facts",
+      "name": "Feeding an AI Agent the Facts",
+      "views_all": 0,
+      "visitors_all": 0,
+      "views_30d": 0,
+      "visitors_30d": 0
     },
     {
       "id": "home",
@@ -591,12 +599,17 @@
       "path": "/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html",
       "views_all": 1,
       "visitors_all": 1
+    },
+    {
+      "path": "/can-artificial-minds-feel/c05-grammar-trap.html",
+      "views_all": 1,
+      "visitors_all": 1
     }
   ],
   "countries": [
     {
       "name": "United States",
-      "visitors": 46
+      "visitors": 47
     },
     {
       "name": "France",
@@ -618,7 +631,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 30
+      "visitors": 31
     },
     {
       "name": "Safari",
@@ -632,7 +645,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 31
+      "visitors": 32
     },
     {
       "name": "Windows",
@@ -657,12 +670,12 @@
       "visitors": 30
     },
     {
-      "name": "Phone",
+      "name": "Large screen",
       "visitors": 10
     },
     {
-      "name": "Large screen",
-      "visitors": 9
+      "name": "Phone",
+      "visitors": 10
     },
     {
       "name": "Tablet",
@@ -676,7 +689,7 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 27
+      "visitors": 28
     },
     {
       "name": "pundirp.github.io",
