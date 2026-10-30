@@ -1,10 +1,10 @@
 {
-  "generated": "2026-10-30T05:56:10Z",
+  "generated": "2026-10-30T22:26:08Z",
   "totals": {
-    "views_all": 68,
-    "visitors_all": 68,
-    "views_30d": 54,
-    "visitors_30d": 54
+    "views_all": 69,
+    "visitors_all": 69,
+    "views_30d": 55,
+    "visitors_30d": 55
   },
   "daily": [
     {
@@ -454,8 +454,8 @@
     },
     {
       "day": "2026-10-30",
-      "views": 0,
-      "visitors": 0
+      "views": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-10",
-      "views": 52,
-      "visitors": 52
+      "views": 53,
+      "visitors": 53
     }
   ],
   "projects": [
@@ -538,17 +538,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 32,
-      "visitors_all": 32,
-      "views_30d": 27,
-      "visitors_30d": 27
+      "views_all": 33,
+      "visitors_all": 33,
+      "views_30d": 28,
+      "visitors_30d": 28
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 32,
-      "visitors_all": 32
+      "views_all": 33,
+      "visitors_all": 33
     },
     {
       "path": "/stillpoint/collection.html",
@@ -620,6 +620,10 @@
       "visitors": 2
     },
     {
+      "name": "Argentina",
+      "visitors": 1
+    },
+    {
       "name": "Kazakhstan",
       "visitors": 1
     },
@@ -631,7 +635,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 31
+      "visitors": 32
     },
     {
       "name": "Safari",
@@ -649,7 +653,7 @@
     },
     {
       "name": "Windows",
-      "visitors": 11
+      "visitors": 12
     },
     {
       "name": "iOS",
@@ -667,7 +671,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 30
+      "visitors": 31
     },
     {
       "name": "Large screen",
@@ -717,6 +721,10 @@
     },
     {
       "name": "chatgpt.com",
+      "visitors": 1
+    },
+    {
+      "name": "github.com/pundirp/artificialminds/deployments/github-pages",
       "visitors": 1
     },
     {
