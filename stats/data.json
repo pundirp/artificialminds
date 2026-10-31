@@ -1,17 +1,12 @@
 {
-  "generated": "2026-10-30T22:26:08Z",
+  "generated": "2026-10-31T05:52:26Z",
   "totals": {
-    "views_all": 69,
-    "visitors_all": 69,
-    "views_30d": 55,
-    "visitors_30d": 55
+    "views_all": 70,
+    "visitors_all": 70,
+    "views_30d": 53,
+    "visitors_30d": 53
   },
   "daily": [
-    {
-      "day": "2026-08-02",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-03",
       "views": 0,
@@ -454,8 +449,13 @@
     },
     {
       "day": "2026-10-30",
-      "views": 1,
-      "visitors": 1
+      "views": 2,
+      "visitors": 2
+    },
+    {
+      "day": "2026-10-31",
+      "views": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -466,8 +466,8 @@
     },
     {
       "month": "2026-10",
-      "views": 53,
-      "visitors": 53
+      "views": 54,
+      "visitors": 54
     }
   ],
   "projects": [
@@ -524,8 +524,8 @@
       "name": "AI Future Canon",
       "views_all": 6,
       "visitors_all": 6,
-      "views_30d": 6,
-      "visitors_30d": 6
+      "views_30d": 4,
+      "visitors_30d": 4
     },
     {
       "id": "feeding-an-ai-agent-the-facts",
@@ -538,8 +538,8 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 33,
-      "visitors_all": 33,
+      "views_all": 34,
+      "visitors_all": 34,
       "views_30d": 28,
       "visitors_30d": 28
     }
@@ -547,8 +547,8 @@
   "pages": [
     {
       "path": "/",
-      "views_all": 33,
-      "visitors_all": 33
+      "views_all": 34,
+      "visitors_all": 34
     },
     {
       "path": "/stillpoint/collection.html",
@@ -609,7 +609,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 47
+      "visitors": 48
     },
     {
       "name": "France",
@@ -635,7 +635,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 32
+      "visitors": 33
     },
     {
       "name": "Safari",
@@ -653,7 +653,7 @@
     },
     {
       "name": "Windows",
-      "visitors": 12
+      "visitors": 13
     },
     {
       "name": "iOS",
@@ -671,7 +671,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 31
+      "visitors": 32
     },
     {
       "name": "Large screen",
@@ -693,15 +693,15 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 28
+      "visitors": 27
     },
     {
       "name": "pundirp.github.io",
-      "visitors": 7
+      "visitors": 8
     },
     {
       "name": "pundirp.github.io/artificialminds",
-      "visitors": 7
+      "visitors": 5
     },
     {
       "name": "Google",
