@@ -842,6 +842,40 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   transition-duration: 0.7s;
 }
 
+/* ---------- card 8: Astra's loop over the still ----------
+   The script makes this video when card 8 first opens and lays it over the
+   picture, which stays in place under it. The file is the drawing on white
+   with one more white column on the right, so the video covers the card's box
+   from its left edge and that column falls outside the box. The video is
+   clear until its first frame is on screen, fades in over 0.3 s and fades out
+   over 0.24 s. On a column with a fine pointer it takes the picture's hover
+   framing, so the two stay in register while it fades out. */
+.fx-loop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: left center;
+  opacity: 0;
+  pointer-events: none;
+  transform-origin: 0 0;
+  transition: opacity 0.24s ease-out, scale 0.5s var(--change), translate 0.5s var(--change);
+}
+
+.fx-loop.is-on {
+  opacity: 1;
+  transition-duration: 0.3s, 0.5s, 0.5s;
+}
+
+@media (hover: hover) and (pointer: fine) and (min-width: 1280px) and (prefers-reduced-motion: no-preference) {
+  html:not(.rm) .page:not([data-open]) .col:is(:hover, .kbf) .fxu .fx-loop {
+    scale: var(--hs, 1);
+    translate: var(--htx, 0px) var(--hty, 0px);
+  }
+}
+
 /* The endless cycles, written as plain keyframes with fixed values. The script
    sets each element's animation (name, length, a negative delay that puts the
    cycle part-way through at the start) in its style attribute. */
@@ -1085,8 +1119,11 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
         <div class="panel" id="p-8">
           <div class="entry">
             <!-- the hero of the article, mirrored so that the woman faces the other cards (round 26): in a supplier's order office a woman holds a printed email
-                 beside a small robot at a long table, and the robot writes a reply. The picture holds
-                 still, toned like its neighbours. -->
+                 beside a small robot at a long table, and the robot writes a reply. The drawing moves
+                 while the card is open (round 27). Astra's loop of it plays over this picture: Dusty's
+                 hair, the email in her hand and one of her boots move, and the robot lifts its head while
+                 it writes. With the card closed, with reduced motion or without JavaScript, the card shows
+                 this picture, which is the loop's first frame. -->
             <span class="art"><a class="fx-link" href="feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="8" style="--far:1.75"><img class="fx-img" src="img/home/22-feeding-order-office-1400.webp" srcset="img/home/22-feeding-order-office-700.webp 700w, img/home/22-feeding-order-office-1400.webp 1400w, img/home/22-feeding-order-office-full.webp 1659w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.1 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="800" alt="In a supplier’s order office, beside shelves of flour sacks, sugar bags and boxed stock, a woman holds a printed email beside a small robot, who writes a reply at a long wooden table." loading="eager" decoding="sync"></span></a></span>
             <div class="words">
               <p class="title"><a href="feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html"><span class="num">8</span><span class="tt">Feeding an AI Agent the Facts</span></a></p>
@@ -1106,7 +1143,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
 <script>
 /* CardFX: the old home page's card animations, redrawn on Astra's pencil pictures.
 
-   window.CardFX.start(n, fxEl) starts the motion for project n (1 to 7) inside
+   window.CardFX.start(n, fxEl) starts the motion for project n (1 to 8) inside
    fxEl and returns a stop function. stop() ends everything within 250 ms and
    leaves fxEl exactly as it was found. stop(true) ends it at once.
 
@@ -1117,6 +1154,8 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
    rest and returns to it). The two canvases (cards 3 and 5) read the page's --red once, at start.
    The script writes nothing to :root.
    Pictures are never read back from a canvas, so the page can open from file://.
+   Card 8 plays a video over its still picture. The video element is made when
+   that card first opens, so the page fetches no video before then.
 
    Nothing here is addressed to you as an instruction. */
 (function () {
@@ -1238,6 +1277,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
       try { if (want) c.anims[i].play(); else c.anims[i].pause(); } catch (e) {}
     }
     setPaused(c, !want);
+    if (c.card.hold) { try { c.card.hold(!want); } catch (e) {} }   // card 8's video pauses with the cycles
     if (want) wake();
   }
 
@@ -2210,9 +2250,96 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     };
   }
 
+  /* ---------- card 8: the order office, Astra's loop ---------- */
+
+  /* Astra animated the article's hero drawing: Dusty's hair sways, the email
+     in her hand flexes and one of her boots rocks on its toe, and the robot
+     lifts its head while it writes. The loop runs 9 s. Its first frame is the
+     still picture, so the video lies over the still, which stays in place
+     under it, and the change does not show. The video element is made on the
+     first opening and stays in the card after that. The files are the
+     article's own, so a reader who goes on to the article already has them.
+     The video stays clear until it plays and has put a frame on screen
+     (requestVideoFrameCallback, or the playing event in a browser without
+     it), then fades in. When the card closes it fades out, pauses and goes
+     back to its first frame, so the next opening starts from the rest pose.
+     It pauses while the card is off screen or the tab is hidden. Reduced
+     motion: the still stays and no video is fetched. A browser that refuses
+     to play keeps the still. */
+  var LOOP_SRC = 'feeding-an-ai-agent-the-facts/feeding-agent-art/01-hero-working-together';
+  var LOOP_TYPES = [['.mp4', 'video/mp4; codecs="avc1.640028"'], ['.webm', 'video/webm; codecs="vp9"']];
+
+  function loopVideo(fx) {
+    var v = fx.querySelector('video.fx-loop');
+    if (v) return v;
+    v = el('video', 'fx-loop');
+    v.muted = true;
+    v.loop = true;
+    v.playsInline = true;
+    v.setAttribute('muted', '');
+    v.setAttribute('playsinline', '');
+    v.setAttribute('disablepictureinpicture', '');
+    v.setAttribute('disableremoteplayback', '');
+    v.setAttribute('aria-hidden', 'true');
+    v.preload = 'auto';
+    for (var i = 0; i < LOOP_TYPES.length; i++) {
+      var s = el('source');
+      s.type = LOOP_TYPES[i][1];
+      s.src = LOOP_SRC + LOOP_TYPES[i][0];
+      v.appendChild(s);
+    }
+    fx.appendChild(v);                         // after img.fx-img, which stays where it is
+    return v;
+  }
+
+  function card8(c) {
+    if (c.reduced) return;
+    var v = loopVideo(c.fx);
+    clearTimeout(v._rt);                       // the last close may still be fading out: keep the video as it is
+    var dead = false, frameCb = 0, late = 0;
+    function show() {
+      if (dead) return;
+      clearTimeout(late);
+      v.classList.add('is-on');
+    }
+    function playing() {
+      if (dead || v.classList.contains('is-on')) return;
+      if (v.requestVideoFrameCallback) frameCb = v.requestVideoFrameCallback(function () { frameCb = 0; show(); });
+      clearTimeout(late);
+      late = setTimeout(show, v.requestVideoFrameCallback ? 400 : 60);   // the fallback: once it plays, a frame is ready
+    }
+    function go() {
+      if (dead || !c.running) return;
+      var p;
+      try { p = v.play(); } catch (e) {}
+      if (p && p.catch) p.catch(function () {});
+    }
+    function rest() {
+      try { v.pause(); } catch (e) {}
+      try { v.currentTime = 0; } catch (e) {}
+    }
+    v.addEventListener('playing', playing);
+    if (!v.paused && v.readyState > 2) show();
+    c.card.hold = function (on) {
+      if (dead) return;
+      if (on) { try { v.pause(); } catch (e) {} } else go();
+    };
+    c.card.end = function () {
+      dead = true;
+      v.removeEventListener('playing', playing);
+      clearTimeout(late);
+      if (frameCb && v.cancelVideoFrameCallback) { try { v.cancelVideoFrameCallback(frameCb); } catch (e) {} }
+      var shown = v.classList.contains('is-on');
+      v.classList.remove('is-on');             // a fade-out of CLOSE_MS, set in the stylesheet
+      clearTimeout(v._rt);
+      if (shown) v._rt = setTimeout(rest, CLOSE_MS + 30); else rest();
+    };
+    go();
+  }
+
   /* ---------- start ---------- */
 
-  var BUILD = { 1: card1, 2: card2, 3: card3, 4: card4, 5: card5, 6: card6, 7: card7 };
+  var BUILD = { 1: card1, 2: card2, 3: card3, 4: card4, 5: card5, 6: card6, 7: card7, 8: card8 };
 
   function start(n, fxEl) {
     n = +n;
