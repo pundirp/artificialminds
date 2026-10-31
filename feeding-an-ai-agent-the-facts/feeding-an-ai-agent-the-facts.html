@@ -2299,7 +2299,7 @@ section.appx .col ol.more li,ol.more{font-size:var(--t-fine)}
 <section class="section leaf">
   <div class="col">
     <div class="spot primary"><picture><source type="image/webp" srcset="feeding-agent-art/08-guardrails-jar.webp"><img src="feeding-agent-art/08-guardrails-jar.webp" width="1254" height="1254" alt="A glass biscuit jar is secured with a clasp, with its key resting beside it." loading="lazy" decoding="async"></picture></div>
-    <p class="drop lede"><span class="lead">With the loop</span> from Chapter 6, the agent wrote a $109 credit into the ERP, the company’s finance system. Nobody approved it. The agent’s reply also included <span class="biz">All You Knead</span>’s 31% profit margin on the bakery’s orders. The agent had signed in with a <strong>service account</strong> that carried <strong>permissions</strong> to read and change everything. Its tool <code>erp.update</code> could change any field in any table.</p>
+    <p class="drop lede"><span class="lead">With the loop</span> from Chapter 6, the agent wrote a $109 credit into the ERP, the company’s finance system. Nobody approved it. The agent’s reply also included <span class="biz">All You Knead</span>’s 30% profit margin on the bakery’s orders. The agent had signed in with a <strong>service account</strong> that carried <strong>permissions</strong> to read and change everything. Its tool <code>erp.update</code> could change any field in any table.</p>
     <span class="gloss"><span class="d"><b>Service account</b>A service account is a login that belongs to a program.</span><span class="d"><b>Permissions</b>Permissions are the list of things a login can read or change.</span></span>
 
     <p>This is the <strong>confused deputy</strong> problem. The agent used its broad permissions to act on instructions from any text in its context.</p>
@@ -2317,7 +2317,7 @@ section.appx .col ol.more li,ol.more{font-size:var(--t-fine)}
 
     <figure class="mfig" id="fig-two-askers">
   <p class="fig-take"><span class="fig-no">Figure 11.</span><span class="fig-t">Guardrails: what the agent can read</span></p>
-  <svg class="d" viewBox="0 0 356 312" role="img" aria-label="A table of what the agent can read in two cases. In the left column, the agent works with the service account, before the fix. It reads the bakery’s records, the bakery’s 31 percent margin, other customers’ contracts and the cost tables. A red line leads from the margin to the draft reply, which holds the order, the contract clause and the 31 percent margin. In the right column, the agent works with Dusty’s rights, after the fix. It reads the bakery’s records, and the margin, other customers’ contracts and the cost tables are blocked. The draft reply holds the order and the contract clause." style="--u0:1.1742;--u0p:0.9332">
+  <svg class="d" viewBox="0 0 356 312" role="img" aria-label="A table of what the agent can read in two cases. In the left column, the agent works with the service account, before the fix. It reads the bakery’s records, the 30 percent margin on the bakery’s orders, other customers’ contracts and the cost tables. A red line leads from the margin to the draft reply, which holds the order, the contract clause and the 30 percent margin. In the right column, the agent works with Dusty’s rights, after the fix. It reads the bakery’s records, and the margin, other customers’ contracts and the cost tables are blocked. The draft reply holds the order and the contract clause." style="--u0:1.1742;--u0p:0.9332">
 <defs><marker id="fig-two-askers-a" viewBox="0 0 7 6" refX="6" refY="3" markerWidth="7" markerHeight="6" markerUnits="userSpaceOnUse" orient="auto"><path class="aha" d="M0 .2L7 3L0 5.8L1.9 3Z"/></marker></defs>
 <text class="sa-s t-fig-fine" x="0" y="15">Agent works with</text>
 <text class="sa-h" x="180.5" y="15" text-anchor="middle">Service account</text>
@@ -2327,7 +2327,7 @@ section.appx .col ol.more li,ol.more{font-size:var(--t-fine)}
 <text class="sa-l" x="0" y="61.6"><tspan x="0" dy="0">The bakery’s</tspan><tspan x="0" dy="16">records</tspan></text>
 <rect class="bx" x="124" y="46" width="113" height="38" rx="6"/><text class="sa-c" x="180.5" y="69.6" text-anchor="middle">reads</text>
 <rect class="bx" x="243" y="46" width="113" height="38" rx="6"/><text class="sa-c" x="299.5" y="69.6" text-anchor="middle">reads</text>
-<text class="sa-l" x="0" y="105.6"><tspan x="0" dy="0">The bakery’s</tspan><tspan x="0" dy="16">31% margin</tspan></text>
+<text class="sa-l" x="0" y="105.6"><tspan x="0" dy="0">30% margin</tspan><tspan x="0" dy="16">on the bakery</tspan></text>
 <rect class="bxa" x="124" y="90" width="113" height="38" rx="6"/><text class="sa-c ta" x="180.5" y="113.6" text-anchor="middle">reads</text>
 <rect class="sa-blk sa-blk-r" x="243.5" y="90.5" width="112" height="37" rx="6"/><text class="sa-c b ta" x="299.5" y="113.6" text-anchor="middle">blocked</text>
 <text class="sa-l" x="0" y="149.6"><tspan x="0" dy="0">Other customers’</tspan><tspan x="0" dy="16">contracts</tspan></text>
@@ -2341,7 +2341,7 @@ section.appx .col ol.more li,ol.more{font-size:var(--t-fine)}
 <rect class="bxw" x="124" y="236" width="113" height="74" rx="6"/>
 <text class="sa-m " x="134" y="258">the order</text>
 <text class="sa-m " x="134" y="277">the clause</text>
-<text class="sa-m b ta" x="134" y="296">the 31% margin</text>
+<text class="sa-m b ta" x="134" y="296">the 30% margin</text>
 <rect class="bxw" x="243" y="236" width="113" height="74" rx="6"/>
 <text class="sa-m " x="253" y="258">the order</text>
 <text class="sa-m " x="253" y="277">the clause</text>
