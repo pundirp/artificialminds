@@ -305,11 +305,9 @@
   }
   .frame svg{display:block;width:100%;height:auto;border-radius:0}
   /* the flicker room: Astra's ink drawing on the page's cream. The picture fills its box,
-     so this box has no padding and the same cream as the page. The blank is that cream too,
-     and the ring is the rubric red. */
+     so this box has no padding and the same cream as the page. The blank is that cream too. */
   .frame.scene-frame{padding:0;background:var(--paper)}
   #scene .paper{fill:var(--paper)}
-  #scene .ring{fill:none;stroke:var(--rubric)}
   figcaption{
     margin-top:.9rem;
     color:var(--ink-soft);
@@ -607,7 +605,7 @@
 
         <!-- the room and the three-row bookcase, drawn by Astra in ink and joined with the
              cream page colour into one picture (room-base.jpg, 1584 by 1013 pixels): the same
-             picture at the same place in every state, so nothing outside the ring changes.
+             picture at the same place in every state.
              The picture has 8 more units of cream below the room than the drawing, which leaves
              the same margin below the rug as on its sides. -->
         <g id="room">
@@ -615,21 +613,17 @@
           <image href="room-base.jpg" x="0" y="0" width="640" height="409.212" preserveAspectRatio="none"/>
         </g>
 
-        <!-- variant A: the top row of the bookcase, standing on the cabinet's top board. The
+        <!-- variant A: the top row of the bookcase. The
              picture is the part of the finished scene that holds the top row, cut out with a few
-             pixels of margin, and it sits inside the ring. Everything else is room-base.jpg. -->
+             pixels of margin. Everything else is room-base.jpg. -->
         <g id="varA">
-          <image href="room-top-row.jpg" x="25.8586" y="71.0971" width="219.7980" height="64.6337" preserveAspectRatio="none"/>
+          <image href="room-top-row.jpg" x="25.0505" y="66.2495" width="221.4141" height="83.2159" preserveAspectRatio="none"/>
         </g>
 
         <!-- variant B: nothing added, so the bookcase has three rows -->
         <g id="varB" style="visibility:hidden"></g>
 
         <rect id="blank" class="paper" x="0" y="0" width="640" height="409.212" style="visibility:hidden"/>
-
-        <g id="mark" style="visibility:hidden">
-          <rect class="ring" x="23.5" y="68" width="223.7" height="69" stroke-width="2" rx="2"/>
-        </g>
       </svg>
     </div>
 
@@ -637,7 +631,6 @@
       <button id="fStart" type="button" disabled aria-disabled="true">Start the flicker</button>
       <button id="fPause" type="button" hidden>Pause</button>
       <button id="fPlain" type="button" hidden>Swap with no blank</button>
-      <button id="fShow" type="button" hidden aria-pressed="false">Show the change</button>
       <span class="status" id="fTimer" aria-live="off"></span>
     </div>
     <p class="warn">The pictures alternate a little under once a second, with a plain page between them.</p>
@@ -787,24 +780,21 @@
   var varA = document.getElementById("varA"),
       varB = document.getElementById("varB"),
       blank = document.getElementById("blank"),
-      mark  = document.getElementById("mark"),
       bStart = document.getElementById("fStart"),
       bPause = document.getElementById("fPause"),
       bPlain = document.getElementById("fPlain"),
-      bShow  = document.getElementById("fShow"),
       timerEl = document.getElementById("fTimer"),
       cap = document.getElementById("fCap");
 
   var WITH_BLANK = [["A",400],["blank",150],["B",400],["blank",150]];
   var NO_BLANK   = [["A",650],["B",650]];
 
-  /* The whole demonstration is five flags. Every button changes one flag and
+  /* The whole demonstration is four flags. Every button changes one flag and
      then the controls are drawn from the flags, so no label can get stuck. */
   var st = {
     started:false,   /* has the flicker been started at least once */
     running:false,   /* is it flickering right now */
     blanked:true,    /* is there a blank frame between the two pictures */
-    marked:false,    /* is the changing shelf ringed */
     told:false       /* has the explanation been uncovered */
   };
 
@@ -826,12 +816,8 @@
     bStart.hidden = st.started;
     bPause.hidden = !st.started;
     bPlain.hidden = !st.started;
-    bShow.hidden  = !st.started;
     bPause.textContent = st.running ? "Pause" : "Resume";
     bPlain.textContent = st.blanked ? "Swap with no blank" : "Put the blank back";
-    bShow.textContent  = st.marked ? "Hide the change" : "Show the change";
-    bShow.setAttribute("aria-pressed", st.marked ? "true" : "false");
-    mark.style.visibility = st.marked ? "visible" : "hidden";
     cap.hidden = !st.told;
     if(!st.started) timerEl.textContent = "";
   }
@@ -885,16 +871,11 @@
     var wasRunning = st.running;
     halt();
     st.blanked = !st.blanked;
+    if(!st.blanked) st.told = true;
     seq = st.blanked ? WITH_BLANK : NO_BLANK;
     step = 0;
     show(seq[0][0]);
     if(wasRunning) run();
-    render();
-  });
-
-  bShow.addEventListener("click", function(){
-    st.marked = !st.marked;
-    if(st.marked) st.told = true;
     render();
   });
 
