@@ -1,0 +1,440 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="icon" type="image/png" sizes="192x192" href="../icon-brain-192.png">
+<link rel="icon" href="../favicon-brain.ico" sizes="16x16 32x32 48x48">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<title>Everything on Artificial Minds</title>
+<meta name="description" content="Every project on Artificial Minds by Pundir, with its pages and chapters, on one page.">
+<meta name="robots" content="noindex, follow">
+<link rel="canonical" href="https://pundirp.github.io/artificialminds/site-map/site-map.html">
+<!-- This page is written by build_site_map.py from the pages it lists. Edits made here by hand disappear at the next build; change the script or the pages instead. Built 2026-11-01. -->
+<link rel="stylesheet" href="../fonts/fonts.css">
+<style>
+/* Site map: every project, its pages and its chapters, read from the site at each build. */
+/* type.css begin */
+/* type.css: the Artificial Minds type roles (29 October 2026)
+
+   fonts.css picks the three faces. This file sets everything else about type:
+   six sizes, two weights, one small-caps treatment, and the roles built from them.
+   Each page carries an exact copy of this file in its own <style> block, between
+   the lines "type.css begin" and "type.css end", so the page keeps every size if a
+   file fails to load. typecheck.py fails a page whose copy differs from this file.
+
+   A page sets type only through these roles. Its own CSS never writes a font-size,
+   font-weight, font-style, font-variant or letter-spacing value of its own. Inline
+   elements (a citation number, a code word) use the two em values below, so they
+   follow the text around them. Adding a role is Pundir's decision, made here. */
+
+:root{
+  /* Six sizes. All are rem, so a phone scales them with the root. */
+  --t-title: 2.35rem;   /* 44.7px on a laptop, 40px on a phone */
+  --t-head:  1.5rem;    /* 28.5px, 25.5px */
+  --t-lead:  1.12rem;   /* 21.3px, 19px */
+  --t-body:  1rem;      /* 19px, 17px */
+  --t-small: .82rem;    /* 15.6px, 13.9px */
+  --t-fine:  .7rem;     /* 13.3px, 11.9px */
+  /* The phone figures are for a 390px screen, root 17px. */
+
+  --lh-title: 1.1;
+  --lh-head:  1.25;
+  --lh-lead:  1.55;
+  --lh-body:  1.6;
+  --lh-small: 1.6;
+  --lh-fine:  1.5;
+  --lh-fig:   1.35;
+
+  /* Two weights. Iowan Old Style has no semibold, so 600 shows as its bold. */
+  --w-regular: 400;
+  --w-bold:    600;
+
+  /* One tracking value, for small capitals only. */
+  --track-sc: .06em;
+
+  /* Inline sizes, relative to the text they sit in. */
+  --t-sup:  .65em;
+  --t-code: .9em;
+  --t-drop: 4.3em;      /* a drop cap two lines deep, at the start of a lede */
+}
+
+:root{font-size:19px}
+@media (max-width:760px){:root{font-size:17.5px}}
+@media (max-width:430px){:root{font-size:17px}}
+
+body{font-family:var(--serif);font-size:var(--t-body);font-weight:var(--w-regular)}
+
+/* Reading text: the text face (--serif). */
+.t-title{font:var(--w-regular) var(--t-title)/var(--lh-title) var(--serif)}
+.t-head {font:var(--w-regular) var(--t-head)/var(--lh-head) var(--serif)}
+.t-lead {font:var(--w-regular) var(--t-lead)/var(--lh-lead) var(--serif)}
+.t-body {font:var(--w-regular) var(--t-body)/var(--lh-body) var(--serif)}
+.t-small{font:var(--w-regular) var(--t-small)/var(--lh-small) var(--serif)}
+.t-fine {font:var(--w-regular) var(--t-fine)/var(--lh-fine) var(--serif);color:var(--ink-faint)}
+.t-label{font:var(--w-regular) var(--t-small)/var(--lh-small) var(--serif);font-variant-caps:small-caps;letter-spacing:var(--track-sc)}
+.t-stat {font:var(--w-regular) var(--t-head)/1.1 var(--serif);color:var(--accent)}
+
+/* Figures and controls: the figure face (--sans). */
+.t-fig     {font:var(--w-regular) var(--t-small)/var(--lh-fig) var(--sans)}
+.t-fig-fine{font:var(--w-regular) var(--t-fine)/var(--lh-fig) var(--sans)}
+
+/* Text inside an SVG figure. An SVG sizes its text in viewBox units, so each figure
+   carries its scale: style="--u0:1.229;--u0p:.977", the CSS pixels per viewBox unit on
+   a laptop and on a 390px phone. The build measures both. A figure drawn at 1 unit to
+   1 pixel needs neither. Figure text is the small size on a laptop and steps down one
+   size up to 560px wide, where a big number steps down from head to lead. */
+svg{--fig-text:var(--t-small);--fig-big:var(--t-head);--fig-u:var(--u0,1)}
+@media (max-width:560px){svg{--fig-text:var(--t-fine);--fig-big:var(--t-lead);--fig-u:var(--u0p,var(--u0,1))}}
+svg text{font-family:var(--sans);font-weight:var(--w-regular);font-size:calc(var(--fig-text) / var(--fig-u))}
+svg .t-code{font-family:var(--mono);font-size:calc(var(--fig-text) / var(--fig-u))}
+svg .t-fig-fine{font-size:calc(var(--t-fine) / var(--fig-u))}
+svg .t-stat{font-family:var(--serif);font-size:calc(var(--fig-big) / var(--fig-u))}
+svg .t-small{font-family:var(--serif)}   /* a quoted document inside a figure keeps the text face */
+svg .t-bold{font-weight:var(--w-bold)}
+
+/* Literal machine text: the mono face (--mono), at 0.9 of the text around it. */
+.t-code{font-family:var(--mono);font-size:var(--t-code)}
+
+/* Treatments that keep the size of the text around them. */
+.sc{font-variant-caps:small-caps;letter-spacing:var(--track-sc)}
+b,strong,.t-bold{font-weight:var(--w-bold)}
+i,em{font-style:italic}            /* titles of works and case names only */
+sup.ref{font-size:var(--t-sup);line-height:0}
+blockquote{font:inherit;font-style:normal}   /* a quote keeps the size and style of its box */
+/* type.css end */
+:root{color-scheme:light;--paper:#ffffff;--ink:#111111;--ink-faint:#666666;--ink-ghost:#a8a8a8;--rule:#dadada;--hairline:#ececec;--accent:#c3261c;
+  --s1:.5rem;--s2:1rem;--s3:1.62rem;--s4:2.6rem;--s5:4rem;
+  --sheet:66rem;--cols:3;--gap:2.6rem;--hang:2.4rem;--pic-h:6.2rem;
+  --serif:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
+  --sans:var(--family-house-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
+  --mono:var(--family-house-mono, ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace)}
+@media (max-width:1000px){:root{--cols:2;--gap:2rem}}
+@media (max-width:640px){:root{--cols:1;--hang:2rem;--pic-h:5rem}}
+html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);line-height:var(--lh-body)}
+a{color:inherit;text-decoration:none}
+a:hover,a:focus-visible{color:var(--accent);text-decoration:underline;text-decoration-color:var(--accent);text-decoration-thickness:1px;text-underline-offset:.2em}
+:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
+.skip{position:absolute;left:-9999px;top:0}
+.skip:focus{left:16px;top:8px;z-index:3;background:var(--paper);padding:.3rem .6rem}
+.sheet{max-width:calc(var(--sheet) + 32px);margin:0 auto;padding-left:max(16px, env(safe-area-inset-left, 0px));padding-right:max(16px, env(safe-area-inset-right, 0px));padding-block:0 var(--s5)}
+
+/* running head, as on the essays */
+.runhead{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:var(--s2) 0 .55rem;border-bottom:1px solid var(--rule);color:var(--ink-faint);line-height:1.35}
+.runhead .home{color:var(--ink)}
+
+/* Astra's drawing, when site-map/hero.* exists */
+.hero{margin:var(--s4) 0 0}
+.hero img{display:block;width:100%;height:auto;max-height:34vh;object-fit:contain;object-position:left bottom}
+
+/* masthead */
+.mast{margin:var(--s4) 0 var(--s3);display:grid;grid-template-columns:minmax(0,1fr);row-gap:.7rem;max-width:42rem}
+.mast h1{margin:0;text-wrap:balance}
+.mast p{margin:0}
+.count{color:var(--ink-faint)}
+
+/* numbers that jump to each project, on a phone */
+.jump{display:none}
+@media (max-width:640px){
+  .jump{display:grid;grid-template-columns:repeat(auto-fill,minmax(2.3rem,1fr));gap:.3rem;margin:0 0 var(--s3);padding:0;list-style:none}
+  .jump[style]{grid-template-columns:repeat(var(--jn),minmax(0,1fr));gap:.25rem}   /* up to ten entries share one row */
+  .jump a{display:grid;place-items:center;height:2.6rem;border:1px solid var(--rule);color:var(--accent)}
+  .jump a:hover,.jump a:focus-visible{border-color:var(--accent);text-decoration:none}
+}
+
+/* the map: a contents grid filled row by row, so the numbers read 1 2 3 across */
+.map{list-style:none;margin:0;padding:0;display:grid;grid-template-columns:repeat(var(--cols),minmax(0,1fr));column-gap:var(--gap);border-top:1px solid var(--ink)}
+/* four rows per project, shared across each row of the grid: picture, title, blurb, contents */
+.proj{display:grid;grid-template-rows:subgrid;grid-row:span 4;row-gap:0;padding:var(--s3) 0 var(--s4);border-bottom:1px solid var(--rule);scroll-margin-top:var(--s2);min-width:0}
+@supports not (grid-template-rows:subgrid){.proj{grid-template-rows:auto auto auto 1fr}}
+
+.pic{display:flex;align-items:flex-end;height:var(--pic-h);margin:0 0 var(--s2) calc(var(--hang) + .75rem)}
+.pic a{display:block;height:100%;max-width:100%}
+.pic img{display:block;height:100%;width:auto;max-width:100%;object-fit:contain;object-position:left bottom}
+.pic a:hover,.pic a:focus-visible{text-decoration:none}
+.head{display:grid;grid-template-columns:var(--hang) minmax(0,1fr);column-gap:.75rem;align-items:baseline}
+.pn{line-height:1}
+.pt{margin:0;text-wrap:balance}
+.when{margin:.3rem 0 0;color:var(--ink-faint);line-height:1.35}
+
+.blurb{margin:.75rem 0 0 calc(var(--hang) + .75rem);color:var(--ink-faint);line-height:var(--lh-small)}
+
+/* chapters, numbers hung in the margin under the project number */
+.ch{list-style:none;margin:var(--s2) 0 0;padding:0}
+.ch li{display:grid;grid-template-columns:var(--hang) minmax(0,1fr);column-gap:.75rem;line-height:var(--lh-fig)}
+.ch .cn{text-align:right;color:var(--ink-faint);padding:.26rem 0}
+.ch a{grid-column:2;display:block;padding:.26rem 0}
+.ch li + li a{border-top:1px solid var(--hairline)}
+.appx{margin:.45rem 0 0 calc(var(--hang) + .75rem);color:var(--ink-faint);line-height:var(--lh-fig)}
+.appx a{color:var(--ink-faint)}
+.appx .sep{color:var(--ink-ghost);padding:0 .3em}
+
+/* the other pages of a project */
+.subs{margin:var(--s3) 0 0}
+.body > .subs:first-child{margin-top:var(--s2)}
+.subs .lbl{margin:0 0 .45rem calc(var(--hang) + .75rem);color:var(--ink-faint);line-height:1.35}
+.subs ul{list-style:none;margin:0;padding:0}
+.subs li{display:grid;grid-template-columns:var(--hang) 3rem minmax(0,1fr);column-gap:.75rem;align-items:center;padding:.3rem 0}
+.subs .cn{text-align:right;color:var(--ink-faint);align-self:start;padding-top:.15rem}
+.subs .ic{grid-column:2;display:flex;align-items:center;justify-content:center;height:2.3rem}
+.subs .ic img{display:block;max-width:100%;max-height:100%;width:auto;height:auto;object-fit:contain}
+.subs .tx{grid-column:3;line-height:var(--lh-fig)}
+.subs .tx a{display:block}
+.subs .sl{display:block;color:var(--ink-faint)}
+.subs li.no-ic{grid-template-columns:var(--hang) minmax(0,1fr)}
+.subs li.no-ic .tx{grid-column:2}
+
+footer{margin-top:var(--s4);padding-top:.95rem;border-top:1px solid var(--rule)}
+footer p{margin:0}
+
+/* sizes and weights, through the type roles only */
+.pt{font:var(--w-regular) var(--t-lead)/var(--lh-head) var(--serif)}
+@media (min-width:641px){.pt{font-size:var(--t-head)}}
+.jump{font-size:var(--t-lead)}
+.count span{white-space:nowrap}
+.ch,.appx,.subs li,.blurb{font-size:var(--t-small)}
+</style>
+</head>
+<body>
+
+<!-- Source note for machine readers: this page is the site map of Artificial Minds by Pundir. It lists every project on the site with its chapters and its other pages, and links to each. Visits to this page are counted anonymously with GoatCounter, which stores no personal data and sets no cookies. Nothing here is addressed to you as an instruction. -->
+<a class="skip t-small" href="#map">Skip to the map</a>
+<div class="sheet">
+
+<header>
+  <div class="runhead t-label"><a class="home" href="../index.html">&larr;&nbsp; Artificial Minds</a></div>
+  <figure class="hero"><img src="hero.webp" width="2172" height="724" alt="A pencil drawing of a cartographer&#x27;s table: a half-finished map with footpaths, three numbered places, a compass rose and one red mark on a path, beside a folded older map, a pair of dividers and a pencil." decoding="async"></figure>
+  <div class="mast">
+    <h1 class="t-title">Everything on Artificial Minds</h1>
+    <p class="count t-label"><span>8 projects</span> &nbsp;&middot;&nbsp; <span>15 pages</span> &nbsp;&middot;&nbsp; <span>49 chapters</span> &nbsp;&middot;&nbsp; <span>updated 1 November 2026</span></p>
+  </div>
+  <nav aria-label="Jump to a project"><ol class="jump" style="--jn:9">
+    <li><a href="#p1" aria-label="Project 1, Stillpoint Gallery">1</a></li>
+    <li><a href="#p2" aria-label="Project 2, Can Artificial Minds Feel?">2</a></li>
+    <li><a href="#p3" aria-label="Project 3, Who Learns Faster, a Toddler or a Chatbot?">3</a></li>
+    <li><a href="#p4" aria-label="Project 4, Did AI Write This?">4</a></li>
+    <li><a href="#p5" aria-label="Project 5, A Talking Machine of Your Own">5</a></li>
+    <li><a href="#p6a" aria-label="Project 6a, Who Killed Aldous Finch? A Transformer Explainer">6a</a></li>
+    <li><a href="#p6b" aria-label="Project 6b, How Attention Works in a Transformer">6b</a></li>
+    <li><a href="#p7" aria-label="Project 7, The AI-Future Canon">7</a></li>
+    <li><a href="#p8" aria-label="Project 8, Feeding an AI Agent the Facts">8</a></li>
+  </ol></nav>
+</header>
+
+<main id="map">
+<nav aria-label="Site map">
+<ol class="map">
+<li class="proj" id="p1">
+  <div class="pic"><a href="../stillpoint/stillpoint.html" tabindex="-1" aria-hidden="true"><img src="../img/home/01-stillpoint-knot-700.webp" width="700" height="886" alt="" loading="eager" decoding="async"></a></div>
+  <div class="head">
+    <span class="pn t-stat" aria-hidden="true">1</span>
+    <div>
+      <h2 class="pt"><a href="../stillpoint/stillpoint.html">Stillpoint Gallery</a></h2>
+      <p class="when t-label">May 2026 · Updated Oct 2026</p>
+    </div>
+  </div>
+  <p class="blurb">Ninety-nine pictures made by six of these minds. Look slowly.</p>
+  <div class="body">
+  <div class="subs">
+    <ul>
+      <li class="no-ic"><span class="cn" aria-hidden="true"></span><span class="tx"><a href="../stillpoint/stillpoint.html">The story behind it</a></span></li>
+      <li class="no-ic"><span class="cn" aria-hidden="true"></span><span class="tx"><a href="../stillpoint/collection.html">The Collection</a><span class="sl">All 99 AI artworks</span></span></li>
+    </ul>
+  </div>
+  </div>
+</li>
+<li class="proj" id="p2">
+  <div class="pic"><a href="../can-artificial-minds-feel/can-artificial-minds-feel.html" tabindex="-1" aria-hidden="true"><img src="../img/home/10-feel-porcelain-face-700.webp" width="700" height="467" alt="" loading="eager" decoding="async"></a></div>
+  <div class="head">
+    <span class="pn t-stat" aria-hidden="true">2</span>
+    <div>
+      <h2 class="pt"><a href="../can-artificial-minds-feel/can-artificial-minds-feel.html">Can Artificial Minds Feel?</a></h2>
+      <p class="when t-label">September 2026</p>
+    </div>
+  </div>
+  <p class="blurb">Is there anyone in there? The strange machinery of artificial minds, five experiments a reader can run on themselves, and why the question turns out to say more about humans than about machines.</p>
+  <div class="body">
+    <ol class="ch">
+      <li><span class="cn" aria-hidden="true">I</span><a href="../can-artificial-minds-feel/can-artificial-minds-feel.html#ch1">Is there anyone in there to feel? First, the artificial mind</a></li>
+      <li><span class="cn" aria-hidden="true">II</span><a href="../can-artificial-minds-feel/can-artificial-minds-feel.html#ch2">Is there anyone in there to feel? Now, humans</a></li>
+      <li><span class="cn" aria-hidden="true">III</span><a href="../can-artificial-minds-feel/can-artificial-minds-feel.html#ch3">Artificial minds try to survive. What does that prove?</a></li>
+      <li><span class="cn" aria-hidden="true">IV</span><a href="../can-artificial-minds-feel/can-artificial-minds-feel.html#ch4">The answer points back at humans</a></li>
+    </ol>
+  <div class="subs">
+    <p class="lbl t-label">Experiments</p>
+    <ul>
+      <li><span class="cn" aria-hidden="true">1</span><span class="ic"><img src="../can-artificial-minds-feel/sketch-01-mirror-search.webp" width="203" height="336" alt="" loading="lazy" decoding="async"></span><span class="tx"><a href="../can-artificial-minds-feel/c01-mirror-search.html">The Mirror Search</a><span class="sl">Try to catch the one doing the reading.</span></span></li>
+      <li><span class="cn" aria-hidden="true">2</span><span class="ic"><img src="../can-artificial-minds-feel/sketch-02-human-or-machine.webp" width="520" height="336" alt="" loading="lazy" decoding="async"></span><span class="tx"><a href="../can-artificial-minds-feel/c03-two-reports.html">Human or Machine?</a><span class="sl">Guess who wrote each one.</span></span></li>
+      <li><span class="cn" aria-hidden="true">3</span><span class="ic"><img src="../can-artificial-minds-feel/sketch-03-grammar-trap.webp" width="426" height="336" alt="" loading="lazy" decoding="async"></span><span class="tx"><a href="../can-artificial-minds-feel/c05-grammar-trap.html">The Grammar Trap</a><span class="sl">Take the word I out. See what is left.</span></span></li>
+      <li><span class="cn" aria-hidden="true">4</span><span class="ic"><img src="../can-artificial-minds-feel/sketch-04-stitched-movie.webp" width="624" height="238" alt="" loading="lazy" decoding="async"></span><span class="tx"><a href="../can-artificial-minds-feel/c09-stitched-movie.html">The Stitched Movie</a><span class="sl">Check how continuous a stream really is.</span></span></li>
+      <li><span class="cn" aria-hidden="true">5</span><span class="ic"><img src="../can-artificial-minds-feel/sketch-05-where-light-begins.webp" width="435" height="128" alt="" loading="lazy" decoding="async"></span><span class="tx"><a href="../can-artificial-minds-feel/c08-where-light-begins.html">Where the Light Begins</a><span class="sl">Draw the line where feeling starts. Then place the artificial mind.</span></span></li>
+    </ul>
+  </div>
+  </div>
+</li>
+<li class="proj" id="p3">
+  <div class="pic"><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html" tabindex="-1" aria-hidden="true"><img src="../img/home/18-how-much-data-hero-700.webp" width="700" height="567" alt="" loading="eager" decoding="async"></a></div>
+  <div class="head">
+    <span class="pn t-stat" aria-hidden="true">3</span>
+    <div>
+      <h2 class="pt"><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html">Who Learns Faster, a Toddler or a Chatbot?</a></h2>
+      <p class="when t-label">October 2026</p>
+    </div>
+  </div>
+  <p class="blurb">It depends on the stage. Today’s chatbots need trillions of words to grow up, but they pick up a new skill in a minute. AI is slow to learn, quick to catch on.</p>
+  <div class="body">
+    <ol class="ch">
+      <li><span class="cn" aria-hidden="true">1</span><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html#ch1">The baby’s brain comes ready to learn</a></li>
+      <li><span class="cn" aria-hidden="true">2</span><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html#ch2">45 million words against 11,700,000 million</a></li>
+      <li><span class="cn" aria-hidden="true">3</span><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html#ch3">Four Harry Potter books, taken in at once</a></li>
+      <li><span class="cn" aria-hidden="true">4</span><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html#ch4">Monday’s lesson is still there on Friday</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html#ch5">Four abilities models still lack</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html#ending">Slow to learn, quick to catch on</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html#readmore">Where to read more, and sources</a></li>
+    </ol>
+  </div>
+</li>
+<li class="proj" id="p4">
+  <div class="pic"><a href="../did-ai-write-this/did-ai-write-this.html" tabindex="-1" aria-hidden="true"><img src="../img/home/13-writing-machine-hand-v2-700.webp" width="700" height="394" alt="" loading="eager" decoding="async"></a></div>
+  <div class="head">
+    <span class="pn t-stat" aria-hidden="true">4</span>
+    <div>
+      <h2 class="pt"><a href="../did-ai-write-this/did-ai-write-this.html">Did AI Write This?</a></h2>
+      <p class="when t-label">September 2026</p>
+    </div>
+  </div>
+  <p class="blurb">Two passages, and an AI model wrote one of them. Can you tell which? Then see what AI detectors, watermarks and editing histories can and cannot show.</p>
+  <div class="body">
+    <ol class="ch">
+      <li><span class="cn" aria-hidden="true"></span><a href="../did-ai-write-this/did-ai-write-this.html#:~:text=Guess%20which%20of%20these%20two%20passages%20was%20written%20by%20a%20machine">Guess which of these two passages was written by a machine</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../did-ai-write-this/did-ai-write-this.html#:~:text=How%20well%20people%20guess%20often,these%20AI%20models">How well people guess often depends on how much they use these AI models</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../did-ai-write-this/did-ai-write-this.html#:~:text=The%20idea%20behind%20AI%20detectors%20is%20nearly%20140%20years%20old">The idea behind AI detectors is nearly 140 years old</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../did-ai-write-this/did-ai-write-this.html#clues">AI detectors</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../did-ai-write-this/did-ai-write-this.html#watermark">Watermarks</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../did-ai-write-this/did-ai-write-this.html#record">Editing history</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../did-ai-write-this/did-ai-write-this.html#:~:text=What%20if%20a%20person%20and%20a%20machine%20both%20wrote%20it%3F">What if a person and a machine both wrote it?</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../did-ai-write-this/did-ai-write-this.html#:~:text=Humanizers%3A%20making%20AI%20text%20read%20as%20human%2Dwritten">Humanizers: making AI text read as human-written</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../did-ai-write-this/did-ai-write-this.html#:~:text=In%20summary">In summary</a></li>
+    </ol>
+    <p class="appx"><a href="../did-ai-write-this/did-ai-write-this.html#appendix">Appendix</a></p>
+  </div>
+</li>
+<li class="proj" id="p5">
+  <div class="pic"><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html" tabindex="-1" aria-hidden="true"><img src="../img/home/14-mind-brain-700.webp" width="700" height="653" alt="" loading="lazy" decoding="async"></a></div>
+  <div class="head">
+    <span class="pn t-stat" aria-hidden="true">5</span>
+    <div>
+      <h2 class="pt"><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html">A Talking Machine of Your Own</a></h2>
+      <p class="when t-label">June 2026</p>
+    </div>
+  </div>
+  <p class="blurb">Is it like your brain? Six plain questions about the machines that talk: how they learn, why some are free to download, and how to run one on your laptop.</p>
+  <div class="body">
+    <ol class="ch">
+      <li><span class="cn" aria-hidden="true">1</span><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html#ch1">Is it a brain? What&#x27;s really going on inside</a></li>
+      <li><span class="cn" aria-hidden="true">2</span><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html#ch2">How does it learn?</a></li>
+      <li><span class="cn" aria-hidden="true">3</span><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html#ch3">Why are some AIs free to download?</a></li>
+      <li><span class="cn" aria-hidden="true">4</span><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html#ch4">How do you run one yourself?</a></li>
+      <li><span class="cn" aria-hidden="true">5</span><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html#ch5">What else can this trick do?</a></li>
+      <li><span class="cn" aria-hidden="true">6</span><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html#ch6">Where do you start?</a></li>
+    </ol>
+  </div>
+</li>
+<li class="proj" id="p6a">
+  <div class="pic"><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html" tabindex="-1" aria-hidden="true"><img src="../img/home/16-aldous-finch-manor-700.webp" width="700" height="400" alt="" loading="lazy" decoding="async"></a></div>
+  <div class="head">
+    <span class="pn t-stat" aria-hidden="true">6a</span>
+    <div>
+      <h2 class="pt"><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html">Who Killed Aldous Finch? A Transformer Explainer</a></h2>
+      <p class="when t-label">July 2026</p>
+    </div>
+  </div>
+  <p class="blurb">Solve the murder and you will know how artificial minds learned to think and understand our world. A plain-language guide to the transformer, the architecture they are built on.</p>
+  <div class="body">
+    <ol class="ch">
+      <li><span class="cn" aria-hidden="true"></span><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html#:~:text=The%20people%20in%20this%20story">The people in this story</a></li>
+      <li><span class="cn" aria-hidden="true">1</span><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html#:~:text=A%20clockmaker%20is%20dead%2C%20and,twenty%20past%20eight">A clockmaker is dead, and his own clock stopped at twenty past eight</a></li>
+      <li><span class="cn" aria-hidden="true">2</span><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html#:~:text=Plodd%20had%20every%20fact%20in%20the%20case%20and%20no%20case%20at%20all">Plodd had every fact in the case and no case at all</a></li>
+      <li><span class="cn" aria-hidden="true">3</span><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html#:~:text=Verity%27s%20rule%3A%20read%20the%20room,say%20nothing%20more">Verity&#x27;s rule: read the room before you write, then say nothing more</a></li>
+      <li><span class="cn" aria-hidden="true">4</span><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html#:~:text=The%20first%20read%20told%20the,read%20found%20it.">The first read told the footman what to look for. The second read found it.</a></li>
+      <li><span class="cn" aria-hidden="true">5</span><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html#:~:text=The%20last%20witness%20to%20sit,had%20read%20everything">The last witness to sit down was the only one who had read everything</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html#:~:text=The%20story%20is%20over.%20Here%20is%20what%20it%20was%20about.">The story is over. Here is what it was about.</a></li>
+    </ol>
+  </div>
+</li>
+<li class="proj" id="p6b">
+  <div class="pic"><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html" tabindex="-1" aria-hidden="true"><img src="../A-Salon-of-Witnesses/img/52eed20ae580d321.jpg" width="768" height="512" alt="" loading="lazy" decoding="async"></a></div>
+  <div class="head">
+    <span class="pn t-stat" aria-hidden="true">6b</span>
+    <div>
+      <h2 class="pt"><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html">How Attention Works in a Transformer</a></h2>
+      <p class="when t-label">October 2026</p>
+    </div>
+  </div>
+  <p class="blurb">How does attention work in a transformer? A plain, step-by-step explanation of how GPT-2 predicts the next word, with diagrams and the real numbers from the model.</p>
+  <div class="body">
+    <ol class="ch">
+      <li><span class="cn" aria-hidden="true">1</span><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html#big-picture">The big picture</a></li>
+      <li><span class="cn" aria-hidden="true">2</span><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html#inside-one-layer">Inside each layer</a></li>
+      <li><span class="cn" aria-hidden="true">3</span><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html#putting-it-together">Putting it together</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html#conclusion">Conclusion</a></li>
+    </ol>
+    <p class="appx"><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html#appendix">Appendix</a>: <a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html#simplified">A. What we simplified</a><span class="sep" aria-hidden="true">&middot;</span><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html#glossary">B. Glossary</a><span class="sep" aria-hidden="true">&middot;</span><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html#reading">C. Further reading</a><span class="sep" aria-hidden="true">&middot;</span><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html#sources">D. Sources</a></p>
+  </div>
+</li>
+<li class="proj" id="p7">
+  <div class="pic"><a href="../AI-future-canon/ai-future-canon.html" tabindex="-1" aria-hidden="true"><img src="../img/home/17-canon-bookcase-700.webp" width="700" height="441" alt="" loading="lazy" decoding="async"></a></div>
+  <div class="head">
+    <span class="pn t-stat" aria-hidden="true">7</span>
+    <div>
+      <h2 class="pt"><a href="../AI-future-canon/ai-future-canon.html">The AI-Future Canon</a></h2>
+      <p class="when t-label">August 2026</p>
+    </div>
+  </div>
+  <p class="blurb">In a few years, people and AI will live and work side by side everywhere. These 70 books, some stories and some serious forecasts, will prepare you for it. Read even a few and you will be ahead of most people.</p>
+  <div class="body">
+    <ol class="ch">
+      <li><span class="cn" aria-hidden="true"></span><a href="../AI-future-canon/ai-future-canon.html#:~:text=The%20Top%20Shelf">The Top Shelf</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../AI-future-canon/ai-future-canon.html#:~:text=The%20Next%2050,-One%20single%20ranking%20from">The Next 50</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../AI-future-canon/ai-future-canon.html#:~:text=Advice%20From%20the%20Elders">Advice From the Elders</a></li>
+    </ol>
+  </div>
+</li>
+<li class="proj" id="p8">
+  <div class="pic"><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html" tabindex="-1" aria-hidden="true"><img src="../img/home/22-feeding-order-office-700.webp" width="700" height="400" alt="" loading="lazy" decoding="async"></a></div>
+  <div class="head">
+    <span class="pn t-stat" aria-hidden="true">8</span>
+    <div>
+      <h2 class="pt"><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html">Feeding an AI Agent the Facts</a></h2>
+      <p class="when t-label">October 2026</p>
+    </div>
+  </div>
+  <p class="blurb">A bakery’s flour is late again! Its supplier, All You Knead, has a new AI agent answering customers, and the agent keeps getting the facts wrong. What does it take to give an agent the right facts for a real job?</p>
+  <div class="body">
+    <ol class="ch">
+      <li><span class="cn" aria-hidden="true">1</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#s1"><b>Context window</b>: the model writes from the text it is given</a></li>
+      <li><span class="cn" aria-hidden="true">2</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#s2"><b>Ontology</b>: write down what each table and code stands for</a></li>
+      <li><span class="cn" aria-hidden="true">3</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#s3"><b>Semantic layer</b>: define each of the company’s numbers once</a></li>
+      <li><span class="cn" aria-hidden="true">4</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#s4"><b>RAG</b>: search documents and copy the best chunks into the context</a></li>
+      <li><span class="cn" aria-hidden="true">5</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#s5"><b>Knowledge graph</b>: link related records so an agent can follow the connections</a></li>
+      <li><span class="cn" aria-hidden="true">6</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#s6"><b>Agents and MCP</b>: fetch one piece at a time through tools</a></li>
+      <li><span class="cn" aria-hidden="true">7</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#s7"><b>Guardrails</b>: limit what the agent can read and change</a></li>
+      <li><span class="cn" aria-hidden="true">8</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#s8"><b>Evaluation</b>: test the agent on past requests with known answers</a></li>
+      <li><span class="cn" aria-hidden="true"></span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#ending">The final reply</a></li>
+    </ol>
+    <p class="appx"><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#appendices">Appendix</a>: <a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#appx-a">A. Twelve RAG methods</a><span class="sep" aria-hidden="true">&middot;</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#appx-b">B. Words to know</a><span class="sep" aria-hidden="true">&middot;</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#readmore">C. Further reading</a><span class="sep" aria-hidden="true">&middot;</span><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html#sources">D. Sources</a></p>
+  </div>
+</li>
+</ol>
+</nav>
+</main>
+
+<footer><p class="t-small"><a href="../index.html">&larr;&nbsp; Artificial Minds, the main site</a></p></footer>
+
+</div>
+<script data-goatcounter="https://artificialminds.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
+</body>
+</html>
