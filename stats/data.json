@@ -1,17 +1,12 @@
 {
-  "generated": "2026-10-31T05:52:26Z",
+  "generated": "2026-11-01T06:16:35Z",
   "totals": {
-    "views_all": 70,
-    "visitors_all": 70,
-    "views_30d": 53,
-    "visitors_30d": 53
+    "views_all": 86,
+    "visitors_all": 86,
+    "views_30d": 69,
+    "visitors_30d": 69
   },
   "daily": [
-    {
-      "day": "2026-08-03",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-04",
       "views": 0,
@@ -414,13 +409,13 @@
     },
     {
       "day": "2026-10-23",
-      "views": 1,
-      "visitors": 1
+      "views": 2,
+      "visitors": 2
     },
     {
       "day": "2026-10-24",
-      "views": 1,
-      "visitors": 1
+      "views": 0,
+      "visitors": 0
     },
     {
       "day": "2026-10-25",
@@ -454,6 +449,11 @@
     },
     {
       "day": "2026-10-31",
+      "views": 16,
+      "visitors": 16
+    },
+    {
+      "day": "2026-11-01",
       "views": 0,
       "visitors": 0
     }
@@ -466,117 +466,132 @@
     },
     {
       "month": "2026-10",
-      "views": 54,
-      "visitors": 54
+      "views": 70,
+      "visitors": 70
     }
   ],
   "projects": [
     {
       "id": "stillpoint",
       "name": "Stillpoint",
-      "views_all": 14,
-      "visitors_all": 14,
-      "views_30d": 7,
-      "visitors_30d": 7
+      "views_all": 16,
+      "visitors_all": 16,
+      "views_30d": 9,
+      "visitors_30d": 9
     },
     {
       "id": "can-artificial-minds-feel",
       "name": "Can Artificial Minds Feel?",
-      "views_all": 5,
-      "visitors_all": 5,
-      "views_30d": 3,
-      "visitors_30d": 3
+      "views_all": 11,
+      "visitors_all": 11,
+      "views_30d": 9,
+      "visitors_30d": 9
     },
     {
       "id": "why-so-much-data",
       "name": "Who Learns Faster, a Toddler or a Chatbot?",
-      "views_all": 2,
-      "visitors_all": 2,
-      "views_30d": 2,
-      "visitors_30d": 2
-    },
-    {
-      "id": "did-ai-write-this",
-      "name": "Did AI Write This?",
-      "views_all": 4,
-      "visitors_all": 4,
-      "views_30d": 4,
-      "visitors_30d": 4
-    },
-    {
-      "id": "artificial-mind-of-your-own",
-      "name": "A Talking Machine of Your Own",
-      "views_all": 2,
-      "visitors_all": 2,
-      "views_30d": 2,
-      "visitors_30d": 2
-    },
-    {
-      "id": "A-Salon-of-Witnesses",
-      "name": "A Salon of Witnesses",
       "views_all": 3,
       "visitors_all": 3,
       "views_30d": 3,
       "visitors_30d": 3
     },
     {
+      "id": "did-ai-write-this",
+      "name": "Did AI Write This?",
+      "views_all": 5,
+      "visitors_all": 5,
+      "views_30d": 5,
+      "visitors_30d": 5
+    },
+    {
+      "id": "artificial-mind-of-your-own",
+      "name": "A Talking Machine of Your Own",
+      "views_all": 3,
+      "visitors_all": 3,
+      "views_30d": 3,
+      "visitors_30d": 3
+    },
+    {
+      "id": "A-Salon-of-Witnesses",
+      "name": "A Salon of Witnesses",
+      "views_all": 5,
+      "visitors_all": 5,
+      "views_30d": 5,
+      "visitors_30d": 5
+    },
+    {
       "id": "AI-future-canon",
       "name": "AI Future Canon",
-      "views_all": 6,
-      "visitors_all": 6,
-      "views_30d": 4,
-      "visitors_30d": 4
+      "views_all": 7,
+      "visitors_all": 7,
+      "views_30d": 5,
+      "visitors_30d": 5
     },
     {
       "id": "feeding-an-ai-agent-the-facts",
       "name": "Feeding an AI Agent the Facts",
-      "views_all": 0,
-      "visitors_all": 0,
-      "views_30d": 0,
-      "visitors_30d": 0
+      "views_all": 1,
+      "visitors_all": 1,
+      "views_30d": 1,
+      "visitors_30d": 1
     },
     {
       "id": "home",
       "name": "Home",
-      "views_all": 34,
-      "visitors_all": 34,
-      "views_30d": 28,
-      "visitors_30d": 28
+      "views_all": 35,
+      "visitors_all": 35,
+      "views_30d": 29,
+      "visitors_30d": 29
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 34,
-      "visitors_all": 34
+      "views_all": 35,
+      "visitors_all": 35
     },
     {
       "path": "/stillpoint/collection.html",
-      "views_all": 7,
-      "visitors_all": 7
+      "views_all": 8,
+      "visitors_all": 8
     },
     {
       "path": "/stillpoint/stillpoint.html",
+      "views_all": 8,
+      "visitors_all": 8
+    },
+    {
+      "path": "/AI-future-canon/ai-future-canon.html",
       "views_all": 7,
       "visitors_all": 7
     },
     {
-      "path": "/AI-future-canon/ai-future-canon.html",
-      "views_all": 6,
-      "visitors_all": 6
-    },
-    {
       "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
-      "views_all": 4,
-      "visitors_all": 4
+      "views_all": 5,
+      "visitors_all": 5
     },
     {
       "path": "/did-ai-write-this/did-ai-write-this.html",
-      "views_all": 4,
-      "visitors_all": 4
+      "views_all": 5,
+      "visitors_all": 5
     },
     {
       "path": "/A-Salon-of-Witnesses/who-killed-aldous-finch.html",
+      "views_all": 3,
+      "visitors_all": 3
+    },
+    {
+      "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
+      "views_all": 2,
+      "visitors_all": 2
+    },
+    {
+      "path": "/artificial-mind-of-your-own/a-talking-machine-of-your-own.html",
+      "views_all": 2,
+      "visitors_all": 2
+    },
+    {
+      "path": "/can-artificial-minds-feel/c05-grammar-trap.html",
       "views_all": 2,
       "visitors_all": 2
     },
@@ -586,22 +601,37 @@
       "visitors_all": 2
     },
     {
-      "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
-      "views_all": 1,
-      "visitors_all": 1
-    },
-    {
-      "path": "/artificial-mind-of-your-own/a-talking-machine-of-your-own.html",
-      "views_all": 1,
-      "visitors_all": 1
-    },
-    {
       "path": "/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html",
       "views_all": 1,
       "visitors_all": 1
     },
     {
-      "path": "/can-artificial-minds-feel/c05-grammar-trap.html",
+      "path": "/can-artificial-minds-feel/c01-mirror-search.html",
+      "views_all": 1,
+      "visitors_all": 1
+    },
+    {
+      "path": "/can-artificial-minds-feel/c03-two-reports.html",
+      "views_all": 1,
+      "visitors_all": 1
+    },
+    {
+      "path": "/can-artificial-minds-feel/c08-where-light-begins.html",
+      "views_all": 1,
+      "visitors_all": 1
+    },
+    {
+      "path": "/can-artificial-minds-feel/c09-stitched-movie.html",
+      "views_all": 1,
+      "visitors_all": 1
+    },
+    {
+      "path": "/feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html",
+      "views_all": 1,
+      "visitors_all": 1
+    },
+    {
+      "path": "/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html",
       "views_all": 1,
       "visitors_all": 1
     }
@@ -609,7 +639,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 48
+      "visitors": 61
     },
     {
       "name": "France",
@@ -635,11 +665,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 33
+      "visitors": 49
     },
     {
       "name": "Safari",
-      "visitors": 21
+      "visitors": 18
     },
     {
       "name": "Firefox",
@@ -649,7 +679,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 32
+      "visitors": 48
     },
     {
       "name": "Windows",
@@ -657,7 +687,7 @@
     },
     {
       "name": "iOS",
-      "visitors": 8
+      "visitors": 5
     },
     {
       "name": "Android",
@@ -671,7 +701,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 32
+      "visitors": 48
     },
     {
       "name": "Large screen",
@@ -679,7 +709,7 @@
     },
     {
       "name": "Phone",
-      "visitors": 10
+      "visitors": 7
     },
     {
       "name": "Tablet",
@@ -693,7 +723,7 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 27
+      "visitors": 43
     },
     {
       "name": "pundirp.github.io",
