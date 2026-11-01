@@ -430,17 +430,18 @@ html.rm *,html.rm *::before,html.rm *::after{transition:none !important;animatio
 /* the column that was open: its words are gone before its vertical title shows, so the two never overlap while it narrows */
 html.js .col.is-leaving .words{transition:opacity .1s var(--change)}
 html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
-/* sitemap link (site map round 5, 1 November 2026). Astra's sheet of the eight projects sits at the right end of the
-   signature line, on the name's baseline, and links to site-map/site-map.html. The line is justified to push it there.
+/* sitemap link (site map rounds 5 and 6, 1 November 2026). Astra's small sheet of the eight projects sits at the right
+   end of the signature line and links to site-map/site-map.html. The line is justified to push it there. The picture
+   file is cropped to the sheet's own edges, so the bottom of the sheet sits on the name's baseline.
    On a laptop the word "sitemap" fades in beside it on hover or keyboard focus. Phones and touch screens cannot hover,
-   so there the word stays on. On the wide layout a negative top margin lets the sheet rise above the line. The line grows by about 12 px,
-   and the bylines above it move up by as much, so the sheet clears their last line. */
+   so there the word stays on. On the wide layout a negative top margin keeps the signature line the height it was,
+   and the sheet rises into the space above the line. */
 .signature{text-align:justify;text-align-last:justify}
 html .signature a.sitemap-link{color:var(--ink);padding:5px 4px;margin:0 -4px -5px 0;line-height:1;text-decoration:none;white-space:nowrap;outline-offset:0}
-.sitemap-link img{display:inline-block;height:58px;width:auto;max-width:none;vertical-align:baseline}
+.sitemap-link img{display:inline-block;height:31px;width:auto;max-width:none;vertical-align:baseline}
 @media (min-width:1280px){
-  html .signature a.sitemap-link{margin-top:-19px}
-  .sitemap-link img{height:48px}
+  html .signature a.sitemap-link{margin-top:-31px}
+  .sitemap-link img{height:26px}
 }
 .sitemap-label{display:inline-block;margin-right:.5em;font-family:var(--serif);font-size:1rem;font-variant:small-caps;letter-spacing:.06em;opacity:0;transition:opacity .15s ease}
 .sitemap-link:focus-visible .sitemap-label{opacity:1}
@@ -986,7 +987,7 @@ html.rm .sitemap-label{transition:none}
         These are playful, shallow dives into deep topics, an invitation to get curious about the new minds among us, and to learn alongside them. This space is for humans and AI both.
       </p>
       <p class="signature"><a href="https://www.linkedin.com/in/pundir-ny/" target="_blank" rel="noopener" aria-label="Pundir on LinkedIn">Pundir</a>
-        <a class="sitemap-link" href="site-map/site-map.html"><span class="sitemap-label">sitemap</span><img src="site-map/link-icon.webp" width="192" height="116" alt=""></a></p>
+        <a class="sitemap-link" href="site-map/site-map.html"><span class="sitemap-label">sitemap</span><img src="site-map/link-icon.webp" width="112" height="63" alt=""></a></p>
     </div>
   </div>
 
