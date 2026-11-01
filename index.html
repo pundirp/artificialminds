@@ -432,13 +432,14 @@ html.js .col.is-leaving .words{transition:opacity .1s var(--change)}
 html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
 /* sitemap link (site map rounds 5 and 6, 1 November 2026). Astra's small sheet of the eight projects sits at the right
    end of the signature line and links to site-map/site-map.html. The line is justified to push it there. The picture
-   file is cropped to the sheet's own edges, so the bottom of the sheet sits on the name's baseline.
+   file is cropped to the sheet's own edges. The sheet sits 2 px below the name's baseline: on the line exactly,
+   its pale lower edge made it look as if it floated above the words.
    On a laptop the word "sitemap" fades in beside it on hover or keyboard focus. Phones and touch screens cannot hover,
    so there the word stays on. On the wide layout a negative top margin keeps the signature line the height it was,
    and the sheet rises into the space above the line. */
 .signature{text-align:justify;text-align-last:justify}
 html .signature a.sitemap-link{color:var(--ink);padding:5px 4px;margin:0 -4px -5px 0;line-height:1;text-decoration:none;white-space:nowrap;outline-offset:0}
-.sitemap-link img{display:inline-block;height:31px;width:auto;max-width:none;vertical-align:baseline}
+.sitemap-link img{display:inline-block;height:31px;width:auto;max-width:none;vertical-align:-2px}
 @media (min-width:1280px){
   html .signature a.sitemap-link{margin-top:-31px}
   .sitemap-link img{height:26px}

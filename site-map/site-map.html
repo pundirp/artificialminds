@@ -129,12 +129,12 @@ blockquote{font:inherit;font-style:normal}   /* a quote keeps the size and style
 /* type.css end */
 :root{color-scheme:light;--paper:#ffffff;--ink:#111111;--ink-faint:#666666;--ink-ghost:#a8a8a8;--rule:#dadada;--hairline:#ececec;--accent:#c3261c;
   --s1:.5rem;--s2:1rem;--s3:1.62rem;--s4:2.6rem;--s5:4rem;
-  --sheet:66rem;--cols:3;--gap:2.6rem;--hang:2.4rem;--pic-h:6.2rem;
+  --sheet:66rem;--cols:3;--gap:2.6rem;--hang:3.4rem;--pic-h:6.2rem;
   --serif:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
   --sans:var(--family-house-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
   --mono:var(--family-house-mono, ui-monospace, "SF Mono", Menlo, Consolas, "Liberation Mono", monospace)}
 @media (max-width:1000px){:root{--cols:2;--gap:2rem}}
-@media (max-width:640px){:root{--cols:1;--hang:2rem;--pic-h:5rem}}
+@media (max-width:640px){:root{--cols:1;--hang:3.2rem;--pic-h:5rem}}
 html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
 *{box-sizing:border-box}
@@ -149,6 +149,8 @@ a:hover,a:focus-visible{color:var(--accent);text-decoration:underline;text-decor
 /* running head, as on the essays */
 .runhead{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:var(--s2) 0 .55rem;border-bottom:1px solid var(--rule);color:var(--ink-faint);line-height:1.35}
 .runhead .home{color:var(--ink)}
+/* the ways back to the main site, at the top and the foot: an underline on hover, and they stay ink */
+.runhead .home:hover,.runhead .home:focus-visible,footer a:hover,footer a:focus-visible{color:var(--ink);text-decoration-color:var(--ink)}
 
 /* Astra's drawing, when site-map/hero.* exists */
 .hero{margin:var(--s4) 0 0}
@@ -165,8 +167,8 @@ a:hover,a:focus-visible{color:var(--accent);text-decoration:underline;text-decor
 @media (max-width:640px){
   .jump{display:grid;grid-template-columns:repeat(auto-fill,minmax(2.3rem,1fr));gap:.3rem;margin:0 0 var(--s3);padding:0;list-style:none}
   .jump[style]{grid-template-columns:repeat(var(--jn),minmax(0,1fr));gap:.25rem}   /* up to ten entries share one row */
-  .jump a{display:grid;place-items:center;height:2.6rem;border:1px solid var(--rule);color:var(--accent)}
-  .jump a:hover,.jump a:focus-visible{border-color:var(--accent);text-decoration:none}
+  .jump a{display:grid;place-items:center;height:2.6rem;border:1px solid var(--rule);color:var(--ink)}
+  .jump a:hover,.jump a:focus-visible{border-color:var(--ink);text-decoration:none}
 }
 
 /* the map: a contents grid filled row by row, so the numbers read 1 2 3 across */
@@ -179,9 +181,12 @@ a:hover,a:focus-visible{color:var(--accent);text-decoration:underline;text-decor
 .pic a{display:block;height:100%;max-width:100%}
 .pic img{display:block;height:100%;width:auto;max-width:100%;object-fit:contain;object-position:left bottom}
 .pic a:hover,.pic a:focus-visible{text-decoration:none}
-.head{display:grid;grid-template-columns:var(--hang) minmax(0,1fr);column-gap:.75rem;align-items:baseline}
-.pn{line-height:1}
-.pt{margin:0;text-wrap:balance}
+.head{display:grid;grid-template-columns:minmax(var(--hang),max-content) minmax(0,1fr);column-gap:.75rem;align-items:start}
+/* the project number stands two lines deep, as the stage numbers do in Who Learns Faster, set right against
+   the title. Both boxes are trimmed to the top of their capitals, so the number's top is level with the
+   title's. A letter after the number (6a, 6b) takes the title's size. */
+.pn{line-height:.8;color:var(--ink);text-align:right;white-space:nowrap;text-box:trim-both cap alphabetic}
+.pt{margin:0;text-wrap:balance;text-box:trim-start cap alphabetic}
 .when{margin:.3rem 0 0;color:var(--ink-faint);line-height:1.35}
 
 .blurb{margin:.75rem 0 0 calc(var(--hang) + .75rem);color:var(--ink-faint);line-height:var(--lh-small)}
@@ -215,6 +220,9 @@ footer{margin-top:var(--s4);padding-top:.95rem;border-top:1px solid var(--rule)}
 footer p{margin:0}
 
 /* sizes and weights, through the type roles only */
+.pn{font-size:var(--t-drop)}
+.pn .pl{font-size:var(--t-lead)}
+@media (min-width:641px){.pn .pl{font-size:var(--t-head)}}
 .pt{font:var(--w-regular) var(--t-lead)/var(--lh-head) var(--serif)}
 @media (min-width:641px){.pt{font-size:var(--t-head)}}
 .jump{font-size:var(--t-lead)}
@@ -254,7 +262,7 @@ footer p{margin:0}
 <li class="proj" id="p1">
   <div class="pic"><a href="../stillpoint/stillpoint.html" tabindex="-1" aria-hidden="true"><img src="../img/home/01-stillpoint-knot-700.webp" width="700" height="886" alt="" loading="eager" decoding="async"></a></div>
   <div class="head">
-    <span class="pn t-stat" aria-hidden="true">1</span>
+    <span class="pn" aria-hidden="true"><span class="pd">1</span></span>
     <div>
       <h2 class="pt"><a href="../stillpoint/stillpoint.html">Stillpoint Gallery</a></h2>
       <p class="when t-label">May 2026 · Updated Oct 2026</p>
@@ -273,7 +281,7 @@ footer p{margin:0}
 <li class="proj" id="p2">
   <div class="pic"><a href="../can-artificial-minds-feel/can-artificial-minds-feel.html" tabindex="-1" aria-hidden="true"><img src="../img/home/10-feel-porcelain-face-700.webp" width="700" height="467" alt="" loading="eager" decoding="async"></a></div>
   <div class="head">
-    <span class="pn t-stat" aria-hidden="true">2</span>
+    <span class="pn" aria-hidden="true"><span class="pd">2</span></span>
     <div>
       <h2 class="pt"><a href="../can-artificial-minds-feel/can-artificial-minds-feel.html">Can Artificial Minds Feel?</a></h2>
       <p class="when t-label">September 2026</p>
@@ -302,7 +310,7 @@ footer p{margin:0}
 <li class="proj" id="p3">
   <div class="pic"><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html" tabindex="-1" aria-hidden="true"><img src="../img/home/18-how-much-data-hero-700.webp" width="700" height="567" alt="" loading="eager" decoding="async"></a></div>
   <div class="head">
-    <span class="pn t-stat" aria-hidden="true">3</span>
+    <span class="pn" aria-hidden="true"><span class="pd">3</span></span>
     <div>
       <h2 class="pt"><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html">Who Learns Faster, a Toddler or a Chatbot?</a></h2>
       <p class="when t-label">October 2026</p>
@@ -324,7 +332,7 @@ footer p{margin:0}
 <li class="proj" id="p4">
   <div class="pic"><a href="../did-ai-write-this/did-ai-write-this.html" tabindex="-1" aria-hidden="true"><img src="../img/home/13-writing-machine-hand-v2-700.webp" width="700" height="394" alt="" loading="eager" decoding="async"></a></div>
   <div class="head">
-    <span class="pn t-stat" aria-hidden="true">4</span>
+    <span class="pn" aria-hidden="true"><span class="pd">4</span></span>
     <div>
       <h2 class="pt"><a href="../did-ai-write-this/did-ai-write-this.html">Did AI Write This?</a></h2>
       <p class="when t-label">September 2026</p>
@@ -349,7 +357,7 @@ footer p{margin:0}
 <li class="proj" id="p5">
   <div class="pic"><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html" tabindex="-1" aria-hidden="true"><img src="../img/home/14-mind-brain-700.webp" width="700" height="653" alt="" loading="lazy" decoding="async"></a></div>
   <div class="head">
-    <span class="pn t-stat" aria-hidden="true">5</span>
+    <span class="pn" aria-hidden="true"><span class="pd">5</span></span>
     <div>
       <h2 class="pt"><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html">A Talking Machine of Your Own</a></h2>
       <p class="when t-label">June 2026</p>
@@ -370,7 +378,7 @@ footer p{margin:0}
 <li class="proj" id="p6a">
   <div class="pic"><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html" tabindex="-1" aria-hidden="true"><img src="../img/home/16-aldous-finch-manor-700.webp" width="700" height="400" alt="" loading="lazy" decoding="async"></a></div>
   <div class="head">
-    <span class="pn t-stat" aria-hidden="true">6a</span>
+    <span class="pn" aria-hidden="true"><span class="pd">6</span><span class="pl">a</span></span>
     <div>
       <h2 class="pt"><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html">Who Killed Aldous Finch? A Transformer Explainer</a></h2>
       <p class="when t-label">July 2026</p>
@@ -392,7 +400,7 @@ footer p{margin:0}
 <li class="proj" id="p6b">
   <div class="pic"><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html" tabindex="-1" aria-hidden="true"><img src="../A-Salon-of-Witnesses/img/52eed20ae580d321.jpg" width="768" height="512" alt="" loading="lazy" decoding="async"></a></div>
   <div class="head">
-    <span class="pn t-stat" aria-hidden="true">6b</span>
+    <span class="pn" aria-hidden="true"><span class="pd">6</span><span class="pl">b</span></span>
     <div>
       <h2 class="pt"><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html">How Attention Works in a Transformer</a></h2>
       <p class="when t-label">October 2026</p>
@@ -412,7 +420,7 @@ footer p{margin:0}
 <li class="proj" id="p7">
   <div class="pic"><a href="../AI-future-canon/ai-future-canon.html" tabindex="-1" aria-hidden="true"><img src="../img/home/17-canon-bookcase-700.webp" width="700" height="441" alt="" loading="lazy" decoding="async"></a></div>
   <div class="head">
-    <span class="pn t-stat" aria-hidden="true">7</span>
+    <span class="pn" aria-hidden="true"><span class="pd">7</span></span>
     <div>
       <h2 class="pt"><a href="../AI-future-canon/ai-future-canon.html">The AI-Future Canon</a></h2>
       <p class="when t-label">August 2026</p>
@@ -430,7 +438,7 @@ footer p{margin:0}
 <li class="proj" id="p8">
   <div class="pic"><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html" tabindex="-1" aria-hidden="true"><img src="../img/home/22-feeding-order-office-700.webp" width="700" height="400" alt="" loading="lazy" decoding="async"></a></div>
   <div class="head">
-    <span class="pn t-stat" aria-hidden="true">8</span>
+    <span class="pn" aria-hidden="true"><span class="pd">8</span></span>
     <div>
       <h2 class="pt"><a href="../feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html">Feeding an AI Agent the Facts</a></h2>
       <p class="when t-label">October 2026</p>
