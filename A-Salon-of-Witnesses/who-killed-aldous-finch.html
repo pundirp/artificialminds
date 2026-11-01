@@ -53,6 +53,8 @@
 /* ============================================================
    Who Killed Aldous Finch?  White paper style, October 2026,
    with the paintings restored (round 16) and ink drop capitals (round 17).
+   The ink drawing of the manor from the home page opens the page,
+   with the home page's lamp in its lit window (round 29).
    One sheet, one mode. Every colour on the page is a variable
    in the :root block below, including the colours in the
    chair rows. The paintings and the portraits keep their own
@@ -77,26 +79,18 @@
   --rubric:#c3261c;
   --burgundy:#63202f;
 
-  /* the title on the night sky, as on the live page */
-  --sky-ink:#cdc9ce;
-  --sky-shade:rgba(6,14,17,.65);
-
-  /* paper-white at partial strength, for the dissolve at the edges of the
-     painting (a smooth ramp from full paper to clear). --clear is the
-     transparent end of every gradient. */
-  --clear:rgba(255,255,255,0);
-  --edge-1:rgba(255,255,255,.85);
-  --edge-2:rgba(255,255,255,.5);
-  --edge-3:rgba(255,255,255,.15);
-
-  /* the lamp in the lit window: warm gold, the live page's own values */
-  --glow-1:rgba(255,220,150,.55);
-  --glow-2:rgba(217,160,90,.28);
-  --glow-3:rgba(217,160,90,.08);
-  --glow-4:rgba(255,250,235,.9);
-  --glow-5:rgba(255,236,190,.6);
-  --glow-6:rgba(255,225,170,.32);
-  --glow-7:rgba(217,160,90,.16);
+  /* the lamp in the lit window: the home page's lamp, stop for stop.
+     Halo, pane glow and the light on the snow, each as centre, middle
+     and edge. */
+  --lamp-halo:rgba(239,233,221,.42);
+  --lamp-halo-mid:rgba(217,160,90,.22);
+  --lamp-halo-out:rgba(217,160,90,0);
+  --lamp-core:rgba(255,248,235,.92);
+  --lamp-core-mid:rgba(239,233,221,.55);
+  --lamp-core-out:rgba(239,233,221,0);
+  --lamp-cast:rgba(239,233,221,.3);
+  --lamp-cast-mid:rgba(217,160,90,.14);
+  --lamp-cast-out:rgba(217,160,90,0);
 
   --serif:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
   --sans:var(--family-house-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
@@ -153,70 +147,79 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 .runhead a.rh-comp{white-space:normal;text-align:right}
 @media (max-width:480px){ .runhead{flex-direction:column;align-items:flex-start;gap:.15rem} .runhead a.rh-comp{text-align:left} }
 
-/* ---------- 5. The painting and the title ---------- */
-/* The painting is shown whole, in colour, at the width it has on the live
-   page: up to 1400px, and never taller than 92% of the window. Its edges
-   dissolve into the paper. The title sits on the night sky in its light ink.
-   The lamp is placed in percentages of the picture, so it stays on the lit
-   window at every width. */
-.hero{margin:var(--s2) 0 0}
-.hero-frame{
-  --side:14%; --top:7%; --foot:10%;
-  position:relative;isolation:isolate;overflow:hidden;
-  width:min(100%, 1400px, calc(92vh * 1400 / 923));
-  aspect-ratio:1400 / 923;
-  margin:0 auto;
+/* ---------- 5. The drawing and the title ---------- */
+/* The ink drawing of Harrow Manor from the home page, with the home page's
+   lamp in the lit window. The drawing is as wide as the text sheet, and its
+   sky is the paper. On a short window the frame trims the empty sky above
+   the house, never more than a fifth of the drawing, so the title and the
+   first lines of the story show without scrolling. --reserve is the room
+   kept under the drawing for them. The lamp is placed in percentages of the
+   drawing, so it stays on the lit window at every width and every trim. */
+.hero{
+  max-width:calc(var(--sheet) + 32px);margin:var(--s2) auto 0;padding:0 16px;
+  container-type:inline-size;--shot-h:calc(100cqw * 800 / 1400);
 }
-.hero-shot{position:relative;width:100%;height:100%}
-.hero-shot img{display:block;width:100%;height:100%;object-fit:cover;object-position:bottom center}
-.hero-frame::after{
-  content:"";position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:
-    linear-gradient(to right, var(--paper) 0, var(--edge-1) calc(var(--side) * .25), var(--edge-2) calc(var(--side) * .5), var(--edge-3) calc(var(--side) * .75), var(--clear) var(--side)),
-    linear-gradient(to left, var(--paper) 0, var(--edge-1) calc(var(--side) * .25), var(--edge-2) calc(var(--side) * .5), var(--edge-3) calc(var(--side) * .75), var(--clear) var(--side)),
-    linear-gradient(to bottom, var(--paper) 0, var(--edge-1) calc(var(--top) * .25), var(--edge-2) calc(var(--top) * .5), var(--edge-3) calc(var(--top) * .75), var(--clear) var(--top)),
-    linear-gradient(to top, var(--paper) 0, var(--edge-1) calc(var(--foot) * .25), var(--edge-2) calc(var(--foot) * .5), var(--edge-3) calc(var(--foot) * .75), var(--clear) var(--foot));
+.hero-frame{position:relative;overflow:hidden;margin:0;aspect-ratio:1400 / 800}
+@supports (height:1cqw){
+  .hero-frame{
+    aspect-ratio:auto;
+    height:min(var(--shot-h), max(calc(100vh - var(--reserve)), calc(var(--shot-h) * .8)));
+    height:min(var(--shot-h), max(calc(100svh - var(--reserve)), calc(var(--shot-h) * .8)));
+  }
 }
-.hero-text{
-  position:absolute;left:0;right:0;top:12%;z-index:3;
-  text-align:center;padding:0 1.5rem;
-  text-shadow:0 2px 20px var(--sky-shade);
-}
-h1{
-  font-weight:400;font-size:clamp(36px, 4.6vw, 64px);line-height:1.08;letter-spacing:.005em;
-  color:var(--sky-ink);margin:0;
-}
+.hero-shot{position:absolute;left:0;right:0;bottom:0;aspect-ratio:1400 / 800}
+.hero-shot img{display:block;width:100%;height:100%}
 
-/* on a narrow screen the painting is scaled up and cropped left and right,
-   so the hero keeps some height and the sky keeps room for the title */
-@media (max-width:760px){
-  .hero-frame{--side:9%; --top:6%; --foot:8%;width:100%;aspect-ratio:auto;height:76vh;display:flex;justify-content:center}
-  .hero-shot{flex:0 0 auto;width:auto;height:100%;aspect-ratio:1400 / 923}
-  .hero-text{top:11%}
-}
-
-/* the lit window: a small pool of light that goes out altogether at the
-   trough and comes back at the pane. Under five seconds, dark to full.
-   The window sits at 57.9% across the picture and 86.4% down it. */
+/* the lit window: the home page's lamp. A halo, the pane's glow and the
+   light on the snow breathe together, out from 45 to 55 percent of a
+   4.444 s count and lit at both ends. The window sits at 58.56% across
+   the drawing and 73.95% down it. */
 .lamp{position:absolute;inset:0;z-index:2;pointer-events:none;animation:lampbreath 4.444s ease-in-out infinite}
-.lamp i{position:absolute;display:block;border-radius:50%}
+.lamp i{position:absolute;display:block;border-radius:50%;transform:translate(-50%,-50%)}
 .lamp .halo{
-  left:57.9%;top:86.4%;width:10%;aspect-ratio:1;transform:translate(-50%,-50%);
-  background:radial-gradient(circle, var(--glow-1) 0%, var(--glow-2) 30%, var(--glow-3) 55%, var(--clear) 70%);
+  left:58.56%;top:73.95%;width:12%;aspect-ratio:1;
+  background:radial-gradient(circle, var(--lamp-halo) 0%, var(--lamp-halo-mid) 38%, var(--lamp-halo-out) 72%);
 }
 .lamp .core{
-  left:57.9%;top:86.4%;width:3%;aspect-ratio:1;transform:translate(-50%,-50%);
-  background:radial-gradient(circle, var(--glow-4) 0%, var(--glow-5) 35%, var(--clear) 78%);
+  left:58.56%;top:73.95%;width:4%;aspect-ratio:1;
+  background:radial-gradient(circle, var(--lamp-core) 0%, var(--lamp-core-mid) 42%, var(--lamp-core-out) 78%);
 }
 .lamp .cast{
-  left:57.9%;top:90.2%;width:11%;height:5%;transform:translate(-50%,-50%);
-  background:radial-gradient(ellipse at center, var(--glow-6) 0%, var(--glow-7) 45%, var(--clear) 80%);
+  left:58.56%;top:77.55%;width:9%;height:3.35%;
+  background:radial-gradient(ellipse at center, var(--lamp-cast) 0%, var(--lamp-cast-mid) 45%, var(--lamp-cast-out) 80%);
 }
 @keyframes lampbreath{
   0%, 100% { opacity:1 }
   45%, 55% { opacity:0 }
 }
 @media (prefers-reduced-motion:reduce){ .lamp{animation:none} }
+
+/* on a phone the drawing runs from edge to edge of the screen and is drawn
+   a quarter larger, trimmed at both sides, so the house reads at that size */
+@media (max-width:600px){
+  .hero{padding:0;--shot-h:calc(125cqw * 800 / 1400)}
+  .hero-frame{aspect-ratio:1400 / 1000}
+  .hero-shot{left:-12.5%;right:-12.5%}
+}
+
+/* the title: the site's title size, ink on the paper */
+h1{font-weight:400;font-size:2.35rem;line-height:1.1;color:var(--ink);margin:0;text-wrap:balance}
+
+/* The title and the line under it sit in the empty sky of the drawing,
+   centred above the house (round 29, layout C). The sky band runs from the
+   top of the frame to halfway down the drawing, so its foot sits half the
+   drawing's height (--shot-h) above the frame's foot. In the middle three
+   fifths of the drawing the sky is clear down to the chimneys, 52% of the
+   way down, and the text stays inside that width. Each line of text sits on
+   its own strip of paper, as tight as the words, so the faint stars never
+   show through the letters and no strip cuts into the trees. */
+.hero{--reserve:10.5rem}
+.hero-text{
+  position:absolute;left:0;right:0;top:0;bottom:calc(var(--shot-h) * .5);z-index:3;
+  display:flex;align-items:center;justify-content:center;padding:0 1rem;text-align:center;
+}
+.hero-plate span{background:var(--paper);-webkit-box-decoration-break:clone;box-decoration-break:clone;padding:.05em .35em .1em}
+.subtitle{margin:.3rem 0 0;font-variant:small-caps;letter-spacing:.06em;font-size:1rem;line-height:1.4;color:var(--ink-faint)}
 
 /* ---------- 6. The opening and the drop capitals ---------- */
 .intro{margin-top:var(--s3)}
@@ -417,7 +420,7 @@ footer .col p{margin:0;font-size:.82rem}
 <div class="hero">
   <div class="hero-frame">
     <div class="hero-shot">
-      <img src="img/c7127bd0195edaad.jpg" alt="Harrow Manor on the night of the first snow, seen across a white lawn between two bare trees. One window on the ground floor is still lit.">
+      <img src="../img/home/16-aldous-finch-manor-1400.webp" srcset="../img/home/16-aldous-finch-manor-700.webp 700w, ../img/home/16-aldous-finch-manor-1400.webp 1400w, ../img/home/16-aldous-finch-manor-full.webp 3318w" sizes="(min-width:912px) 879px, (max-width:600px) 125vw, calc(100vw - 32px)" width="1400" height="800" fetchpriority="high" alt="An ink drawing of Harrow Manor on the night of the first snow, seen across a white lawn between two large trees. One window on the ground floor is lit.">
       <span class="lamp" aria-hidden="true">
         <i class="halo"></i>
         <i class="core"></i>
@@ -425,7 +428,10 @@ footer .col p{margin:0;font-size:.82rem}
       </span>
     </div>
     <div class="hero-text">
-      <h1 class="hero-title">Who Killed Aldous Finch?</h1>
+      <div class="hero-plate">
+        <h1 class="hero-title"><span>Who Killed Aldous Finch?</span></h1>
+        <p class="subtitle"><span>A transformer explainer</span></p>
+      </div>
     </div>
   </div>
 </div>
