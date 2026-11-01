@@ -55,7 +55,7 @@
    with the paintings restored (round 16) and ink drop capitals (round 17).
    The ink drawing of the manor from the home page opens the page,
    with the home page's lamp in its lit window (round 29). At the
-   lamp's trough the window goes dark like the others (round 30).
+   lamp's trough the window looks like the others (rounds 30, 31).
    One sheet, one mode. Every colour on the page is a variable
    in the :root block below, including the colours in the
    chair rows. The paintings and the portraits keep their own
@@ -193,10 +193,11 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   0%, 100% { opacity:1 }
   45%, 55% { opacity:0 }
 }
-/* while the lamp is out the window goes as dark as the others (round 30).
-   The pane is a copy of the lit window with its glass darkened to the
-   other windows' tone. It fades in as the lamp fades out, on the same
-   count. It covers the glass and eight pixels of the drawing round it,
+/* while the lamp is out the window looks like the others (rounds 30 and
+   31). The pane holds the unlit window straight above, in the same bay,
+   scaled onto the lit one, so it shows dark glass and light bars. It
+   fades in as the lamp fades out, on the same count. It covers the glass
+   and eight pixels of the drawing round it,
    from 57.535% across and 71.835% down. The margin hides the yellow that
    the smaller copies of the drawing blur past the glass, and the
    rounding of the pane's edge to whole screen pixels. */

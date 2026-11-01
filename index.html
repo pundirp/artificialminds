@@ -569,10 +569,10 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   background: radial-gradient(ellipse at center, var(--lamp-cast) 0%, var(--lamp-cast-mid) 45%, var(--lamp-cast-out) 80%);
 }
 
-/* while the lamp is out the window goes as dark as the others (round 30 of
-   A Salon of Witnesses). The pane is a copy of the lit window with its glass
-   darkened to the other windows' tone. The script places it on the glass and
-   runs it on the lamp's count, the other way round. */
+/* while the lamp is out the window looks like the others (rounds 30 and 31
+   of A Salon of Witnesses). The pane holds the unlit window straight above,
+   in the same bay, scaled onto the lit one. The script places it on the
+   glass and runs it on the lamp's count, the other way round. */
 .cardfx-lamp-pane {
   position: absolute;
   display: block;
@@ -2070,8 +2070,8 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   /* The live home page's lamp: a halo, the pane's glow and the light on the snow,
      one breath of 4.444 s, ease-in-out, lit at the ends, out from 45 to 55
      percent of the count. Sizes and colours are in cardfx.css. While the lamp
-     is out, a darkened copy of the window covers the glass, so the window goes
-     as dark as the others. */
+     is out, the unlit window from the floor above covers the glass, so the
+     window looks like the others. */
   function card6(c) {
     var layer = c.layer('cardfx-lamp');
     var pane = el('i', 'cardfx-lamp-pane');
