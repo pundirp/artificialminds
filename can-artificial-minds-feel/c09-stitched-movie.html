@@ -60,12 +60,10 @@
     --note-paper: #ffffff;   /* the paper under each quote frame is opaque white, whatever the ground */
     --note-shadow: rgba(17, 17, 17, .18);   /* the small shadow under each quote frame */
 
-    /* the time-bar figure in section IV, in grey scale (round 41, option 2: on the page) */
-    --tb-run:#ffffff;       /* a block of running time */
-    --tb-outline:#555555;   /* the outline of each bar's track: dark and thin */
-    --tb-hatch:#9a9a9a;     /* the pencil hatching in the gaps: clock time with nothing seen */
-    --tb-label:#5c5c5c;     /* the label above each bar */
-    --tb-cap:#3a3a3a;       /* the caption under each bar */
+    /* the time-bar figure in section IV (round 44): Astra's pictures on a plain white sheet */
+    --tb-sheet:#ffffff;     /* the sheet under the three rows */
+    --tb-label:var(--ink);  /* the label above each row, in dark ink */
+    --tb-cap:#3a3a3a;       /* the caption under each row */
 
     /* the block */
     --measure:34rem;
@@ -365,53 +363,51 @@
   .try .label{color:var(--rubric);margin-bottom:.55rem;display:block}
   .try p{font-size:.98rem;margin:0 0 .8rem}
 
-  /* ---- the time-bar figure in section IV (round 41, option 2: straight on the page) ----
-     No panel. The frame for this figure has no fill, no rule and no padding, so the rows sit on the
-     page's own paper, in line with the text. Each bar is a track with a dark thin outline: the whole
-     span of clock time. Running time is a white block inside the track. The gaps show the page's paper,
-     hatched like a pencil shading: clock time with nothing seen. The hatching stops 1px short of the
-     outline on every side, so a block edge that lands half a pixel off never shows a sliver of hatching. When the gaps close, the white blocks join at the
-     left and all the hatching gathers at the right end of the track. */
-  .frame.tb-frame{background:none;border:0;padding:0}
-  .rows{margin:0;background:none;padding:.35rem 0 0}
-  .bar{display:block;width:100%;height:30px}
-  .bar .gapline{fill:none}
-  .row{margin:0 0 1.4rem}
-  .row:last-child{margin-bottom:.2rem}
-  .row .label{color:var(--tb-label);margin-bottom:.4rem;display:block}
+  /* ---- the time-bar figure in section IV (round 44) ----
+     A plain white sheet with the page's thin frame line holds three rows: a label, a track and a caption.
+     Each track is the whole span of clock time, and keeps the shape of its picture at every width:
+     its aspect-ratio is 2280 (three times 760) over the height of its picture in pixels.
+     A track holds one picture per row (time-row-1.jpg, 2 and 3), cut into pieces. A piece is a box of
+     exact percentage width and left edge with the whole picture inside it, shifted left so the box
+     shows its own slice. The script moves the boxes; with no script they sit at their open places.
+     The sheet is at most 760px wide and is centred on the text column. On a narrower window it is
+     as wide as the window less the page's side gutters, and never narrower than the column. */
+  .tb-sheet{
+    --tb-w:min(760px,max(100%,100vw - 2*var(--gut)));
+    --tb-pad:12px;
+    width:var(--tb-w);
+    margin:0 calc((100% - var(--tb-w))/2);
+    padding:1.4rem 0 1.3rem;
+    background:var(--tb-sheet);
+    outline:1px solid var(--rule);
+  }
+  @media (min-width:40em){ .tb-sheet{--tb-pad:29px} }
+  .tb-row + .tb-row{margin-top:1.25rem;padding-top:1.15rem;border-top:1px solid var(--rule)}
+  .tb-row .label{display:block;margin:0 var(--tb-pad) .7rem;color:var(--tb-label)}
+  .tb-track{position:relative;width:100%;overflow:hidden;isolation:isolate}
+  .tb-t1{aspect-ratio:2280 / 432}
+  .tb-t2{aspect-ratio:2280 / 390}
+  .tb-t3{aspect-ratio:2280 / 282}
+  .tb-pc{position:absolute;top:0;height:100%;overflow:hidden;pointer-events:none}
+  .tb-pc img,.tb-whole{display:block;position:absolute;top:0;left:0;height:100%;max-width:none;
+    pointer-events:none;user-select:none;-webkit-user-drag:none}
+  .tb-t1 .tb-pc{width:2.5%} .tb-t1 .tb-pc img{width:3100%}
+  .tb-t2 .tb-pc{width:40%}  .tb-t2 .tb-pc img{width:200%}
+  .tb-t3 .tb-pc{width:2%}   .tb-t3 .tb-pc img{width:800%}
+  /* the whole picture, shown over the pieces only when they have settled closed, so that no
+     hairline shows where two pieces meet. It is the same picture at the same size and place. */
+  .tb-whole{visibility:hidden;z-index:1}
+  .tb-t1 .tb-whole{width:77.5%} .tb-t2 .tb-whole{width:80%} .tb-t3 .tb-whole{width:16%}
+  .tb-settled .tb-whole{visibility:visible}
+  /* a caption is as tall as its longer wording: two hidden copies of the wordings share its box */
+  .tb-cap{display:grid;margin:.7rem var(--tb-pad) 0}
+  .tb-cap > *{grid-area:1 / 1}
+  .tb-ghost{visibility:hidden}
   .rowcap{
     font-size:.84rem;
     color:var(--tb-cap);
-    margin:.42rem 0 0;
+    margin:0;
     line-height:1.5;
-    min-height:1.35rem;
-  }
-  /* each running block has its own colour and no outline. crispEdges puts every edge on a whole
-     pixel, so blocks that meet after the gaps close show no faint seam where they join */
-  .bar .run{fill:var(--tb-run);shape-rendering:crispEdges}
-  .rows{position:relative;z-index:0}
-  .ink-time-label{position:relative}
-  .ink-time-label::before,
-  .ink-time-label::after{
-    content:"";
-    position:absolute;
-    top:100%;
-    left:-1px;
-    right:-1px;
-    margin-top:calc(.4rem + 1.25% - 1px);
-    height:0;
-    padding-top:2.857%;
-    border:1px solid transparent;
-    pointer-events:none;
-  }
-  .ink-time-label::after{
-    z-index:-1;
-    background:
-      repeating-linear-gradient(-45deg,var(--tb-hatch) 0 1px,transparent 1px 4px) 50% 50% / calc(100% - 2px) calc(100% - 2px) no-repeat;
-  }
-  .ink-time-label::before{
-    z-index:1;
-    border-color:var(--tb-outline);
   }
 
   /* ---- meter ---- */
@@ -539,29 +535,6 @@
   .said.testimony .sc{ font-variant: normal; letter-spacing: inherit; }
   @media (max-width: 600px) { .said.testimony { --orn: 24px; } }
 
-  /* ===== Pencil icons by Astra, added 29 October 2026 =====
-     Section IV, the three rows of the time-bar figure (#bar1, #bar2, #bar3): a small pencil-and-ink picture
-     (ink-11-seeing.jpg, ink-12-sleep.jpg, ink-13-conversation.jpg) sits to the left of each row's
-     label. The label keeps its text and still wraps on a narrow phone. The wrapper takes the bottom margin
-     that ".row .label" had (.4rem), so the space above each bar is the same as before, and the label
-     itself carries no margin. The bars, their ids, viewBoxes, captions and the script are untouched. */
-  .ink-time-label{
-    display:flex;
-    align-items:flex-end;
-    gap:10px;
-    margin-bottom:.4rem;
-  }
-  .ink-time-label img{
-    width:44px;
-    height:44px;
-    flex:none;
-    object-fit:contain;
-  }
-  .ink-time-label .label{margin:0}
-  @media (max-width:430px){
-    .ink-time-label{gap:8px}
-    .ink-time-label img{width:36px;height:36px}
-  }
 </style>
 </head>
 <body>
@@ -674,34 +647,82 @@
 
 <section id="sec-4">
   <h2><span class="n">IV</span> Clock time and experienced time are different lengths</h2>
-  <p>Three stretches of clock time: ten seconds of looking around a room, two days with a night in the middle, ten minutes of a conversation with an artificial mind. The pale blocks are when something was running. Press the button to close the gaps.</p>
+  <p>Three stretches of clock time: ten seconds of looking around a room, two days with a night in the middle, ten minutes of a conversation with an artificial mind. The drawn pieces are when something was running. Press the button to close the gaps.</p>
 
   <figure>
-    <div class="frame tb-frame">
-      <div class="rows">
-        <div class="row">
-          <div class="ink-time-label">
-            <img src="ink-11-seeing.jpg" width="144" height="144" alt="" aria-hidden="true" draggable="false">
-            <p class="label">Ten seconds of looking</p>
-          </div>
-          <svg class="bar" id="bar1" viewBox="0 0 560 30" preserveAspectRatio="none" role="img" aria-label="Ten seconds of looking, broken into fixations separated by suppressed eye movements."></svg>
+    <div class="tb-sheet" id="tbSheet">
+      <div class="tb-row">
+        <p class="label">Ten seconds of looking</p>
+        <div class="tb-track tb-t1" id="bar1" role="img" aria-label="Ten seconds of looking, broken into fixations separated by suppressed eye movements.">
+    <span class="tb-pc" style="left:0%"><img src="time-row-1.jpg" alt="" draggable="false"></span>
+    <span class="tb-pc" style="left:3.25%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-100%"></span>
+    <span class="tb-pc" style="left:6.5%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-200%"></span>
+    <span class="tb-pc" style="left:9.75%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-300%"></span>
+    <span class="tb-pc" style="left:13%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-400%"></span>
+    <span class="tb-pc" style="left:16.25%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-500%"></span>
+    <span class="tb-pc" style="left:19.5%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-600%"></span>
+    <span class="tb-pc" style="left:22.75%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-700%"></span>
+    <span class="tb-pc" style="left:26%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-800%"></span>
+    <span class="tb-pc" style="left:29.25%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-900%"></span>
+    <span class="tb-pc" style="left:32.5%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-1000%"></span>
+    <span class="tb-pc" style="left:35.75%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-1100%"></span>
+    <span class="tb-pc" style="left:39%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-1200%"></span>
+    <span class="tb-pc" style="left:42.25%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-1300%"></span>
+    <span class="tb-pc" style="left:45.5%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-1400%"></span>
+    <span class="tb-pc" style="left:48.75%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-1500%"></span>
+    <span class="tb-pc" style="left:52%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-1600%"></span>
+    <span class="tb-pc" style="left:55.25%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-1700%"></span>
+    <span class="tb-pc" style="left:58.5%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-1800%"></span>
+    <span class="tb-pc" style="left:61.75%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-1900%"></span>
+    <span class="tb-pc" style="left:65%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-2000%"></span>
+    <span class="tb-pc" style="left:68.25%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-2100%"></span>
+    <span class="tb-pc" style="left:71.5%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-2200%"></span>
+    <span class="tb-pc" style="left:74.75%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-2300%"></span>
+    <span class="tb-pc" style="left:78%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-2400%"></span>
+    <span class="tb-pc" style="left:81.25%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-2500%"></span>
+    <span class="tb-pc" style="left:84.5%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-2600%"></span>
+    <span class="tb-pc" style="left:87.75%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-2700%"></span>
+    <span class="tb-pc" style="left:91%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-2800%"></span>
+    <span class="tb-pc" style="left:94.25%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-2900%"></span>
+    <span class="tb-pc" style="left:97.5%"><img src="time-row-1.jpg" alt="" draggable="false" style="left:-3000%"></span>
+    <img class="tb-whole" src="time-row-1.jpg" alt="" draggable="false">
+        </div>
+        <div class="tb-cap">
           <p class="rowcap" id="cap1">Thirty eye movements. About two and a quarter seconds not seen.</p>
+          <p class="rowcap tb-ghost" aria-hidden="true">Thirty eye movements. About two and a quarter seconds not seen.</p>
+          <p class="rowcap tb-ghost" aria-hidden="true">From inside: one unbroken look at a room.</p>
         </div>
-        <div class="row">
-          <div class="ink-time-label">
-            <img src="ink-12-sleep.jpg" width="144" height="144" alt="" aria-hidden="true" draggable="false">
-            <p class="label">Two days</p>
-          </div>
-          <svg class="bar" id="bar2" viewBox="0 0 560 30" preserveAspectRatio="none" role="img" aria-label="Two waking days separated by one night."></svg>
+      </div>
+      <div class="tb-row">
+        <p class="label">Two days</p>
+        <div class="tb-track tb-t2" id="bar2" role="img" aria-label="Two waking days separated by one night.">
+    <span class="tb-pc" style="left:0%"><img src="time-row-2.jpg" alt="" draggable="false"></span>
+    <span class="tb-pc" style="left:60%"><img src="time-row-2.jpg" alt="" draggable="false" style="left:-100%"></span>
+    <img class="tb-whole" src="time-row-2.jpg" alt="" draggable="false">
+        </div>
+        <div class="tb-cap">
           <p class="rowcap" id="cap2">Sixteen hours awake, eight hours of sleep, sixteen hours awake.</p>
+          <p class="rowcap tb-ghost" aria-hidden="true">Sixteen hours awake, eight hours of sleep, sixteen hours awake.</p>
+          <p class="rowcap tb-ghost" aria-hidden="true">From inside: evening, then morning. No gap, and no seam where one was.</p>
         </div>
-        <div class="row">
-          <div class="ink-time-label">
-            <img src="ink-13-conversation.jpg" width="144" height="144" alt="" aria-hidden="true" draggable="false">
-            <p class="label">Ten minutes of a conversation</p>
-          </div>
-          <svg class="bar" id="bar3" viewBox="0 0 560 30" preserveAspectRatio="none" role="img" aria-label="Eight generations separated by long spans in which nothing runs."></svg>
+      </div>
+      <div class="tb-row">
+        <p class="label">Ten minutes of a conversation</p>
+        <div class="tb-track tb-t3" id="bar3" role="img" aria-label="Eight generations separated by long spans in which nothing runs.">
+    <span class="tb-pc" style="left:0%"><img src="time-row-3.jpg" alt="" draggable="false"></span>
+    <span class="tb-pc" style="left:14%"><img src="time-row-3.jpg" alt="" draggable="false" style="left:-100%"></span>
+    <span class="tb-pc" style="left:28%"><img src="time-row-3.jpg" alt="" draggable="false" style="left:-200%"></span>
+    <span class="tb-pc" style="left:42%"><img src="time-row-3.jpg" alt="" draggable="false" style="left:-300%"></span>
+    <span class="tb-pc" style="left:56%"><img src="time-row-3.jpg" alt="" draggable="false" style="left:-400%"></span>
+    <span class="tb-pc" style="left:70%"><img src="time-row-3.jpg" alt="" draggable="false" style="left:-500%"></span>
+    <span class="tb-pc" style="left:84%"><img src="time-row-3.jpg" alt="" draggable="false" style="left:-600%"></span>
+    <span class="tb-pc" style="left:98%"><img src="time-row-3.jpg" alt="" draggable="false" style="left:-700%"></span>
+    <img class="tb-whole" src="time-row-3.jpg" alt="" draggable="false">
+        </div>
+        <div class="tb-cap">
           <p class="rowcap" id="cap3">Eight generations. Between them, nothing running.</p>
+          <p class="rowcap tb-ghost" aria-hidden="true">Eight generations. Between them, nothing running.</p>
+          <p class="rowcap tb-ghost" aria-hidden="true">From inside, if there is an inside: eight bursts running straight into each other. Far less clock time, and just as unbroken.</p>
         </div>
       </div>
     </div>
@@ -962,8 +983,6 @@
   /* ------------------------------------------------------------------
      3. Clock time collapsed to experienced time
      ------------------------------------------------------------------ */
-  var W = 560, H = 30, BAR_Y = 7, BAR_H = 16, NS = "http://www.w3.org/2000/svg";
-
   /* each row is a list of segment durations and the gaps between them,
      expressed as fractions of the row's total clock span */
   function fixationRow(){
@@ -989,70 +1008,64 @@
   }
 
   var rows = [
-    {svg: document.getElementById("bar1"), segs: fixationRow(),
+    {track: document.getElementById("bar1"), segs: fixationRow(),
      capEl: document.getElementById("cap1"),
      capA: "Thirty eye movements. About two and a quarter seconds not seen.",
      capB: "From inside: one unbroken look at a room."},
-    {svg: document.getElementById("bar2"), segs: dayRow(),
+    {track: document.getElementById("bar2"), segs: dayRow(),
      capEl: document.getElementById("cap2"),
      capA: "Sixteen hours awake, eight hours of sleep, sixteen hours awake.",
      capB: "From inside: evening, then morning. No gap, and no seam where one was."},
-    {svg: document.getElementById("bar3"), segs: turnRow(),
+    {track: document.getElementById("bar3"), segs: turnRow(),
      capEl: document.getElementById("cap3"),
      capA: "Eight generations. Between them, nothing running.",
      capB: "From inside, if there is an inside: eight bursts running straight into each other. Far less clock time, and just as unbroken."}
   ];
 
+  /* The pieces are already in the page, at their open places. Each segment above is a piece, in order,
+     with its open left edge s.x and, after the gaps close, the running total of the widths before it.
+     All numbers are percentages of the track. */
   function build(row){
-    var svg = row.svg;
-    row.rects = [];
-    if(!svg) return;
-    var base = document.createElementNS(NS, "rect");
-    base.setAttribute("x", "0");
-    base.setAttribute("y", String(BAR_Y + BAR_H/2 - 0.5));
-    base.setAttribute("width", String(W));
-    base.setAttribute("height", "1");
-    base.setAttribute("class", "gapline");   /* its colour comes from the CSS, .bar .gapline */
-    svg.appendChild(base);
-
+    var pcs = row.track ? row.track.querySelectorAll(".tb-pc") : [];
+    row.pieces = [];
+    if(pcs.length !== row.segs.length) return;
     var run = 0;
-    row.rects = row.segs.map(function(s){
-      var r = document.createElementNS(NS, "rect");
-      r.setAttribute("y", String(BAR_Y));
-      r.setAttribute("height", String(BAR_H));
-      r.setAttribute("class", "run");   /* its colour comes from the CSS, .bar .run */
-      r.setAttribute("width", String(s.w/100 * W));
-      r.setAttribute("x", String(s.x/100 * W));
-      svg.appendChild(r);
-      var o = {el: r, from: s.x/100 * W, to: run};
-      run += s.w/100 * W;
+    row.pieces = row.segs.map(function(s, i){
+      var o = {el: pcs[i], from: s.x, to: run};
+      run += s.w;
       return o;
     });
   }
   rows.forEach(build);
 
-  var collapsed = false, animRaf = null, curT = 0;
+  var sheet = document.getElementById("tbSheet"),
+      collapsed = false, animRaf = null, curT = 0;
+
+  /* the whole picture over the pieces: on only when they sit closed and still */
+  function seam(on){ if(sheet) sheet.classList.toggle("tb-settled", on); }
 
   function place(t){
     curT = t;
     var e = t < 0.5 ? 4*t*t*t : 1 - Math.pow(-2*t + 2, 3)/2; /* easeInOutCubic */
     rows.forEach(function(row){
-      row.rects.forEach(function(o){
-        o.el.setAttribute("x", String(o.from + (o.to - o.from) * e));
+      row.pieces.forEach(function(o){
+        o.el.style.left = ((1 - e) * o.from + e * o.to) + "%";
       });
     });
   }
 
   function animate(to){
     if(animRaf) window.cancelAnimationFrame(animRaf);
-    if(reduce){ place(to); return; }
+    seam(false);
+    if(reduce){ place(to); seam(to === 1); return; }
     var from = curT, span = to - from;
-    if(span === 0) return;
+    if(span === 0){ seam(to === 1); return; }
     var began = performance.now(), ms = 950 * Math.abs(span);
     (function frame(now){
       var p = Math.min(1, (now - began)/ms);
-      place(from + span * p);
+      place(p < 1 ? from + span * p : to);
       if(p < 1) animRaf = window.requestAnimationFrame(frame);
+      else seam(to === 1);
     })(began);
   }
 
