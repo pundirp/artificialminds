@@ -1,10 +1,10 @@
 {
-  "generated": "2026-11-01T06:16:35Z",
+  "generated": "2026-11-01T17:56:47Z",
   "totals": {
-    "views_all": 86,
-    "visitors_all": 86,
-    "views_30d": 69,
-    "visitors_30d": 69
+    "views_all": 88,
+    "visitors_all": 88,
+    "views_30d": 71,
+    "visitors_30d": 71
   },
   "daily": [
     {
@@ -454,8 +454,8 @@
     },
     {
       "day": "2026-11-01",
-      "views": 0,
-      "visitors": 0
+      "views": 2,
+      "visitors": 2
     }
   ],
   "monthly": [
@@ -468,6 +468,11 @@
       "month": "2026-10",
       "views": 70,
       "visitors": 70
+    },
+    {
+      "month": "2026-11",
+      "views": 2,
+      "visitors": 2
     }
   ],
   "projects": [
@@ -538,17 +543,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 35,
-      "visitors_all": 35,
-      "views_30d": 29,
-      "visitors_30d": 29
+      "views_all": 36,
+      "visitors_all": 36,
+      "views_30d": 30,
+      "visitors_30d": 30
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 35,
-      "visitors_all": 35
+      "views_all": 36,
+      "visitors_all": 36
     },
     {
       "path": "/stillpoint/collection.html",
@@ -631,6 +636,11 @@
       "visitors_all": 1
     },
     {
+      "path": "/site-map/site-map.html",
+      "views_all": 1,
+      "visitors_all": 1
+    },
+    {
       "path": "/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html",
       "views_all": 1,
       "visitors_all": 1
@@ -639,7 +649,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 61
+      "visitors": 63
     },
     {
       "name": "France",
@@ -665,7 +675,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 49
+      "visitors": 51
     },
     {
       "name": "Safari",
@@ -679,7 +689,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 48
+      "visitors": 50
     },
     {
       "name": "Windows",
@@ -705,7 +715,7 @@
     },
     {
       "name": "Large screen",
-      "visitors": 10
+      "visitors": 12
     },
     {
       "name": "Phone",
@@ -723,7 +733,7 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 43
+      "visitors": 45
     },
     {
       "name": "pundirp.github.io",
