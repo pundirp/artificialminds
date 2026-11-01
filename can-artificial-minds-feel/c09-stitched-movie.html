@@ -60,12 +60,12 @@
     --note-paper: #ffffff;   /* the paper under each quote frame is opaque white, whatever the ground */
     --note-shadow: rgba(17, 17, 17, .18);   /* the small shadow under each quote frame */
 
-    /* inks used only inside the dark plates */
-    --plate:#1e1710;
-    --plate-ink:#efe8d8;
-    --plate-dim:#cabda2;
-    --plate-faint:#a2937a;
-    --plate-rule:#443729;
+    /* the time-bar figure in section IV, in grey scale (round 41, option 2: on the page) */
+    --tb-run:#ffffff;       /* a block of running time */
+    --tb-outline:#555555;   /* the outline of each bar's track: dark and thin */
+    --tb-hatch:#9a9a9a;     /* the pencil hatching in the gaps: clock time with nothing seen */
+    --tb-label:#5c5c5c;     /* the label above each bar */
+    --tb-cap:#3a3a3a;       /* the caption under each bar */
 
     /* the block */
     --measure:34rem;
@@ -304,6 +304,12 @@
     border-radius:0;
   }
   .frame svg{display:block;width:100%;height:auto;border-radius:0}
+  /* the flicker room: Astra's ink drawing on the page's cream. The picture fills its box,
+     so this box has no padding and the same cream as the page. The blank is that cream too,
+     and the ring is the rubric red. */
+  .frame.scene-frame{padding:0;background:var(--paper)}
+  #scene .paper{fill:var(--paper)}
+  #scene .ring{fill:none;stroke:var(--rubric)}
   figcaption{
     margin-top:.9rem;
     color:var(--ink-soft);
@@ -361,18 +367,53 @@
   .try .label{color:var(--rubric);margin-bottom:.55rem;display:block}
   .try p{font-size:.98rem;margin:0 0 .8rem}
 
-  /* ---- collapse diagram, a dark plate set into the leaf ---- */
-  .rows{margin:0;background:var(--plate);padding:1.15rem 1.05rem .95rem}
+  /* ---- the time-bar figure in section IV (round 41, option 2: straight on the page) ----
+     No panel. The frame for this figure has no fill, no rule and no padding, so the rows sit on the
+     page's own paper, in line with the text. Each bar is a track with a dark thin outline: the whole
+     span of clock time. Running time is a white block inside the track. The gaps show the page's paper,
+     hatched like a pencil shading: clock time with nothing seen. The hatching stops 1px short of the
+     outline on every side, so a block edge that lands half a pixel off never shows a sliver of hatching. When the gaps close, the white blocks join at the
+     left and all the hatching gathers at the right end of the track. */
+  .frame.tb-frame{background:none;border:0;padding:0}
+  .rows{margin:0;background:none;padding:.35rem 0 0}
+  .bar{display:block;width:100%;height:30px}
+  .bar .gapline{fill:none}
   .row{margin:0 0 1.4rem}
   .row:last-child{margin-bottom:.2rem}
-  .row .label{color:var(--plate-faint);margin-bottom:.4rem;display:block}
-  .bar{display:block;width:100%;height:30px}
+  .row .label{color:var(--tb-label);margin-bottom:.4rem;display:block}
   .rowcap{
     font-size:.84rem;
-    color:var(--plate-dim);
+    color:var(--tb-cap);
     margin:.42rem 0 0;
     line-height:1.5;
     min-height:1.35rem;
+  }
+  /* each running block has its own colour and no outline. crispEdges puts every edge on a whole
+     pixel, so blocks that meet after the gaps close show no faint seam where they join */
+  .bar .run{fill:var(--tb-run);shape-rendering:crispEdges}
+  .rows{position:relative;z-index:0}
+  .ink-time-label{position:relative}
+  .ink-time-label::before,
+  .ink-time-label::after{
+    content:"";
+    position:absolute;
+    top:100%;
+    left:-1px;
+    right:-1px;
+    margin-top:calc(.4rem + 1.25% - 1px);
+    height:0;
+    padding-top:2.857%;
+    border:1px solid transparent;
+    pointer-events:none;
+  }
+  .ink-time-label::after{
+    z-index:-1;
+    background:
+      repeating-linear-gradient(-45deg,var(--tb-hatch) 0 1px,transparent 1px 4px) 50% 50% / calc(100% - 2px) calc(100% - 2px) no-repeat;
+  }
+  .ink-time-label::before{
+    z-index:1;
+    border-color:var(--tb-outline);
   }
 
   /* ---- meter ---- */
@@ -499,6 +540,30 @@
   .said.testimony .prov::before{ background: var(--ink-ghost); }
   .said.testimony .sc{ font-variant: normal; letter-spacing: inherit; }
   @media (max-width: 600px) { .said.testimony { --orn: 24px; } }
+
+  /* ===== Pencil icons by Astra, added 29 October 2026 =====
+     Section IV, the three rows of the time-bar figure (#bar1, #bar2, #bar3): a small pencil-and-ink picture
+     (ink-11-seeing.jpg, ink-12-sleep.jpg, ink-13-conversation.jpg) sits to the left of each row's
+     label. The label keeps its text and still wraps on a narrow phone. The wrapper takes the bottom margin
+     that ".row .label" had (.4rem), so the space above each bar is the same as before, and the label
+     itself carries no margin. The bars, their ids, viewBoxes, captions and the script are untouched. */
+  .ink-time-label{
+    display:flex;
+    align-items:flex-end;
+    gap:10px;
+    margin-bottom:.4rem;
+  }
+  .ink-time-label img{
+    width:44px;
+    height:44px;
+    flex:none;
+    object-fit:contain;
+  }
+  .ink-time-label .label{margin:0}
+  @media (max-width:430px){
+    .ink-time-label{gap:8px}
+    .ink-time-label img{width:36px;height:36px}
+  }
 </style>
 </head>
 <body>
@@ -536,109 +601,46 @@
   <p>Two pictures of the same room, with one thing different. Press start; they alternate, with a blank frame in between. Take as long as you like.</p>
 
   <figure>
-    <div class="frame">
-      <svg id="scene" viewBox="0 0 640 400" role="img" aria-label="A dark room at night: a bookcase, a framed picture, a window with stars, a desk with a lamp.">
+    <div class="frame scene-frame">
+      <svg id="scene" viewBox="0 0 640 409.212" role="img" aria-label="A room at night: a bookcase, a framed picture, a window with stars, a desk with a lamp.">
         <title>A room at night</title>
-        <defs>
-          <radialGradient id="glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%" stop-color="#e8d3a4" stop-opacity=".26"/>
-            <stop offset="55%" stop-color="#e8d3a4" stop-opacity=".09"/>
-            <stop offset="100%" stop-color="#e8d3a4" stop-opacity="0"/>
-          </radialGradient>
-          <g id="books">
-            <rect x="58" y="-42" width="12" height="42" fill="#806c50"/>
-            <rect x="72" y="-38" width="10" height="38" fill="#5f4f38"/>
-            <rect x="84" y="-44" width="14" height="44" fill="#97815f"/>
-            <rect x="100" y="-34" width="9" height="34" fill="#5f4f38"/>
-            <rect x="111" y="-41" width="13" height="41" fill="#806c50"/>
-            <rect x="126" y="-36" width="11" height="36" fill="#97815f"/>
-            <rect x="139" y="-43" width="15" height="43" fill="#5f4f38"/>
-            <rect x="156" y="-39" width="10" height="39" fill="#806c50"/>
-            <rect x="168" y="-33" width="12" height="33" fill="#97815f"/>
-            <rect x="182" y="-42" width="14" height="42" fill="#5f4f38"/>
-            <rect x="198" y="-37" width="9" height="37" fill="#806c50"/>
-            <rect x="209" y="-40" width="13" height="40" fill="#6b5a41"/>
-            <rect x="224" y="-35" width="8" height="35" fill="#97815f"/>
-          </g>
-          <g id="room">
-            <rect x="0" y="0" width="640" height="400" fill="#211a12"/>
-            <rect x="0" y="318" width="640" height="82" fill="#17110a"/>
-            <rect x="0" y="317" width="640" height="1" fill="#382d1f"/>
-            <ellipse cx="316" cy="366" rx="196" ry="24" fill="#241c14"/>
-            <rect x="352" y="42" width="232" height="196" fill="#100b06"/>
-            <circle cx="540" cy="80" r="13" fill="#e8dcc0" opacity=".5"/>
-            <circle cx="390" cy="72" r="1.4" fill="#ebe5d6" opacity=".6"/>
-            <circle cx="430" cy="95" r="1" fill="#ebe5d6" opacity=".45"/>
-            <circle cx="505" cy="68" r="1.6" fill="#ebe5d6" opacity=".55"/>
-            <circle cx="556" cy="112" r="1.2" fill="#ebe5d6" opacity=".5"/>
-            <circle cx="410" cy="180" r="1.1" fill="#ebe5d6" opacity=".42"/>
-            <circle cx="540" cy="196" r="1.4" fill="#ebe5d6" opacity=".5"/>
-            <circle cx="496" cy="152" r="1" fill="#ebe5d6" opacity=".4"/>
-            <rect x="352" y="42" width="232" height="196" fill="none" stroke="#806c50" stroke-width="3"/>
-            <rect x="466" y="42" width="3" height="196" fill="#806c50"/>
-            <rect x="352" y="124" width="232" height="3" fill="#806c50"/>
-            <rect x="340" y="238" width="256" height="9" fill="#382d1f"/>
-            <rect x="272" y="100" width="54" height="70" fill="#241d15" stroke="#806c50" stroke-width="2"/>
-            <rect x="281" y="109" width="36" height="52" fill="none" stroke="#4a3c2a" stroke-width="1"/>
-            <ellipse cx="562" cy="256" rx="52" ry="22" fill="url(#glow)"/>
-            <rect x="330" y="272" width="270" height="8" fill="#382d1f"/>
-            <rect x="340" y="280" width="6" height="38" fill="#2b2318"/>
-            <rect x="584" y="280" width="6" height="38" fill="#2b2318"/>
-            <rect x="548" y="264" width="28" height="8" fill="#382d1f"/>
-            <rect x="560" y="228" width="3" height="36" fill="#806c50"/>
-            <path d="M542 228 L582 228 L572 208 L552 208 Z" fill="#33281a" stroke="#806c50" stroke-width="1.5"/>
-            <rect x="352" y="258" width="10" height="14" fill="#806c50"/>
-            <rect x="364" y="262" width="8" height="10" fill="#97815f"/>
-            <rect x="374" y="256" width="12" height="16" fill="#5f4f38"/>
-          </g>
-        </defs>
 
-        <!-- variant A: the tall bookcase -->
+        <!-- the room and the three-row bookcase, drawn by Astra in ink and joined with the
+             cream page colour into one picture (room-base.jpg, 1584 by 1013 pixels): the same
+             picture at the same place in every state, so nothing outside the ring changes.
+             The picture has 8 more units of cream below the room than the drawing, which leaves
+             the same margin below the rug as on its sides. -->
+        <g id="room">
+          <rect class="paper" x="0" y="0" width="640" height="409.212"/>
+          <image href="room-base.jpg" x="0" y="0" width="640" height="409.212" preserveAspectRatio="none"/>
+        </g>
+
+        <!-- variant A: the top row of the bookcase, standing on the cabinet's top board. The
+             picture is the part of the finished scene that holds the top row, cut out with a few
+             pixels of margin, and it sits inside the ring. Everything else is room-base.jpg. -->
         <g id="varA">
-          <use href="#room"/>
-          <rect x="48" y="96" width="8" height="222" fill="#4a3c2a"/>
-          <rect x="236" y="96" width="8" height="222" fill="#4a3c2a"/>
-          <rect x="48" y="96" width="196" height="8" fill="#56462f"/>
-          <rect x="48" y="150" width="196" height="6" fill="#4a3c2a"/>
-          <rect x="48" y="204" width="196" height="6" fill="#4a3c2a"/>
-          <rect x="48" y="258" width="196" height="6" fill="#4a3c2a"/>
-          <rect x="48" y="312" width="196" height="6" fill="#4a3c2a"/>
-          <use href="#books" y="150"/>
-          <use href="#books" y="204"/>
-          <use href="#books" y="258"/>
-          <use href="#books" y="312"/>
+          <image href="room-top-row.jpg" x="25.8586" y="71.0971" width="219.7980" height="64.6337" preserveAspectRatio="none"/>
         </g>
 
-        <!-- variant B: same room, one shelf shorter -->
-        <g id="varB" style="visibility:hidden">
-          <use href="#room"/>
-          <rect x="48" y="150" width="8" height="168" fill="#4a3c2a"/>
-          <rect x="236" y="150" width="8" height="168" fill="#4a3c2a"/>
-          <rect x="48" y="150" width="196" height="8" fill="#56462f"/>
-          <rect x="48" y="204" width="196" height="6" fill="#4a3c2a"/>
-          <rect x="48" y="258" width="196" height="6" fill="#4a3c2a"/>
-          <rect x="48" y="312" width="196" height="6" fill="#4a3c2a"/>
-          <use href="#books" y="204"/>
-          <use href="#books" y="258"/>
-          <use href="#books" y="312"/>
-        </g>
+        <!-- variant B: nothing added, so the bookcase has three rows -->
+        <g id="varB" style="visibility:hidden"></g>
 
-        <rect id="blank" x="0" y="0" width="640" height="400" fill="#1a140d" style="visibility:hidden"/>
+        <rect id="blank" class="paper" x="0" y="0" width="640" height="409.212" style="visibility:hidden"/>
 
         <g id="mark" style="visibility:hidden">
-          <rect x="40" y="88" width="212" height="72" fill="none" stroke="#c2563c" stroke-width="2" rx="2"/>
+          <rect class="ring" x="23.5" y="68" width="223.7" height="69" stroke-width="2" rx="2"/>
         </g>
       </svg>
     </div>
 
     <div class="controls">
-      <button id="fStart" type="button">Start the flicker</button>
+      <button id="fStart" type="button" disabled aria-disabled="true">Start the flicker</button>
       <button id="fPause" type="button" hidden>Pause</button>
       <button id="fPlain" type="button" hidden>Swap with no blank</button>
       <button id="fShow" type="button" hidden aria-pressed="false">Show the change</button>
       <span class="status" id="fTimer" aria-live="off"></span>
     </div>
-    <p class="warn">The pictures alternate a little over once a second. Nothing sudden or bright.</p>
+    <p class="warn">The pictures alternate a little under once a second, with a plain page between them.</p>
     <noscript>This demonstration needs JavaScript. The picture above is one of the two versions.</noscript>
 
     <figcaption id="fCap" hidden>
@@ -682,20 +684,29 @@
   <p>Three stretches of clock time: ten seconds of looking around a room, two days with a night in the middle, ten minutes of a conversation with an artificial mind. The pale blocks are when something was running. Press the button to close the gaps.</p>
 
   <figure>
-    <div class="frame" style="padding:1.1rem .9rem .9rem">
+    <div class="frame tb-frame">
       <div class="rows">
         <div class="row">
-          <p class="label">Ten seconds of looking</p>
+          <div class="ink-time-label">
+            <img src="ink-11-seeing.jpg" width="144" height="144" alt="" aria-hidden="true" draggable="false">
+            <p class="label">Ten seconds of looking</p>
+          </div>
           <svg class="bar" id="bar1" viewBox="0 0 560 30" preserveAspectRatio="none" role="img" aria-label="Ten seconds of looking, broken into fixations separated by suppressed eye movements."></svg>
           <p class="rowcap" id="cap1">Thirty eye movements. About two and a quarter seconds not seen.</p>
         </div>
         <div class="row">
-          <p class="label">Two days</p>
+          <div class="ink-time-label">
+            <img src="ink-12-sleep.jpg" width="144" height="144" alt="" aria-hidden="true" draggable="false">
+            <p class="label">Two days</p>
+          </div>
           <svg class="bar" id="bar2" viewBox="0 0 560 30" preserveAspectRatio="none" role="img" aria-label="Two waking days separated by one night."></svg>
           <p class="rowcap" id="cap2">Sixteen hours awake, eight hours of sleep, sixteen hours awake.</p>
         </div>
         <div class="row">
-          <p class="label">Ten minutes of a conversation</p>
+          <div class="ink-time-label">
+            <img src="ink-13-conversation.jpg" width="144" height="144" alt="" aria-hidden="true" draggable="false">
+            <p class="label">Ten minutes of a conversation</p>
+          </div>
           <svg class="bar" id="bar3" viewBox="0 0 560 30" preserveAspectRatio="none" role="img" aria-label="Eight generations separated by long spans in which nothing runs."></svg>
           <p class="rowcap" id="cap3">Eight generations. Between them, nothing running.</p>
         </div>
@@ -784,8 +795,8 @@
       timerEl = document.getElementById("fTimer"),
       cap = document.getElementById("fCap");
 
-  var WITH_BLANK = [["A",300],["blank",100],["B",300],["blank",100]];
-  var NO_BLANK   = [["A",520],["B",520]];
+  var WITH_BLANK = [["A",400],["blank",150],["B",400],["blank",150]];
+  var NO_BLANK   = [["A",650],["B",650]];
 
   /* The whole demonstration is five flags. Every button changes one flag and
      then the controls are drawn from the flags, so no label can get stuck. */
@@ -890,6 +901,46 @@
   show("A");
   render();
 
+  /* Start waits for the two room pictures (room-base.jpg and room-top-row.jpg). The button
+     stays disabled until each one has loaded and decoded. If a picture fails to load, or
+     the wait runs past 15 seconds, the button is enabled anyway so the page never sticks.
+     After one second of waiting the button says so. */
+  var pics = Array.prototype.map.call(document.querySelectorAll("#scene image"), function(el){
+        return el.getAttribute("href");
+      }),
+      held = [], pending = pics.length, startReady = false, labelTimer = null, giveUpTimer = null;
+
+  function startOk(){
+    if(startReady) return;
+    startReady = true;
+    window.clearTimeout(labelTimer);
+    window.clearTimeout(giveUpTimer);
+    bStart.disabled = false;
+    bStart.removeAttribute("aria-disabled");
+    bStart.textContent = "Start the flicker";
+  }
+
+  function settled(){
+    pending -= 1;
+    if(pending <= 0) startOk();
+  }
+
+  labelTimer = window.setTimeout(function(){
+    if(!startReady) bStart.textContent = "Loading the pictures";
+  }, 1000);
+  giveUpTimer = window.setTimeout(startOk, 15000);
+
+  pics.forEach(function(url){
+    var im = new Image();
+    held.push(im);
+    im.onload = function(){
+      if(im.decode){ im.decode().then(settled, settled); } else { settled(); }
+    };
+    im.onerror = settled;
+    im.src = url;
+  });
+  if(!pics.length) startOk();
+
   /* ------------------------------------------------------------------
      2. Live estimate of unseen time in this experiment
      ------------------------------------------------------------------ */
@@ -980,7 +1031,7 @@
     base.setAttribute("y", String(BAR_Y + BAR_H/2 - 0.5));
     base.setAttribute("width", String(W));
     base.setAttribute("height", "1");
-    base.setAttribute("fill", "#443729");
+    base.setAttribute("class", "gapline");   /* its colour comes from the CSS, .bar .gapline */
     svg.appendChild(base);
 
     var run = 0;
@@ -988,7 +1039,7 @@
       var r = document.createElementNS(NS, "rect");
       r.setAttribute("y", String(BAR_Y));
       r.setAttribute("height", String(BAR_H));
-      r.setAttribute("fill", "#cabda2");
+      r.setAttribute("class", "run");   /* its colour comes from the CSS, .bar .run */
       r.setAttribute("width", String(s.w/100 * W));
       r.setAttribute("x", String(s.x/100 * W));
       svg.appendChild(r);
