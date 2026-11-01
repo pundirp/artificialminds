@@ -569,6 +569,19 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   background: radial-gradient(ellipse at center, var(--lamp-cast) 0%, var(--lamp-cast-mid) 45%, var(--lamp-cast-out) 80%);
 }
 
+/* while the lamp is out the window goes as dark as the others (round 30 of
+   A Salon of Witnesses). The pane is a copy of the lit window with its glass
+   darkened to the other windows' tone. The script places it on the glass and
+   runs it on the lamp's count, the other way round. */
+.cardfx-lamp-pane {
+  position: absolute;
+  display: block;
+  margin: 0;
+  padding: 0;
+  background: url("img/home/16-aldous-finch-manor-window-dark.webp") 0 0 / 100% 100% no-repeat;
+  opacity: 0;
+}
+
 /* the water: a window on the reflection, a sheet that carries the filter, and a
    copy of the picture inside it */
 .cardfx-ripple {
@@ -906,6 +919,14 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   45% { opacity: 0; animation-timing-function: ease-in-out; }
   55% { opacity: 0; animation-timing-function: ease-in-out; }
   100% { opacity: 1; }
+}
+
+/* the dark pane over the lit window: in while the lamp is out */
+@keyframes cardfx-lamp-dark {
+  0% { opacity: 0; animation-timing-function: ease-in-out; }
+  45% { opacity: 1; animation-timing-function: ease-in-out; }
+  55% { opacity: 1; animation-timing-function: ease-in-out; }
+  100% { opacity: 0; }
 }
 
 /* one bead of the pulse on card 7 */
@@ -2044,12 +2065,21 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
   /* ---------- card 6: the manor lamp ---------- */
 
   var LAMP = { x: 58.56, y: 73.95, castY: 77.55 };      // the pane and the snow under it, re-measured on the new picture
+  var DARK = { x: 57.776, y: 72.31, w: 1.597, h: 3.323 }; // the lit window's glass, with one pixel of frame round it
 
   /* The live home page's lamp: a halo, the pane's glow and the light on the snow,
      one breath of 4.444 s, ease-in-out, lit at the ends, out from 45 to 55
-     percent of the count. Sizes and colours are in cardfx.css. */
+     percent of the count. Sizes and colours are in cardfx.css. While the lamp
+     is out, a darkened copy of the window covers the glass, so the window goes
+     as dark as the others. */
   function card6(c) {
     var layer = c.layer('cardfx-lamp');
+    var pane = el('i', 'cardfx-lamp-pane');
+    pane.style.left = pct(DARK.x);
+    pane.style.top = pct(DARK.y);
+    pane.style.width = pct(DARK.w);
+    pane.style.height = pct(DARK.h);
+    layer.appendChild(pane);
     var group = el('div', 'cardfx-group');
     layer.appendChild(group);
     var halo = el('i', 'cardfx-lamp-halo');
@@ -2064,6 +2094,7 @@ html.js .col.is-leaving .c-text{transition:opacity .2s var(--change) .14s}
     group.appendChild(cast);
     if (c.reduced) return;                    // the live page leaves the lamp lit, full strength
     c.cycle(group, 'cardfx-lamp', 4.444, 0, 'ease-in-out');
+    c.cycle(pane, 'cardfx-lamp-dark', 4.444, 0, 'ease-in-out');
   }
 
   /* ---------- card 7: the bookcase thread ---------- */
