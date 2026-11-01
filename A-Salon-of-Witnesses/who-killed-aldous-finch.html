@@ -196,10 +196,12 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 /* while the lamp is out the window goes as dark as the others (round 30).
    The pane is a copy of the lit window with its glass darkened to the
    other windows' tone. It fades in as the lamp fades out, on the same
-   count, and covers the glass from 57.78% across and 72.31% down the
-   drawing. */
+   count. It covers the glass and eight pixels of the drawing round it,
+   from 57.535% across and 71.835% down. The margin hides the yellow that
+   the smaller copies of the drawing blur past the glass, and the
+   rounding of the pane's edge to whole screen pixels. */
 .pane{
-  position:absolute;left:57.776%;top:72.31%;width:1.597%;height:3.323%;z-index:1;pointer-events:none;
+  position:absolute;left:57.535%;top:71.835%;width:2.08%;height:4.272%;z-index:1;pointer-events:none;
   background:url("../img/home/16-aldous-finch-manor-window-dark.webp") 0 0 / 100% 100% no-repeat;
   opacity:0;animation:panedark 4.444s ease-in-out infinite;
 }
