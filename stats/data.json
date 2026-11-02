@@ -1,17 +1,12 @@
 {
-  "generated": "2026-11-01T17:56:47Z",
+  "generated": "2026-11-02T06:17:58Z",
   "totals": {
-    "views_all": 88,
-    "visitors_all": 88,
+    "views_all": 89,
+    "visitors_all": 89,
     "views_30d": 71,
     "visitors_30d": 71
   },
   "daily": [
-    {
-      "day": "2026-08-04",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-05",
       "views": 0,
@@ -454,8 +449,13 @@
     },
     {
       "day": "2026-11-01",
-      "views": 2,
-      "visitors": 2
+      "views": 3,
+      "visitors": 3
+    },
+    {
+      "day": "2026-11-02",
+      "views": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -471,8 +471,8 @@
     },
     {
       "month": "2026-11",
-      "views": 2,
-      "visitors": 2
+      "views": 3,
+      "visitors": 3
     }
   ],
   "projects": [
@@ -503,10 +503,10 @@
     {
       "id": "did-ai-write-this",
       "name": "Did AI Write This?",
-      "views_all": 5,
-      "visitors_all": 5,
-      "views_30d": 5,
-      "visitors_30d": 5
+      "views_all": 6,
+      "visitors_all": 6,
+      "views_30d": 6,
+      "visitors_30d": 6
     },
     {
       "id": "artificial-mind-of-your-own",
@@ -545,8 +545,8 @@
       "name": "Home",
       "views_all": 36,
       "visitors_all": 36,
-      "views_30d": 30,
-      "visitors_30d": 30
+      "views_30d": 29,
+      "visitors_30d": 29
     }
   ],
   "pages": [
@@ -571,12 +571,12 @@
       "visitors_all": 7
     },
     {
-      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
-      "views_all": 5,
-      "visitors_all": 5
+      "path": "/did-ai-write-this/did-ai-write-this.html",
+      "views_all": 6,
+      "visitors_all": 6
     },
     {
-      "path": "/did-ai-write-this/did-ai-write-this.html",
+      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
       "views_all": 5,
       "visitors_all": 5
     },
@@ -649,7 +649,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 63
+      "visitors": 64
     },
     {
       "name": "France",
@@ -679,7 +679,7 @@
     },
     {
       "name": "Safari",
-      "visitors": 18
+      "visitors": 19
     },
     {
       "name": "Firefox",
@@ -697,7 +697,7 @@
     },
     {
       "name": "iOS",
-      "visitors": 5
+      "visitors": 6
     },
     {
       "name": "Android",
@@ -719,7 +719,7 @@
     },
     {
       "name": "Phone",
-      "visitors": 7
+      "visitors": 8
     },
     {
       "name": "Tablet",
@@ -733,7 +733,7 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 45
+      "visitors": 44
     },
     {
       "name": "pundirp.github.io",
@@ -752,16 +752,16 @@
       "visitors": 3
     },
     {
+      "name": "chatgpt.com",
+      "visitors": 2
+    },
+    {
       "name": "pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html",
       "visitors": 2
     },
     {
       "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
       "visitors": 2
-    },
-    {
-      "name": "chatgpt.com",
-      "visitors": 1
     },
     {
       "name": "github.com/pundirp/artificialminds/deployments/github-pages",
