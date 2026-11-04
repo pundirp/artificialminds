@@ -1,17 +1,12 @@
 {
-  "generated": "2026-11-03T19:33:42Z",
+  "generated": "2026-11-04T06:35:51Z",
   "totals": {
-    "views_all": 103,
-    "visitors_all": 103,
-    "views_30d": 85,
-    "visitors_30d": 85
+    "views_all": 108,
+    "visitors_all": 108,
+    "views_30d": 90,
+    "visitors_30d": 90
   },
   "daily": [
-    {
-      "day": "2026-08-06",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-07",
       "views": 0,
@@ -454,8 +449,13 @@
     },
     {
       "day": "2026-11-03",
-      "views": 2,
-      "visitors": 2
+      "views": 7,
+      "visitors": 7
+    },
+    {
+      "day": "2026-11-04",
+      "views": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -471,8 +471,8 @@
     },
     {
       "month": "2026-11",
-      "views": 17,
-      "visitors": 17
+      "views": 22,
+      "visitors": 22
     }
   ],
   "projects": [
@@ -487,18 +487,18 @@
     {
       "id": "can-artificial-minds-feel",
       "name": "Can Artificial Minds Feel?",
-      "views_all": 14,
-      "visitors_all": 14,
-      "views_30d": 12,
-      "visitors_30d": 12
+      "views_all": 17,
+      "visitors_all": 17,
+      "views_30d": 15,
+      "visitors_30d": 15
     },
     {
       "id": "why-so-much-data",
       "name": "Who Learns Faster, a Toddler or a Chatbot?",
-      "views_all": 3,
-      "visitors_all": 3,
-      "views_30d": 3,
-      "visitors_30d": 3
+      "views_all": 4,
+      "visitors_all": 4,
+      "views_30d": 4,
+      "visitors_30d": 4
     },
     {
       "id": "did-ai-write-this",
@@ -535,10 +535,10 @@
     {
       "id": "feeding-an-ai-agent-the-facts",
       "name": "Feeding an AI Agent the Facts",
-      "views_all": 2,
-      "visitors_all": 2,
-      "views_30d": 2,
-      "visitors_30d": 2
+      "views_all": 3,
+      "visitors_all": 3,
+      "views_30d": 3,
+      "visitors_30d": 3
     },
     {
       "id": "home",
@@ -571,19 +571,29 @@
       "visitors_all": 9
     },
     {
+      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
+      "views_all": 8,
+      "visitors_all": 8
+    },
+    {
       "path": "/did-ai-write-this/did-ai-write-this.html",
       "views_all": 7,
       "visitors_all": 7
     },
     {
-      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
-      "views_all": 6,
-      "visitors_all": 6
-    },
-    {
       "path": "/A-Salon-of-Witnesses/who-killed-aldous-finch.html",
       "views_all": 4,
       "visitors_all": 4
+    },
+    {
+      "path": "/can-artificial-minds-feel/c05-grammar-trap.html",
+      "views_all": 3,
+      "visitors_all": 3
+    },
+    {
+      "path": "/feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html",
+      "views_all": 3,
+      "visitors_all": 3
     },
     {
       "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
@@ -601,17 +611,12 @@
       "visitors_all": 2
     },
     {
-      "path": "/can-artificial-minds-feel/c05-grammar-trap.html",
-      "views_all": 2,
-      "visitors_all": 2
-    },
-    {
       "path": "/can-artificial-minds-feel/c08-where-light-begins.html",
       "views_all": 2,
       "visitors_all": 2
     },
     {
-      "path": "/feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html",
+      "path": "/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html",
       "views_all": 2,
       "visitors_all": 2
     },
@@ -639,17 +644,12 @@
       "path": "/site-map/site-map.html",
       "views_all": 1,
       "visitors_all": 1
-    },
-    {
-      "path": "/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html",
-      "views_all": 1,
-      "visitors_all": 1
     }
   ],
   "countries": [
     {
       "name": "United States",
-      "visitors": 68
+      "visitors": 73
     },
     {
       "name": "United Kingdom",
@@ -679,7 +679,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 65
+      "visitors": 70
     },
     {
       "name": "Safari",
@@ -693,7 +693,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 50
+      "visitors": 55
     },
     {
       "name": "Windows",
@@ -719,7 +719,7 @@
     },
     {
       "name": "Large screen",
-      "visitors": 15
+      "visitors": 20
     },
     {
       "name": "Phone",
@@ -737,7 +737,7 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 45
+      "visitors": 50
     },
     {
       "name": "pundirp.github.io",
