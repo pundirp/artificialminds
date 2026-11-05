@@ -83,9 +83,9 @@ the researchers who work on each, and what three AI leaders say about continual 
 Search words: why does AI need so much data, sample efficiency, how children learn language,
 in-context learning, context window, continual learning, catastrophic forgetting.
 
-### 4. Did AI Write This?
+### 4. A Likely Story
 
-https://pundirp.github.io/artificialminds/did-ai-write-this/did-ai-write-this.html
+https://pundirp.github.io/artificialminds/did-ai-write-this/a-likely-story.html
 
 Two passages about waiting out a storm in a tent, one from a 1922 book and one written by a
 model for this essay. Pick the machine's, then read what the three kinds of evidence can and
