@@ -517,6 +517,11 @@ html.rm .sitemap-label{transition:none}
   --phone-halo-35: rgba(255, 255, 255, 0.35);
   --phone-halo-85: rgba(255, 255, 255, 0.85);
 
+  /* card 7: the pale yellow inside the lit lamp shade, red green blue. It is
+     the fisherman's bulb yellow (255 208 20, A Salon of Witnesses) at 45
+     percent on white paper. */
+  --bulb-glass: 255 234 149;
+
   /* card 2: the typing bubble over the phone. A soft white fill with no outline,
      and mid grey dots. */
   --bubble-fill: #ffffff;
@@ -1024,6 +1029,68 @@ html.rm .sitemap-label{transition:none}
   0% { opacity: 0; animation-timing-function: ease-in-out; }
   50% { opacity: 0.5; animation-timing-function: ease-in-out; }
   100% { opacity: 0; }
+}
+
+/* card 7: the reader's foot and the lamp (canon books, round 11). Three
+   pictures the size of the drawing lie on it: the patch, the foot and the cuff.
+   The script turns the foot about the ankle. The lamp is a small box of pale
+   yellow under a white cover that is clear over the white inside the
+   shade. The group is multiplied onto the drawing, so the white cover changes
+   nothing and only the opening turns yellow, while the pencil rim stays dark.
+   Only the group's opacity changes: 0 to 1 in 2 s and back, ease-in-out, with
+   no pause, as on the fisherman's bulb. With reduced motion the lamp stays lit
+   and still. Without mix-blend-mode the lamp is off and stays white. */
+.cardfx-reader img {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 0;
+}
+
+.cardfx-reader-lamp {
+  position: absolute;
+  display: block;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  isolation: isolate;
+  mix-blend-mode: multiply;
+  animation: cardfx-bulb 2s ease-in-out infinite alternate;
+}
+
+.cardfx-reader-lamp-glass {
+  position: absolute;
+  display: block;
+  background: rgb(var(--bulb-glass));
+}
+
+.cardfx-reader-lamp-still {
+  animation: none;
+  opacity: 1;
+}
+
+@supports not (mix-blend-mode: multiply) {
+  .cardfx-reader-lamp {
+    display: none;
+  }
+}
+
+/* the lamp in the reader drawing glowing on and off */
+@keyframes cardfx-bulb {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .cardfx-reader-lamp {
+    animation: none;
+    opacity: 1;
+  }
 }
 
 /* a layer on a hidden tab or off screen holds every cycle inside it */
@@ -2241,7 +2308,11 @@ html.rm .sitemap-label{transition:none}
     c.cycle(pane, 'cardfx-lamp-dark', 4.444, 0, 'ease-in-out');
   }
 
-  /* ---------- card 7: the bookcase thread ---------- */
+  /* ---------- the bookcase thread: card 7 until canon books round 11 ---------- */
+
+  /* No card uses this now. It stays, with CASE_NODES, WAKE, AR_CASE, makeLight,
+     the .cardfx-light rules and @keyframes cardfx-bead, so the thread can come
+     back if the bookcase drawing does. */
 
   /* id, x, y, diameter of the drawn node, all percent of the picture width.
      Order of the wake follows the old page: the middle shelf left to right, the
@@ -2258,7 +2329,7 @@ html.rm .sitemap-label{transition:none}
   var WAKE = 8;       // seconds for the glow to go once round the thread
   var AR_CASE = 1580 / 996;
 
-  function card7(c) {
+  function bookcaseThread(c) {
     var layer = c.layer('cardfx-thread');
     var step = WAKE / CASE_NODES.length;
     for (var i = 0; i < CASE_NODES.length; i++) {
@@ -2273,6 +2344,117 @@ html.rm .sitemap-label{transition:none}
         c.cycle(light, 'cardfx-bead', WAKE, -step * i);
       }
     }
+  }
+
+  /* ---------- card 7: the reader's foot and the lamp ---------- */
+
+  /* Canon books, round 11. Her crossed foot swings about the ankle, and the
+     white inside the lamp shade turns yellow and back. The foot is three
+     pictures laid on the drawing: the patch (the paper and the chair behind the
+     foot, drawn back in), the foot, which turns about the ankle, and the cuff,
+     which the sock slides under. At rest the three show the drawing exactly as
+     it is. The lamp is a small yellow box under a white cover that is clear
+     over the opening; the stylesheet multiplies the two onto the drawing and
+     runs their opacity. All four pictures are cut for each file the card serves
+     (700, 1400 and full), and the builder takes the set that matches the file
+     the browser picked. Every position is in pixels of the 1774 by 887
+     original, so READER_CROP alone ties them to the card. With reduced motion
+     the foot stays as drawn and the lamp stays lit. */
+  var READER_CROP = [376, 260.1, 994, 626.9];       // the card's crop of the original: left, top, width, height
+  var READER_FOOT = {
+    pivot: [755, 725],          // the ankle, where the sock goes under the hem
+    period: 2.6,                // seconds for one swing
+    ramp: 1.2,                  // seconds for the swing to grow from still
+    /* [share of the swing, degrees]: toe down with a short pause, a slow lift
+       to toe up, and back down. Each step eases in and out. */
+    keys: [[0, 2.4], [0.12, 2.4], [0.56, -3.0], [1, 2.4]]
+  };
+  var READER_LAMP = [920, 394, 104, 36];            // the yellow box under the lamp's cover: left, top, width, height
+
+  function readerAngle(t) {
+    var u = (t % READER_FOOT.period) / READER_FOOT.period;
+    var g = Math.min(1, t / READER_FOOT.ramp);
+    return g * g * (3 - 2 * g) * pieces(READER_FOOT.keys, u);
+  }
+
+  function card7(c) {
+    var img = c.fx.querySelector('img.fx-img');
+    if (!img) return;
+    var FILE = /17-canon-reader-(700|1400|full)\.webp/;
+    function fileFor(name, size) { return (img.currentSrc || img.src).replace(FILE, '17-canon-reader-' + name + '-' + size + '.webp'); }
+    var x0 = READER_CROP[0], y0 = READER_CROP[1], cw = READER_CROP[2], ch = READER_CROP[3];
+    var moving = !c.reduced;
+
+    var layer = c.layer('cardfx-reader');
+    var pics = {};
+    if (moving) {
+      ['patch', 'foot', 'cuff'].forEach(function (name) {
+        var im = el('img', 'cardfx-reader-' + name);
+        im.alt = '';
+        im.decoding = 'async';
+        layer.appendChild(im);
+        pics[name] = im;
+      });
+      pics.foot.style.transformOrigin = pct((READER_FOOT.pivot[0] - x0) / cw * 100) + ' ' + pct((READER_FOOT.pivot[1] - y0) / ch * 100);
+    }
+
+    /* the lamp: the yellow box goes in only once its cover has loaded, so no
+       yellow ever shows uncovered */
+    var lamp = el('span', moving ? 'cardfx-reader-lamp' : 'cardfx-reader-lamp cardfx-reader-lamp-still');
+    var glass = el('i', 'cardfx-reader-lamp-glass');
+    glass.style.left = pct((READER_LAMP[0] - x0) / cw * 100);
+    glass.style.top = pct((READER_LAMP[1] - y0) / ch * 100);
+    glass.style.width = pct(READER_LAMP[2] / cw * 100);
+    glass.style.height = pct(READER_LAMP[3] / ch * 100);
+    var cover = el('img', 'cardfx-reader-lamp-cover');
+    cover.alt = '';
+    cover.decoding = 'async';
+    lamp.appendChild(cover);
+    layer.appendChild(lamp);
+
+    /* the pictures that match the card's file; until the foot's three are in,
+       the foot stays at rest, where the stack is the drawing itself */
+    var ready = false, size = '', pending = 0;
+    function load() {
+      var m = FILE.exec(img.currentSrc || img.src || '');
+      if (!m || m[1] === size) return;
+      size = m[1];
+      if (glass.parentNode) lamp.removeChild(glass);
+      cover.onload = function () { if (!glass.parentNode) lamp.insertBefore(glass, cover); };
+      cover.src = fileFor('lamp', size);
+      if (!moving) return;
+      ready = false;
+      setAngle(0);
+      pending = 3;
+      ['patch', 'foot', 'cuff'].forEach(function (name) {
+        var im = pics[name];
+        im.onload = function () { if (--pending === 0) ready = true; };
+        im.onerror = function () { pending = -1; };   // a missing picture: the foot never moves
+        im.src = fileFor(name, size);
+      });
+    }
+
+    var angle = 0, footT = 0;
+    function setAngle(a) {
+      angle = a;
+      if (pics.foot) pics.foot.style.transform = a ? 'rotate(' + a.toFixed(3) + 'deg)' : '';
+    }
+
+    if (img.complete && img.currentSrc) load();
+    img.addEventListener('load', load);       // the browser may pick another file when the card grows
+    c.undo.push(function () { img.removeEventListener('load', load); });
+    if (!moving) return;
+
+    c.card.tick = function (dt) {
+      if (!ready) return;
+      footT += dt;
+      setAngle(readerAngle(footT));
+    };
+    /* closing: the foot eases back to rest while the layer fades */
+    var from = 0;
+    c.card.closes = true;
+    c.card.beginClose = function () { from = angle; };
+    c.card.close = function (p) { setAngle(from * (1 - easeState(p))); };
   }
 
   /* ---------- card 1: the live mosaic ---------- */
@@ -2430,7 +2612,7 @@ html.rm .sitemap-label{transition:none}
   /* ---------- start ---------- */
 
   /* card 8 has no motion since round 37: its loop moved the order office drawing, which the cardboard truck replaced */
-  var BUILD = { 1: card1, 2: card2, 3: card3, 4: card4, 5: card5, 6: card6 };   /* card 7 has no motion since the reader drawing replaced the bookcase: its thread of lights was laid on the bookcase */
+  var BUILD = { 1: card1, 2: card2, 3: card3, 4: card4, 5: card5, 6: card6, 7: card7 };
 
   function start(n, fxEl) {
     n = +n;
