@@ -1982,21 +1982,21 @@ html.rm .sitemap-label{transition:none}
      numbers. In the essay the machine hand slides along one line of writing,
      14.3 s each way at constant speed, and waits 3 percent of the cycle at each
      end (0.43 s). The sliding layer goes from translate(0, 0) to
-     translate(13%, 0.1%), percent of the picture, and back again (the
+     translate(12.96%, -1.91%), percent of the picture, and back again (the
      rest, --machine-rest, is the first of the two). Inside it the pen bobs: a
      3.3 s cycle of small dips and lifts about the nib, each step eased in and
-     out, with one longer lift at 57 to 61 percent. The nib is at 56.41 percent,
-     57.94 percent of the layer. Here both run from the shared clock, which starts
+     out, with one longer lift at 57 to 61 percent. The nib is at 56.78 percent,
+     56.92 percent of the layer. Here both run from the shared clock, which starts
      when the card opens, and the pose is one transform on the layer, which
      turns about its top left corner. When the card closes the hand returns to
      its rest. */
   var HAND = {
     p0: [0, 0],              // the rest, percent of the picture
-    p1: [13, 0.1],           // the far end of the slide
+    p1: [12.96, -1.91],      // the far end of the slide
     one: 14.3,               // seconds along the line, each way
     hold: 0.03,              // share of the cycle spent waiting at each end
     bob: 3.3,                // seconds for one cycle of the pen's bob
-    nx: 56.41, ny: 57.94     // the nib, percent of the layer: the bob turns about it
+    nx: 56.78, ny: 56.92     // the nib, percent of the layer: the bob turns about it
   };
   /* the bob: [share of the cycle, x percent, y percent, degrees] */
   var BOB_X = [[0, 0], [0.52, 0], [0.57, 0.08], [0.61, 0.1], [0.66, 0], [1, 0]];
@@ -2490,7 +2490,7 @@ html.rm .sitemap-label{transition:none}
     ],
     2: { v: [.230, .12, .420, .99], ink: [0, 0, 1, 1], bs: [.18, .06, .82, .99] },   /* the subway car (round 49; crop 190,110 to 1240,810 of the 1360 by 840 master): the closed spine shows the standing woman with her grocery bags; a band shows the woman with the bags, the seat and the man who shrugs */
     3: { v: [.200, .175, .315, .640], ink: [.053, .029, .956, .954], bs: [.120, .170, .430, .690], bclip: [0, 0, .535, 1], bink: [.053, .029, .535, .954] },   /* the child at the desk with the trunk and the monkey below; the child, the desk and the top of the roots in a band, which shows nothing of the robot's side */
-    4: { v: [.560, .175, .740, .585], ink: [0, 0, 1, 1], hl: .540, fit: true, bs: [.030, .160, .970, .820] },   /* the machine hand with its pen (round 29 of Project 6, the ink drawing cut into two layers); hl: on hover the window reaches the nib, at canvas x .564; a band shows the whole drawing */
+    4: { v: [.560, .205, .690, .575], ink: [0, 0, 1, 1], hl: .548, bs: [.020, .135, .965, .855] },   /* the machine hand with its pen (round 29 of Project 6: the ink drawing in two layers, darker and turned 5 degrees); hl: on hover the window reaches the nib, at canvas x .568; no fit, since the drawing is shorter than the column and fit made the hover zoom in; a band shows the whole drawing */
     5: { v: [.397, .100, .603, .900], ink: [.007, .015, .999, .990], bs: [.007, .015, .999, .990] },  /* the brain */
     6: { v: [.482, .490, .538, .850], ink: [0, .033, 1, .998], bs: [.310, .500, .700, .790] },       /* the manor: the central gable; the whole house in a band */
     7: { v: [.482, .1195, .698, .9857], ink: [.001, 0, .999, .998], bs: [.4064, .1195, .7585, .9857] },   /* the reader drawing (crop 376,260 to 1370,887 of the 1774 by 887 original): the lamp, its shade and pole, and the left arm and back of the empty armchair in the spine; the lamp with the armchair in a band; the open card shows the whole scene */
