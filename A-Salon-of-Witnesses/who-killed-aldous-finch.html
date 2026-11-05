@@ -365,6 +365,8 @@ figcaption.fig-cap{font-size:.82rem;line-height:1.5;color:var(--ink-faint);margi
 .c-pin{fill:var(--ink)}
 .c-line{stroke:var(--ink-faint)}
 .c-text{font-family:var(--serif);fill:var(--ink)}
+.fx-shade{flood-color:var(--ink);flood-opacity:.7}
+.scroller image[href^="img/cast-"]{filter:url(#sitter-shadow)}
 @media (max-width:760px){
   .chairs svg{width:700px;max-width:none}
   .chairs .scroll-note{display:block}
@@ -419,6 +421,18 @@ footer .col p{margin:0;font-size:.82rem}
      ============================================================ -->
 <svg class="sprite" width="0" height="0" aria-hidden="true" focusable="false">
   <symbol id="chair-img" viewBox="0 0 169 400"><image href="img/da4ec9912bb67ea3.webp" width="169" height="400"/></symbol>
+  <!-- The feImage must name the same file as the chair-img symbol above. Its box is the chair
+       placed on the portrait: x +2, y -13, 64 by 150 units, as fractions of the 68 unit portrait. -->
+  <filter id="sitter-shadow" filterUnits="objectBoundingBox" primitiveUnits="objectBoundingBox" x="-0.15" y="-0.15" width="1.4" height="1.4" color-interpolation-filters="sRGB">
+    <feImage href="img/da4ec9912bb67ea3.webp" x="0.0294" y="-0.1912" width="0.9412" height="2.2059" preserveAspectRatio="none" result="chair"/>
+    <feMorphology in="chair" operator="erode" radius="0.009" result="chairIn"/>
+    <feGaussianBlur in="SourceAlpha" stdDeviation="0.0441"/>
+    <feOffset dx="0.0882" dy="0.1029" result="blur"/>
+    <feFlood class="fx-shade"/>
+    <feComposite in2="blur" operator="in" result="shade"/>
+    <feComposite in="shade" in2="chairIn" operator="in" result="shadow"/>
+    <feMerge><feMergeNode in="shadow"/><feMergeNode in="SourceGraphic"/></feMerge>
+  </filter>
 </svg>
 
 <!-- ============================================================
