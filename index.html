@@ -499,9 +499,11 @@ html.rm .sitemap-label{transition:none}
      0.835) with its arm drawn on to the right edge, so its rest is the essay's
      rest as it stands: the hand high on the right, its nib on the text, the arm
      leaving the frame. The animation starts from the machine's pose and returns
-     to it. */
-  --human-rest: translate(-12.074%, 7.936%) matrix(0.99781, -0.00356, -0.00859, 1.00641, 0, 0);
-  --machine-rest: translate(0.36%, -15.41%);
+     to it. Round 29 of Project 6 replaced the three layers with two, cut from one
+     ink drawing: the paper with the human hand, and the machine hand. Both lie
+     where they belong at rest, so both rests are none. */
+  --human-rest: none;
+  --machine-rest: none;
 
   /* the edges of card 4 (the same glow and haze as the essay's picture) */
   --fx-glow-mid: rgba(255, 255, 255, 0.5);
@@ -1081,13 +1083,13 @@ html.rm .sitemap-label{transition:none}
       <div class="col-in">
         <button class="c-open" type="button" id="b-4" aria-expanded="false" aria-controls="p-4">
           <span class="c-num"></span>
-          <span class="c-slice" aria-hidden="true"><span class="stack"><img class="s-paper" src="img/home/11-writing-paper-1400.webp" srcset="img/home/11-writing-paper-700.webp 700w, img/home/11-writing-paper-1400.webp 1400w, img/home/11-writing-paper-full.webp 1672w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.7 * (100vh - 400px))), (max-width:529px) 70vw, 370px" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="s-machine" src="img/home/13-writing-machine-hand-v2-1400.webp" srcset="img/home/13-writing-machine-hand-v2-700.webp 700w, img/home/13-writing-machine-hand-v2-1400.webp 1400w, img/home/13-writing-machine-hand-v2-full.webp 1672w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.7 * (100vh - 400px))), (max-width:529px) 70vw, 370px" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="s-human" src="img/home/12-writing-human-hand-1400.webp" srcset="img/home/12-writing-human-hand-700.webp 700w, img/home/12-writing-human-hand-1400.webp 1400w, img/home/12-writing-human-hand-full.webp 1672w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.7 * (100vh - 400px))), (max-width:529px) 70vw, 370px" width="1400" height="788" alt="" loading="eager" decoding="sync"></span></span>
+          <span class="c-slice" aria-hidden="true"><span class="stack"><img class="s-paper" src="img/home/11-writing-ink-paper-full.webp" srcset="img/home/11-writing-ink-paper-700.webp 700w, img/home/11-writing-ink-paper-full.webp 1365w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.7 * (100vh - 400px))), (max-width:529px) 70vw, 370px" width="1365" height="768" alt="" loading="eager" decoding="sync"><img class="s-machine" src="img/home/13-writing-ink-robot-full.webp" srcset="img/home/13-writing-ink-robot-700.webp 700w, img/home/13-writing-ink-robot-full.webp 1365w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.7 * (100vh - 400px))), (max-width:529px) 70vw, 370px" width="1365" height="768" alt="" loading="eager" decoding="sync"></span></span>
           <span class="c-text"></span>
           <span class="f-win" aria-hidden="true"></span>
         </button>
         <div class="panel" id="p-4">
           <div class="entry">
-            <span class="art art-4"><a class="fx-link" href="did-ai-write-this/a-likely-story.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="4" style="--far:1.7769" role="img" aria-label="A human hand and a mechanical hand, each holding a fountain pen, writing the same lines of handwriting on one sheet of paper."><img class="fx-paper" src="img/home/11-writing-paper-1400.webp" srcset="img/home/11-writing-paper-700.webp 700w, img/home/11-writing-paper-1400.webp 1400w, img/home/11-writing-paper-full.webp 1672w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.7 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="fx-machine" src="img/home/13-writing-machine-hand-v2-1400.webp" srcset="img/home/13-writing-machine-hand-v2-700.webp 700w, img/home/13-writing-machine-hand-v2-1400.webp 1400w, img/home/13-writing-machine-hand-v2-full.webp 1672w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.7 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"><img class="fx-human" src="img/home/12-writing-human-hand-1400.webp" srcset="img/home/12-writing-human-hand-700.webp 700w, img/home/12-writing-human-hand-1400.webp 1400w, img/home/12-writing-human-hand-full.webp 1672w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.7 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1400" height="788" alt="" loading="eager" decoding="sync"></span></a></span>
+            <span class="art art-4"><a class="fx-link" href="did-ai-write-this/a-likely-story.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="4" style="--far:1.7769" role="img" aria-label="An ink drawing of a human hand and a mechanical hand, each holding a fountain pen, writing on one sheet of paper."><img class="fx-paper" src="img/home/11-writing-ink-paper-full.webp" srcset="img/home/11-writing-ink-paper-700.webp 700w, img/home/11-writing-ink-paper-full.webp 1365w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.7 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1365" height="768" alt="" loading="eager" decoding="sync"><img class="fx-machine" src="img/home/13-writing-ink-robot-full.webp" srcset="img/home/13-writing-ink-robot-700.webp 700w, img/home/13-writing-ink-robot-full.webp 1365w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.7 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1365" height="768" alt="" loading="eager" decoding="sync"></span></a></span>
             <div class="words">
               <p class="title"><a href="did-ai-write-this/a-likely-story.html"><span class="num">4</span><span class="tt">A Likely Story</span></a></p>
               <p class="blurb">Two passages, and an AI model wrote one of them. Can you tell which? Then see what AI detectors, watermarks and editing histories can and cannot show.</p>
@@ -1979,22 +1981,22 @@ html.rm .sitemap-label{transition:none}
   /* The motion of the hero of the essay A Likely Story (round 25), with its
      numbers. In the essay the machine hand slides along one line of writing,
      14.3 s each way at constant speed, and waits 3 percent of the cycle at each
-     end (0.43 s). The sliding layer goes from translate(.36%, -15.41%) to
-     translate(14.3%, -14.67%), percent of the picture, and back again (the
+     end (0.43 s). The sliding layer goes from translate(0, 0) to
+     translate(13%, 0.1%), percent of the picture, and back again (the
      rest, --machine-rest, is the first of the two). Inside it the pen bobs: a
      3.3 s cycle of small dips and lifts about the nib, each step eased in and
-     out, with one longer lift at 57 to 61 percent. The nib is at 44.6 percent,
-     74.9 percent of the layer. Here both run from the shared clock, which starts
+     out, with one longer lift at 57 to 61 percent. The nib is at 56.41 percent,
+     57.94 percent of the layer. Here both run from the shared clock, which starts
      when the card opens, and the pose is one transform on the layer, which
      turns about its top left corner. When the card closes the hand returns to
      its rest. */
   var HAND = {
-    p0: [0.36, -15.41],      // the rest, percent of the picture
-    p1: [14.3, -14.67],      // the far end of the line
+    p0: [0, 0],              // the rest, percent of the picture
+    p1: [13, 0.1],           // the far end of the slide
     one: 14.3,               // seconds along the line, each way
     hold: 0.03,              // share of the cycle spent waiting at each end
     bob: 3.3,                // seconds for one cycle of the pen's bob
-    nx: 44.6, ny: 74.9       // the nib, percent of the layer: the bob turns about it
+    nx: 56.41, ny: 57.94     // the nib, percent of the layer: the bob turns about it
   };
   /* the bob: [share of the cycle, x percent, y percent, degrees] */
   var BOB_X = [[0, 0], [0.52, 0], [0.57, 0.08], [0.61, 0.1], [0.66, 0], [1, 0]];
@@ -2488,7 +2490,7 @@ html.rm .sitemap-label{transition:none}
     ],
     2: { v: [.230, .12, .420, .99], ink: [0, 0, 1, 1], bs: [.18, .06, .82, .99] },   /* the subway car (round 49; crop 190,110 to 1240,810 of the 1360 by 840 master): the closed spine shows the standing woman with her grocery bags; a band shows the woman with the bags, the seat and the man who shrugs */
     3: { v: [.200, .175, .315, .640], ink: [.053, .029, .956, .954], bs: [.120, .170, .430, .690], bclip: [0, 0, .535, 1], bink: [.053, .029, .535, .954] },   /* the child at the desk with the trunk and the monkey below; the child, the desk and the top of the roots in a band, which shows nothing of the robot's side */
-    4: { v: [.522, .060, .627, .722], ink: [0, 0, 1, 1], hl: .425, fit: true, bs: [0, 0, 1, 1] },   /* the machine hand with its pen, where the essay's picture has it (round 25; the same part of the drawing as before); hl: on hover the window reaches the nib, at canvas x .449 */
+    4: { v: [.560, .175, .740, .585], ink: [0, 0, 1, 1], hl: .540, fit: true, bs: [.030, .160, .970, .820] },   /* the machine hand with its pen (round 29 of Project 6, the ink drawing cut into two layers); hl: on hover the window reaches the nib, at canvas x .564; a band shows the whole drawing */
     5: { v: [.397, .100, .603, .900], ink: [.007, .015, .999, .990], bs: [.007, .015, .999, .990] },  /* the brain */
     6: { v: [.482, .490, .538, .850], ink: [0, .033, 1, .998], bs: [.310, .500, .700, .790] },       /* the manor: the central gable; the whole house in a band */
     7: { v: [.482, .1195, .698, .9857], ink: [.001, 0, .999, .998], bs: [.4064, .1195, .7585, .9857] },   /* the reader drawing (crop 376,260 to 1370,887 of the 1774 by 887 original): the lamp, its shade and pole, and the left arm and back of the empty armchair in the spine; the lamp with the armchair in a band; the open card shows the whole scene */
@@ -2571,7 +2573,7 @@ html.rm .sitemap-label{transition:none}
       units.push({ el: fx.querySelector('.fx-brain'), nat: [1299, 1211], tile: false, idx: 0, fr: FRAMES[5] });
       c._lat = fx.querySelector('.fx-lattice');
     } else {
-      units.push({ el: fx, nat: n === 4 ? [1672, 941] : nat(fx.querySelector('img')), tile: false, idx: 0, fr: FRAMES[n] });
+      units.push({ el: fx, nat: n === 4 ? [1365, 768] : nat(fx.querySelector('img')), tile: false, idx: 0, fr: FRAMES[n] });
     }
     units.forEach(function (u) { if (!u.mel) u.mel = u.el; u.el.classList.add('fxu'); });
     c._units = units;
@@ -2712,7 +2714,7 @@ html.rm .sitemap-label{transition:none}
     var tz = (getComputedStyle(btnOf(c)).getPropertyValue('--tz') || '54%').trim();
     var x0 = tz.slice(-1) === '%' ? W * parseFloat(tz) / 100 : parseFloat(tz);
     var el = cs.querySelector(':scope > img, :scope > .stack'), fb = FRAMES[n];
-    var nat = el.tagName === 'IMG' ? [+el.getAttribute('width'), +el.getAttribute('height')] : [1672, 941];
+    var nat = el.tagName === 'IMG' ? [+el.getAttribute('width'), +el.getAttribute('height')] : [1365, 768];
     bandPlace(el, { x: x0, y: 0, w: W - x0, h: bandH }, nat, fb.bs, fb.bink || fb.ink, false, fb.bclip);
   }
 
