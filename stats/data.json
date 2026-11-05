@@ -1,17 +1,12 @@
 {
-  "generated": "2026-11-04T06:35:51Z",
+  "generated": "2026-11-05T06:55:59Z",
   "totals": {
-    "views_all": 108,
-    "visitors_all": 108,
-    "views_30d": 90,
-    "visitors_30d": 90
+    "views_all": 113,
+    "visitors_all": 113,
+    "views_30d": 95,
+    "visitors_30d": 95
   },
   "daily": [
-    {
-      "day": "2026-08-07",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-08",
       "views": 0,
@@ -454,6 +449,11 @@
     },
     {
       "day": "2026-11-04",
+      "views": 5,
+      "visitors": 5
+    },
+    {
+      "day": "2026-11-05",
       "views": 0,
       "visitors": 0
     }
@@ -471,8 +471,8 @@
     },
     {
       "month": "2026-11",
-      "views": 22,
-      "visitors": 22
+      "views": 27,
+      "visitors": 27
     }
   ],
   "projects": [
@@ -503,10 +503,10 @@
     {
       "id": "did-ai-write-this",
       "name": "Did AI Write This?",
-      "views_all": 7,
-      "visitors_all": 7,
-      "views_30d": 7,
-      "visitors_30d": 7
+      "views_all": 8,
+      "visitors_all": 8,
+      "views_30d": 8,
+      "visitors_30d": 8
     },
     {
       "id": "artificial-mind-of-your-own",
@@ -527,38 +527,38 @@
     {
       "id": "AI-future-canon",
       "name": "AI Future Canon",
-      "views_all": 9,
-      "visitors_all": 9,
-      "views_30d": 7,
-      "visitors_30d": 7
+      "views_all": 11,
+      "visitors_all": 11,
+      "views_30d": 9,
+      "visitors_30d": 9
     },
     {
       "id": "feeding-an-ai-agent-the-facts",
       "name": "Feeding an AI Agent the Facts",
-      "views_all": 3,
-      "visitors_all": 3,
-      "views_30d": 3,
-      "visitors_30d": 3
+      "views_all": 4,
+      "visitors_all": 4,
+      "views_30d": 4,
+      "visitors_30d": 4
     },
     {
       "id": "home",
       "name": "Home",
-      "views_all": 40,
-      "visitors_all": 40,
-      "views_30d": 33,
-      "visitors_30d": 33
+      "views_all": 41,
+      "visitors_all": 41,
+      "views_30d": 34,
+      "visitors_30d": 34
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 40,
-      "visitors_all": 40
+      "views_all": 41,
+      "visitors_all": 41
     },
     {
       "path": "/AI-future-canon/ai-future-canon.html",
-      "views_all": 9,
-      "visitors_all": 9
+      "views_all": 11,
+      "visitors_all": 11
     },
     {
       "path": "/stillpoint/collection.html",
@@ -577,8 +577,8 @@
     },
     {
       "path": "/did-ai-write-this/did-ai-write-this.html",
-      "views_all": 7,
-      "visitors_all": 7
+      "views_all": 8,
+      "visitors_all": 8
     },
     {
       "path": "/A-Salon-of-Witnesses/who-killed-aldous-finch.html",
@@ -586,12 +586,12 @@
       "visitors_all": 4
     },
     {
-      "path": "/can-artificial-minds-feel/c05-grammar-trap.html",
-      "views_all": 3,
-      "visitors_all": 3
+      "path": "/feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html",
+      "views_all": 4,
+      "visitors_all": 4
     },
     {
-      "path": "/feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html",
+      "path": "/can-artificial-minds-feel/c05-grammar-trap.html",
       "views_all": 3,
       "visitors_all": 3
     },
@@ -649,7 +649,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 73
+      "visitors": 78
     },
     {
       "name": "United Kingdom",
@@ -679,7 +679,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 70
+      "visitors": 75
     },
     {
       "name": "Safari",
@@ -693,7 +693,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 55
+      "visitors": 60
     },
     {
       "name": "Windows",
@@ -715,11 +715,11 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 57
+      "visitors": 59
     },
     {
       "name": "Large screen",
-      "visitors": 20
+      "visitors": 23
     },
     {
       "name": "Phone",
@@ -737,7 +737,7 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 50
+      "visitors": 53
     },
     {
       "name": "pundirp.github.io",
@@ -753,6 +753,10 @@
     },
     {
       "name": "Google",
+      "visitors": 4
+    },
+    {
+      "name": "chatgpt.com",
       "visitors": 3
     },
     {
@@ -762,10 +766,6 @@
     {
       "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
       "visitors": 3
-    },
-    {
-      "name": "chatgpt.com",
-      "visitors": 2
     },
     {
       "name": "teams.public.onecdn.static.microsoft",
