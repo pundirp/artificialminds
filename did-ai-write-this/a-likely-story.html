@@ -248,13 +248,13 @@ figure svg{display:block;width:100%;height:auto;max-width:34rem}
 .portraits{display:flex;gap:1.4rem;justify-content:center;align-items:flex-end;margin:1rem 0 1.4rem}
 .portraits .portrait{margin:0;padding:0;width:7.6rem;text-align:center}
 .portraits .portrait img{display:block;width:100%;height:auto;max-width:none}
-/* the portraits are gray and nothing changes them */
-.who-card img.face, .portraits .portrait img, .tlfaces img{filter:grayscale(1)}
+/* the faces in the who-cards are gray. The four portraits on the old paper keep the sepia of their files */
+.who-card img.face{filter:grayscale(1)}
 .portraits .portrait figcaption{margin-top:0;padding-top:.35rem;font-family:var(--serif);font-size:.82rem;font-variant:small-caps;letter-spacing:.06em;color:var(--ink-faint);white-space:nowrap}
 
 /* ---------- 6b. The old paper ----------
    The two history parts keep the sheet they had on the live page: a photograph of torn paper laid on as a border
-   image, sepia ink and cards, and gray portraits.
+   image, sepia ink and cards, and sepia portraits.
    The colours are the old-* tokens in :root. The shadow under the sheet is lighter than on the dark page. */
 .sheetwrap{filter:drop-shadow(0 1px 2px var(--old-shadow-a)) drop-shadow(0 7px 11px var(--old-shadow-b)) drop-shadow(4px 18px 30px var(--old-shadow-c))}
 .paper{color:var(--old-ink);
@@ -294,6 +294,13 @@ figure svg{display:block;width:100%;height:auto;max-width:34rem}
 .paper .tl .tlicon.tlfaces{background:none}
 .paper ul.tl::before{top:6.95rem}
 .paper ul.tl::before{background:var(--old-hair)}
+/* with no tiles behind the drawings, the line down the left breaks at each picture. Each entry holds its own
+   piece of line, from under its picture (3.7rem) to the top of the next picture (.5rem into the next entry) */
+.paper ul.tl::before{display:none}
+.paper ul.tl li{position:relative}
+.paper ul.tl li::after{content:"";position:absolute;left:1.4rem;top:3.7rem;bottom:-.5rem;width:1px;background:var(--old-hair)}
+.paper ul.tl li:first-child::after{top:6.95rem}
+.paper ul.tl li:last-child::after{bottom:.7rem}
 .paper .tl .when{font-size:.64rem;letter-spacing:.14em;line-height:1.35;color:var(--old-dim);margin:.15rem 0 .2rem}
 .paper .tl li{border-top-color:var(--old-hair)}
 
@@ -593,6 +600,9 @@ ul.tl li{display:grid;grid-template-columns:2.8rem 1fr;gap:0 1.1rem;padding:.5re
 .tl .tlicon svg{display:block;width:100%;height:auto;max-width:none;stroke-linecap:round;stroke-linejoin:round}
 .tl .tlicon.tlfaces{display:block;padding:.15rem .15rem .05rem}
 .tl .tlicon.tlfaces img{width:100%;height:auto;display:block;margin-bottom:.1rem}
+/* the thirteen drawings after 1887 have transparent grounds. They sit straight on the paper, with no tile */
+.tl .tlicon img.w10-ink{display:block;width:100%;height:auto}
+.paper .tl .tlicon:has(> img.w10-ink){background:transparent}
 .tl .when{display:block;font-size:.82rem;line-height:1.35;margin:.15rem 0 .2rem}
 .tl p{margin:0;font-size:.96rem}
 
@@ -662,6 +672,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
   .aside.paper > figure > svg .sv-label{letter-spacing:.04em}
   .aside.paper .wl-axis{transform:translateY(8px)}
   ul.tl::before{display:none}
+  .paper ul.tl li::after{display:none}
   ul.tl li{grid-template-columns:2.2rem 1fr;gap:0 .8rem;padding:.8rem 0;border-top:1px solid var(--rule)}
   ul.tl li:first-child{border-top:0}
   .tl .tlicon{width:2.2rem;background:none;padding:0}
@@ -1468,111 +1479,55 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 <div><span class="when">1887</span><p>T. C. Mendenhall counts how many words of each length Dickens and Thackeray use. He draws the counts as curves.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="Two writers hidden behind a screen, and a judge on the other side of it">
-<circle cx="11" cy="14" r="4" class="sv-none sk-dim"/>
-<circle cx="11" cy="30" r="4" class="sv-none sk-dim"/>
-<line x1="22" y1="6" x2="22" y2="38" class="sk-faint sk-dash"/>
-<circle cx="33" cy="19" r="4.5" class="sv-none sk-amber"/>
-<path d="M27 33 C28 27, 38 27, 39 33" class="sv-none sk-amber"/>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-1950.webp" width="256" height="256" alt="A privacy screen with typing terminals" loading="lazy" decoding="async"></span>
 <div><span class="when">1950</span><p>Alan Turing proposes the imitation game. A judge has to decide, from typed messages alone, which of two hidden writers is the machine.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="The word upon, with a tally of five strokes under it">
-<text x="22" y="18" text-anchor="middle" class="sv-text sv-13 sv-dim">upon</text>
-<g class="sk-amber"><line x1="12" y1="26" x2="12" y2="38"/><line x1="17" y1="26" x2="17" y2="38"/><line x1="22" y1="26" x2="22" y2="38"/><line x1="27" y1="26" x2="27" y2="38"/><line x1="9" y1="38" x2="31" y2="26"/></g>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-1963.webp" width="256" height="256" alt="Manuscript slips and counting marks" loading="lazy" decoding="async"></span>
 <div><span class="when">1963</span><p>Frederick Mosteller and David Wallace count small words in the disputed Federalist Papers and give all twelve to James Madison.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="A screen with a question mark on it">
-<rect x="7" y="9" width="30" height="22" rx="1" class="sv-none sk-dim"/>
-<line x1="22" y1="31" x2="22" y2="37" class="sk-dim"/>
-<line x1="14" y1="37" x2="30" y2="37" class="sk-dim"/>
-<text x="22" y="27" text-anchor="middle" class="sv-text sv-16 sv-amber">?</text>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-1966.webp" width="256" height="256" alt="A vintage computer terminal" loading="lazy" decoding="async"></span>
 <div><span class="when">1966</span><p>Joseph Weizenbaum publishes ELIZA, a program of about 200 lines that answers a person by turning their words back into questions. People treat ELIZA as though it understands them.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="The same three blocks of a sentence, shown in two different orders">
-<g class="sv-dim"><rect x="6" y="12" width="12" height="5"/><rect x="20" y="12" width="7" height="5"/><rect x="29" y="12" width="9" height="5"/></g>
-<line x1="22" y1="20" x2="22" y2="23" class="sk-amber"/>
-<path d="M20 23 L24 23 L22 26 Z" class="sv-amber"/>
-<g class="sv-dim"><rect x="6" y="28" width="9" height="5"/><rect x="17" y="28" width="12" height="5"/><rect x="31" y="28" width="7" height="5"/></g>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-2001.webp" width="256" height="256" alt="Rearranged strips of text" loading="lazy" decoding="async"></span>
 <div><span class="when">2001</span><p>Mikhail Atallah and colleagues publish the first watermark for written text. The watermark sits in changes made to the grammar of some sentences. Rewrite those sentences and the watermark is gone.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="Two rows of words, some of them tinted">
-<g class="sv-dim"><rect x="6" y="14" width="10" height="6"/><rect x="30" y="14" width="8" height="6"/><rect x="6" y="26" width="7" height="6"/><rect x="30" y="26" width="8" height="6"/></g>
-<g class="sv-amber"><rect x="18" y="14" width="9" height="6"/><rect x="16" y="26" width="11" height="6"/></g>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-2019.webp" width="256" height="256" alt="A magnifier examining word patterns" loading="lazy" decoding="async"></span>
 <div><span class="when">2019</span><p>Two tools arrive that work like the AI detectors in section 1. GLTR colours each word by how easy it was to guess. OpenAI's AI detector for GPT-2 catches about 95% of GPT-2's text.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="A chat bubble beside a key">
-<path d="M5 11 h19 v13 h-12 l-4 5 v-5 h-3 z" class="sv-none sk-dim"/>
-<circle cx="32" cy="15" r="4" class="sv-none sk-amber"/>
-<path d="M34.8 17.8 L40 23 M37.5 20.5 L35.5 22.5 M40 23 L38 25" class="sv-none sk-amber"/>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-2022-11.webp" width="256" height="256" alt="A speech note and a key" loading="lazy" decoding="async"></span>
 <div><span class="when">November 2022</span><p>ChatGPT is released on the 30th. Two days earlier Scott Aaronson had <a href="https://scottaaronson.blog/?p=6823" target="_blank" rel="noopener">described a watermark for ChatGPT</a>. He designed it while working at OpenAI.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="A short list, bracketed">
-<path d="M8 8 L5 8 L5 36 L8 36" class="sv-none sk-green"/>
-<path d="M12 10 H36 M12 18 H30 M12 26 H34 M12 34 H28" class="sv-none sk-green"/>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-2023-01.webp" width="256" height="256" alt="A bracketed list" loading="lazy" decoding="async"></span>
 <div><span class="when">January 2023</span><p>The green-list watermark is published. A week later OpenAI releases an AI detector for any model. It catches 26% of AI-written text and wrongly flags 9% of human text.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="A gauge with its needle low, reading 26">
-<path d="M7 30 A15 15 0 0 1 37 30" class="sv-none sk-dim"/>
-<line x1="22" y1="30" x2="13.8" y2="21.3" class="sk-amber"/>
-<text x="22" y="42" text-anchor="middle" class="sv-text sv-12 sv-amber">26</text>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-2023-07.webp" width="256" height="256" alt="An unnumbered gauge with a low needle" loading="lazy" decoding="async"></span>
 <div><span class="when">July 2023</span><p>OpenAI withdraws that AI detector 171 days after launching it, "due to its low rate of accuracy".</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="A switch in the off position">
-<rect x="7" y="16" width="30" height="14" rx="7" class="sv-none sk-dim"/>
-<circle cx="14" cy="23" r="4.5" class="sv-dim"/>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-2023-08.webp" width="256" height="256" alt="A lowered toggle switch" loading="lazy" decoding="async"></span>
 <div><span class="when">August 2023</span><p>Vanderbilt turns Turnitin's AI detector off and publishes the arithmetic behind the decision.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="A knockout bracket, four down to one">
-<path d="M6 10 H16 V20 H6 M16 15 H22" class="sv-none sk-dim"/>
-<path d="M6 26 H16 V36 H6 M16 31 H22" class="sv-none sk-dim"/>
-<path d="M22 15 H28 V31 H22 M28 23 H36" class="sv-none sk-amber"/>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-2024-10.webp" width="256" height="256" alt="Candidate tickets with one selected" loading="lazy" decoding="async"></span>
 <div><span class="when">October 2024</span><p>Google <a href="https://www.nature.com/articles/s41586-024-08025-4" target="_blank" rel="noopener">publishes the design of SynthID-Text</a>, the watermark running in Gemini, in the journal <i>Nature</i>.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="A label a reader can see, sitting on a page of text">
-<rect x="6" y="6" width="18" height="7" class="sv-amber"/>
-<g class="sk-faint"><line x1="6" y1="20" x2="38" y2="20"/><line x1="6" y1="28" x2="32" y2="28"/><line x1="6" y1="36" x2="36" y2="36"/></g>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-2025-09.webp" width="256" height="256" alt="A visible label on a page" loading="lazy" decoding="async"></span>
 <div><span class="when">September 2025</span><p><a href="https://www.cac.gov.cn/2025-03/14/c_1743654684782215.htm" target="_blank" rel="noopener">China's labelling rules</a> take effect. They require a visible label on AI-written text where it could mislead.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="A gavel resting on its block">
-<line x1="10" y1="14" x2="20" y2="4" class="sk-dim sk-2"/>
-<line x1="15" y1="9" x2="31" y2="25" class="sk-dim"/>
-<line x1="9" y1="38" x2="35" y2="38" class="sk-amber sk-2"/>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-2026-01.webp" width="256" height="256" alt="A gavel and its block" loading="lazy" decoding="async"></span>
 <div><span class="when">January 2026</span><p>A New York court throws out a university's finding against a student. The finding had rested on an AI detector score of 100%.</p></div>
 </li>
 <li>
-<span class="tlicon"><svg viewBox="0 0 44 44" role="img" aria-label="A page of text with a hidden watermark in it, beside a ring of twelve dots">
-<g class="sk-faint"><line x1="4" y1="14" x2="21" y2="14"/><line x1="4" y1="22" x2="18" y2="22"/><line x1="4" y1="30" x2="20" y2="30"/></g>
-<circle cx="12" cy="22" r="1.6" class="sv-amber"/>
-<g class="sv-amber">
-<circle cx="40" cy="22" r="1.2"/><circle cx="39.1" cy="25.5" r="1.2"/><circle cx="36.5" cy="28.1" r="1.2"/>
-<circle cx="33" cy="29" r="1.2"/><circle cx="29.5" cy="28.1" r="1.2"/><circle cx="26.9" cy="25.5" r="1.2"/>
-<circle cx="26" cy="22" r="1.2"/><circle cx="26.9" cy="18.5" r="1.2"/><circle cx="29.5" cy="15.9" r="1.2"/>
-<circle cx="33" cy="15" r="1.2"/><circle cx="36.5" cy="15.9" r="1.2"/><circle cx="39.1" cy="18.5" r="1.2"/>
-</g>
-</svg></span>
+<span class="tlicon"><img class="w10-ink" src="img/w10/W10-2026-08.webp" width="256" height="256" alt="A page with a watermark and an embossing press" loading="lazy" decoding="async"></span>
 <div><span class="when">August 2026</span><p><a href="https://digital-strategy.ec.europa.eu/en/faqs/transparency-obligations-under-article-50-ai-act" target="_blank" rel="noopener">The European rule requiring a watermark on AI-written text</a> starts applying on the 2nd. On the 14th Anthropic announces that new Claude models will carry a watermark.</p></div>
 </li>
 </ul>
