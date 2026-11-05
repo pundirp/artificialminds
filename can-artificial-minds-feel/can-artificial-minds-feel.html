@@ -101,35 +101,39 @@
   /* The phone on the empty seat. Three things sit over the drawing, placed in
      percent of the picture so they stay on the phone at every width: the lit
      screen, a pale halo on the seat, and a small speech bubble with three dots
-     above the phone, as in a chat app that shows someone typing. Nothing goes
-     dark. The screen breathes between dim and bright over 6 seconds, and the
-     halo follows it 0.6 seconds behind. The three dots rise and fall in turn,
-     one wave every 2.4 seconds, and the bubble softens and returns over 12
-     seconds. All of it is eased. The shapes take no pointer and no focus.
-     Under a request for less motion everything holds still: the screen softly
+     above the phone, as in a chat app that shows someone typing. One cycle is
+     10 seconds and every change is eased. The screen brightens from dark to lit
+     over 2 seconds and the halo follows it. When the screen is mostly lit the
+     bubble fades in over 1.5 seconds and rises 2 pixels. The dots rise and fall
+     in turn, one wave every 2.4 seconds. The bubble fades away over 1.5 seconds,
+     the screen dims back to dark over 2 seconds, and the phone rests dark for
+     1.5 seconds. The bubble is never visible while the screen is dark. The
+     bubble is a soft white fill with no outline. The shapes take no pointer and
+     no focus. Under a request for less motion everything holds still: the screen
      lit, the bubble shown, the dots at one steady tone. */
-  .hero-halo,.hero-screen,.hero-bubble{position:absolute;display:block;margin:0;padding:0;pointer-events:none}
+  .hero-halo,.hero-screen,.hero-bubble{position:absolute;display:block;margin:0;padding:0;pointer-events:none;opacity:0}
   .hero-halo{
-    left:43.46%;top:64.5%;width:13%;aspect-ratio:2 / 1;border-radius:50%;opacity:.28;
+    left:43.46%;top:64.5%;width:13%;aspect-ratio:2 / 1;border-radius:50%;
     background:radial-gradient(closest-side,var(--phone-halo-0) 0,var(--phone-halo-0) 30%,var(--phone-halo-85) 42%,var(--phone-halo-35) 70%,var(--phone-halo-0) 100%);
-    animation:phone-halo 6s ease-in-out -5.4s infinite;
+    animation:phone-halo 10s ease-in-out infinite;
   }
-  .hero-screen{left:48.16%;top:69.17%;width:3.53%;height:1.13%;border-radius:12% / 30%;background:var(--phone-lit);opacity:.5;animation:phone-breathe 6s ease-in-out infinite}
-  /* One path draws the bubble and its tail, so the outline has no seam. The tail
-     tip sits just above the phone's screen, centred on it. */
-  .hero-bubble{left:49.93%;bottom:31.22%;width:5%;height:auto;transform:translateX(-50%);overflow:visible;animation:bubble-soften 12s ease-in-out infinite}
-  .hero-bubble path{fill:var(--bubble-fill);stroke:var(--bubble-line);stroke-width:1;stroke-linejoin:round;vector-effect:non-scaling-stroke}
+  .hero-screen{left:48.16%;top:69.17%;width:3.53%;height:1.13%;border-radius:12% / 30%;background:var(--phone-lit);animation:phone-breathe 10s ease-in-out infinite}
+  /* One path draws the bubble and its tail. The tail tip sits just above the
+     phone's screen, centred on it. */
+  .hero-bubble{left:49.93%;bottom:31.16%;width:3.75%;height:auto;transform:translateX(-50%);overflow:visible;animation:bubble-pop 10s ease-in-out infinite}
+  .hero-bubble path{fill:var(--bubble-fill)}
   .hero-bubble circle{fill:var(--bubble-dot);opacity:.45;animation:bubble-dot 2.4s ease-in-out infinite}
   .hero-bubble circle:nth-of-type(2){animation-delay:-2s}
   .hero-bubble circle:nth-of-type(3){animation-delay:-1.6s}
-  @keyframes phone-breathe{0%,100%{opacity:.5}50%{opacity:.96}}
-  @keyframes phone-halo{0%,100%{opacity:.28}50%{opacity:.8}}
-  @keyframes bubble-soften{0%,100%{opacity:1}50%{opacity:.8}}
+  @keyframes phone-breathe{0%{opacity:0}20%{opacity:.95}65%{opacity:.95}85%{opacity:0}100%{opacity:0}}
+  @keyframes phone-halo{0%{opacity:0}3%{opacity:0}24%{opacity:.8}68%{opacity:.8}88%{opacity:0}100%{opacity:0}}
+  @keyframes bubble-pop{0%,17%{opacity:0;transform:translate(-50%,2px)}32%{opacity:1;transform:translate(-50%,0)}52%{opacity:1;transform:translate(-50%,0)}67%{opacity:0;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,0)}}
   @keyframes bubble-dot{0%,100%{opacity:.45;transform:translateY(0)}50%{opacity:1;transform:translateY(-3.4px)}}
   @media (prefers-reduced-motion:reduce){
     .hero-halo,.hero-screen,.hero-bubble,.hero-bubble circle{animation:none}
     .hero-halo{opacity:.55}
     .hero-screen{opacity:.8}
+    .hero-bubble{opacity:1}
     .hero-bubble circle{opacity:.7}
   }
   h1{font-weight:400;font-size:3rem;line-height:1.04;letter-spacing:-.014em;margin-bottom:var(--s2)}
@@ -295,9 +299,8 @@
     --phone-halo-0:rgba(255, 255, 255, 0);
     --phone-halo-35:rgba(255, 255, 255, 0.35);
     --phone-halo-85:rgba(255, 255, 255, 0.85);
-    /* the typing bubble over the phone: white fill, dark grey outline, mid grey dots */
+    /* the typing bubble over the phone: a soft white fill with no outline, and mid grey dots */
     --bubble-fill:#ffffff;
-    --bubble-line:#555555;
     --bubble-dot:#8a8a8a;
   }
   html,body{background:var(--paper);color:var(--ink)}
