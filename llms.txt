@@ -17,7 +17,7 @@ Every page is static HTML with its own styles and pictures. Where a question is 
 
 - [Still Point](https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html): the story behind a catalogue of 99 pictures made by six AI models, Opus 4.8, Fable 5.0, Fable 5.1, Astra, Opus 5.5 and Nano Banana, and how they were chosen (May 2026, updated October 2026).
 - [Still Point: The Collection](https://pundirp.github.io/artificialminds/stillpoint/collection.html): the 99 pictures themselves, each with its title and the model that made it.
-- [Can Artificial Minds Feel?](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html): an essay in four chapters on AI consciousness, covering what an AI model is made of, the failed human search for a self, the self-preservation test results, and why the question stays open (September 2026).
+- [Can Artificial Minds Feel? Search Me.](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html): an essay in four chapters on AI consciousness, covering what an AI model is made of, the failed human search for a self, the self-preservation test results, and why the question stays open (September 2026).
 - [Who Learns Faster, a Toddler or a Chatbot?](https://pundirp.github.io/artificialminds/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html): an essay on why AI needs so much data, which follows a child and an AI model through four stages of learning, from before birth to the rest of life (October 2026).
 - [A Likely Story](https://pundirp.github.io/artificialminds/did-ai-write-this/a-likely-story.html): a guess-the-author test followed by what AI detectors, text watermarks and editing histories can and cannot tell you (September 2026).
 - [A Talking Machine of Your Own](https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/a-talking-machine-of-your-own.html): a field guide to how large language models work, how they are trained, why some are free to download, and how to run one on a laptop (June 2026).
@@ -26,7 +26,7 @@ Every page is static HTML with its own styles and pictures. Where a question is 
 - [The AI-Future Canon](https://pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html): 70 books about the AI future, chosen from 156 candidates and ranked by three AI models given the roles of historian, builder and sage (August 2026).
 - [Your Order Is on the Truck](https://pundirp.github.io/artificialminds/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html): an illustrated field guide to how a company prepares its data for an AI agent. It follows one late flour delivery through the context window, ontologies, semantic layers, RAG, knowledge graphs, tools and MCP, guardrails and evaluation, with eight real cases (October 2026).
 
-## Experiments in Can Artificial Minds Feel?
+## Experiments in Can Artificial Minds Feel? Search Me.
 
 - [The mirror search](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c01-mirror-search.html): nine timed lines that ask a reader to look for the one doing the reading, in about ninety seconds.
 - [Human or Machine?](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c03-two-reports.html): ten sentences about looking inside for a self, five by people and five by an AI model, to sort one from the other.

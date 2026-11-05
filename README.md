@@ -44,7 +44,7 @@ made by AI models, AI generated art and AI image generation, shown as a slow gal
 than a demo. The full collection with titles and artists is at
 https://pundirp.github.io/artificialminds/stillpoint/collection.html
 
-### 2. Can Artificial Minds Feel?
+### 2. Can Artificial Minds Feel? Search Me.
 
 https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html
 

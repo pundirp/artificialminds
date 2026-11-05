@@ -56,7 +56,7 @@ SITE_PREFIX = "/artificialminds"
 # folder name in the repo, which is also the first path segment after the prefix.
 PROJECTS = [
     ("stillpoint", "Stillpoint"),
-    ("can-artificial-minds-feel", "Can Artificial Minds Feel?"),
+    ("can-artificial-minds-feel", "Can Artificial Minds Feel? Search Me."),
     ("why-so-much-data", "Who Learns Faster, a Toddler or a Chatbot?"),
     ("did-ai-write-this", "A Likely Story"),
     ("artificial-mind-of-your-own", "A Talking Machine of Your Own"),
