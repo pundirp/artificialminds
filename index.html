@@ -516,6 +516,12 @@ html.rm .sitemap-label{transition:none}
   --phone-halo-0: rgba(255, 255, 255, 0);
   --phone-halo-35: rgba(255, 255, 255, 0.35);
   --phone-halo-85: rgba(255, 255, 255, 0.85);
+
+  /* card 2: the typing bubble over the phone. White fill, dark grey outline,
+     mid grey dots. */
+  --bubble-fill: #ffffff;
+  --bubble-line: #555555;
+  --bubble-dot: #8a8a8a;
 }
 
 .cardfx-layer {
@@ -924,8 +930,10 @@ html.rm .sitemap-label{transition:none}
   100% { opacity: 0; }
 }
 
-/* card 2: the phone's screen and the halo round it. Dark for about half of the
-   cycle, rising, lit, fading. */
+/* card 2: the phone's screen, the halo round it and the typing bubble above it.
+   Nothing goes dark. The screen breathes between dim and bright over 6
+   seconds, the halo follows it, the three dots rise and fall in turn (one wave
+   every 2.4 seconds) and the bubble softens and returns over 12 seconds. */
 .cardfx-phone-halo,
 .cardfx-phone-screen {
   position: absolute;
@@ -933,7 +941,7 @@ html.rm .sitemap-label{transition:none}
   margin: 0;
   padding: 0;
   transform: translate(-50%, -50%);
-  opacity: 0;
+  opacity: 0.5;
 }
 
 .cardfx-phone-halo {
@@ -952,13 +960,46 @@ html.rm .sitemap-label{transition:none}
   background: var(--phone-lit);
 }
 
-@keyframes cardfx-phone {
-  0% { opacity: 0; animation-timing-function: ease-in-out; }
-  38% { opacity: 0; animation-timing-function: ease-in-out; }
-  55% { opacity: 1; }
-  75% { opacity: 1; animation-timing-function: ease-in-out; }
-  89% { opacity: 0; }
-  100% { opacity: 0; }
+/* one path draws the bubble and its tail, so the outline has no seam */
+.cardfx-phone-bubble {
+  position: absolute;
+  display: block;
+  height: auto;
+  transform: translateX(-50%);
+  overflow: visible;
+}
+
+.cardfx-phone-bubble path {
+  fill: var(--bubble-fill);
+  stroke: var(--bubble-line);
+  stroke-width: 1;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.cardfx-phone-bubble circle {
+  fill: var(--bubble-dot);
+  opacity: 0.45;
+}
+
+@keyframes cardfx-phone-breathe {
+  0%, 100% { opacity: 0.5; }
+  50% { opacity: 0.96; }
+}
+
+@keyframes cardfx-phone-halo {
+  0%, 100% { opacity: 0.28; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes cardfx-phone-soften {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.8; }
+}
+
+@keyframes cardfx-phone-dot {
+  0%, 100% { opacity: 0.45; transform: translateY(0); }
+  50% { opacity: 1; transform: translateY(-3.4px); }
 }
 
 /* one bead of the pulse on card 7 */
@@ -1828,16 +1869,20 @@ html.rm .sitemap-label{transition:none}
     faceWaterline(c.layer('cardfx-line'));          // above the water, so no copy can cover it
   }
 
-  /* ---------- card 2: the light on the phone ---------- */
+  /* ---------- card 2: the phone, its light and the typing bubble ---------- */
 
   /* The phone on the empty seat. x, y: the centre of its screen, and w, h: the
      screen's size, as percent of the picture (the picture is the 1050 by 700
      crop of the 1360 by 840 master, so the screen is 48 by 9.5 pixels of it,
      centred at 679.5, 585.75 of the master). The halo is the pale light on the
-     seat, w percent of the picture wide and half as high. One cycle is 7
-     seconds, dark for about half of it. */
-  var PHONE = { x: 46.62, y: 67.96, w: 4.571, h: 1.357, halo: 17 };
-  var PHONE_CYCLE = 7;
+     seat, halo percent of the picture wide and half as high. The bubble is
+     bubble percent of the picture wide, centred on the screen, with the tip of
+     its tail tip percent down the picture, just above the phone. Nothing goes
+     dark: the screen breathes over 6 seconds, the halo follows it 0.6 seconds
+     behind, the dots make one wave every 2.4 seconds and the bubble softens
+     and returns over 12 seconds. */
+  var PHONE = { x: 46.62, y: 67.96, w: 4.571, h: 1.357, halo: 17, bubble: 6.48, tip: 66.4 };
+  var BUBBLE_PATH = 'M22 2H78A20 20 0 0 1 78 42H56L50 55L44 42H22A20 20 0 0 1 22 2Z';
 
   function card2(c) {
     var layer = c.layer('cardfx-phone');
@@ -1848,15 +1893,43 @@ html.rm .sitemap-label{transition:none}
     halo.style.width = pct(PHONE.halo);
     screen.style.width = pct(PHONE.w);
     screen.style.height = pct(PHONE.h);
+
+    var NS = 'http://www.w3.org/2000/svg';
+    var bubble = document.createElementNS(NS, 'svg');
+    bubble.setAttribute('class', 'cardfx-phone-bubble');
+    bubble.setAttribute('viewBox', '0 0 100 56');
+    bubble.setAttribute('focusable', 'false');
+    var shape = document.createElementNS(NS, 'path');
+    shape.setAttribute('d', BUBBLE_PATH);
+    bubble.appendChild(shape);
+    var dots = [];
+    for (var k = 0; k < 3; k++) {
+      var dot = document.createElementNS(NS, 'circle');
+      dot.setAttribute('cx', String(30 + 20 * k));
+      dot.setAttribute('cy', '22');
+      dot.setAttribute('r', '4.4');
+      bubble.appendChild(dot);
+      dots.push(dot);
+    }
+    bubble.style.left = pct(PHONE.x);
+    bubble.style.width = pct(PHONE.bubble);
+    // the svg is 56 units high, the tail tip 1 unit above its bottom edge
+    var unit = PHONE.bubble * 0.56 * 1.5 / 56;     // percent of the picture height per unit
+    bubble.style.bottom = pct(100 - PHONE.tip - unit);
+
     layer.appendChild(halo);
     layer.appendChild(screen);
-    if (c.reduced) {                          // the screen stays softly lit and still
+    layer.appendChild(bubble);
+    if (c.reduced) {                          // everything holds still: the screen softly lit, the bubble shown, the dots at one tone
       halo.style.opacity = '0.55';
       screen.style.opacity = '0.8';
+      for (var m = 0; m < dots.length; m++) dots[m].style.opacity = '0.7';
       return;
     }
-    c.cycle(halo, 'cardfx-phone', PHONE_CYCLE, 0);
-    c.cycle(screen, 'cardfx-phone', PHONE_CYCLE, 0);
+    c.cycle(screen, 'cardfx-phone-breathe', 6, 0, 'ease-in-out');
+    c.cycle(halo, 'cardfx-phone-halo', 6, -5.4, 'ease-in-out');
+    c.cycle(bubble, 'cardfx-phone-soften', 12, 0, 'ease-in-out');
+    for (var n = 0; n < dots.length; n++) c.cycle(dots[n], 'cardfx-phone-dot', 2.4, -(2.4 - 0.4 * n) % 2.4, 'ease-in-out');
   }
 
   /* ---------- card 3: signals climbing the roots ---------- */
