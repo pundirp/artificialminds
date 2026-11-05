@@ -144,9 +144,9 @@ The underlying data and the rules behind it are published beside the page:
 - Data: https://pundirp.github.io/artificialminds/AI-future-canon/canon-data.json
 - Methodology: https://pundirp.github.io/artificialminds/AI-future-canon/AI-Future-Canon-Methodology.md
 
-### 8. Feeding an AI Agent the Facts
+### 8. Your Order Is on the Truck
 
-https://pundirp.github.io/artificialminds/feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html
+https://pundirp.github.io/artificialminds/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html
 
 An illustrated field guide to how a company prepares its data for an AI agent, for readers
 with no technical background. A bakery’s flour is late, and its owner emails her supplier,

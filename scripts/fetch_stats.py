@@ -62,7 +62,7 @@ PROJECTS = [
     ("artificial-mind-of-your-own", "A Talking Machine of Your Own"),
     ("A-Salon-of-Witnesses", "A Salon of Witnesses"),
     ("AI-future-canon", "AI Future Canon"),
-    ("feeding-an-ai-agent-the-facts", "Feeding an AI Agent the Facts"),
+    ("feeding-an-ai-agent-the-facts", "Your Order Is on the Truck"),
 ]
 HOME_ID = "home"
 HOME_NAME = "Home"
