@@ -517,10 +517,9 @@ html.rm .sitemap-label{transition:none}
   --phone-halo-35: rgba(255, 255, 255, 0.35);
   --phone-halo-85: rgba(255, 255, 255, 0.85);
 
-  /* card 2: the typing bubble over the phone. White fill, dark grey outline,
-     mid grey dots. */
+  /* card 2: the typing bubble over the phone. A soft white fill with no outline,
+     and mid grey dots. */
   --bubble-fill: #ffffff;
-  --bubble-line: #555555;
   --bubble-dot: #8a8a8a;
 }
 
@@ -931,9 +930,12 @@ html.rm .sitemap-label{transition:none}
 }
 
 /* card 2: the phone's screen, the halo round it and the typing bubble above it.
-   Nothing goes dark. The screen breathes between dim and bright over 6
-   seconds, the halo follows it, the three dots rise and fall in turn (one wave
-   every 2.4 seconds) and the bubble softens and returns over 12 seconds. */
+   One cycle is 10 seconds and every change is eased. The screen brightens from
+   dark to lit over 2 seconds and the halo follows. When the screen is mostly lit
+   the bubble fades in over 1.5 seconds and rises 2 pixels, the three dots rise
+   and fall in turn (one wave every 2.4 seconds), then the bubble fades away
+   over 1.5 seconds, the screen dims over 2 seconds and the phone rests dark for
+   1.5 seconds. The bubble is never visible while the screen is dark. */
 .cardfx-phone-halo,
 .cardfx-phone-screen {
   position: absolute;
@@ -941,7 +943,7 @@ html.rm .sitemap-label{transition:none}
   margin: 0;
   padding: 0;
   transform: translate(-50%, -50%);
-  opacity: 0.5;
+  opacity: 0;
 }
 
 .cardfx-phone-halo {
@@ -960,21 +962,18 @@ html.rm .sitemap-label{transition:none}
   background: var(--phone-lit);
 }
 
-/* one path draws the bubble and its tail, so the outline has no seam */
+/* one path draws the bubble and its tail: a soft white fill with no outline */
 .cardfx-phone-bubble {
   position: absolute;
   display: block;
   height: auto;
   transform: translateX(-50%);
   overflow: visible;
+  opacity: 0;
 }
 
 .cardfx-phone-bubble path {
   fill: var(--bubble-fill);
-  stroke: var(--bubble-line);
-  stroke-width: 1;
-  stroke-linejoin: round;
-  vector-effect: non-scaling-stroke;
 }
 
 .cardfx-phone-bubble circle {
@@ -983,18 +982,28 @@ html.rm .sitemap-label{transition:none}
 }
 
 @keyframes cardfx-phone-breathe {
-  0%, 100% { opacity: 0.5; }
-  50% { opacity: 0.96; }
+  0% { opacity: 0; }
+  20% { opacity: 0.95; }
+  65% { opacity: 0.95; }
+  85% { opacity: 0; }
+  100% { opacity: 0; }
 }
 
 @keyframes cardfx-phone-halo {
-  0%, 100% { opacity: 0.28; }
-  50% { opacity: 0.8; }
+  0% { opacity: 0; }
+  3% { opacity: 0; }
+  24% { opacity: 0.8; }
+  68% { opacity: 0.8; }
+  88% { opacity: 0; }
+  100% { opacity: 0; }
 }
 
-@keyframes cardfx-phone-soften {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.8; }
+@keyframes cardfx-phone-pop {
+  0%, 17% { opacity: 0; transform: translate(-50%, 2px); }
+  32% { opacity: 1; transform: translate(-50%, 0); }
+  52% { opacity: 1; transform: translate(-50%, 0); }
+  67% { opacity: 0; transform: translate(-50%, 0); }
+  100% { opacity: 0; transform: translate(-50%, 0); }
 }
 
 @keyframes cardfx-phone-dot {
@@ -1877,11 +1886,12 @@ html.rm .sitemap-label{transition:none}
      centred at 679.5, 585.75 of the master). The halo is the pale light on the
      seat, halo percent of the picture wide and half as high. The bubble is
      bubble percent of the picture wide, centred on the screen, with the tip of
-     its tail tip percent down the picture, just above the phone. Nothing goes
-     dark: the screen breathes over 6 seconds, the halo follows it 0.6 seconds
-     behind, the dots make one wave every 2.4 seconds and the bubble softens
-     and returns over 12 seconds. */
-  var PHONE = { x: 46.62, y: 67.96, w: 4.571, h: 1.357, halo: 17, bubble: 6.48, tip: 66.4 };
+     its tail tip percent down the picture, just above the phone. One cycle is
+     10 seconds: the screen brightens over 2 seconds and the halo follows, the
+     bubble fades in once the screen is mostly lit, the dots make one wave every
+     2.4 seconds, then the bubble fades away, the screen dims and the phone
+     rests dark for 1.5 seconds. */
+  var PHONE = { x: 46.62, y: 67.96, w: 4.571, h: 1.357, halo: 17, bubble: 4.86, tip: 66.4 };
   var BUBBLE_PATH = 'M22 2H78A20 20 0 0 1 78 42H56L50 55L44 42H22A20 20 0 0 1 22 2Z';
 
   function card2(c) {
@@ -1920,15 +1930,16 @@ html.rm .sitemap-label{transition:none}
     layer.appendChild(halo);
     layer.appendChild(screen);
     layer.appendChild(bubble);
-    if (c.reduced) {                          // everything holds still: the screen softly lit, the bubble shown, the dots at one tone
+    if (c.reduced) {                          // everything holds still: the screen lit, the bubble shown, the dots at one tone
       halo.style.opacity = '0.55';
       screen.style.opacity = '0.8';
+      bubble.style.opacity = '1';
       for (var m = 0; m < dots.length; m++) dots[m].style.opacity = '0.7';
       return;
     }
-    c.cycle(screen, 'cardfx-phone-breathe', 6, 0, 'ease-in-out');
-    c.cycle(halo, 'cardfx-phone-halo', 6, -5.4, 'ease-in-out');
-    c.cycle(bubble, 'cardfx-phone-soften', 12, 0, 'ease-in-out');
+    c.cycle(screen, 'cardfx-phone-breathe', 10, 0, 'ease-in-out');
+    c.cycle(halo, 'cardfx-phone-halo', 10, 0, 'ease-in-out');
+    c.cycle(bubble, 'cardfx-phone-pop', 10, 0, 'ease-in-out');
     for (var n = 0; n < dots.length; n++) c.cycle(dots[n], 'cardfx-phone-dot', 2.4, -(2.4 - 0.4 * n) % 2.4, 'ease-in-out');
   }
 
@@ -2563,7 +2574,7 @@ html.rm .sitemap-label{transition:none}
     ],
     2: { v: [.230, .12, .420, .99], ink: [0, 0, 1, 1], bs: [.18, .06, .82, .99] },   /* the subway car (round 49; crop 190,110 to 1240,810 of the 1360 by 840 master): the closed spine shows the standing woman with her grocery bags; a band shows the woman with the bags, the seat and the man who shrugs */
     3: { v: [.200, .175, .315, .640], ink: [.053, .029, .956, .954], bs: [.120, .170, .430, .690], bclip: [0, 0, .535, 1], bink: [.053, .029, .535, .954] },   /* the child at the desk with the trunk and the monkey below; the child, the desk and the top of the roots in a band, which shows nothing of the robot's side */
-    4: { v: [.596, .040, .716, .960], ink: [0, 0, 1, 1], hl: .580, bs: [0, 0, 1, 1] },   /* the machine hand with its pen (round 29 of Project 6: the ink drawing in two layers, darker, turned 5 degrees and cropped 1.5 times closer); v is a tall strip through the pen and the fingers, so the closed column zooms in on the hand; hl: on hover the window reaches the nib, at canvas x .601; no fit, since fit made the hover zoom in; a band shows the whole picture */
+    4: { v: [.592, .128, .785, .680], ink: [0, 0, 1, 1], hl: .580, bs: [0, 0, 1, 1] },   /* the machine hand with its pen (round 29 of Project 6: the ink drawing in two layers, darker, turned 5 degrees and cropped 1.5 times closer); hl: on hover the window reaches the nib, at canvas x .601; no fit, since fit made the hover zoom in; a band shows the whole picture */
     5: { v: [.397, .100, .603, .900], ink: [.007, .015, .999, .990], bs: [.007, .015, .999, .990] },  /* the brain */
     6: { v: [.482, .490, .538, .850], ink: [0, .033, 1, .998], bs: [.310, .500, .700, .790] },       /* the manor: the central gable; the whole house in a band */
     7: { v: [.482, .1195, .698, .9857], ink: [.001, 0, .999, .998], bs: [.4064, .1195, .7585, .9857] },   /* the reader drawing (crop 376,260 to 1370,887 of the 1774 by 887 original): the lamp, its shade and pole, and the left arm and back of the empty armchair in the spine; the lamp with the armchair in a band; the open card shows the whole scene */
