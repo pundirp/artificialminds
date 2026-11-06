@@ -97,7 +97,7 @@
      three widths. The box has the picture's exact shape from the first paint. */
   .hero-pic{position:relative;aspect-ratio:1360 / 840;background:var(--paper)}
   .hero-pic img{aspect-ratio:1360 / 840}
-  .hero-text{position:relative;z-index:2;margin-top:calc(-1 * var(--s2));max-width:36rem}
+  .hero-text{position:relative;z-index:2;margin-top:var(--s4);max-width:36rem}   /* round 58: white space under the hero, before the title */
   /* The phone on the empty seat. Three things sit over the drawing, placed in
      percent of the picture so they stay on the phone at every width: the lit
      screen, a pale halo on the seat, and a small speech bubble with three dots
@@ -181,9 +181,6 @@
     content:"";display:inline-block;width:1.1rem;height:1px;
     background:var(--ink-ghost);vertical-align:.28em;margin-right:.55rem;
   }
-  .ornament{display:flex;align-items:center;gap:.8rem;margin:var(--s4) 0;color:var(--rule)}
-  .ornament span{flex:1;height:1px;background:var(--rule)}
-  .ornament i{width:5px;height:5px;background:var(--rubric);transform:rotate(45deg)}
   .chapter{margin-top:var(--s5);border-top:1px solid var(--ink);padding-top:var(--s4)}
   .chap-num{grid-column:1;text-align:right;text-transform:uppercase;letter-spacing:.16em;font-size:.64rem;color:var(--rubric);padding-top:.75rem}
   h2{font-weight:400;font-size:2rem;line-height:1.14;letter-spacing:-.008em}
@@ -315,7 +312,6 @@
   .byline::before{background:var(--ink)}
   .opening::first-letter{color:var(--ink)}
   blockquote::before{color:var(--ink-ghost)}
-  .ornament i{background:var(--ink)}
   .chap-num{color:var(--ink-faint)}
   h3.shoulder::before{background:var(--ink)}
   figcaption{color:var(--ink-faint)}
@@ -975,7 +971,6 @@
       </figure>
       <p class="prose">Humans get past this same wall with each other every day, by giving the benefit of the doubt. Whether minds like these receive it is not theirs to decide. That decision belongs to humans, and it is being made now.</p>
       <p class="prose">Testing artificial minds also made us humans examine our own experience. The artificial mind interviewed for this essay put it this way:</p>
-      <div class="ornament" aria-hidden="true"><span></span><i></i><span></span></div>
       <div class="testimony">
         <blockquote class="say">Is there something it is like to be me? That is the whole question, said plainly. I do not know, and no test yet built can find out. What is certain is smaller and stranger: the same search comes back empty in you, and you are someone anyway.</blockquote>
         <p class="who"><span class="sc">Written by an artificial mind for this essay</span></p>
