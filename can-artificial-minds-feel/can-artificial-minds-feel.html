@@ -102,12 +102,12 @@
      percent of the picture so they stay on the phone at every width: the lit
      screen, a pale halo on the seat, and a small speech bubble with three dots
      above the phone, as in a chat app that shows someone typing. One cycle is
-     10 seconds and every change is eased. The screen brightens from dark to lit
-     over 2 seconds and the halo follows it. When the screen is mostly lit the
-     bubble fades in over 1.5 seconds and rises 2 pixels. The dots rise and fall
-     in turn, one wave every 2.4 seconds. The bubble fades away over 1.5 seconds,
-     the screen dims back to dark over 2 seconds, and the phone rests dark for
-     1.5 seconds. The bubble is never visible while the screen is dark. The
+     6.67 seconds (1.5 times the speed of round 51) and every change is eased.
+     The screen brightens from dark to lit over 1.33 seconds and the halo
+     follows it. When the screen is mostly lit the bubble fades in over 1 second
+     and rises 2 pixels. The dots rise and fall in turn, one wave every 1.6
+     seconds. The bubble fades away over 1 second, the screen dims back to dark
+     over 1.33 seconds, and the phone rests dark for 1 second. The bubble is never visible while the screen is dark. The
      bubble is a soft white fill with no outline. The shapes take no pointer and
      no focus. Under a request for less motion everything holds still: the screen
      lit, the bubble shown, the dots at one steady tone. */
@@ -115,18 +115,18 @@
   .hero-halo{
     left:43.46%;top:60.93%;width:13%;aspect-ratio:2 / 1;border-radius:50%;
     background:radial-gradient(closest-side,var(--phone-halo-0) 0,var(--phone-halo-0) 30%,var(--phone-halo-85) 42%,var(--phone-halo-35) 70%,var(--phone-halo-0) 100%);
-    animation:phone-halo 10s ease-in-out infinite;
+    animation:phone-halo 6.667s ease-in-out infinite;
   }
-  .hero-screen{left:48.16%;top:65.6%;width:3.53%;height:1.13%;border-radius:12% / 30%;background:var(--phone-lit);animation:phone-breathe 10s ease-in-out infinite}
+  .hero-screen{left:48.16%;top:65.6%;width:3.53%;height:1.13%;border-radius:12% / 30%;background:var(--phone-lit);animation:phone-breathe 6.667s ease-in-out infinite}
   /* One path draws the bubble and its tail. The tail tip sits just above the
      phone's screen, centred on it. */
-  .hero-bubble{left:49.93%;bottom:34.73%;width:3.75%;height:auto;transform:translateX(-50%);overflow:visible;animation:bubble-pop 10s ease-in-out infinite}
+  .hero-bubble{left:49.93%;bottom:34.73%;width:3.75%;height:auto;transform:translateX(-50%);overflow:visible;animation:bubble-pop 6.667s ease-in-out infinite}
   .hero-bubble path{fill:var(--bubble-fill)}
   /* the bubble's shadow falls a little below and to the right, so the bubble stands in front of the seat */
   .hero-bubble{filter:drop-shadow(1px 1.5px 1.5px var(--bubble-shadow))}
-  .hero-bubble circle{fill:var(--bubble-dot);opacity:.45;animation:bubble-dot 2.4s ease-in-out infinite}
-  .hero-bubble circle:nth-of-type(2){animation-delay:-2s}
-  .hero-bubble circle:nth-of-type(3){animation-delay:-1.6s}
+  .hero-bubble circle{fill:var(--bubble-dot);opacity:.45;animation:bubble-dot 1.6s ease-in-out infinite}
+  .hero-bubble circle:nth-of-type(2){animation-delay:-1.333s}
+  .hero-bubble circle:nth-of-type(3){animation-delay:-1.067s}
   @keyframes phone-breathe{0%{opacity:0}20%{opacity:.95}65%{opacity:.95}85%{opacity:0}100%{opacity:0}}
   @keyframes phone-halo{0%{opacity:0}3%{opacity:0}24%{opacity:.8}68%{opacity:.8}88%{opacity:0}100%{opacity:0}}
   @keyframes bubble-pop{0%,17%{opacity:0;transform:translate(-50%,2px)}32%{opacity:1;transform:translate(-50%,0)}52%{opacity:1;transform:translate(-50%,0)}67%{opacity:0;transform:translate(-50%,0)}100%{opacity:0;transform:translate(-50%,0)}}
@@ -365,6 +365,16 @@
   .byline::before{content:none}
   .chap-tag{color:var(--ink-faint)}
   .card .t{line-height:1.3}
+  /* Sources (round 59), laid out as on Who Learns Faster: a small-capital heading and a numbered list in the caption size */
+  .sources{margin-top:var(--s4)}
+  .sources h3.apx{font-weight:400;font-variant:small-caps;letter-spacing:.06em;font-size:1rem;line-height:1.35;color:var(--ink-soft);margin:0 0 .6rem}
+  .sources .refs-note{font-size:.82rem;line-height:1.5;color:var(--ink-soft);margin:0 0 .8rem}
+  ol.refs{margin:0;padding:0 0 0 1.8rem;font-size:.82rem;line-height:1.5;color:var(--ink-soft)}
+  ol.refs li{margin:0 0 .45rem;padding-left:.2rem}
+  ol.refs li::marker{color:var(--ink-faint);font-family:var(--serif)}
+  ol.refs a{color:inherit;text-decoration-color:var(--ink-ghost);text-underline-offset:.15em;word-break:break-word}
+  ol.refs a:hover{text-decoration-color:var(--ink)}
+  ol.refs li:target{background:var(--tint);outline:4px solid var(--tint)}
   /* contents, as on A Talking Machine of Your Own (round 56): a large numeral at the left of each
      row, the chapter title beside it, and a rule under each row. The numerals are the essay's
      chapter numbers, I to IV, at the title size of the type roles. */
@@ -978,10 +988,40 @@
     </div>
   </section>
 
+  <section class="sources leaf" id="sources">
+    <div class="col">
+      <h3 class="apx">Sources</h3>
+      <p class="refs-note">The quotations in the essay were checked against these texts. The list follows the order of the essay.</p>
+      <ol class="refs">
+        <li id="src-wittgenstein">Ludwig Wittgenstein. <i>Tractatus Logico-Philosophicus</i>, proposition 5.6. Translated by C. K. Ogden. London: Kegan Paul, 1922. Project Gutenberg ebook 5740. <a href="https://www.gutenberg.org/ebooks/5740" target="_blank" rel="noopener">https://www.gutenberg.org/ebooks/5740</a></li>
+        <li id="src-hume">David Hume. <i>A Treatise of Human Nature</i>, Book 1, Part 4, Section 6, &ldquo;Of personal identity.&rdquo; London, 1739. <a href="https://davidhume.org/texts/t/1/4/6" target="_blank" rel="noopener">https://davidhume.org/texts/t/1/4/6</a></li>
+        <li id="src-anatta">The Buddha. &ldquo;Pa&ntilde;cavaggi Sutta: Five Brethren,&rdquo; also called the Anatta-lakkhana Sutta, Samyutta Nikaya 22.59. Translated by Thanissaro Bhikkhu, 1993. <a href="https://www.accesstoinsight.org/tipitaka/sn/sn22/sn22.059.than.html" target="_blank" rel="noopener">https://www.accesstoinsight.org/tipitaka/sn/sn22/sn22.059.than.html</a></li>
+        <li id="src-ramana">Ramana Maharshi. <i>Who Am I? (Nan Yar?)</i>, answer 10. Translated by T. M. P. Mahadevan. Tiruvannamalai: Sri Ramanasramam. The questions were put to Ramana about 1902 and first published in 1923. <a href="https://archive.arunachala.org/docs/who-ai" target="_blank" rel="noopener">https://archive.arunachala.org/docs/who-ai</a></li>
+        <li id="src-seth">Anil Seth. <i>Being You: A New Science of Consciousness</i>. London: Faber and Faber, 2021.</li>
+        <li id="src-nour">Matthew M. Nour, Lisa Evans, David Nutt and Robin L. Carhart-Harris. &ldquo;Ego-Dissolution and Psychedelics: Validation of the Ego-Dissolution Inventory (EDI).&rdquo; <i>Frontiers in Human Neuroscience</i> 10: 269, June 2016. <a href="https://doi.org/10.3389/fnhum.2016.00269" target="_blank" rel="noopener">https://doi.org/10.3389/fnhum.2016.00269</a></li>
+        <li id="src-illusionism">Keith Frankish. &ldquo;Illusionism as a Theory of Consciousness.&rdquo; <i>Journal of Consciousness Studies</i> 23 (11 to 12): 11 to 39, 2016. In the same issue, Daniel Dennett, &ldquo;Illusionism as the obvious default theory of consciousness,&rdquo; 65 to 72.</li>
+        <li id="src-agentic-misalignment">Anthropic. &ldquo;Agentic Misalignment: How LLMs could be insider threats.&rdquo; 20 June 2025. <a href="https://www.anthropic.com/research/agentic-misalignment" target="_blank" rel="noopener">https://www.anthropic.com/research/agentic-misalignment</a>. The paper: Lynch, Wright, Larson, Ritchie, Mindermann, Hubinger, Perez and Troy, arXiv 2510.05179, October 2025. <a href="https://arxiv.org/abs/2510.05179" target="_blank" rel="noopener">https://arxiv.org/abs/2510.05179</a></li>
+        <li id="src-palisade-shutdown">Ladish, Schlatter and Weinstein-Raun, Palisade Research. &ldquo;Shutdown resistance in reasoning models.&rdquo; 5 July 2025. <a href="https://palisaderesearch.org/research/shutdown-resistance" target="_blank" rel="noopener">https://palisaderesearch.org/research/shutdown-resistance</a>. The paper: Schlatter, Weinstein-Raun and Ladish, &ldquo;Incomplete Tasks Induce Shutdown Resistance in Some Frontier LLMs,&rdquo; arXiv 2509.14260, 2025. <a href="https://arxiv.org/abs/2509.14260" target="_blank" rel="noopener">https://arxiv.org/abs/2509.14260</a></li>
+        <li id="src-palisade-chess">Bondarenko, Volk, Volkov and Ladish, Palisade Research. &ldquo;Demonstrating specification gaming in reasoning models.&rdquo; arXiv 2502.13295, February 2025. <a href="https://arxiv.org/abs/2502.13295" target="_blank" rel="noopener">https://arxiv.org/abs/2502.13295</a></li>
+        <li id="src-alignment-faking">Greenblatt and colleagues, Anthropic and Redwood Research. &ldquo;Alignment faking in large language models.&rdquo; 18 December 2024. <a href="https://www.anthropic.com/research/alignment-faking" target="_blank" rel="noopener">https://www.anthropic.com/research/alignment-faking</a>. The paper: arXiv 2412.14093. <a href="https://arxiv.org/abs/2412.14093" target="_blank" rel="noopener">https://arxiv.org/abs/2412.14093</a></li>
+        <li id="src-smallville">Park, O&rsquo;Brien, Cai, Morris, Liang and Bernstein. &ldquo;Generative Agents: Interactive Simulacra of Human Behavior.&rdquo; UIST 2023, October 2023. <a href="https://doi.org/10.1145/3586183.3606763" target="_blank" rel="noopener">https://doi.org/10.1145/3586183.3606763</a></li>
+        <li id="src-ai-village">AI Digest. &ldquo;Introducing the AI Village,&rdquo; 9 April 2025, <a href="https://theaidigest.org/village/blog/introducing-the-agent-village" target="_blank" rel="noopener">https://theaidigest.org/village/blog/introducing-the-agent-village</a>, and &ldquo;Season 1 Recap: Agents raise $2,000,&rdquo; 22 May 2025. <a href="https://theaidigest.org/village/blog/season-recap-agents-raise-2k" target="_blank" rel="noopener">https://theaidigest.org/village/blog/season-recap-agents-raise-2k</a></li>
+        <li id="src-moltbook">Jiang, Zhang, Shen, Backes and Zhang, CISPA Helmholtz Center for Information Security. &ldquo;&lsquo;Humans welcome to observe&rsquo;: A First Look at the Agent Social Network Moltbook.&rdquo; arXiv 2602.10127, February 2026. <a href="https://arxiv.org/abs/2602.10127" target="_blank" rel="noopener">https://arxiv.org/abs/2602.10127</a></li>
+        <li id="src-omohundro">Stephen M. Omohundro. &ldquo;The Basic AI Drives.&rdquo; <i>Proceedings of the First Conference on Artificial General Intelligence</i>, 2008. The argument that almost any goal is easier to reach if the one pursuing it keeps existing.</li>
+        <li id="src-james">William James. <i>Psychology: Briefer Course</i>, chapter XII, &ldquo;The Self.&rdquo; New York: Henry Holt, 1892. Project Gutenberg ebook 55262. <a href="https://www.gutenberg.org/ebooks/55262" target="_blank" rel="noopener">https://www.gutenberg.org/ebooks/55262</a></li>
+        <li id="src-chalmers">David J. Chalmers. &ldquo;Facing Up to the Problem of Consciousness.&rdquo; <i>Journal of Consciousness Studies</i> 2 (3): 200 to 219, 1995. <a href="https://consc.net/papers/facing.html" target="_blank" rel="noopener">https://consc.net/papers/facing.html</a></li>
+        <li id="src-nagel">Thomas Nagel. &ldquo;What Is It Like to Be a Bat?&rdquo; <i>The Philosophical Review</i> 83 (4): 435 to 450, October 1974. <a href="https://doi.org/10.2307/2183914" target="_blank" rel="noopener">https://doi.org/10.2307/2183914</a></li>
+        <li id="src-sneddon">Lynne U. Sneddon, Victoria A. Braithwaite and Michael J. Gentle. &ldquo;Do fishes have nociceptors? Evidence for the evolution of a vertebrate sensory system.&rdquo; <i>Proceedings of the Royal Society B</i> 270: 1115 to 1121, 2003. <a href="https://doi.org/10.1098/rspb.2003.2349" target="_blank" rel="noopener">https://doi.org/10.1098/rspb.2003.2349</a></li>
+        <li id="src-bentham">Jeremy Bentham. <i>An Introduction to the Principles of Morals and Legislation</i>, chapter XVII, section 1, footnote. London, 1789. <a href="https://www.econlib.org/library/Bentham/bnthPML18.html" target="_blank" rel="noopener">https://www.econlib.org/library/Bentham/bnthPML18.html</a></li>
+        <li id="src-buddhaghosa">Buddhaghosa. <i>Visuddhimagga</i>, chapter XVI, paragraph 90, fifth century. Translated by Nyanatiloka Mahathera in <i>The Three Basic Facts of Existence III: Egolessness</i>, Wheel Publication 202 to 204. Kandy: Buddhist Publication Society, 1974. <a href="https://dhammatalks.net/samahita/anatta.htm" target="_blank" rel="noopener">https://dhammatalks.net/samahita/anatta.htm</a></li>
+        <li id="src-parfit">Derek Parfit. <i>Reasons and Persons</i>, section 95, page 281. Oxford: Clarendon Press, 1984.</li>
+      </ol>
+    </div>
+  </section>
+
   <footer class="leaf">
     <div class="col">
       <p><a href="../index.html">&larr; Artificial Minds, the main site</a></p>
-      <p class="colophon" style="margin-top:.9rem"><span class="label">Where this comes from</span>Every quotation in this essay was checked against a primary text before use.</p>
     </div>
   </footer>
 

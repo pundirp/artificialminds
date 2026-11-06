@@ -939,12 +939,12 @@ html.rm .sitemap-label{transition:none}
 }
 
 /* card 2: the phone's screen, the halo round it and the typing bubble above it.
-   One cycle is 10 seconds and every change is eased. The screen brightens from
-   dark to lit over 2 seconds and the halo follows. When the screen is mostly lit
-   the bubble fades in over 1.5 seconds and rises 2 pixels, the three dots rise
-   and fall in turn (one wave every 2.4 seconds), then the bubble fades away
-   over 1.5 seconds, the screen dims over 2 seconds and the phone rests dark for
-   1.5 seconds. The bubble is never visible while the screen is dark. */
+   One cycle is 6.67 seconds (1.5 times the speed of round 51) and every change
+   is eased. The screen brightens from dark to lit over 1.33 seconds and the halo
+   follows. When the screen is mostly lit the bubble fades in over 1 second and
+   rises 2 pixels, the three dots rise and fall in turn (one wave every 1.6
+   seconds), then the bubble fades away over 1 second, the screen dims over 1.33
+   seconds and the phone rests dark for 1 second. The bubble is never visible while the screen is dark. */
 .cardfx-phone-halo,
 .cardfx-phone-screen {
   position: absolute;
@@ -1957,10 +1957,10 @@ html.rm .sitemap-label{transition:none}
      seat, halo percent of the picture wide and half as high. The bubble is
      bubble percent of the picture wide, centred on the screen, with the tip of
      its tail tip percent down the picture, just above the phone. One cycle is
-     10 seconds: the screen brightens over 2 seconds and the halo follows, the
-     bubble fades in once the screen is mostly lit, the dots make one wave every
-     2.4 seconds, then the bubble fades away, the screen dims and the phone
-     rests dark for 1.5 seconds. */
+     6.67 seconds: the screen brightens over 1.33 seconds and the halo follows,
+     the bubble fades in once the screen is mostly lit, the dots make one wave
+     every 1.6 seconds, then the bubble fades away, the screen dims and the
+     phone rests dark for 1 second. */
   var PHONE = { x: 49.48, y: 60.53, w: 4.571, h: 1.357, halo: 17, bubble: 4.86, tip: 58.97 };
   var BUBBLE_PATH = 'M22 2H78A20 20 0 0 1 78 42H56L50 55L44 42H22A20 20 0 0 1 22 2Z';
 
@@ -2007,10 +2007,10 @@ html.rm .sitemap-label{transition:none}
       for (var m = 0; m < dots.length; m++) dots[m].style.opacity = '0.7';
       return;
     }
-    c.cycle(screen, 'cardfx-phone-breathe', 10, 0, 'ease-in-out');
-    c.cycle(halo, 'cardfx-phone-halo', 10, 0, 'ease-in-out');
-    c.cycle(bubble, 'cardfx-phone-pop', 10, 0, 'ease-in-out');
-    for (var n = 0; n < dots.length; n++) c.cycle(dots[n], 'cardfx-phone-dot', 2.4, -(2.4 - 0.4 * n) % 2.4, 'ease-in-out');
+    c.cycle(screen, 'cardfx-phone-breathe', 6.667, 0, 'ease-in-out');
+    c.cycle(halo, 'cardfx-phone-halo', 6.667, 0, 'ease-in-out');
+    c.cycle(bubble, 'cardfx-phone-pop', 6.667, 0, 'ease-in-out');
+    for (var n = 0; n < dots.length; n++) c.cycle(dots[n], 'cardfx-phone-dot', 1.6, -(1.6 - 0.2667 * n) % 1.6, 'ease-in-out');
   }
 
   /* ---------- card 3: signals climbing the roots ---------- */
