@@ -113,6 +113,14 @@ code, .tok { font-family: var(--mono); font-size: .8em; background: var(--tint);
 .tok.seq { white-space: normal; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
 
 .sheet { max-width: var(--sheet); margin: 0 auto; }
+@media (max-width: 1000px) { .sheet { max-width: var(--measure); } }
+/* from 761 to 1000px the wide figures (their drawings are 760px wide) reach out past the column, centred, up to the window
+   less 32px and at most the old column; below that they scroll sideways and the note says so */
+@media (min-width: 761px) and (max-width: 1000px) {
+  .col > .wide { width: min(var(--sheet), calc(100vw - 32px)); margin-left: calc((100% - min(var(--sheet), calc(100vw - 32px))) / 2); }
+}
+@media (min-width: 761px) and (max-width: 791px) { .wide > .scroll-note { display: block; } }
+@media (min-width: 761px) and (max-width: 839px) { .wide:has(.frame-box) > .scroll-note { display: block; } }
 .leaf { display: grid; grid-template-columns: var(--margin-col) minmax(0, var(--measure)); column-gap: var(--gutter); }
 .leaf > .col { grid-column: 2; min-width: 0; }
 .col p { margin: 0 0 1rem; }

@@ -120,6 +120,7 @@ a:hover{text-decoration-color:var(--ink)}
 a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 
 .sheet{max-width:calc(var(--sheet) + 32px);margin:0 auto;padding:0 16px}
+@media (max-width:1000px){ .sheet{max-width:calc(var(--measure) + 32px); padding-left:16px; padding-right:16px} }
 .sheet.foot{padding-bottom:var(--s5)}
 
 /* the hidden sprite holds the chair picture and, for the chair rows, the round portraits */
@@ -161,6 +162,7 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
   max-width:calc(var(--sheet) + 32px);margin:var(--s2) auto 0;padding:0 16px;
   container-type:inline-size;--shot-h:calc(100cqw * 800 / 1400);
 }
+@media (max-width:1000px){ .hero{max-width:calc(var(--measure) + 32px); padding-left:16px; padding-right:16px} }
 .hero-frame{position:relative;overflow:hidden;margin:0;aspect-ratio:1400 / 800}
 @supports (height:1cqw){
   .hero-frame{
@@ -358,6 +360,9 @@ figcaption.fig-cap{font-size:.82rem;line-height:1.5;color:var(--ink-faint);margi
    The chair picture and the portraits keep their own colours. */
 .chairs .scroller{overflow-x:auto}
 .chairs svg{width:100%;height:auto}
+@media (min-width:761px) and (max-width:1000px){
+  .fig.chairs{width:min(var(--sheet),calc(100vw - 32px));margin-left:calc((100% - min(var(--sheet),calc(100vw - 32px))) / 2)}
+}
 .chairs .scroll-note{display:none;font-size:.82rem;line-height:1.5;color:var(--ink-faint);margin:.4rem 0 0}
 .c-floor{stroke:var(--rule)}
 .c-card{fill:var(--paper);stroke:var(--ink-ghost)}

@@ -53,8 +53,8 @@
 <style>
 /* ---------- 1. Tokens ----------
    Every colour on the page is in this block, including the colours used inside drawings and the colours of the old paper.
-   The white paper palette is seven greys and one red. Red is the reader's guide: part numerals, sub-heading numbers,
-   "Figure N." labels, the selected button, the numbers in the contents list and the two key words of the one-guess figure.
+   The white paper palette is seven greys and one red. Red is the reader's guide: the section labels in Chapter Labels,
+   "Figure N." labels, the numbers of the numbered lists, the selected button and the two key words of the one-guess figure.
    Red also marks the AI side of the figures, as the text asks.
    The appendix carries no red.
    Green and orange appear only where the text of the essay names that colour, in their quiet forms.
@@ -89,8 +89,9 @@
   --sans: var(--family-house-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
   --mono: var(--family-house-mono, ui-monospace, "SF Mono", Menlo, Consolas, monospace);
 
-  /* one column, as wide as the column of the live page */
-  --measure:678px;
+  /* the three parts of the layout of the four other essays: Chapter Labels, Gap and Main Text */
+  --margin-col:10rem; --gutter:2.25rem; --measure:34rem;
+  --sheet:calc(var(--margin-col) + var(--gutter) + var(--measure));
   --s1:.5rem; --s2:1rem; --s3:1.62rem; --s4:2.6rem; --s5:4rem; --s6:6.2rem;
   --pad:16px;
 
@@ -104,7 +105,7 @@
 html{-webkit-text-size-adjust:100%;background:var(--paper);scroll-behavior:smooth}
 @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto} }
 body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--serif);font-size:1rem;line-height:1.6}
-.sheet{max-width:calc(var(--measure) + 2 * var(--pad));margin:0 auto;padding:0 var(--pad) var(--s5)}
+.sheet{max-width:calc(var(--sheet) + 2 * var(--pad));margin:0 auto;padding:0 var(--pad) var(--s5)}
 p{margin:0 0 1rem}
 b{font-weight:700}
 img{max-width:100%}
@@ -119,10 +120,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 .js .jsonly{display:block}
 .req{font-style:italic}
 
-/* the one label style: small capitals in the text face, never uppercase, never red */
+/* the one label style: small capitals in the text face, never uppercase, never red. The section labels in Chapter Labels
+   (section 16) are the one red label, as on How Attention Works in a Transformer */
 .label,.figtitle,th,.tlabel,.tfoot,.verdict,.legend2,.band,.ev .tag,.contm,
 .tl .when,.sgrid .sn,.pcard p.skey,.sgrid .skey,.pair p.label,.pair .pb::before,.pair .pa::before,
-.cm .axis .dl,.cm .axis .cont,h2#appendix{
+.cm .axis .dl,.cm .axis .cont{
   font-family:var(--serif);font-variant:small-caps;text-transform:none;letter-spacing:.06em;font-weight:400;color:var(--ink-faint)
 }
 .label{font-size:.82rem;line-height:1.4}
@@ -189,28 +191,43 @@ h1{font-weight:400;font-size:2.35rem;line-height:1.1;letter-spacing:-.005em;marg
 }
 
 /* ---------- 5. Headings ----------
-   A section opens with a light rule across the column. A part opens with a black rule and its numeral,
-   large and red, above the title. A sub-heading is one line: its number in red, then its title in ink. */
+   A section opens with a light rule. A numbered section opens with a black rule, its title and a grey line under the title;
+   its label sits in Chapter Labels (section 16). A sub-heading is a side heading in small capitals under a light rule. */
 h2{position:relative;font-weight:400;font-size:1.5rem;line-height:1.32;letter-spacing:0;margin:var(--s4) 0 .6rem;padding-top:.95rem}
 h2::before,.backend::before{content:"";position:absolute;top:0;right:0;left:0;border-top:1px solid var(--rule)}
-h2.big{margin-top:var(--s5);display:grid;grid-template-columns:auto 1fr;column-gap:1.1rem;align-items:center}
+h2.big{margin-top:var(--s5)}
 h2.big::before{border-top-color:var(--ink)}
-h2.big .num{grid-row:1/3;display:block;margin:.35rem 0 0;padding-right:.2rem;align-self:center;font-size:6rem;line-height:1;font-weight:400;font-variant-numeric:lining-nums;color:var(--rubric)}
-h2.big .ttl{display:block;align-self:end;font-size:2rem;line-height:1.1}
-h2.big .sub2{display:block;align-self:start;font-size:1.12rem;line-height:1.4;color:var(--ink-faint);margin-top:.3rem}
-.toc{margin:.4rem 0 1.4rem;padding-left:1.4rem}
-.toc li{margin-bottom:.4rem}
-.toc > li::marker,.toc .tocn{color:var(--rubric)}
+h2.big .ttl{display:block;font-size:2rem;line-height:1.1}
+h2.big .sub2{display:block;font-size:1.12rem;line-height:1.4;color:var(--ink-faint);margin-top:.3rem}
+/* the contents, in the style of How Attention Works in a Transformer: the label in Chapter Labels, a hairline above and
+   below each entry, the number of each section large in ink, the parts of a section under it. Each entry keeps its
+   short description, in the small size and grey, under its title. */
+.contents{position:relative;margin:1rem 0 var(--s3)}
+.contents .side{display:block;margin:0 0 .3rem;padding-top:.15rem;font-family:var(--serif);font-variant:small-caps;text-transform:none;
+  letter-spacing:.06em;font-weight:400;font-size:1rem;line-height:1.35;color:var(--ink-faint)}
+ol.toc{list-style:none;margin:0;padding:0;border-top:1px solid var(--rule)}
+ol.toc > li{position:relative;margin:0;padding:.8rem 0 .85rem 3rem;border-bottom:1px solid var(--rule)}
+ol.toc .toc-n{position:absolute;left:0;top:.62rem;font-size:2.05rem;line-height:1;color:var(--ink)}
+ol.toc a{color:var(--ink);text-decoration:none}
+ol.toc a:hover{text-decoration:underline;text-decoration-color:var(--ink-ghost)}
+ol.toc > li > a{display:block;font-size:1.12rem;line-height:1.3}
+ol.toc ol{list-style:none;margin:.45rem 0 0;padding:0}
+ol.toc ol li{margin:0;padding:.3rem 0 .2rem;line-height:1.4}
+ol.toc .toc-d{display:block;margin-top:.15rem;font-size:.82rem;line-height:1.5;color:var(--ink-faint)}
+ol.toc .toc-d a{color:inherit;text-decoration:underline;text-decoration-color:var(--ink-ghost)}
+ol.toc .toc-d a:hover{text-decoration-color:var(--ink)}
 
-h3{display:flex;align-items:baseline;gap:.7rem;margin:var(--s4) 0 .7rem;padding-top:.95rem;border-top:1px solid var(--rule);
-  font-weight:400;font-size:1.3rem;line-height:1.3;letter-spacing:0;color:var(--ink)}
-h3 .subnum{flex:none;font-size:1.55rem;line-height:1;font-variant-numeric:lining-nums;color:var(--rubric)}
+/* a sub-heading, as the side headings of A Talking Machine of Your Own: small capitals at the small size in dark grey,
+   under a light rule. Over 1000px it sits in Chapter Labels beside the first lines of its text (section 16). */
+h3.shoulder{position:relative;margin:var(--s4) 0 .7rem;padding-top:calc(.95rem + .3rem);border-top:1px solid var(--rule);
+  font-family:var(--serif);font-variant:small-caps;text-transform:none;letter-spacing:.06em;font-weight:400;
+  font-size:.82rem;line-height:1.45;color:var(--ink-soft)}
 
 /* ---------- 5b. Drop capitals ----------
    One large ink initial opens the first paragraph of each part and each main section.
    The size and the colour are those of the capitals that the two quiz passages already carry.
    The quiz introduction and the two old paper sections carry no drop capital. */
-.sheet > h2 + p::first-letter{
+:is(.sheet,.col) > h2 + p::first-letter,.col > .chapter + p::first-letter{
   float:left;font-size:3.1em;line-height:.82;padding:.08em .12em 0 0;color:var(--ink)
 }
 
@@ -268,12 +285,10 @@ figure svg{display:block;width:100%;height:auto;max-width:34rem}
   padding:1.1rem 1rem 1.3rem;margin:2.2rem calc(-1 * clamp(.6rem, (100vw - 100%) / 2 - 6px, 2.2rem));
   font-size:calc(1rem - 1px);transform:rotate(-.35deg);will-change:transform}
 .paper.hist{transform:rotate(.25deg)}
-.paper .label,.paper .figtitle,.paper .tl .when,.paper .portraits .portrait figcaption,.paper .apxn{
+.paper .label,.paper .figtitle,.paper .tl .when,.paper .portraits .portrait figcaption{
   font-family:var(--sans);font-variant:normal;text-transform:uppercase;font-weight:400
 }
 .paper .label{font-size:.64rem;letter-spacing:.18em;line-height:1.5;color:var(--old-dim)}
-.paper h3.apx{font-size:1.05rem;color:var(--old-ink);margin-top:.2rem}
-.paper .apxn{font-size:.72rem;letter-spacing:.1em;color:var(--old-amber)}
 .paper .fig-no{font-variant:normal;letter-spacing:0;color:inherit}
 .paper p,.apxwrap .paper p{color:var(--old-ink)}
 .paper a{color:var(--old-amber);text-decoration:none;border-bottom:1px solid var(--old-faint)}
@@ -612,10 +627,13 @@ ul.tl li{display:grid;grid-template-columns:2.8rem 1fr;gap:0 1.1rem;padding:.5re
 /* ---------- 13. Appendix, sources and the way back ---------- */
 .apxwrap{font-size:.92rem;color:var(--ink-soft)}
 .apxwrap p{color:var(--ink-soft)}
-h2#appendix{font-size:1rem;line-height:1.35;color:var(--ink-soft);margin:var(--s5) 0 1.6rem;padding-top:.95rem}
+/* the appendix is headed as on How Attention Works in a Transformer: a section heading at the size of the numbered
+   section titles under a black rule, then parts A, B and C, each under its own rule, the first rule light */
+h2#appendix{font-size:2rem;line-height:1.1;color:var(--ink);margin:var(--s5) 0 0;padding-top:.95rem}
 h2#appendix::before{border-top-color:var(--ink)}
-h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height:1.35;color:var(--ink);margin:var(--s4) 0 .7rem;padding-top:0;border-top:0}
-.apxn{flex:none;font-size:1.4rem;line-height:1;font-variant-numeric:lining-nums;color:var(--ink-faint)}
+h3.apx{position:relative;margin:var(--s5) 0 var(--s3);padding-top:.95rem;border-top:1px solid var(--ink);
+  font-weight:400;font-size:1.5rem;line-height:1.24;letter-spacing:0;color:var(--ink);text-wrap:balance}
+h2#appendix + h3.apx{margin-top:var(--s3);border-top-color:var(--rule)}
 .apxwrap #usefig{font-size:.92rem}
 .apxwrap .fig-no{color:var(--ink-faint)}
 .refs{list-style:none;counter-reset:r;padding:0;margin:1rem 0 2rem;font-size:.74rem;color:var(--ink-soft);line-height:1.5}
@@ -666,7 +684,6 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 
 /* ---------- 15. Phone and narrow screens ---------- */
 @media (max-width:620px){
-  h2.big .num{font-size:4.4rem}
   h2.big .ttl{font-size:1.7rem}
   .paper{border-width:31px 28px 34px 28px;padding-top:.8rem;padding-bottom:1rem}
   .aside.paper,.paper.hist{padding-left:.15rem;padding-right:.15rem}
@@ -682,18 +699,18 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
   .tl .when{margin:0 0 .2rem}
   .uselists{grid-template-columns:1fr}
   /* a framed drawing with a 520-unit frame reaches out to 8px from the screen edge, and its text keeps to 11px or more */
-  .sheet > figure.frame:has(> svg){margin-left:calc(8px - var(--pad));margin-right:calc(8px - var(--pad));padding-left:.4rem;padding-right:.4rem}
-  .sheet > figure > svg .sv-label,.sheet > figure > svg .sv-12,.sheet > figure > svg .sv-13,.sheet > figure > svg .sv-14,.sheet > figure > svg .sv-15{font-size:16.6px}
-  .sheet > figure > svg .sv-label{letter-spacing:.04em}
-  .sheet > figure.frame:has(> svg) > .figtitle,.sheet > figure.frame:has(> svg) > figcaption{margin-left:.5rem;margin-right:.5rem}
+  :is(.sheet,.col) > figure.frame:has(> svg){margin-left:calc(8px - var(--pad));margin-right:calc(8px - var(--pad));padding-left:.4rem;padding-right:.4rem}
+  :is(.sheet,.col) > figure > svg .sv-label,:is(.sheet,.col) > figure > svg .sv-12,:is(.sheet,.col) > figure > svg .sv-13,:is(.sheet,.col) > figure > svg .sv-14,:is(.sheet,.col) > figure > svg .sv-15{font-size:16.6px}
+  :is(.sheet,.col) > figure > svg .sv-label{letter-spacing:.04em}
+  :is(.sheet,.col) > figure.frame:has(> svg) > .figtitle,:is(.sheet,.col) > figure.frame:has(> svg) > figcaption{margin-left:.5rem;margin-right:.5rem}
   /* the legend of the word-length drawing moves left to make room for the larger labels */
   #novelfig svg line[x1="256"],#novelfig svg text[x="286"]{transform:translateX(-68px)}
   #novelfig svg line[x1="378"],#novelfig svg text[x="408"]{transform:translateX(-44px)}
-  .sheet > figure > svg text[x="442"][y="82"]{transform:translateX(-6px)}
+  :is(.sheet,.col) > figure > svg text[x="442"][y="82"]{transform:translateX(-6px)}
   /* the two notes in the editing-history drawing start further left, on a wider backing */
-  .sheet > figure > svg text[x="96"][y="118"]{transform:translateX(-84px)}
-  .sheet > figure > svg rect[x="92"][y="106"]{transform:translateX(-84px);width:500px}
-  .sheet > figure > svg rect[x="236"][y="152"]{transform:translateX(-96px);width:300px}
+  :is(.sheet,.col) > figure > svg text[x="96"][y="114"]{transform:translateX(-84px)}
+  :is(.sheet,.col) > figure > svg rect[x="92"][y="102"]{transform:translateX(-84px);width:330px;height:42px}
+  :is(.sheet,.col) > figure > svg rect[x="236"][y="152"]{transform:translateX(-96px);width:300px}
   /* a figure inside a numbered list takes the full column */
   .limits figure{margin-left:-2.7rem}
   /* the rate curve sits inside that list, so the rules above for a 520-unit drawing miss it.
@@ -766,6 +783,107 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
   .cm .axis .ic{transition:none!important}
   .cm .axis .ic .icn{animation:none!important}
 }
+/* ---------- 16. Chapter Labels, Gap and Main Text (round 37) ----------
+   The layout of the four other essays. Over 1000px the sheet is 46.25rem wide: Chapter Labels 10rem, Gap 2.25rem and
+   Main Text 34rem. Everything before the section "How well people guess" spans the whole sheet, as Pundir decided on
+   5 November 2026. From that section on, div.col holds the text in Main Text.
+   In Chapter Labels: the label of each numbered section, on the baseline of its title; the side heading of each
+   sub-section, beside the first lines of its text; and the word "Contents" beside the contents. Every rule above a
+   heading runs across all three parts.
+   The framed figures sit in Main Text, each with its side heading beside it, as the other boxes do. Over 1000px a
+   framed figure in the text keeps the side padding it has at 1000px and below, so a drawing is drawn at the same size
+   on both sides of 1000px. A side heading beside a framed box sits on the baseline of the box's first text row.
+   One block spans all three parts over 1000px: the cat and mouse figure, whose eight boxes need the room. From 621px
+   to 1000px it reaches past the column. The appendix keeps to Main Text, as on How Attention Works in a Transformer.
+   The two old paper sheets sit on Main Text, with the visible edge of the paper on the edges of the column.
+   At 1000px and below the page is one column, at most 34rem wide with 16px at each side, centred. Labels and side
+   headings sit above their headings and text. */
+.chap-num{margin:0;font-family:var(--serif);font-variant:small-caps;text-transform:none;letter-spacing:.06em;font-weight:400;
+  font-size:1rem;line-height:1.35;color:var(--rubric)}
+.chapter{position:relative}
+/* Over 620px a framed figure inside a numbered list reaches back over the list's indent, so it sits on the edges of
+   Main Text with the boxes around it. At 620px and below the page's own phone rules already do this. */
+@media (min-width:621px){
+  .col .limits figure.frame{margin-left:-2.7rem}
+}
+/* The two-guess figure: where its two columns sit side by side, each column's sentence, label, list and verdict share
+   a row with the same part of the other column, so the two lists start on the same line when one label wraps.
+   In a grid the margins between the parts add up where in the text flow they overlapped; the two top margins that
+   overlapped go, so every gap stays as it was. */
+@media (min-width:621px){
+  .gcols{grid-template-rows:repeat(4,auto);row-gap:0}
+  .gcols > .gp{display:grid;grid-row:1 / span 4;grid-template-rows:subgrid;row-gap:0}
+  .gcols .gtab,.gcols .gverdict{margin-top:0}
+}
+/* The old paper: the visible edge of the torn sheet lies about 31px inside the left of its box and 26px inside the right
+   (13px with the thinner phone border). The box reaches out by those amounts, so the paper a reader sees sits on the
+   edges of its column. It stays 6px clear of the window, so its tilt never reaches past the edge. Over 620px the paper
+   keeps less room at its sides, and a drawing on it reaches over the side padding of its card, so on a column of
+   646px the drawings on the paper keep the size they had before round 37. */
+:root{--paper-in-l:31px;--paper-in-r:26px}
+@media (max-width:620px){ :root{--paper-in-l:13px;--paper-in-r:13px} }
+.paper{
+  margin-left:max(calc(-1 * var(--paper-in-l)), calc(6px - (100vw - 100%) / 2));
+  margin-right:max(calc(-1 * var(--paper-in-r)), calc(6px - (100vw - 100%) / 2))
+}
+@media (min-width:621px){
+  .paper{padding-left:.3rem;padding-right:.3rem}
+  .paper figure{padding-left:.6rem;padding-right:.6rem}
+  .paper figure > svg{width:calc(100% + .6rem);max-width:none;margin-left:-.3rem;margin-right:-.3rem}
+}
+@media (min-width:1001px){
+  .col{margin-left:calc(var(--margin-col) + var(--gutter))}
+  /* the label of a numbered section sits in Chapter Labels on the baseline of the first line of the title */
+  .chapter > .chap-num{position:absolute;top:1.58rem;left:calc(-1 * (var(--margin-col) + var(--gutter)));width:var(--margin-col);text-align:right}
+  .col h2::before,.col > .backend::before{left:calc(-1 * (var(--margin-col) + var(--gutter)))}
+  /* "Contents" sits in Chapter Labels beside the first entry */
+  .contents .side{position:absolute;top:0;left:calc(-1 * (var(--margin-col) + var(--gutter)));width:var(--margin-col);margin:0;
+    padding-top:.85rem;text-align:right}
+  /* a side heading sits in Chapter Labels. Its rule runs across all three parts, and its text starts as the first
+     line beside it starts, as on A Talking Machine of Your Own. The heading takes no height of its own. */
+  .col h3.shoulder{height:0;margin-bottom:0;padding-top:calc(.95rem + 1px);border-top:0}
+  .col h3.shoulder::before{content:"";position:absolute;top:0;left:calc(-1 * (var(--margin-col) + var(--gutter)));right:0;
+    border-top:1px solid var(--rule)}
+  .col h3.shoulder > span{position:absolute;top:calc(1px + .95rem + .5rem);left:calc(-1 * (var(--margin-col) + var(--gutter)));
+    width:var(--margin-col);text-align:right}
+  /* a side heading straight above a framed box, a framed figure or the watermark table, sits on the baseline of the
+     box's first text row: the figure's title, or the table's header row. Both rows have their baseline 37px below the
+     top of the box, so one rule places both headings. The heading's line starts below the box's top margin, its
+     border and the frame's top padding, plus .16rem, the distance by which the title's baseline sits lower in its
+     line than the heading's baseline sits in its own. */
+  .col h3.shoulder:has(+ :is(figure.frame,.tbox)) > span{top:calc(1px + .95rem + var(--s3) + 1px + 1rem + .16rem)}
+  /* the appendix rules run across all three parts too */
+  .col h3.apx{border-top:0}
+  .col h3.apx::before{content:"";position:absolute;top:0;left:calc(-1 * (var(--margin-col) + var(--gutter)));right:0;
+    border-top:1px solid var(--ink)}
+  .col h2#appendix + h3.apx::before{border-top-color:var(--rule)}
+  /* the one block that spans all three parts: the cat and mouse figure, whose eight boxes need the room */
+  .col > figure.pfig:has(> .cm){margin-left:calc(-1 * (var(--margin-col) + var(--gutter)))}
+  /* a framed figure in the text sits in Main Text with the side padding it has at 1000px and below, so its drawing
+     is drawn 609.8px wide on both sides of 1000px. The figure of visits in the appendix keeps its padding. */
+  .col > figure.frame,.col .limits figure.frame{padding-left:.9rem;padding-right:.9rem}
+  /* the reader test: the two passages side by side inside the card */
+  .passes{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:21.6px;margin:.7rem 0}
+  .passes > .pass{margin:0}
+}
+@media (max-width:1000px){
+  /* one column for every essay: at most 34rem wide plus 16px at each side, centred */
+  .sheet{max-width:calc(var(--measure) + 32px);padding-left:16px;padding-right:16px}
+  /* the label sits above the title, under the rule, as on the four essays */
+  .chapter > .chap-num{position:absolute;top:.95rem;left:0;right:0}
+  .chapter > h2{padding-top:calc(.95rem + 1.35rem + .5rem)}
+  /* a framed box straight under a side heading starts where a paragraph would, so the gap under the heading is the
+     same as above a paragraph */
+  .col h3.shoulder + :is(figure.frame,.tbox){margin-top:0}
+}
+/* The cat and mouse figure: from 621px to 1000px it reaches past the column, centred, up to the window less 32px and
+   at most the width of the sheet, as the wide figures do on How Attention Works in a Transformer. Its eight boxes need
+   the room. At 620px and below the window less 32px is the width of the column, so the figure keeps to the column. */
+@media (min-width:621px) and (max-width:1000px){
+  .col > figure.pfig:has(> .cm){width:min(var(--sheet),calc(100vw - 32px));margin-left:calc((100% - min(var(--sheet),calc(100vw - 32px))) / 2)}
+}
+/* on a phone the appendix heading takes the phone size of the numbered section titles */
+@media (max-width:620px){ h2#appendix{font-size:1.7rem} }
 </style>
 </head>
 <body>
@@ -775,8 +893,8 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 
 <figure class="hero">
   <div class="scene" role="img" aria-label="An ink drawing of a human hand and a mechanical hand, each holding a fountain pen, writing on one sheet of paper.">
-    <img class="wpaper" src="../img/home/11-writing-ink-paper-crop-full.webp" srcset="../img/home/11-writing-ink-paper-crop-700.webp 700w, ../img/home/11-writing-ink-paper-crop-full.webp 1365w" sizes="(min-width:760px) 680px, calc(100vw - 32px)" width="1365" height="768" alt="">
-    <div class="hand machine"><img src="../img/home/13-writing-ink-robot-crop-full.webp" srcset="../img/home/13-writing-ink-robot-crop-700.webp 700w, ../img/home/13-writing-ink-robot-crop-full.webp 1365w" sizes="(min-width:760px) 680px, calc(100vw - 32px)" width="1365" height="768" alt=""></div>
+    <img class="wpaper" src="../img/home/11-writing-ink-paper-crop-full.webp" srcset="../img/home/11-writing-ink-paper-crop-700.webp 700w, ../img/home/11-writing-ink-paper-crop-full.webp 1365w" sizes="(min-width:1001px) 879px, (min-width:761px) 646px, (min-width:627px) 595px, calc(100vw - 32px)" width="1365" height="768" alt="">
+    <div class="hand machine"><img src="../img/home/13-writing-ink-robot-crop-full.webp" srcset="../img/home/13-writing-ink-robot-crop-700.webp 700w, ../img/home/13-writing-ink-robot-crop-full.webp 1365w" sizes="(min-width:1001px) 879px, (min-width:761px) 646px, (min-width:627px) 595px, calc(100vw - 32px)" width="1365" height="768" alt=""></div>
   </div>
   <div class="hero-text">
     <h1>A Likely Story</h1>
@@ -790,6 +908,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 
 <div class="card" id="ex1">
   <p class="orient">Read two paragraphs about waiting out a storm in a tent. One comes from a book published in 1922. An AI model wrote the other for this essay. Pick the one you think the machine wrote.</p>
+  <div class="passes">
   <div class="pass">
     <span class="label">Passage A</span>
     <p class="passage"><span class="lead-in">Rain hammered the tent</span> until each drop seemed to strike inside my skull. I sat with my knees drawn up, watching the thin walls shudder and bow beneath the wind. Water gathered along a seam, swelled into bright beads, then fell onto the corner of my sleeping bag. The air smelled of wet nylon, mud, and the wool of my socks. Whenever lightning flashed, the scattered boots and cooking pots appeared stark against the fabric, then vanished into gray. Thunder rolled through the ground beneath me. I pressed my palms around a cooling mug and counted the spaces between gusts. Gradually, the canvas stopped snapping. The rain softened to a steady patter, and somewhere beyond the entrance, water trickled over stones. I loosened my grip and stretched my cramped legs.</p>
@@ -797,6 +916,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
   <div class="pass">
     <span class="label">Passage B</span>
     <p class="passage"><span class="lead-in">One summer blizzard</span> is much like another. The temperature, never very low, rises, and you are not cold in the tent. Sometimes a blizzard is a very welcome rest: after weeks of hard pulling, dragging yourself awake each morning, feeling as though you had only just gone to sleep, with the mental strain perhaps which work among crevasses entails, it is most pleasant to be put to bed for two or three days. You may sleep dreamlessly nearly all the time, rousing out for meals, or waking occasionally to hear from the soft warmth of your reindeer bag the deep boom of the tent flapping in the wind, or drowsily you may visit other parts of the world, while the drifting snow purrs against the green tent at your head.</p>
+  </div>
   </div>
 
   <div class="jsonly">
@@ -823,6 +943,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 </div>
 
 <!-- ============ 2. WHAT THE GUESS SHOWS ============ -->
+<div class="col">
 <h2>How well people guess often depends on how much they use these AI models</h2>
 
 <p>In <a href="https://arxiv.org/abs/2107.00061" target="_blank" rel="noopener">a 2021 study</a>, researchers gave a mix of short stories, news articles and recipes to readers with no training in spotting AI writing. People had written some of those pieces, and OpenAI GPT-3 had written the rest. The readers were right about half the time, the same as guessing. After a short training session, some readers' accuracy rose to about 55%.</p>
@@ -888,23 +1009,27 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 <p>Neither of those conditions holds when the suspect is an AI model. There is no short list of suspects. Every version of every model writes differently from the last. A model asked to write in someone else's style will do it. The idea of counting habits a writer cannot see survived anyway. Every AI detector today is descended from it.</p>
 
 <p>There are three broad ways to check whether an AI model wrote a text.</p>
+<nav class="contents" aria-label="Contents">
+<span class="side">Contents</span>
 <ol class="toc">
-<li><a href="#clues">AI detectors</a>. Programs that read the finished text and score how AI-written it looks.<ul style="margin:.4rem 0 0;padding-left:1.1rem">
-  <li><b><a href="#mimic"><span class="tocn">1a.</span> An AI trained to mimic another AI.</a></b> It runs a stand-in model and checks how predictable each word was. Free research tools such as <a href="https://github.com/ahans30/Binoculars" target="_blank" rel="noopener">Binoculars</a> work this way.</li>
-  <li><b><a href="#catch"><span class="tocn">1b.</span> An AI trained to catch another AI.</a></b> It learned the difference from millions of matched human and AI documents. <a href="https://www.pangram.com/" target="_blank" rel="noopener">Pangram</a> works this way.</li>
-  </ul></li>
-<li><a href="#watermark">Watermarks</a>. Hidden patterns planted in the text by the AI model itself.</li>
-<li><a href="#record">Editing history</a>. The writing software's log of how the text got onto the page.</li>
+<li><span class="toc-n">1</span><a href="#clues">AI detectors</a><span class="toc-d">Programs that read the finished text and score how AI-written it looks.</span>
+  <ol>
+  <li><a href="#mimic">An AI trained to mimic another AI</a><span class="toc-d">It runs a stand-in model and checks how predictable each word was. Free research tools such as <a href="https://github.com/ahans30/Binoculars" target="_blank" rel="noopener">Binoculars</a> work this way.</span></li>
+  <li><a href="#catch">An AI trained to catch another AI</a><span class="toc-d">It learned the difference from millions of matched human and AI documents. <a href="https://www.pangram.com/" target="_blank" rel="noopener">Pangram</a> works this way.</span></li>
+  </ol></li>
+<li><span class="toc-n">2</span><a href="#watermark">Watermarks</a><span class="toc-d">Hidden patterns planted in the text by the AI model itself.</span></li>
+<li><span class="toc-n">3</span><a href="#record">Editing history</a><span class="toc-d">The writing software's log of how the text got onto the page.</span></li>
 </ol>
+</nav>
 <p>None of the three works well on a paragraph that a person and an AI model wrote together. AI detectors also face humanizers. These services rewrite AI text until an AI detector scores it as human-written.</p>
 
 
 <!-- ============ 3. CLUES IN THE WRITING ============ -->
-<h2 id="clues" class="big"><span class="num">1</span><span class="ttl">AI detectors</span><span class="sub2">Programs that read the finished text and score how AI-written it looks.</span></h2>
+<div class="chapter"><p class="chap-num">Section 1</p><h2 id="clues" class="big"><span class="ttl">AI detectors</span><span class="sub2">Programs that read the finished text and score how AI-written it looks.</span></h2></div>
 
 <p>All an AI detector has is the words of the text. There are two designs. The first scores how predictable each word would be to an AI model. The second is trained on millions of examples of AI and human writing.</p>
 
-<h3 class="sub" id="mimic"><span class="subnum">1a</span>An AI trained to mimic another AI</h3>
+<h3 class="shoulder" id="mimic"><span>An AI trained to mimic another AI</span></h3>
 
 
 <p>Inside the first design sits an AI model of its own, used as a simulator. The simulator plays the part of the AI model that might have written the text. The AI detector feeds the text to the simulator one word at a time. At each point the simulator lists the words most likely to come next. The AI detector then checks where the real next word sits on that list. A word near the top of the list is easy to guess. A word far down is a surprise. An AI model writes by picking a likely next word, again and again. Its sentences are built from words the simulator puts near the top. A person surprises the simulator more often.</p>
@@ -946,7 +1071,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 <p>The simulator has to resemble the AI model that might have written the text. An AI detector tested against one AI model does worse on text from an AI model it has not seen. Every new version of an AI model changes its habits. An AI detector tuned last year checks for habits that may already be gone.</p>
 
 
-<h3 class="sub" id="catch"><span class="subnum">1b</span>An AI trained to catch another AI</h3>
+<h3 class="shoulder" id="catch"><span>An AI trained to catch another AI</span></h3>
 
 <p>The second design is trained on examples. Someone collects millions of documents that people wrote and has AI models write a twin of each one, on the same subject and at the same length. A program is then trained to tell each document from its twin. Because both documents cover the same subject, the program has to look for differences in how they are written.</p>
 
@@ -989,7 +1114,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 </figure>
 
 
-<h3>What an AI detector cannot do</h3>
+<h3 class="shoulder"><span>What an AI detector cannot do</span></h3>
 <ol class="limits">
 <li><p><b>Guarantee that human writing never gets flagged.</b> In 2023 several AI detectors <a href="https://arstechnica.com/information-technology/2023/07/why-ai-detectors-think-the-us-constitution-was-written-by-ai/" target="_blank" rel="noopener">flagged the opening of the United States Constitution</a>. Edward Tian built the AI detector <a href="https://gptzero.me/" target="_blank" rel="noopener">GPTZero</a>. He explained that AI models learn to write by reading an enormous pile of text, and the Constitution sits in that pile. An AI detector's simulator was therefore trained on the Constitution and would have picked much the same words. Before each release, Pangram runs a test on the Declaration of Independence. The test blocks the release if the Declaration scores as AI-written.</p>
 
@@ -1057,11 +1182,11 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 
 
 
-<h2 id="watermark" class="big"><span class="num">2</span><span class="ttl">Watermarks</span><span class="sub2">Hidden patterns planted in the text by the AI model itself.</span></h2>
+<div class="chapter"><p class="chap-num">Section 2</p><h2 id="watermark" class="big"><span class="ttl">Watermarks</span><span class="sub2">Hidden patterns planted in the text by the AI model itself.</span></h2></div>
 
 <p>An AI model gives every word it could write next a probability. Suppose it has written "The weather today was cold and". It might put "grey" at 31%, "overcast" at 22%, "wet" at 14%, "dark" at 9% and "damp" at 6%, with the rest of the 100% spread thinly over every other word it could write. It then picks one at random in proportion to those numbers, so a word at 30% comes out about 3 times in 10. Where several words sit close together, the pick is nearly a coin toss. A reader will not care which of those words appears. A watermark changes the odds in picks like those.</p>
 
-<h3>How the watermark is planted</h3>
+<h3 class="shoulder"><span>How the watermark is planted</span></h3>
 
 <p>The company that makes the AI model keeps a secret number called a key. Before choosing each next word, the model uses the key and the preceding text to work out a list of favoured words, called the green list. The probabilities of the words on that list go up a little and the probabilities of all other words go down a little. The model still picks at random, so any word can come out. Over a page of writing, though, the favoured words come out more often than they otherwise would. Each word has different words in front of it, so the green list is worked out again at every step.</p>
 
@@ -1112,7 +1237,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 <figcaption><span class="fig-no">Figure 3.</span> The green list holds far more than three words, and it is worked out again for every word, because it depends on the words already written.</figcaption>
 </figure>
 
-<h3>How a checker finds watermarks</h3>
+<h3 class="shoulder"><span>How a checker finds watermarks</span></h3>
 
 <p>Later the company can run a checker over the text. The checker holds the same key. At each word, the checker uses the key and the preceding text to recreate the green list, then checks whether that word was on the list. In text without a watermark, nothing steered the picks, so about half the words land on the green list by chance. In watermarked text, far more words land on it.</p>
 
@@ -1135,11 +1260,11 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 <figcaption><span class="fig-no">Figure 4.</span> The colours are added here to illustrate the pattern; they do not appear in watermarked text. The checker rebuilds the green list at each word and keeps the count.</figcaption>
 </figure>
 
-<h3>Two real designs</h3>
+<h3 class="shoulder"><span>Two real designs</span></h3>
 
 <p>The green list came from John Kirchenbauer and colleagues at the University of Maryland, who <a href="https://arxiv.org/abs/2301.10226" target="_blank" rel="noopener">published it in January 2023</a>. It is the simpler of the two. The other design, SynthID-Text, came from Google DeepMind and was <a href="https://www.nature.com/articles/s41586-024-08025-4" target="_blank" rel="noopener">published in the science journal Nature in October 2024</a>. It works like a tournament. The model produces several possible next words and uses the key to pick the winner of each pair of words, until one word is left to write. Google was already using this design in Gemini when the Nature paper came out. Anthropic <a href="https://www.anthropic.com/news/claude-text-watermark" target="_blank" rel="noopener">announced on 14 August 2026</a> that new Claude models would carry a version of this design, with older models to follow in the months after. Every candidate word in the tournament is one the model could have written anyway, so the sentence reads no differently.</p>
 
-<h3>Who watermarks text today</h3>
+<h3 class="shoulder"><span>Who watermarks text today</span></h3>
 
 <div class="tbox">
 <div class="scroll">
@@ -1157,7 +1282,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 </div>
 </div>
 
-<h3>What a watermark cannot do</h3>
+<h3 class="shoulder"><span>What a watermark cannot do</span></h3>
 
 <ol class="limits">
 <li><p><b>Most text carries no watermark at all.</b> OpenAI built a text watermark in 2022 and has never switched it on, so text from ChatGPT carries no watermark today. Some companies publish everything needed to run their models, so anyone can download a model and run it on their own computer. The program that writes the text adds the watermark, and whoever runs that program can leave the watermark switched off.</p></li>
@@ -1172,11 +1297,11 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 </ol>
 
 <!-- ============ 5. THE WRITING PROCESS ============ -->
-<h2 id="record" class="big"><span class="num">3</span><span class="ttl">Editing history</span><span class="sub2">The writing software's log of how the text got onto the page.</span></h2>
+<div class="chapter"><p class="chap-num">Section 3</p><h2 id="record" class="big"><span class="ttl">Editing history</span><span class="sub2">The writing software's log of how the text got onto the page.</span></h2></div>
 
 <p>The third kind of evidence is a record of the writing as it happens. Google Docs keeps a version history, a log of every edit made to a document. <a href="https://www.grammarly.com/blog/company/grammarly-launches-grammarly-authorship/" target="_blank" rel="noopener">Grammarly's Authorship feature</a>, released in August 2024, sits inside the document while the writer works, and it marks each stretch of text as typed, pasted, or generated by AI.</p>
 
-<h3>What an editing history looks like</h3>
+<h3 class="shoulder"><span>What an editing history looks like</span></h3>
 
 <figure class="frame">
 <p class="figtitle">what the writing software recorded for two essays</p>
@@ -1189,8 +1314,8 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
   <line x1="96" y1="90" x2="506" y2="90" class="sk-faint"/>
   <g class="sv-dim"><rect x="96" y="74" width="4" height="16"/><rect x="106" y="71" width="5" height="19"/><rect x="117" y="76" width="3" height="14"/><rect x="127" y="69" width="6" height="21"/><rect x="139" y="73" width="4" height="17"/><rect x="149" y="68" width="7" height="22"/><rect x="163" y="75" width="3" height="15"/><rect x="172" y="72" width="6" height="18"/><rect x="184" y="70" width="5" height="20"/><rect x="216" y="74" width="4" height="16"/><rect x="226" y="74" width="4" height="16"/><rect x="236" y="71" width="5" height="19"/><rect x="247" y="76" width="3" height="14"/><rect x="257" y="69" width="6" height="21"/><rect x="269" y="73" width="4" height="17"/><rect x="279" y="68" width="7" height="22"/><rect x="293" y="75" width="3" height="15"/><rect x="302" y="72" width="6" height="18"/><rect x="331" y="70" width="5" height="20"/><rect x="343" y="74" width="4" height="16"/><rect x="353" y="74" width="4" height="16"/><rect x="363" y="71" width="5" height="19"/><rect x="374" y="76" width="3" height="14"/><rect x="384" y="69" width="6" height="21"/><rect x="396" y="73" width="4" height="17"/><rect x="421" y="68" width="7" height="22"/><rect x="435" y="75" width="3" height="15"/><rect x="444" y="72" width="6" height="18"/><rect x="456" y="70" width="5" height="20"/><rect x="468" y="74" width="4" height="16"/><rect x="478" y="74" width="4" height="16"/><rect x="488" y="71" width="5" height="19"/><rect x="499" y="76" width="3" height="14"/></g>
   <g class="sv-red"><rect x="205" y="56" width="5" height="34"/><rect x="320" y="56" width="5" height="34"/><rect x="410" y="56" width="5" height="34"/></g>
-  <rect x="92" y="106" width="392" height="17" class="sv-card"/>
-  <text x="96" y="118" class="sv-text sv-13 sv-dim">typed a few words at a time for two hours; the three red marks are deletions</text>
+  <rect x="92" y="102" width="262" height="34" class="sv-card"/>
+  <text x="96" y="114" class="sv-text sv-13 sv-dim">typed a few words at a time for two hours; <tspan x="96" dy="1.3em">the three red marks are deletions</tspan></text>
   <text x="14" y="164" class="sv-label">essay b</text>
   <line x1="96" y1="174" x2="506" y2="174" class="sk-faint"/>
   <g class="sv-amber"><rect x="490" y="150" width="4" height="24"/><rect x="496" y="150" width="4" height="24"/><rect x="502" y="150" width="4" height="24"/></g>
@@ -1205,7 +1330,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 
 <p>Essay A looks like honest work and Essay B looks like cheating. Both readings can be wrong.</p>
 
-<h3>What an editing history cannot do</h3>
+<h3 class="shoulder"><span>What an editing history cannot do</span></h3>
 <ol class="limits">
 <li><p><b>An editing history shows how the words arrived and leaves out who thought of them.</b> A student who pasted an essay in three pieces may have been moving text out of her own notes. A student who built an essay a few words at a time may have been reading an AI model's answer on a phone and typing it out by hand.</p></li>
 <li><p><b>The record covers one document.</b> Google Docs and Grammarly log what happens inside the document they run in. A draft written somewhere else and pasted in looks like a paste, whoever wrote it. An essay written on paper leaves no editing history at all.</p></li>
@@ -1384,7 +1509,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 <div class="apxwrap">
 <h2 id="appendix">Appendix</h2>
 
-<h3 class="apx"><span class="apxn">1</span>The AI detectors and humanizers with the most visits</h3>
+<h3 class="apx">A.&nbsp;The AI detectors and humanizers with the most visits</h3>
 
 <p>No one source counts how much writing goes through every AI detector and humanizer. The nearest measure is visits to each service's website, which the traffic firm Similarweb estimates every month.</p>
 
@@ -1420,7 +1545,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 <p>In a peer-reviewed study published in June 2026, researchers ran forty papers written entirely by an AI model through Turnitin, GPTZero, Copyleaks and Pangram. <a href="https://doi.org/10.1007/s40979-026-00226-w" target="_blank" rel="noopener">Turnitin scored every one of them as human</a>. Pangram flagged thirty-nine.</p>
 
 <!-- ============ 9. REFERENCES ============ -->
-<h3 class="apx"><span class="apxn">2</span>Sources</h3>
+<h3 class="apx">B.&nbsp;Sources</h3>
 
 <p class="quiet">ACL, EACL and ICML are academic conferences where researchers present work. Other researchers have reviewed that work first. Arxiv.org is a site where researchers post papers, sometimes before other researchers have reviewed them. A doi is a permanent address for a published paper.</p>
 
@@ -1469,9 +1594,9 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 </ol>
 
 <!-- ============ 7. TIMELINE ============ -->
+<h3 class="apx">C.&nbsp;From counting word lengths in 1887 to watermarking text by law in 2026</h3>
 <div class="sheetwrap">
 <section class="paper hist">
-<h3 class="apx tl"><span class="apxn">3</span>From counting word lengths in 1887 to watermarking text by law in 2026</h3>
 
 <p>In 1887 Mendenhall counted word lengths. In August 2026 a European rule on watermarking AI-written text began to apply. About 140 years separate the two dates.</p>
 
@@ -1538,6 +1663,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 
 </div>
 <p class="backend">Back to <a href="../index.html">Artificial Minds</a>.</p>
+</div>
 
 </div>
 
