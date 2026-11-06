@@ -54,7 +54,8 @@
 /* ---------- 1. Tokens ----------
    Every colour on the page is in this block, including the colours used inside drawings and the colours of the old paper.
    The white paper palette is seven greys and one red. Red is the reader's guide: the section labels in Chapter Labels,
-   the selected button and the two key words of the one-guess figure. "Figure N." labels take the grey of their caption.
+   the sub-section numbers in Chapter Labels and in the contents, the selected button and the two key words of the
+   one-guess figure. "Figure N." labels take the grey of their caption.
    Red also marks the AI side of the figures, as the text asks.
    The appendix carries no red.
    Green and orange appear only where the text of the essay names that colour, in their quiet forms.
@@ -120,8 +121,9 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
 .js .jsonly{display:block}
 .req{font-style:italic}
 
-/* the one label style: small capitals in the text face, never uppercase, never red. The section labels in Chapter Labels
-   (section 16) are the one red label, as on How Attention Works in a Transformer */
+/* the one label style: small capitals in the text face, never uppercase, never red. The section labels and the
+   sub-section numbers in Chapter Labels (section 16) and the sub-section numbers in the contents are the one red
+   label, as on How Attention Works in a Transformer */
 .label,.figtitle,th,.tlabel,.tfoot,.verdict,.legend2,.band,.ev .tag,.contm,
 .tl .when,.sgrid .sn,.pcard p.skey,.sgrid .skey,.pair p.label,.pair .pb::before,.pair .pa::before,
 .cm .axis .dl,.cm .axis .cont{
@@ -192,18 +194,21 @@ h1{font-weight:400;font-size:2.35rem;line-height:1.1;letter-spacing:-.005em;marg
 
 /* ---------- 5. Headings ----------
    A section opens with a light rule. A numbered section opens with a black rule, its title and a grey line under the title;
-   its label sits in Chapter Labels (section 16). A sub-heading is a side heading in small capitals under a light rule. */
+   its label sits in Chapter Labels (section 16). A sub-heading is a side heading in small capitals under a light rule,
+   with its number, such as 1.1, above it in red. */
 h2{position:relative;font-weight:400;font-size:1.5rem;line-height:1.32;letter-spacing:0;margin:var(--s4) 0 .6rem;padding-top:.95rem}
 h2::before,.backend::before{content:"";position:absolute;top:0;right:0;left:0;border-top:1px solid var(--rule)}
 h2.big{margin-top:var(--s5)}
 h2.big::before{border-top-color:var(--ink)}
 h2.big .ttl{display:block;font-size:2rem;line-height:1.1}
-h2.big .sub2{display:block;font-size:1.12rem;line-height:1.4;color:var(--ink-faint);margin-top:.3rem}
-/* the contents, in the style of How Attention Works in a Transformer (round 39): the label in Chapter Labels, a hairline
-   above and below each entry, the number of each section large in ink. Each numbered section keeps its short
-   description, in the small size and grey, under its title, and lists its sub-sections under that, one name a line,
-   with no number. The side headings in the text carry no number either. The sections after Section 3 follow as
-   entries with no number, and a last line names the parts of the appendix. */
+/* the grey line under a title: under each numbered section title, and under the short names of parts A and C of
+   the appendix, where it keeps the part's long title (round 40) */
+h2.big .sub2,h3.apx .sub2{display:block;font-size:1.12rem;line-height:1.4;color:var(--ink-faint);margin-top:.3rem}
+/* the contents, in the style of How Attention Works in a Transformer (rounds 39 and 40): the label in Chapter Labels,
+   a hairline above and below each entry, the number of each section large in ink. Each numbered section keeps its
+   short description, in the small size and grey, under its title, and lists its sub-sections under that, one a
+   line: the number in red in a short column, then the name. The side headings in the text carry the same numbers.
+   The sections after Section 3 follow as entries with no number, and a last line names the parts of the appendix. */
 .contents{position:relative;margin:1rem 0 var(--s3)}
 .contents .side{display:block;margin:0 0 .3rem;padding-top:.15rem;font-family:var(--serif);font-variant:small-caps;text-transform:none;
   letter-spacing:.06em;font-weight:400;font-size:1rem;line-height:1.35;color:var(--ink-faint)}
@@ -214,18 +219,21 @@ ol.toc a{color:var(--ink);text-decoration:none}
 ol.toc a:hover{text-decoration:underline;text-decoration-color:var(--ink-ghost)}
 ol.toc > li > a{display:block;font-size:1.12rem;line-height:1.3}
 ol.toc ol{list-style:none;margin:.45rem 0 0;padding:0}
-ol.toc ol li{margin:0;padding:.12rem 0;line-height:1.4}
+ol.toc ol li{display:grid;grid-template-columns:2.4rem minmax(0,1fr);margin:0;padding:.12rem 0;line-height:1.4}
+ol.toc .sub-n{font-variant:small-caps;letter-spacing:.06em;color:var(--rubric)}
 ol.toc .toc-d{display:block;margin-top:.15rem;font-size:.82rem;line-height:1.5;color:var(--ink-faint)}
-ol.toc .toc-d a{color:inherit;text-decoration:underline;text-decoration-color:var(--ink-ghost)}
-ol.toc .toc-d a:hover{text-decoration-color:var(--ink)}
 /* the parts of the appendix, on one line under the list */
 p.toc-more{margin:.8rem 0 0}
 
 /* a sub-heading, as the side headings of A Talking Machine of Your Own: small capitals at the small size in dark grey,
-   under a light rule. Over 1000px it sits in Chapter Labels beside the first lines of its text (section 16). */
-h3.shoulder{position:relative;margin:var(--s4) 0 .7rem;padding-top:calc(.95rem + .3rem);border-top:1px solid var(--rule);
+   under a light rule. Over 1000px it sits in Chapter Labels beside the first lines of its text (section 16).
+   Its number, such as 1.1, takes the style of the section labels, red small capitals at the body size, on its own
+   line above the name. At 1000px and below the number starts .95rem under the rule and the name follows .5rem
+   below it, as on How Attention Works in a Transformer (round 40). */
+h3.shoulder{position:relative;margin:var(--s4) 0 .7rem;padding-top:.95rem;border-top:1px solid var(--rule);
   font-family:var(--serif);font-variant:small-caps;text-transform:none;letter-spacing:.06em;font-weight:400;
   font-size:.82rem;line-height:1.45;color:var(--ink-soft)}
+h3.shoulder .chap-num{display:block;margin:0 0 .5rem}
 
 /* ---------- 5b. Drop capitals ----------
    One large ink initial opens the first paragraph of each part and each main section.
@@ -796,12 +804,14 @@ h2#appendix + h3.apx{margin-top:var(--s3);border-top-color:var(--rule)}
    The layout of the four other essays. Over 1000px the sheet is 46.25rem wide: Chapter Labels 10rem, Gap 2.25rem and
    Main Text 34rem. Everything before the section "How well people guess" spans the whole sheet, as Pundir decided on
    5 November 2026. From that section on, div.col holds the text in Main Text.
-   In Chapter Labels: the label of each numbered section, on the baseline of its title; the side heading of each
-   sub-section, beside the first lines of its text; and the word "Contents" beside the contents. Every rule above a
+   In Chapter Labels: the label of each numbered section, on the baseline of its title; the number and the side
+   heading of each sub-section, the number on the baseline of the first line of its text and the name under it;
+   and the word "Contents" beside the contents. Every rule above a
    heading runs across all three parts.
    The framed figures sit in Main Text, each with its side heading beside it, as the other boxes do. Over 1000px a
    framed figure in the text keeps the side padding it has at 1000px and below, so a drawing is drawn at the same size
-   on both sides of 1000px. A side heading beside a framed box sits on the baseline of the box's first text row.
+   on both sides of 1000px. The number of a side heading beside a framed box sits on the baseline of the box's first
+   text row.
    One block spans all three parts over 1000px: the cat and mouse figure, whose eight boxes need the room. From 621px
    to 1000px it reaches past the column. The appendix keeps to Main Text, as on How Attention Works in a Transformer.
    The two old paper sheets sit on Main Text, with the visible edge of the paper on the edges of the column.
@@ -843,19 +853,26 @@ h2#appendix + h3.apx{margin-top:var(--s3);border-top-color:var(--rule)}
   /* "Contents" sits in Chapter Labels beside the first entry */
   .contents .side{position:absolute;top:0;left:calc(-1 * (var(--margin-col) + var(--gutter)));width:var(--margin-col);margin:0;
     padding-top:.85rem;text-align:right}
-  /* a side heading sits in Chapter Labels. Its rule runs across all three parts, and its text starts as the first
-     line beside it starts, as on A Talking Machine of Your Own. The heading takes no height of its own. */
+  /* a side heading sits in Chapter Labels. Its rule runs across all three parts. Its number sits on the baseline of
+     the first line of text beside it, and the name follows under the number, its first line level with the second
+     line of text. The number and the text share the body size, and the number's line is 1.35rem where a line of
+     text is 1.6rem, so the heading starts .125rem, half the difference, below the top of that first line. The
+     heading takes no height of its own (round 40). */
   .col h3.shoulder{height:0;margin-bottom:0;padding-top:calc(.95rem + 1px);border-top:0}
   .col h3.shoulder::before{content:"";position:absolute;top:0;left:calc(-1 * (var(--margin-col) + var(--gutter)));right:0;
     border-top:1px solid var(--rule)}
-  .col h3.shoulder > span{position:absolute;top:calc(1px + .95rem + .5rem);left:calc(-1 * (var(--margin-col) + var(--gutter)));
+  .col h3.shoulder > span{position:absolute;top:calc(1px + .95rem + .125rem);left:calc(-1 * (var(--margin-col) + var(--gutter)));
     width:var(--margin-col);text-align:right}
-  /* a side heading straight above a framed box, a framed figure or the watermark table, sits on the baseline of the
-     box's first text row: the figure's title, or the table's header row. Both rows have their baseline 37px below the
-     top of the box, so one rule places both headings. The heading's line starts below the box's top margin, its
-     border and the frame's top padding, plus .16rem, the distance by which the title's baseline sits lower in its
-     line than the heading's baseline sits in its own. */
-  .col h3.shoulder:has(+ :is(figure.frame,.tbox)) > span{top:calc(1px + .95rem + var(--s3) + 1px + 1rem + .16rem)}
+  .col h3.shoulder .chap-num{margin-bottom:.4rem}
+  /* a numbered list of limits starts .4rem lower, by its top margin */
+  .col h3.shoulder:has(+ ol.limits) > span{top:calc(1px + .95rem + .4rem + .125rem)}
+  /* the number of a side heading straight above a framed box, a framed figure or the watermark table, sits on the
+     baseline of the box's first text row: the figure's title, or the table's header row. Both rows have their
+     baseline 37px below the top of the box, so one rule places both headings. The number's line starts below the
+     box's top margin, its border and the frame's top padding, plus .025rem: the title's line is 1.4rem and the
+     number's 1.35rem, both at the body size, so the two baselines meet when the number's line starts half the
+     difference lower. */
+  .col h3.shoulder:has(+ :is(figure.frame,.tbox)) > span{top:calc(1px + .95rem + var(--s3) + 1px + 1rem + .025rem)}
   /* the appendix rules run across all three parts too */
   .col h3.apx{border-top:0}
   .col h3.apx::before{content:"";position:absolute;top:0;left:calc(-1 * (var(--margin-col) + var(--gutter)));right:0;
@@ -1056,28 +1073,28 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <ol class="toc">
 <li><span class="toc-n">1</span><a href="#clues">AI detectors</a><span class="toc-d">Programs that read the finished text and score how AI-written it looks.</span>
   <ol>
-  <li><a href="#mimic">An AI trained to mimic another AI</a><span class="toc-d">It runs a stand-in model and checks how predictable each word was. Free research tools such as <a href="https://github.com/ahans30/Binoculars" target="_blank" rel="noopener">Binoculars</a> work this way.</span></li>
-  <li><a href="#catch">An AI trained to catch another AI</a></li>
-  <li><a href="#detector-limits">What an AI detector cannot do</a></li>
+  <li><span class="sub-n">1.1</span><a href="#mimic">An AI trained to mimic another AI</a></li>
+  <li><span class="sub-n">1.2</span><a href="#catch">An AI trained to catch another AI</a></li>
+  <li><span class="sub-n">1.3</span><a href="#detector-limits">What an AI detector cannot do</a></li>
   </ol></li>
 <li><span class="toc-n">2</span><a href="#watermark">Watermarks</a><span class="toc-d">Hidden patterns planted in the text by the AI model itself.</span>
   <ol>
-  <li><a href="#planted">How the watermark is planted</a></li>
-  <li><a href="#checker">How a checker finds watermarks</a></li>
-  <li><a href="#designs">Two real designs</a></li>
-  <li><a href="#who-watermarks">Who watermarks text today</a></li>
-  <li><a href="#watermark-limits">What a watermark cannot do</a></li>
+  <li><span class="sub-n">2.1</span><a href="#planted">How the watermark is planted</a></li>
+  <li><span class="sub-n">2.2</span><a href="#checker">How a checker finds watermarks</a></li>
+  <li><span class="sub-n">2.3</span><a href="#designs">Two real designs</a></li>
+  <li><span class="sub-n">2.4</span><a href="#who-watermarks">Who watermarks text today</a></li>
+  <li><span class="sub-n">2.5</span><a href="#watermark-limits">What a watermark cannot do</a></li>
   </ol></li>
 <li><span class="toc-n">3</span><a href="#record">Editing history</a><span class="toc-d">The writing software's log of how the text got onto the page.</span>
   <ol>
-  <li><a href="#history-looks">What an editing history looks like</a></li>
-  <li><a href="#history-limits">What an editing history cannot do</a></li>
+  <li><span class="sub-n">3.1</span><a href="#history-looks">What an editing history looks like</a></li>
+  <li><span class="sub-n">3.2</span><a href="#history-limits">What an editing history cannot do</a></li>
   </ol></li>
 <li><a href="#both">What if a person and a machine both wrote it?</a></li>
 <li><a href="#humanizers">Humanizers: making AI text read as human-written</a></li>
 <li><a href="#summary">In summary</a></li>
 </ol>
-<p class="toc-more"><a href="#appendix">Appendix</a>: <a href="#visits">A.&nbsp;The AI detectors and humanizers with the most visits</a> &middot; <a href="#sources">B.&nbsp;Sources</a> &middot; <a href="#timeline">C.&nbsp;From counting word lengths in 1887 to watermarking text by law in 2026</a></p>
+<p class="toc-more"><a href="#appendix">Appendix</a>: <a href="#visits">A.&nbsp;Most-visited tools</a> &middot; <a href="#sources">B.&nbsp;Sources</a> &middot; <a href="#timeline">C.&nbsp;Timeline</a></p>
 </nav>
 <p>None of the three works well on a paragraph that a person and an AI model wrote together. AI detectors also face humanizers. These services rewrite AI text until an AI detector scores it as human-written.</p>
 
@@ -1087,10 +1104,10 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 
 <p>All an AI detector has is the words of the text. There are two designs. The first scores how predictable each word would be to an AI model. The second is trained on millions of examples of AI and human writing.</p>
 
-<h3 class="shoulder" id="mimic"><span>An AI trained to mimic another AI</span></h3>
+<h3 class="shoulder" id="mimic"><span><span class="chap-num">1.1</span> An AI trained to mimic another AI</span></h3>
 
 
-<p>Inside the first design sits an AI model of its own, used as a simulator. The simulator plays the part of the AI model that might have written the text. The AI detector feeds the text to the simulator one word at a time. At each point the simulator lists the words most likely to come next. The AI detector then checks where the real next word sits on that list. A word near the top of the list is easy to guess. A word far down is a surprise. An AI model writes by picking a likely next word, again and again. Its sentences are built from words the simulator puts near the top. A person surprises the simulator more often.</p>
+<p>Inside the first design sits an AI model of its own, used as a simulator. The simulator plays the part of the AI model that might have written the text. The AI detector feeds the text to the simulator one word at a time. At each point the simulator lists the words most likely to come next. The AI detector then checks where the real next word sits on that list. A word near the top of the list is easy to guess. A word far down is a surprise. An AI model writes by picking a likely next word, again and again. Its sentences are built from words the simulator puts near the top. A person surprises the simulator more often. Free research tools such as <a href="https://github.com/ahans30/Binoculars" target="_blank" rel="noopener">Binoculars</a> work this way.</p>
 
 <p>The simulator made one guess in each of two sentences, and the results sit side by side.</p>
 
@@ -1129,7 +1146,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <p>The simulator has to resemble the AI model that might have written the text. An AI detector tested against one AI model does worse on text from an AI model it has not seen. Every new version of an AI model changes its habits. An AI detector tuned last year checks for habits that may already be gone.</p>
 
 
-<h3 class="shoulder" id="catch"><span>An AI trained to catch another AI</span></h3>
+<h3 class="shoulder" id="catch"><span><span class="chap-num">1.2</span> An AI trained to catch another AI</span></h3>
 
 <p>The second design is trained on examples. Someone collects millions of documents that people wrote and has AI models write a twin of each one, on the same subject and at the same length. A program is then trained to tell each document from its twin. Because both documents cover the same subject, the program has to look for differences in how they are written.</p>
 
@@ -1172,7 +1189,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 </figure>
 
 
-<h3 class="shoulder" id="detector-limits"><span>What an AI detector cannot do</span></h3>
+<h3 class="shoulder" id="detector-limits"><span><span class="chap-num">1.3</span> What an AI detector cannot do</span></h3>
 <ol class="limits">
 <li><p><b>Guarantee that human writing never gets flagged.</b> In 2023 several AI detectors <a href="https://arstechnica.com/information-technology/2023/07/why-ai-detectors-think-the-us-constitution-was-written-by-ai/" target="_blank" rel="noopener">flagged the opening of the United States Constitution</a>. Edward Tian built the AI detector <a href="https://gptzero.me/" target="_blank" rel="noopener">GPTZero</a>. He explained that AI models learn to write by reading an enormous pile of text, and the Constitution sits in that pile. An AI detector's simulator was therefore trained on the Constitution and would have picked much the same words. Before each release, Pangram runs a test on the Declaration of Independence. The test blocks the release if the Declaration scores as AI-written.</p>
 
@@ -1244,7 +1261,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 
 <p>An AI model gives every word it could write next a probability. Suppose it has written "The weather today was cold and". It might put "grey" at 31%, "overcast" at 22%, "wet" at 14%, "dark" at 9% and "damp" at 6%, with the rest of the 100% spread thinly over every other word it could write. It then picks one at random in proportion to those numbers, so a word at 30% comes out about 3 times in 10. Where several words sit close together, the pick is nearly a coin toss. A reader will not care which of those words appears. A watermark changes the odds in picks like those.</p>
 
-<h3 class="shoulder" id="planted"><span>How the watermark is planted</span></h3>
+<h3 class="shoulder" id="planted"><span><span class="chap-num">2.1</span> How the watermark is planted</span></h3>
 
 <p>The company that makes the AI model keeps a secret number called a key. Before choosing each next word, the model uses the key and the preceding text to work out a list of favoured words, called the green list. The probabilities of the words on that list go up a little and the probabilities of all other words go down a little. The model still picks at random, so any word can come out. Over a page of writing, though, the favoured words come out more often than they otherwise would. Each word has different words in front of it, so the green list is worked out again at every step.</p>
 
@@ -1297,7 +1314,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <figcaption><span class="fig-no">Figure 3.</span> The green list holds far more than three words, and it is worked out again for every word, because it depends on the words already written.</figcaption>
 </figure>
 
-<h3 class="shoulder" id="checker"><span>How a checker finds watermarks</span></h3>
+<h3 class="shoulder" id="checker"><span><span class="chap-num">2.2</span> How a checker finds watermarks</span></h3>
 
 <p>Later the company can run a checker over the text. The checker holds the same key. At each word, the checker uses the key and the preceding text to recreate the green list, then checks whether that word was on the list. In text without a watermark, nothing steered the picks, so about half the words land on the green list by chance. In watermarked text, far more words land on it.</p>
 
@@ -1322,11 +1339,11 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <figcaption><span class="fig-no">Figure 4.</span> The colours are added here to illustrate the pattern; they do not appear in watermarked text. The checker rebuilds the green list at each word and keeps the count.</figcaption>
 </figure>
 
-<h3 class="shoulder" id="designs"><span>Two real designs</span></h3>
+<h3 class="shoulder" id="designs"><span><span class="chap-num">2.3</span> Two real designs</span></h3>
 
 <p>The green list came from John Kirchenbauer and colleagues at the University of Maryland, who <a href="https://arxiv.org/abs/2301.10226" target="_blank" rel="noopener">published it in January 2023</a>. It is the simpler of the two. The other design, SynthID-Text, came from Google DeepMind and was <a href="https://www.nature.com/articles/s41586-024-08025-4" target="_blank" rel="noopener">published in the science journal Nature in October 2024</a>. It works like a tournament. The model produces several possible next words and uses the key to pick the winner of each pair of words, until one word is left to write. Google was already using this design in Gemini when the Nature paper came out. Anthropic <a href="https://www.anthropic.com/news/claude-text-watermark" target="_blank" rel="noopener">announced on 14 August 2026</a> that new Claude models would carry a version of this design, with older models to follow in the months after. Every candidate word in the tournament is one the model could have written anyway, so the sentence reads no differently.</p>
 
-<h3 class="shoulder" id="who-watermarks"><span>Who watermarks text today</span></h3>
+<h3 class="shoulder" id="who-watermarks"><span><span class="chap-num">2.4</span> Who watermarks text today</span></h3>
 
 <div class="tbox">
 <div class="scroll">
@@ -1344,7 +1361,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 </div>
 </div>
 
-<h3 class="shoulder" id="watermark-limits"><span>What a watermark cannot do</span></h3>
+<h3 class="shoulder" id="watermark-limits"><span><span class="chap-num">2.5</span> What a watermark cannot do</span></h3>
 
 <ol class="limits">
 <li><p><b>Most text carries no watermark at all.</b> OpenAI built a text watermark in 2022 and has never switched it on, so text from ChatGPT carries no watermark today. Some companies publish everything needed to run their models, so anyone can download a model and run it on their own computer. The program that writes the text adds the watermark, and whoever runs that program can leave the watermark switched off.</p></li>
@@ -1363,7 +1380,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 
 <p>The third kind of evidence is a record of the writing as it happens. Google Docs keeps a version history, a log of every edit made to a document. <a href="https://www.grammarly.com/blog/company/grammarly-launches-grammarly-authorship/" target="_blank" rel="noopener">Grammarly's Authorship feature</a>, released in August 2024, sits inside the document while the writer works, and it marks each stretch of text as typed, pasted, or generated by AI.</p>
 
-<h3 class="shoulder" id="history-looks"><span>What an editing history looks like</span></h3>
+<h3 class="shoulder" id="history-looks"><span><span class="chap-num">3.1</span> What an editing history looks like</span></h3>
 
 <figure class="frame">
 <p class="figtitle">what the writing software recorded for two essays</p>
@@ -1392,7 +1409,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 
 <p>Essay A looks like honest work and Essay B looks like cheating. Both readings can be wrong.</p>
 
-<h3 class="shoulder" id="history-limits"><span>What an editing history cannot do</span></h3>
+<h3 class="shoulder" id="history-limits"><span><span class="chap-num">3.2</span> What an editing history cannot do</span></h3>
 <ol class="limits">
 <li><p><b>An editing history shows how the words arrived and leaves out who thought of them.</b> A student who pasted an essay in three pieces may have been moving text out of her own notes. A student who built an essay a few words at a time may have been reading an AI model's answer on a phone and typing it out by hand.</p></li>
 <li><p><b>The record covers one document.</b> Google Docs and Grammarly log what happens inside the document they run in. A draft written somewhere else and pasted in looks like a paste, whoever wrote it. An essay written on paper leaves no editing history at all.</p></li>
@@ -1573,7 +1590,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <div class="apxwrap">
 <h2 id="appendix">Appendix</h2>
 
-<h3 class="apx" id="visits">A.&nbsp;The AI detectors and humanizers with the most visits</h3>
+<h3 class="apx" id="visits">A.&nbsp;Most-visited tools<span class="sub2">The AI detectors and humanizers with the most visits</span></h3>
 
 <p>No one source counts how much writing goes through every AI detector and humanizer. The nearest measure is visits to each service's website, which the traffic firm Similarweb estimates every month.</p>
 
@@ -1658,7 +1675,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 </ol>
 
 <!-- ============ 7. TIMELINE ============ -->
-<h3 class="apx" id="timeline">C.&nbsp;From counting word lengths in 1887 to watermarking text by law in 2026</h3>
+<h3 class="apx" id="timeline">C.&nbsp;Timeline<span class="sub2">From counting word lengths in 1887 to watermarking text by law in 2026</span></h3>
 <div class="sheetwrap">
 <section class="paper hist">
 
