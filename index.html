@@ -143,8 +143,8 @@ html.js .col.is-open .fx-link,html.js .col.is-open .fx-link *{cursor:pointer}
 .fx-paper,.fx-human,.fx-machine{position:absolute;inset:0;width:100%;height:100%;max-width:none}
 .fx[data-card="5"]{display:flex;justify-content:space-between;align-items:center}
 .fx-brain,.fx-lattice{position:relative;flex:none;height:100%}
-.fx-brain{aspect-ratio:1299/1211}
-.fx-lattice{aspect-ratio:1293/1216}
+.fx-brain{aspect-ratio:1/1}
+.fx-lattice{aspect-ratio:1/1}
 .fx-brain img,.fx-lattice img{width:100%;height:100%}
 /* card 1 (the mosaic) and card 4 (the two hands at rest) are styled in cardfx.css */
 /* card 4 in a band slice: the same two rest poses, the human hand in front */
@@ -660,14 +660,14 @@ html.rm .sitemap-label{transition:none}
   pointer-events: none;
 }
 
-/* the brain's red breath */
-.cardfx-tint {
+/* card 5: one paper card of the lattice in red, cut from the drawing. The
+   script sets its place and its opacity. */
+.cardfx-card {
   position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
   display: block;
+  margin: 0;
+  padding: 0;
+  max-width: none;
   opacity: 0;
   pointer-events: none;
 }
@@ -1034,13 +1034,6 @@ html.rm .sitemap-label{transition:none}
   100% { opacity: 0.12; }
 }
 
-/* the red pencil lines of card 5 rising and sinking */
-@keyframes cardfx-breath {
-  0% { opacity: 0; animation-timing-function: ease-in-out; }
-  50% { opacity: 0.5; animation-timing-function: ease-in-out; }
-  100% { opacity: 0; }
-}
-
 /* card 7: the reader's foot and the lamp (canon books, round 11). Three
    pictures the size of the drawing lie on it: the patch, the foot and the cuff.
    The script turns the foot about the ankle. The lamp is a small box of pale
@@ -1231,13 +1224,13 @@ html.rm .sitemap-label{transition:none}
       <div class="col-in">
         <button class="c-open" type="button" id="b-5" aria-expanded="false" aria-controls="p-5">
           <span class="c-num"></span>
-          <span class="c-slice" aria-hidden="true"><img src="img/home/14-mind-brain-1400.webp" srcset="img/home/14-mind-brain-700.webp 700w, img/home/14-mind-brain-full.webp 1299w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(1.14 * (100vh - 400px))), (max-width:529px) 38vw, 200px" width="1299" height="1211" alt="" loading="eager" decoding="sync"></span>
+          <span class="c-slice" aria-hidden="true"><img src="img/home/14-mind-brain-ink-1400.webp" srcset="img/home/14-mind-brain-ink-700.webp 700w, img/home/14-mind-brain-ink-full.webp 1254w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(1.14 * (100vh - 400px))), (max-width:529px) 38vw, 200px" width="1254" height="1254" alt="" loading="eager" decoding="sync"></span>
           <span class="c-text"></span>
           <span class="f-win" aria-hidden="true"></span>
         </button>
         <div class="panel" id="p-5">
           <div class="entry">
-            <span class="art"><a class="fx-link" href="artificial-mind-of-your-own/a-talking-machine-of-your-own.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="5" style="--far:2.25"><span class="fx-brain"><img src="img/home/14-mind-brain-1400.webp" srcset="img/home/14-mind-brain-700.webp 700w, img/home/14-mind-brain-full.webp 1299w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(1.14 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1299" height="1211" alt="A human brain seen from above, pale, with thin gold wires branching out from it." loading="eager" decoding="sync"></span><span class="fx-lattice"><img src="img/home/15-mind-lattice-1400.webp" srcset="img/home/15-mind-lattice-700.webp 700w, img/home/15-mind-lattice-full.webp 1293w" sizes="(min-width:1280px) calc(0.7 * min(100vw - 128px, 1800px) - 420px), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1293" height="1216" alt="A lattice of small paper cards on glass shelves, joined by gold pins." loading="eager" decoding="sync"></span></span></a></span>
+            <span class="art"><a class="fx-link" href="artificial-mind-of-your-own/a-talking-machine-of-your-own.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="5" style="--far:2.11"><span class="fx-brain"><img src="img/home/14-mind-brain-ink-1400.webp" srcset="img/home/14-mind-brain-ink-700.webp 700w, img/home/14-mind-brain-ink-full.webp 1254w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(1.14 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1254" height="1254" alt="An ink drawing of a human brain seen from above, with fine threads branching out of it." loading="eager" decoding="sync"></span><span class="fx-lattice"><img src="img/home/15-mind-lattice-ink-1400.webp" srcset="img/home/15-mind-lattice-ink-700.webp 700w, img/home/15-mind-lattice-ink-full.webp 1254w" sizes="(min-width:1280px) calc(0.7 * min(100vw - 128px, 1800px) - 420px), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1254" height="1254" alt="An ink drawing of glass shelves in a frame of metal rods, with small paper cards joined by fine wires." loading="eager" decoding="sync"></span></span></a></span>
             <div class="words">
               <p class="title"><a href="artificial-mind-of-your-own/a-talking-machine-of-your-own.html"><span class="num">5</span><span class="tt">A Talking Machine of Your Own</span></a></p>
               <p class="blurb">Is it like your brain? Six plain questions about the machines that talk: how they learn, why some are free to download, and how to run one on your laptop.</p>
@@ -2215,58 +2208,201 @@ html.rm .sitemap-label{transition:none}
     };
   }
 
-  /* ---------- card 5: the brain's lit breath ---------- */
+  /* ---------- card 5: the lattice's red cards ---------- */
+
+  /* The brain stays as drawn. On the lattice, every paper card has a canvas of
+     its own that holds a red copy of that card, cut from the drawing along the
+     card's outline. The outlines are fractions of the picture
+     (15-mind-lattice-ink), x then y, found in round 17 of mind-of-your-own-plainness. */
+  var CARDS = [
+    [0.5877, 0.0741, 0.6804, 0.0759, 0.6908, 0.1249, 0.5888, 0.1227],
+    [0.2224, 0.074, 0.3144, 0.0763, 0.3072, 0.1267, 0.1936, 0.1312],
+    [0.7207, 0.1153, 0.8344, 0.1159, 0.8543, 0.1693, 0.7319, 0.1713],
+    [0.4547, 0.1206, 0.5571, 0.1207, 0.5623, 0.1758, 0.4496, 0.1742],
+    [0.2063, 0.1376, 0.3073, 0.139, 0.2883, 0.1909, 0.1833, 0.188],
+    [0.1409, 0.1868, 0.1828, 0.1879, 0.1826, 0.1884, 0.246, 0.1902, 0.2249, 0.241, 0.1156, 0.2381],
+    [0.281, 0.218, 0.3894, 0.2248, 0.3652, 0.2966, 0.2533, 0.2783],
+    [0.6401, 0.2306, 0.7409, 0.2302, 0.749, 0.2749, 0.7669, 0.3147, 0.6478, 0.3173],
+    [0.209, 0.2871, 0.3122, 0.2892, 0.295, 0.3383, 0.1879, 0.3382],
+    [0.4639, 0.3167, 0.5712, 0.3168, 0.5742, 0.3766, 0.4544, 0.3768],
+    [0.139, 0.3382, 0.2473, 0.3383, 0.2257, 0.3918, 0.1141, 0.3898],
+    [0.6727, 0.3458, 0.788, 0.3457, 0.8124, 0.4051, 0.694, 0.4053],
+    [0.2702, 0.3626, 0.3756, 0.3671, 0.3586, 0.4274, 0.2433, 0.4208],
+    [0.2103, 0.4277, 0.316, 0.4283, 0.2991, 0.4852, 0.1873, 0.4814],
+    [0.6414, 0.4249, 0.7348, 0.422, 0.756, 0.4857, 0.6521, 0.4872],
+    [0.1462, 0.4821, 0.2627, 0.486, 0.2438, 0.5426, 0.1207, 0.5391],
+    [0.6819, 0.5, 0.7998, 0.497, 0.8199, 0.5582, 0.695, 0.5598],
+    [0.2798, 0.5286, 0.3888, 0.5312, 0.3622, 0.6006, 0.2541, 0.5898],
+    [0.6054, 0.5718, 0.7294, 0.5688, 0.7467, 0.6312, 0.6461, 0.6332, 0.6491, 0.622, 0.643, 0.6099, 0.6343, 0.6058, 0.6214, 0.6086, 0.6166, 0.6134, 0.6126, 0.6239],
+    [0.2144, 0.5821, 0.2563, 0.5831, 0.2533, 0.5902, 0.3141, 0.5962, 0.3019, 0.638, 0.1931, 0.6348],
+    [0.462, 0.6258, 0.5682, 0.626, 0.5693, 0.6886, 0.453, 0.6884],
+    [0.1476, 0.6348, 0.261, 0.6397, 0.2418, 0.6956, 0.1257, 0.6898],
+    [0.6806, 0.6452, 0.7926, 0.6426, 0.8098, 0.7031, 0.6894, 0.7029],
+    [0.2831, 0.6782, 0.3929, 0.6779, 0.3621, 0.7536, 0.2561, 0.7363],
+    [0.2018, 0.6963, 0.2722, 0.7004, 0.2553, 0.7367, 0.2782, 0.7404, 0.2704, 0.7522, 0.1786, 0.752],
+    [0.132, 0.7524, 0.2468, 0.7558, 0.2277, 0.8086, 0.1117, 0.8063],
+    [0.4621, 0.7699, 0.5693, 0.7702, 0.5704, 0.8333, 0.4557, 0.8333],
+    [0.6983, 0.7673, 0.8042, 0.7652, 0.8188, 0.8144, 0.8233, 0.8187, 0.838, 0.8401, 0.7423, 0.8779, 0.7214, 0.8346, 0.7151, 0.8362],
+    [0.2111, 0.8088, 0.228, 0.8091, 0.2282, 0.8086, 0.3256, 0.8104, 0.3123, 0.8541, 0.2919, 0.8781, 0.1897, 0.852],
+    [0.3469, 0.8744, 0.4514, 0.8744, 0.4491, 0.9336, 0.336, 0.934],
+    [0.5856, 0.8744, 0.6794, 0.8744, 0.6862, 0.9329, 0.583, 0.933]
+  ];
+
+  /* the flashes: a shimmer across the lattice. A new card starts every 0.2 to
+     0.55 seconds and stays red for 2.2 to 3.4 seconds, so about five cards
+     are red at once, each at a different point of its flash. Each new card is
+     the one farthest from the cards already lit, out of six picked at random,
+     so the red cards sit in different places. Five cards are already part-way
+     through their flash when the lattice appears. */
+  var FLASH = {
+    gap: [0.2, 0.55],  // seconds from one new card to the next
+    dur: [2.2, 3.4],  // seconds one flash lasts
+    rise: 0.3,  // share of a flash spent coming up
+    hold: 0.55,  // the flash holds its peak until this share
+    peak: 0.8,  // opacity of the red copy at its peak
+    start: 5,  // cards already lit when the lattice appears
+    tries: 6  // cards picked at random for each new flash
+  };
+
+  function between(r) { return r[0] + Math.random() * (r[1] - r[0]); }
+  function easeIO(f) { return f < 0.5 ? 2 * f * f : 1 - Math.pow(-2 * f + 2, 2) / 2; }
+  function level(u) {
+    if (u < FLASH.rise) return easeIO(u / FLASH.rise);
+    if (u < FLASH.hold) return 1;
+    return 1 - easeIO((u - FLASH.hold) / (1 - FLASH.hold));
+  }
+
+  /* the red copy of the drawing: the drawing's own tones take the red's hue,
+     a red is multiplied over them, and the drawing's outline cuts the result */
+  function redCopy(src, w, h, rgb) {
+    var t = document.createElement('canvas');
+    t.width = w;
+    t.height = h;
+    var g = t.getContext('2d');
+    if (!g) return null;
+    g.drawImage(src, 0, 0, w, h);
+    g.globalCompositeOperation = 'color';
+    g.fillStyle = 'rgb(' + rgb.join(',') + ')';
+    g.fillRect(0, 0, w, h);
+    g.globalCompositeOperation = 'multiply';
+    g.globalAlpha = 0.7;
+    g.fillRect(0, 0, w, h);
+    g.globalAlpha = 1;
+    g.globalCompositeOperation = 'destination-in';
+    g.drawImage(src, 0, 0, w, h);
+    g.globalCompositeOperation = 'source-over';
+    return t;
+  }
+
+  /* one canvas per card, cut from the red copy along the card's outline and
+     placed over the card in percent of the drawing */
+  function cutCards(t, w, h, holder, cls) {
+    var cards = [];
+    for (var k = 0; k < CARDS.length; k++) {
+      var p = CARDS[k], x0 = 1, y0 = 1, x1 = 0, y1 = 0, i;
+      for (i = 0; i < p.length; i += 2) {
+        x0 = Math.min(x0, p[i]); x1 = Math.max(x1, p[i]);
+        y0 = Math.min(y0, p[i + 1]); y1 = Math.max(y1, p[i + 1]);
+      }
+      var px = Math.max(0, Math.floor(x0 * w)), py = Math.max(0, Math.floor(y0 * h));
+      var pw = Math.min(w, Math.ceil(x1 * w)) - px, ph = Math.min(h, Math.ceil(y1 * h)) - py;
+      if (pw < 1 || ph < 1) continue;
+      var cv = document.createElement('canvas');
+      cv.className = cls;
+      cv.setAttribute('aria-hidden', 'true');
+      cv.width = pw;
+      cv.height = ph;
+      var c = cv.getContext('2d');
+      if (!c) continue;
+      c.beginPath();
+      for (i = 0; i < p.length; i += 2) {
+        if (i) c.lineTo(p[i] * w - px, p[i + 1] * h - py);
+        else c.moveTo(p[i] * w - px, p[i + 1] * h - py);
+      }
+      c.closePath();
+      c.clip();
+      c.drawImage(t, -px, -py);
+      cv.style.left = (px / w * 100) + '%';
+      cv.style.top = (py / h * 100) + '%';
+      cv.style.width = (pw / w * 100) + '%';
+      cv.style.height = (ph / h * 100) + '%';
+      holder.appendChild(cv);
+      cards.push({ el: cv, x: (x0 + x1) / 2 * w, y: (y0 + y1) / 2 * h, on: false, t0: 0, dur: 0 });
+    }
+    return cards;
+  }
+
+  /* the clock that runs the flashes: step(dt) moves it on by dt seconds */
+  function flasher(cards) {
+    var clock = 0, next = 0, live = [];
+    function gapTo(k) {
+      var d = Infinity;
+      for (var i = 0; i < live.length; i++) {
+        var c = cards[live[i]];
+        d = Math.min(d, Math.pow(c.x - cards[k].x, 2) + Math.pow(c.y - cards[k].y, 2));
+      }
+      return d;
+    }
+    function pick() {
+      var best = -1, bestD = -1;
+      for (var n = 0; n < FLASH.tries; n++) {
+        var k = Math.floor(Math.random() * cards.length);
+        if (cards[k].on) continue;
+        var d = gapTo(k);
+        if (d > bestD) { best = k; bestD = d; }
+      }
+      return best;
+    }
+    function light(k, t0) {
+      var c = cards[k];
+      c.on = true;
+      c.dur = between(FLASH.dur);
+      c.t0 = t0;
+      live.push(k);
+    }
+    for (var n0 = 0; n0 < FLASH.start; n0++) {
+      var k0 = pick();
+      if (k0 >= 0) { light(k0, 0); cards[k0].t0 = -Math.random() * 0.8 * cards[k0].dur; }
+    }
+    return function step(dt) {
+      clock += dt;
+      while (clock >= next) {
+        var k = pick();
+        if (k >= 0) light(k, next);
+        next += between(FLASH.gap);
+      }
+      for (var i = live.length - 1; i >= 0; i--) {
+        var c = cards[live[i]], u = (clock - c.t0) / c.dur;
+        if (u >= 1) { c.el.style.opacity = '0'; c.on = false; live.splice(i, 1); }
+        else c.el.style.opacity = (FLASH.peak * level(Math.max(0, u))).toFixed(3);
+      }
+    };
+  }
 
   function card5(c) {
     if (c.reduced) return;
-    var box = c.fx.querySelector('.fx-brain');
+    var box = c.fx.querySelector('.fx-lattice');
     var img = box && box.querySelector('img');
     if (!img) return;
-    var cv = el('canvas', 'cardfx-tint');
-    cv.setAttribute('aria-hidden', 'true');
-    box.appendChild(cv);
-    c.layers.push(cv);
-    c.fades.push(cv);
-    var rgb = c.rgb;
-    var dead = false;
+    var layer = el('div', 'cardfx-layer');
+    layer.setAttribute('aria-hidden', 'true');
+    box.appendChild(layer);
+    c.layers.push(layer);
+    c.fades.push(layer);
+    var step = null, dead = false;
     c.undo.push(function () { dead = true; });
 
-    function paint(src, natW, natH) {
-      if (dead || !natW || !natH) return;
-      var dpr = Math.min(2, window.devicePixelRatio || 1);
-      var w = Math.max(64, Math.min(natW, Math.round((box.clientWidth || natW) * dpr)));
-      var h = Math.round(w * natH / natW);
-      cv.width = w;
-      cv.height = h;
-      var ctx = cv.getContext('2d');
-      if (!ctx) return;
-      ctx.clearRect(0, 0, w, h);
-      ctx.globalCompositeOperation = 'source-over';
-      ctx.drawImage(src, 0, 0, w, h);
-      /* the dark lines go red and keep their pencil tone: first the picture's own
-         tones take the red's hue, then a lighter red is multiplied over them, and
-         the picture's own outline cuts the result so clear paper stays clear */
-      var fill = 'rgb(' + rgb.join(',') + ')';
-      ctx.globalCompositeOperation = 'color';
-      ctx.fillStyle = fill;
-      ctx.fillRect(0, 0, w, h);
-      ctx.globalCompositeOperation = 'multiply';
-      ctx.globalAlpha = 0.4;
-      ctx.fillRect(0, 0, w, h);
-      ctx.globalAlpha = 1;
-      ctx.globalCompositeOperation = 'destination-in';
-      ctx.drawImage(src, 0, 0, w, h);
-      ctx.globalCompositeOperation = 'source-over';
-      if (!cv.style.animation) {
-        c.cycle(cv, 'cardfx-breath', 4, 0);
-        if (!c.running) cv.classList.add('cardfx-paused');
-      }
+    function build(src, w, h) {
+      if (dead || step || !w || !h) return;
+      var t = redCopy(src, w, h, c.rgb);
+      if (t) step = flasher(cutCards(t, w, h, layer, 'cardfx-card'));
     }
+    c.card.tick = function (dt) { if (step) step(dt); };
 
     function usable(im) { return im && im.complete && im.naturalWidth > 0; }
     function fromImg() {
-      if (usable(img)) paint(img, img.naturalWidth, img.naturalHeight);
-      else img.addEventListener('load', function () { paint(img, img.naturalWidth, img.naturalHeight); }, { once: true });
+      if (usable(img)) build(img, img.naturalWidth, img.naturalHeight);
+      else img.addEventListener('load', function () { build(img, img.naturalWidth, img.naturalHeight); }, { once: true });
     }
 
     /* the page may hold the small file; use the large one when it exists */
@@ -2274,7 +2410,7 @@ html.rm .sitemap-label{transition:none}
     var big = url.replace(/-700\.webp/, '-1400.webp');
     if (big !== url) {
       var hi = new Image();
-      hi.onload = function () { paint(hi, hi.naturalWidth, hi.naturalHeight); };
+      hi.onload = function () { build(hi, hi.naturalWidth, hi.naturalHeight); };
       hi.onerror = fromImg;
       hi.src = big;
     } else {
@@ -2648,7 +2784,7 @@ html.rm .sitemap-label{transition:none}
       });
       c.io.observe(fxEl);
     }
-    if (typeof ResizeObserver === 'function' && (n === 2 || n === 3 || n === 5)) {
+    if (typeof ResizeObserver === 'function' && (n === 2 || n === 3)) {
       var w0 = fxEl.offsetWidth, h0 = fxEl.offsetHeight, first = true;
       c.ro = new ResizeObserver(function () {
         if (first) { first = false; return; }
@@ -2767,7 +2903,7 @@ html.rm .sitemap-label{transition:none}
     2: { v: [.230, .12, .420, .99], ink: [0, 0, 1, 1], bs: [.18, .06, .82, .99] },   /* the subway car (round 49; crop 190,110 to 1240,810 of the 1360 by 840 master): the closed spine shows the standing woman with her grocery bags; a band shows the woman with the bags, the seat and the man who shrugs */
     3: { v: [.200, .175, .315, .640], ink: [.053, .029, .956, .954], bs: [.120, .170, .430, .690], bclip: [0, 0, .535, 1], bink: [.053, .029, .535, .954] },   /* the child at the desk with the trunk and the monkey below; the child, the desk and the top of the roots in a band, which shows nothing of the robot's side */
     4: { v: [.596, .040, .716, .960], ink: [0, 0, 1, 1], hl: .580, bs: [0, 0, 1, 1] },   /* the machine hand with its pen (round 29 of Project 6: the ink drawing in two layers, darker, turned 5 degrees and cropped 1.5 times closer); v is a tall strip through the pen and the fingers, so the closed column zooms in on the hand; hl: on hover the window reaches the nib, at canvas x .601; no fit, since fit made the hover zoom in; a band shows the whole picture */
-    5: { v: [.397, .100, .603, .900], ink: [.007, .015, .999, .990], bs: [.007, .015, .999, .990] },  /* the brain */
+    5: { v: [.393, .098, .607, .874], ink: [.017, .005, .983, .950], bs: [.017, .005, .983, .950] },  /* the brain (Astra's ink drawing, round 17 of mind-of-your-own-plainness) */
     6: { v: [.482, .490, .538, .850], ink: [0, .033, 1, .998], bs: [.310, .500, .700, .790] },       /* the manor: the central gable; the whole house in a band */
     7: { v: [.482, .1195, .698, .9857], ink: [.001, 0, .999, .998], bs: [.4064, .1195, .7585, .9857] },   /* the reader drawing (crop 376,260 to 1370,887 of the 1774 by 887 original): the lamp, its shade and pole, and the left arm and back of the empty armchair in the spine; the lamp with the armchair in a band; the open card shows the whole scene */
     8: { v: [.7249, .2629, .8702, .8506], ink: [.0124, .0146, .9892, .9834], bs: [.0124, .0146, .9892, .9834] }   /* the cardboard truck (Project 27 round 42; crop 499,170 to 1870,1191 of the 2400 by 1370 master, which faces left since round 40): the baker in her doorway, head to feet; the whole scene in a band */
@@ -2846,7 +2982,7 @@ html.rm .sitemap-label{transition:none}
         units.push({ el: t, img: t.querySelector('img'), nat: nat(t.querySelector('img')), tile: true, idx: i, fade: i === 5, fr: FRAMES[1][i] });
       });
     } else if (n === 5) {
-      units.push({ el: fx.querySelector('.fx-brain'), nat: [1299, 1211], tile: false, idx: 0, fr: FRAMES[5] });
+      units.push({ el: fx.querySelector('.fx-brain'), nat: [1254, 1254], tile: false, idx: 0, fr: FRAMES[5] });
       c._lat = fx.querySelector('.fx-lattice');
     } else {
       units.push({ el: fx, nat: n === 4 ? [1365, 768] : nat(fx.querySelector('img')), tile: false, idx: 0, fr: FRAMES[n] });
