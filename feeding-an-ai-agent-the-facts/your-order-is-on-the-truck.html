@@ -603,16 +603,18 @@ dl.mail-meta{grid-template-columns:2.6rem minmax(0,1fr)}}
 #fig-hidden-line .note.mail{margin:0;padding:.2rem .8rem .55rem 1.05rem;border-left:6px solid transparent;border-radius:0}
 #fig-hidden-line .note.mail .mail-body,
 #fig-hidden-line .note.mail .mail-body p{background:#fff}
-/* round 9: "A closer look" boxes in Astra's pencil frame on white paper, with a small baker at the top-left edge.
-   The type stays smaller than the article's, as Pundir asked in round 7. */
-.col aside.closer{position:relative;margin:4.4rem 0 var(--s3);padding:.95rem 1.15rem 1.05rem;border:8px solid transparent;border-image:url("feeding-agent-art/ui-pencil-frame.webp") 24 / 8px round;background:#fff;background-clip:padding-box;box-shadow:1px 3px 5px -3px rgba(17,17,17,.23)}
-.col aside.closer::before{content:"";position:absolute;width:72px;height:61px;left:12px;bottom:calc(100% + 1px);background:url("feeding-agent-art/ui-closer-baker.webp") center bottom / contain no-repeat;pointer-events:none}
+/* round 9: "A closer look" boxes on white paper, with a small baker at the top-left edge.
+   The type stays smaller than the article's, as Pundir asked in round 7.
+   Round 44: the boxes have the figures' frame, 1px var(--frame), and no shadow. Pundir found Astra's
+   pencil frame thicker and darker than the figures. The padding grows by 7px, so the text keeps its place. */
+.col aside.closer{position:relative;margin:4.4rem 0 var(--s3);padding:calc(.95rem + 7px) calc(1.15rem + 7px) calc(1.05rem + 7px);border:1px solid var(--frame);background:#fff}
+.col aside.closer::before{content:"";position:absolute;width:72px;height:61px;left:19px;bottom:calc(100% - 6px);background:url("feeding-agent-art/ui-closer-baker.webp") center bottom / contain no-repeat;pointer-events:none}
 .closer-lbl{display:block;line-height:1.45;color:var(--ink-faint);margin:0 0 .15rem}
 .col p.closer-title{margin:0 0 .5rem;line-height:1.35;color:var(--ink)}
 .col aside.closer p{line-height:1.6;margin:0 0 .6rem;color:var(--ink)}
 .col aside.closer p:last-child{margin-bottom:0}
-@media (max-width:560px){.col aside.closer{margin-top:4rem;padding:.8rem .85rem .9rem}
-.col aside.closer::before{width:60px;height:51px;left:8px}}
+@media (max-width:560px){.col aside.closer{margin-top:4rem;padding:calc(.8rem + 7px) calc(.85rem + 7px) calc(.9rem + 7px)}
+.col aside.closer::before{width:60px;height:51px;left:15px}}
 /* v4: words to know. In the margin, each term shows its first sentence; the word list holds the rest. */
 @media (min-width:1001px){.gloss .d-more{display:none}
 .col .gloss{margin-bottom:.8rem}
@@ -766,16 +768,16 @@ figure.mfig#fig-six-needs{border:0;padding-left:0;padding-right:0}
 ul.callouts li{background:none}
 /* the label over the list of sources beside the final draft */
 .col p.fs-lbl{margin:1.2rem 0 .3rem;color:var(--ink-faint)}
-/* round 42: the real-world case boxes sit in the closer-look pencil frame. The index tab from Astra's
+/* round 42: the real-world case boxes sit in the closer-look frame. The index tab from Astra's
    case file, in grey, stands on the frame's top edge at the left. Pundir found the whole case file too busy. */
 .col aside.closer.casefile{margin-top:var(--s4)}
-.col aside.closer.casefile::before{content:"";left:1.1rem;bottom:calc(100% + 5px);width:150px;height:20px;background:url("feeding-agent-art/case-tab.webp") center bottom / 100% 100% no-repeat}
+.col aside.closer.casefile::before{content:"";left:calc(1.1rem + 7px);bottom:calc(100% - 2px);width:150px;height:20px;background:url("feeding-agent-art/case-tab.webp") center bottom / 100% 100% no-repeat}
 .col aside.closer.casefile .case-head picture{flex-basis:96px}
 .col aside.closer.casefile .case-head img{width:96px}
 .col aside.closer.casefile blockquote{border-left-color:var(--ink-faint)}
 .col aside.closer.casefile p.src{border-top:1px solid var(--rule);padding-top:.55rem;margin-top:1rem}
 .col aside.closer.casefile p.src::before{content:none}
-@media (max-width:560px){.col aside.closer.casefile::before{left:.8rem;width:120px;height:16px}
+@media (max-width:560px){.col aside.closer.casefile::before{left:calc(.8rem + 7px);width:120px;height:16px}
 .col aside.closer.casefile .case-head picture{flex-basis:72px}
 .col aside.closer.casefile .case-head img{width:72px}}
 /* round 22: on a phone, Appendix A's table stacks into one block per method, as Appendix B does */
