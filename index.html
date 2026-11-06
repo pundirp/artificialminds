@@ -511,11 +511,12 @@ html.rm .sitemap-label{transition:none}
   --fx-haze: rgba(255, 255, 255, 0.85);
 
   /* card 2: the phone on the empty seat. The lit screen, and the halo on the
-     seat at three strengths. */
-  --phone-lit: #f4f4f4;
-  --phone-halo-0: rgba(255, 255, 255, 0);
-  --phone-halo-35: rgba(255, 255, 255, 0.35);
-  --phone-halo-85: rgba(255, 255, 255, 0.85);
+     seat at three strengths. Both are the pale yellow of card 7's lamp,
+     255 241 185, so the phone turns yellow as it brightens. */
+  --phone-lit: #fff1b9;
+  --phone-halo-0: rgba(255, 241, 185, 0);
+  --phone-halo-35: rgba(255, 241, 185, 0.35);
+  --phone-halo-85: rgba(255, 241, 185, 0.85);
 
   /* card 7: the pale yellow inside the lit lamp shade, red green blue. It is
      the fisherman's bulb yellow (255 208 20, A Salon of Witnesses) at 30
@@ -523,9 +524,11 @@ html.rm .sitemap-label{transition:none}
   --bulb-glass: 255 241 185;
 
   /* card 2: the typing bubble over the phone. A soft white fill with no outline,
-     and mid grey dots. */
+     mid grey dots, and a soft shadow below it, so it stands in front of the
+     seat. */
   --bubble-fill: #ffffff;
   --bubble-dot: #8a8a8a;
+  --bubble-shadow: rgba(17, 17, 17, 0.3);
 }
 
 .cardfx-layer {
@@ -979,6 +982,12 @@ html.rm .sitemap-label{transition:none}
 
 .cardfx-phone-bubble path {
   fill: var(--bubble-fill);
+}
+
+/* the bubble's shadow falls a little below and to the right, so the bubble
+   stands in front of the seat */
+.cardfx-phone-bubble {
+  filter: drop-shadow(1px 1.5px 1.5px var(--bubble-shadow));
 }
 
 .cardfx-phone-bubble circle {
