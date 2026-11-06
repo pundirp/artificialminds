@@ -94,9 +94,10 @@
   --s1:.5rem; --s2:1rem; --s3:1.62rem; --s4:2.6rem; --s5:4rem; --s6:6.2rem;
   --pad:16px;
 
-  font-size:18px;
+  font-size:19px;
 }
-@media (max-width:620px){ :root{ font-size:16.5px } }
+@media (max-width:760px){ :root{ font-size:17.5px } }
+@media (max-width:430px){ :root{ font-size:17px } }
 
 /* ---------- 2. Base ---------- */
 *{box-sizing:border-box}
@@ -131,13 +132,11 @@ a:focus-visible,button:focus-visible{outline:2px solid var(--ink);outline-offset
   display:flex;justify-content:space-between;align-items:baseline;gap:1rem;margin:0;
   padding:1em 0 .55em;border-bottom:1px solid var(--rule);
   font-family:var(--serif);font-variant:small-caps;text-transform:none;letter-spacing:.06em;
-  font-size:19px;line-height:1.35;font-weight:400;color:var(--ink-faint)
+  font-size:1rem;line-height:1.35;font-weight:400;color:var(--ink-faint)
 }
 .runhead a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
 .runhead a:hover{color:var(--ink)}
-@media (max-width:760px){ .runhead{font-size:17.5px} }
 @media (max-width:480px){ .runhead > span{display:none} }
-@media (max-width:430px){ .runhead{font-size:17px} }
 
 /* ---------- 4. Title block ----------
    The two layered pictures are cut from one ink drawing by Gemini (Project 6, round 29),
@@ -307,13 +306,15 @@ figure svg{display:block;width:100%;height:auto;max-width:34rem}
 .paper .tl li{border-top-color:var(--old-hair)}
 
 /* ---------- 7. Quiz cards, passages and reveals ---------- */
-.card{background:var(--tint);padding:1rem 1.2rem 1.05rem;margin:var(--s3) 0}
+.card{background:var(--tint);padding:1rem 1.2rem 1.05rem;margin:var(--s3) 0;padding-left:21.6px;padding-right:21.6px}
+@media (max-width:620px){ .card{padding-left:19.8px;padding-right:19.8px} }
 .card > :last-child{margin-bottom:0}
 .orient{margin:0 0 1rem}
 .pass{border:1px solid var(--rule);background:var(--paper);color:var(--ink);padding:1.1rem 1.35rem 1rem;margin:.7rem 0}
-.pass .label{display:block;margin-bottom:.55rem}
+.pass .label{display:block;margin-bottom:.55rem;font-size:14.76px}
+@media (max-width:620px){ .pass .label{font-size:13.53px} }
 .passage{font-size:1rem;line-height:1.66;margin:0}
-.pass .passage{line-height:1.6;color:var(--ink)}
+.pass .passage{font-size:.9rem;line-height:1.6;color:var(--ink)}
 .pass .passage::first-letter{float:left;font-size:3.1em;line-height:.82;padding:.08em .12em 0 0;color:var(--ink)}
 .lead-in{font-variant:small-caps;letter-spacing:.05em}
 .ask{margin:1.1rem 0 .3rem}
@@ -742,7 +743,7 @@ h3.apx{display:flex;align-items:baseline;gap:.7rem;font-size:1.15rem;line-height
 }
 @media (max-width:480px){
   figure.pfig{--dialw:6.8rem;--mg:3.9rem;padding:.8rem .8rem .9rem}
-  .card{padding:.8rem .8rem .9rem}
+  .card{padding:.8rem .8rem .9rem;padding-left:13.2px;padding-right:13.2px}
   .prow{grid-template-columns:1fr;row-gap:.6rem}
   .dcol{display:flex;align-items:center;gap:.9rem;text-align:left}
   .dcol .dial{margin:0;flex:none}
