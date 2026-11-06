@@ -270,10 +270,7 @@ h1{font-weight:400;font-size:27px;line-height:1.2;letter-spacing:-.01em;margin:0
 .counsel h4{font-size:1rem;color:var(--ink)}
 .counsel .who{font-size:.82rem;margin:.1rem 0 .7rem}
 .counsel p{font-size:.92rem;line-height:1.55;color:var(--ink)}
-/* each elder signs the note with a portrait and a name. Subgrid keeps the three
-   signatures level across the columns; a browser without it lets them float free. */
-.counsel-wrap{grid-template-rows:auto auto}
-.counsel{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:0}
+/* each elder signs the note with a portrait and a name, right where that note ends */
 .signoff{display:flex;align-items:flex-end;gap:.7rem;margin-top:.6rem}
 .signoff img{display:block;width:110px;height:auto;flex:none}
 .signoff h4{margin:0}
@@ -459,7 +456,6 @@ footer p.gap{margin-top:.9rem}
 @media (max-width:680px){
   .grid{grid-template-columns:repeat(2,1fr)}
   .counsel-wrap{grid-template-columns:1fr;gap:var(--s2) 0}
-  .counsel{display:block}
   .modal-grid{grid-template-columns:1fr}
   .modal-cover{width:100%;max-width:12rem;margin:0 auto}
   .modal-verdicts{grid-template-columns:1fr}
