@@ -76,7 +76,7 @@
     font-feature-settings:"onum" 1,"kern" 1,"liga" 1;
     font-kerning:normal; text-rendering:optimizeLegibility; -webkit-font-smoothing:antialiased;
   }
-  .sheet{max-width:var(--sheet);margin:0 auto;padding:var(--s4) 1.6rem var(--s6)}
+  .sheet{max-width:var(--sheet);margin:0 auto;padding:0 1.6rem var(--s6)}
   .leaf{display:grid;grid-template-columns:var(--margin-col) minmax(0,var(--measure));column-gap:var(--gutter)}
   .col{grid-column:2;min-width:0}
   .full{grid-column:1 / -1}
@@ -286,7 +286,7 @@
   }
   @media (max-width:430px){
     :root{font-size:17px}
-    .sheet{padding:var(--s3) 1.15rem var(--s5)}
+    .sheet{padding:0 1.15rem var(--s5)}
     h1{font-size:2rem}
     .cards{grid-template-columns:1fr}
   }
@@ -352,8 +352,9 @@
      every label in small capitals at 1rem; italics only for quotations. Diagrams are left as they are. */
   .runhead, .runhead a, .chap-num, .chap-num .n, h3.shoulder, .contents .ct, .contents .n, .card .no, .colophon .label{
     font-variant:small-caps; text-transform:none; letter-spacing:.06em; font-size:1rem; line-height:1.35; font-weight:400}
-  .runhead{padding-bottom:.55rem}
-  .chap-num, .chap-num .n, .contents .n, .card .no, .colophon .label, .runhead, .runhead a{color:var(--ink-faint)}
+  .runhead{padding:1rem 0 .55rem}
+  .runhead a{color:var(--ink-soft);margin-bottom:-1px}
+  .chap-num, .chap-num .n, .contents .n, .card .no, .colophon .label, .runhead{color:var(--ink-faint)}
   h3.shoulder{color:var(--ink-soft)}
   .contents .ct{margin-bottom:.5rem}
   .colophon .label{margin-bottom:.25rem}

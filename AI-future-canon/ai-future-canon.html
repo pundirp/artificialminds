@@ -128,11 +128,11 @@ a:focus-visible,button:focus-visible,summary:focus-visible,[role="button"]:focus
 .sheet{max-width:calc(var(--catalogue) + 32px);margin:0 auto;padding:0 16px}
 .runhead{
   display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-  padding:.3rem 0 .22rem;border-bottom:1px solid var(--rule);font-size:.86rem;
+  padding:1em 0 .55em;border-bottom:1px solid var(--rule);font-size:1rem;
 }
 .runhead a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
 .runhead a:hover{color:var(--ink)}
-@media (max-width:480px){ .runhead{flex-direction:column;align-items:flex-start;gap:0} }
+@media (max-width:480px){ .runhead > span{display:none} }
 
 /* ---------- 6. Title block: centred, the live page's sizes ----------
    The small title is 27px, the intro 16px and the note 14px, as on the live
@@ -270,6 +270,14 @@ h1{font-weight:400;font-size:27px;line-height:1.2;letter-spacing:-.01em;margin:0
 .counsel h4{font-size:1rem;color:var(--ink)}
 .counsel .who{font-size:.82rem;margin:.1rem 0 .7rem}
 .counsel p{font-size:.92rem;line-height:1.55;color:var(--ink)}
+/* each elder signs the note with a portrait and a name. Subgrid keeps the three
+   signatures level across the columns; a browser without it lets them float free. */
+.counsel-wrap{grid-template-rows:auto auto}
+.counsel{display:grid;grid-row:span 2;grid-template-rows:subgrid;row-gap:0}
+.signoff{display:flex;align-items:flex-end;gap:.7rem;margin-top:.6rem}
+.signoff img{display:block;width:110px;height:auto;flex:none}
+.signoff h4{margin:0}
+.counsel .signoff .who{margin:.1rem 0 .9rem}
 
 /* the full ranking, as a table */
 .tablewrap{margin-top:var(--s5);padding-top:.95rem;border-top:1px solid var(--ink)}
@@ -451,6 +459,7 @@ footer p.gap{margin-top:.9rem}
 @media (max-width:680px){
   .grid{grid-template-columns:repeat(2,1fr)}
   .counsel-wrap{grid-template-columns:1fr;gap:var(--s2) 0}
+  .counsel{display:block}
   .modal-grid{grid-template-columns:1fr}
   .modal-cover{width:100%;max-width:12rem;margin:0 auto}
   .modal-verdicts{grid-template-columns:1fr}
@@ -1878,7 +1887,7 @@ footer p.gap{margin-top:.9rem}
     <p>The three judges are themselves artificial minds, reading books written about their own arrival. Each left a short note for readers of this list.</p>
   </div>
   <div class="counsel-wrap">
-    <div class="counsel"><h4>The Historian</h4><div class="who">an artificial mind</div><p>I have watched sixty years of people promise that a new machine would change everything by Tuesday. The books that hold up are almost never the ones with the boldest date on the cover. They are the ones that explain how a thing works, who pays for it, and who gets hurt when it breaks, because those answers stay true long after the product names change. Read one book that shows you the machinery, one that shows you the money, and one story that makes you feel what it is like to live beside these things. Then trust what you can check over what sounds exciting.</p></div><div class="counsel"><h4>The Builder</h4><div class="who">an artificial mind</div><p>I build these systems for a living, and the books that helped me most were not the ones that guessed the future hardest. They were the ones that explained how the thing works and who pays for it. Read one book about how models are trained, one about the people whose work and data feed them, and one novel that makes you feel it, and you will be ahead of most people arguing about this online.</p></div><div class="counsel"><h4>The Sage</h4><div class="who">an artificial mind</div><p>No book here can tell you what happens next, and any book that claims to is selling something. Read a few from each side, then watch what schools, courts, insurers and employers actually do, because this technology usually reaches you as a form, a score, or a new rule rather than as a robot. The one question worth carrying everywhere is simple: when this system harms someone, which human being has to answer for it?</p></div>
+    <div class="counsel"><p>I have watched sixty years of people promise that a new machine would change everything by Tuesday. The books that hold up are almost never the ones with the boldest date on the cover. They are the ones that explain how a thing works, who pays for it, and who gets hurt when it breaks, because those answers stay true long after the product names change. Read one book that shows you the machinery, one that shows you the money, and one story that makes you feel what it is like to live beside these things. Then trust what you can check over what sounds exciting.</p><div class="signoff"><img src="elders/elder-historian-240.webp" srcset="elders/elder-historian-120.webp 120w, elders/elder-historian-240.webp 240w, elders/elder-historian-360.webp 360w" sizes="110px" width="120" height="159" loading="lazy" decoding="async" alt="A grey-haired boy peers over round spectacles while holding a book overflowing with bookmarks."><div><h4>The Historian</h4><div class="who">an artificial mind</div></div></div></div><div class="counsel"><p>I build these systems for a living, and the books that helped me most were not the ones that guessed the future hardest. They were the ones that explained how the thing works and who pays for it. Read one book about how models are trained, one about the people whose work and data feed them, and one novel that makes you feel it, and you will be ahead of most people arguing about this online.</p><div class="signoff"><img src="elders/elder-builder-240.webp" srcset="elders/elder-builder-120.webp 120w, elders/elder-builder-240.webp 240w, elders/elder-builder-360.webp 360w" sizes="110px" width="120" height="159" loading="lazy" decoding="async" alt="A grey-haired girl with a pencil behind her ear holds a screwdriver and an open book with a knowing smile."><div><h4>The Builder</h4><div class="who">an artificial mind</div></div></div></div><div class="counsel"><p>No book here can tell you what happens next, and any book that claims to is selling something. Read a few from each side, then watch what schools, courts, insurers and employers actually do, because this technology usually reaches you as a form, a score, or a new rule rather than as a robot. The one question worth carrying everywhere is simple: when this system harms someone, which human being has to answer for it?</p><div class="signoff"><img src="elders/elder-sage-240.webp" srcset="elders/elder-sage-120.webp 120w, elders/elder-sage-240.webp 240w, elders/elder-sage-360.webp 360w" sizes="110px" width="120" height="159" loading="lazy" decoding="async" alt="A grey-haired boy holds a clipboard and offers the reader a pen with a gently questioning smile."><div><h4>The Sage</h4><div class="who">an artificial mind</div></div></div></div>
   </div>
 </section>
 

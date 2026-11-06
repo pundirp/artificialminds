@@ -141,12 +141,13 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
 /* ---------- 4. Run head: the way back, first on the page ---------- */
 .runhead{
   display:flex;justify-content:space-between;align-items:baseline;gap:1rem;
-  padding:var(--s2) 0 .55rem;border-bottom:1px solid var(--rule);
+  padding:1em 0 .55em;border-bottom:1px solid var(--rule);
 }
-.runhead a{color:var(--ink-soft);text-decoration:none;white-space:nowrap;font-size:.85rem}
+.runhead a{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
+.runhead a.rh-comp{color:var(--ink-faint)}
 .runhead a:hover{color:var(--ink)}
 .runhead a.rh-comp{white-space:normal;text-align:right}
-@media (max-width:480px){ .runhead{flex-direction:column;align-items:flex-start;gap:.15rem} .runhead a.rh-comp{text-align:left} }
+@media (max-width:480px){ .runhead a.rh-comp{display:none} }
 
 /* ---------- 5. The drawing and the title ---------- */
 /* The ink drawing of Harrow Manor from the home page, with the home page's
