@@ -199,9 +199,11 @@ h2.big{margin-top:var(--s5)}
 h2.big::before{border-top-color:var(--ink)}
 h2.big .ttl{display:block;font-size:2rem;line-height:1.1}
 h2.big .sub2{display:block;font-size:1.12rem;line-height:1.4;color:var(--ink-faint);margin-top:.3rem}
-/* the contents, in the style of How Attention Works in a Transformer: the label in Chapter Labels, a hairline above and
-   below each entry, the number of each section large in ink, the parts of a section under it. Each entry keeps its
-   short description, in the small size and grey, under its title. */
+/* the contents, in the style of How Attention Works in a Transformer (round 39): the label in Chapter Labels, a hairline
+   above and below each entry, the number of each section large in ink. Each numbered section keeps its short
+   description, in the small size and grey, under its title, and lists its sub-sections under that, one name a line,
+   with no number. The side headings in the text carry no number either. The sections after Section 3 follow as
+   entries with no number, and a last line names the parts of the appendix. */
 .contents{position:relative;margin:1rem 0 var(--s3)}
 .contents .side{display:block;margin:0 0 .3rem;padding-top:.15rem;font-family:var(--serif);font-variant:small-caps;text-transform:none;
   letter-spacing:.06em;font-weight:400;font-size:1rem;line-height:1.35;color:var(--ink-faint)}
@@ -212,10 +214,12 @@ ol.toc a{color:var(--ink);text-decoration:none}
 ol.toc a:hover{text-decoration:underline;text-decoration-color:var(--ink-ghost)}
 ol.toc > li > a{display:block;font-size:1.12rem;line-height:1.3}
 ol.toc ol{list-style:none;margin:.45rem 0 0;padding:0}
-ol.toc ol li{margin:0;padding:.3rem 0 .2rem;line-height:1.4}
+ol.toc ol li{margin:0;padding:.12rem 0;line-height:1.4}
 ol.toc .toc-d{display:block;margin-top:.15rem;font-size:.82rem;line-height:1.5;color:var(--ink-faint)}
 ol.toc .toc-d a{color:inherit;text-decoration:underline;text-decoration-color:var(--ink-ghost)}
 ol.toc .toc-d a:hover{text-decoration-color:var(--ink)}
+/* the parts of the appendix, on one line under the list */
+p.toc-more{margin:.8rem 0 0}
 
 /* a sub-heading, as the side headings of A Talking Machine of Your Own: small capitals at the small size in dark grey,
    under a light rule. Over 1000px it sits in Chapter Labels beside the first lines of its text (section 16). */
@@ -1053,11 +1057,27 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <li><span class="toc-n">1</span><a href="#clues">AI detectors</a><span class="toc-d">Programs that read the finished text and score how AI-written it looks.</span>
   <ol>
   <li><a href="#mimic">An AI trained to mimic another AI</a><span class="toc-d">It runs a stand-in model and checks how predictable each word was. Free research tools such as <a href="https://github.com/ahans30/Binoculars" target="_blank" rel="noopener">Binoculars</a> work this way.</span></li>
-  <li><a href="#catch">An AI trained to catch another AI</a><span class="toc-d">It learned the difference from millions of matched human and AI documents. <a href="https://www.pangram.com/" target="_blank" rel="noopener">Pangram</a> works this way.</span></li>
+  <li><a href="#catch">An AI trained to catch another AI</a></li>
+  <li><a href="#detector-limits">What an AI detector cannot do</a></li>
   </ol></li>
-<li><span class="toc-n">2</span><a href="#watermark">Watermarks</a><span class="toc-d">Hidden patterns planted in the text by the AI model itself.</span></li>
-<li><span class="toc-n">3</span><a href="#record">Editing history</a><span class="toc-d">The writing software's log of how the text got onto the page.</span></li>
+<li><span class="toc-n">2</span><a href="#watermark">Watermarks</a><span class="toc-d">Hidden patterns planted in the text by the AI model itself.</span>
+  <ol>
+  <li><a href="#planted">How the watermark is planted</a></li>
+  <li><a href="#checker">How a checker finds watermarks</a></li>
+  <li><a href="#designs">Two real designs</a></li>
+  <li><a href="#who-watermarks">Who watermarks text today</a></li>
+  <li><a href="#watermark-limits">What a watermark cannot do</a></li>
+  </ol></li>
+<li><span class="toc-n">3</span><a href="#record">Editing history</a><span class="toc-d">The writing software's log of how the text got onto the page.</span>
+  <ol>
+  <li><a href="#history-looks">What an editing history looks like</a></li>
+  <li><a href="#history-limits">What an editing history cannot do</a></li>
+  </ol></li>
+<li><a href="#both">What if a person and a machine both wrote it?</a></li>
+<li><a href="#humanizers">Humanizers: making AI text read as human-written</a></li>
+<li><a href="#summary">In summary</a></li>
 </ol>
+<p class="toc-more"><a href="#appendix">Appendix</a>: <a href="#visits">A.&nbsp;The AI detectors and humanizers with the most visits</a> &middot; <a href="#sources">B.&nbsp;Sources</a> &middot; <a href="#timeline">C.&nbsp;From counting word lengths in 1887 to watermarking text by law in 2026</a></p>
 </nav>
 <p>None of the three works well on a paragraph that a person and an AI model wrote together. AI detectors also face humanizers. These services rewrite AI text until an AI detector scores it as human-written.</p>
 
@@ -1152,7 +1172,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 </figure>
 
 
-<h3 class="shoulder"><span>What an AI detector cannot do</span></h3>
+<h3 class="shoulder" id="detector-limits"><span>What an AI detector cannot do</span></h3>
 <ol class="limits">
 <li><p><b>Guarantee that human writing never gets flagged.</b> In 2023 several AI detectors <a href="https://arstechnica.com/information-technology/2023/07/why-ai-detectors-think-the-us-constitution-was-written-by-ai/" target="_blank" rel="noopener">flagged the opening of the United States Constitution</a>. Edward Tian built the AI detector <a href="https://gptzero.me/" target="_blank" rel="noopener">GPTZero</a>. He explained that AI models learn to write by reading an enormous pile of text, and the Constitution sits in that pile. An AI detector's simulator was therefore trained on the Constitution and would have picked much the same words. Before each release, Pangram runs a test on the Declaration of Independence. The test blocks the release if the Declaration scores as AI-written.</p>
 
@@ -1224,7 +1244,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 
 <p>An AI model gives every word it could write next a probability. Suppose it has written "The weather today was cold and". It might put "grey" at 31%, "overcast" at 22%, "wet" at 14%, "dark" at 9% and "damp" at 6%, with the rest of the 100% spread thinly over every other word it could write. It then picks one at random in proportion to those numbers, so a word at 30% comes out about 3 times in 10. Where several words sit close together, the pick is nearly a coin toss. A reader will not care which of those words appears. A watermark changes the odds in picks like those.</p>
 
-<h3 class="shoulder"><span>How the watermark is planted</span></h3>
+<h3 class="shoulder" id="planted"><span>How the watermark is planted</span></h3>
 
 <p>The company that makes the AI model keeps a secret number called a key. Before choosing each next word, the model uses the key and the preceding text to work out a list of favoured words, called the green list. The probabilities of the words on that list go up a little and the probabilities of all other words go down a little. The model still picks at random, so any word can come out. Over a page of writing, though, the favoured words come out more often than they otherwise would. Each word has different words in front of it, so the green list is worked out again at every step.</p>
 
@@ -1277,7 +1297,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <figcaption><span class="fig-no">Figure 3.</span> The green list holds far more than three words, and it is worked out again for every word, because it depends on the words already written.</figcaption>
 </figure>
 
-<h3 class="shoulder"><span>How a checker finds watermarks</span></h3>
+<h3 class="shoulder" id="checker"><span>How a checker finds watermarks</span></h3>
 
 <p>Later the company can run a checker over the text. The checker holds the same key. At each word, the checker uses the key and the preceding text to recreate the green list, then checks whether that word was on the list. In text without a watermark, nothing steered the picks, so about half the words land on the green list by chance. In watermarked text, far more words land on it.</p>
 
@@ -1302,11 +1322,11 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <figcaption><span class="fig-no">Figure 4.</span> The colours are added here to illustrate the pattern; they do not appear in watermarked text. The checker rebuilds the green list at each word and keeps the count.</figcaption>
 </figure>
 
-<h3 class="shoulder"><span>Two real designs</span></h3>
+<h3 class="shoulder" id="designs"><span>Two real designs</span></h3>
 
 <p>The green list came from John Kirchenbauer and colleagues at the University of Maryland, who <a href="https://arxiv.org/abs/2301.10226" target="_blank" rel="noopener">published it in January 2023</a>. It is the simpler of the two. The other design, SynthID-Text, came from Google DeepMind and was <a href="https://www.nature.com/articles/s41586-024-08025-4" target="_blank" rel="noopener">published in the science journal Nature in October 2024</a>. It works like a tournament. The model produces several possible next words and uses the key to pick the winner of each pair of words, until one word is left to write. Google was already using this design in Gemini when the Nature paper came out. Anthropic <a href="https://www.anthropic.com/news/claude-text-watermark" target="_blank" rel="noopener">announced on 14 August 2026</a> that new Claude models would carry a version of this design, with older models to follow in the months after. Every candidate word in the tournament is one the model could have written anyway, so the sentence reads no differently.</p>
 
-<h3 class="shoulder"><span>Who watermarks text today</span></h3>
+<h3 class="shoulder" id="who-watermarks"><span>Who watermarks text today</span></h3>
 
 <div class="tbox">
 <div class="scroll">
@@ -1324,7 +1344,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 </div>
 </div>
 
-<h3 class="shoulder"><span>What a watermark cannot do</span></h3>
+<h3 class="shoulder" id="watermark-limits"><span>What a watermark cannot do</span></h3>
 
 <ol class="limits">
 <li><p><b>Most text carries no watermark at all.</b> OpenAI built a text watermark in 2022 and has never switched it on, so text from ChatGPT carries no watermark today. Some companies publish everything needed to run their models, so anyone can download a model and run it on their own computer. The program that writes the text adds the watermark, and whoever runs that program can leave the watermark switched off.</p></li>
@@ -1343,7 +1363,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 
 <p>The third kind of evidence is a record of the writing as it happens. Google Docs keeps a version history, a log of every edit made to a document. <a href="https://www.grammarly.com/blog/company/grammarly-launches-grammarly-authorship/" target="_blank" rel="noopener">Grammarly's Authorship feature</a>, released in August 2024, sits inside the document while the writer works, and it marks each stretch of text as typed, pasted, or generated by AI.</p>
 
-<h3 class="shoulder"><span>What an editing history looks like</span></h3>
+<h3 class="shoulder" id="history-looks"><span>What an editing history looks like</span></h3>
 
 <figure class="frame">
 <p class="figtitle">what the writing software recorded for two essays</p>
@@ -1372,7 +1392,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 
 <p>Essay A looks like honest work and Essay B looks like cheating. Both readings can be wrong.</p>
 
-<h3 class="shoulder"><span>What an editing history cannot do</span></h3>
+<h3 class="shoulder" id="history-limits"><span>What an editing history cannot do</span></h3>
 <ol class="limits">
 <li><p><b>An editing history shows how the words arrived and leaves out who thought of them.</b> A student who pasted an essay in three pieces may have been moving text out of her own notes. A student who built an essay a few words at a time may have been reading an AI model's answer on a phone and typing it out by hand.</p></li>
 <li><p><b>The record covers one document.</b> Google Docs and Grammarly log what happens inside the document they run in. A draft written somewhere else and pasted in looks like a paste, whoever wrote it. An essay written on paper leaves no editing history at all.</p></li>
@@ -1381,7 +1401,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <p>A teacher who wants to know whether the student did the thinking still has to ask the student.</p>
 
 <!-- ============ 6. BOTH ============ -->
-<h2>What if a person and a machine both wrote it?</h2>
+<h2 id="both">What if a person and a machine both wrote it?</h2>
 
 <p>All three techniques have limits when a person and an AI model write together. Much writing now has two authors, a person and an AI model, mixed inside the same paragraph. That makes the question harder.</p>
 
@@ -1460,7 +1480,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 </figure>
 </div>
 
-<h2>Humanizers: making AI text read as human-written</h2>
+<h2 id="humanizers">Humanizers: making AI text read as human-written</h2>
 
 <p>Humanizers rewrite AI text with the aim of getting it past detectors. Undetectable AI claims more than 24 million users and charges between 10 and 42 dollars a month. One popular free humanizer is the rule list from blader/humanizer, a GitHub project. The list holds 25 editing rules, and more than 48,000 people have marked it as useful. That free list was assembled from "Signs of AI writing", a Wikipedia page written to help people spot AI writing.</p>
 
@@ -1537,7 +1557,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 
 
 <!-- ============ 8. BACK ============ -->
-<h2>In summary</h2>
+<h2 id="summary">In summary</h2>
 
 <p>Pangram caught the AI-written passage in the opening quiz. When human and AI sentences were mixed together, it identified eleven of fourteen correctly. Those results are useful. They also show why a detector’s answer needs interpretation: it can recognise a mixed paragraph and still accuse the wrong sentence.</p>
 
@@ -1553,7 +1573,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <div class="apxwrap">
 <h2 id="appendix">Appendix</h2>
 
-<h3 class="apx">A.&nbsp;The AI detectors and humanizers with the most visits</h3>
+<h3 class="apx" id="visits">A.&nbsp;The AI detectors and humanizers with the most visits</h3>
 
 <p>No one source counts how much writing goes through every AI detector and humanizer. The nearest measure is visits to each service's website, which the traffic firm Similarweb estimates every month.</p>
 
@@ -1589,7 +1609,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 <p>In a peer-reviewed study published in June 2026, researchers ran forty papers written entirely by an AI model through Turnitin, GPTZero, Copyleaks and Pangram. <a href="https://doi.org/10.1007/s40979-026-00226-w" target="_blank" rel="noopener">Turnitin scored every one of them as human</a>. Pangram flagged thirty-nine.</p>
 
 <!-- ============ 9. REFERENCES ============ -->
-<h3 class="apx">B.&nbsp;Sources</h3>
+<h3 class="apx" id="sources">B.&nbsp;Sources</h3>
 
 <p class="quiet">ACL, EACL and ICML are academic conferences where researchers present work. Other researchers have reviewed that work first. Arxiv.org is a site where researchers post papers, sometimes before other researchers have reviewed them. A doi is a permanent address for a published paper.</p>
 
@@ -1638,7 +1658,7 @@ figure.pfig > .figbox{background:var(--tint);padding:1rem 1.2rem 1.05rem}
 </ol>
 
 <!-- ============ 7. TIMELINE ============ -->
-<h3 class="apx">C.&nbsp;From counting word lengths in 1887 to watermarking text by law in 2026</h3>
+<h3 class="apx" id="timeline">C.&nbsp;From counting word lengths in 1887 to watermarking text by law in 2026</h3>
 <div class="sheetwrap">
 <section class="paper hist">
 

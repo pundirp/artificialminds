@@ -583,6 +583,7 @@
     --laptop-shadow:rgba(0,0,0,.18);
     --fig-ink:#111111; --fig-text-2:#3a3a3a; --fig-text-3:#666666;
     --fig-box-line:#9a9a9a; --fig-box-fill:#f2f2f2; --fig-rule:#c4c4c4; --fig-hairline:#e3e3e3;
+    --fig-frame:#cccccc;   /* the thin frame around each figure (round 39 captions) */
     --ai-fill:#f9e9e8; --ai-ink:#c3261c;
     --hu-fill:#f2f2f2; --hu-ink:#555555;
     /* the old paper under the 1958 clipping, as in A Likely Story: ink, dim ink, faint ink, hairline, amber for the link,
@@ -1253,7 +1254,7 @@
 .fig-pipeline .narrow { display: none; }
 }
 @media (max-width: 699px) {
-.fig-pipeline > .fig-body > svg:first-of-type { display: none; }
+.fig-pipeline > .figbox > .fig-body > svg:first-of-type { display: none; }
 }
 
   /* ===== Which parts of each figure are the model (red) and which are people (dark grey) ===== */
@@ -1316,14 +1317,22 @@
   .mfig svg{width:100%;height:auto;display:block}
   .mfig svg text{font-family:var(--sans)}
   :where(.mfig) :where(ul, ol, li, dl, dt, dd, h4, figure){margin:0;padding:0}
-  /* each figure sits in a thin grey frame, so its start and end are plain to see; the caption is centred inside */
-  figure.mfig{margin:var(--s4) 0;padding:1rem 1.2rem 1rem;border:1px solid #cccccc}
+  /* each figure's title and drawing sit in a thin grey frame, div.figbox, so its start and end are plain to see.
+     The caption sits below the frame, outside it, flush with its left edge, as on How Attention Works in a
+     Transformer (round 39 captions). The frame keeps the padding the figure had, so every drawing keeps its size,
+     and the figure's own margin gives the usual gap after the caption. A real space follows the figure number,
+     so it reads and copies as two words, and the number keeps the .3rem gap of the model pages. */
+  figure.mfig{margin:var(--s4) 0;padding:0;border:0}
+  figure.mfig > .figbox{padding:1rem 1.2rem 1rem;border:1px solid var(--fig-frame)}
   figure.mfig p.fig-take{margin:0 0 .9rem}
-  figure.mfig figcaption{max-width:36rem;margin:1.1rem auto 0;text-align:center}
-  /* a real space follows the figure number, so it reads and copies as two words */
-  figure.mfig .fig-no{margin-right:.05rem}
-  @media (max-width:1000px){figure.mfig{padding:.85rem .9rem .85rem}}
-  @media (max-width:560px){figure.mfig{padding:.75rem .7rem .75rem}}
+  /* at the full width of the frame a caption could end on one word alone, so the browser keeps two or more there */
+  figure.mfig figcaption{margin:.6rem 0 0;text-wrap:pretty}
+  @media (max-width:1000px){figure.mfig > .figbox{padding:.85rem .9rem .85rem}}
+  @media (max-width:560px){figure.mfig > .figbox{padding:.75rem .7rem .75rem}}
+  /* the five figures that change their layout with their own width now measure the frame, which has the width
+     the figure's inside had before */
+  .fig-release > .figbox, .fig-engines > .figbox, .fig-paths > .figbox, .fig-family > .figbox,
+  .fig-alphafold > .figbox{container-type:inline-size}
 
   /* hero: the brain and the artificial lattice sit above the title, as the drawing does in the toddler essay */
   .hero .hero-art{margin:0 auto var(--s3);max-width:40rem}
@@ -1401,7 +1410,7 @@
      essay's figure text; the caption stays at the caption size. */
   @media (min-width:1001px){
     .section .col > figure.mfig{margin-left:calc(-1 * (var(--margin-col) + var(--gutter)));width:calc(100% + var(--margin-col) + var(--gutter))}
-    figure.mfig > .fig-body{zoom:1.22}
+    figure.mfig > .figbox > .fig-body{zoom:1.22}
   }
 
   /* phones: the two pictures stay side by side above the title, and the running head takes two lines */
@@ -1504,7 +1513,7 @@
           </div>
       <div class="hero-text">
         <h1>A Talking Machine of <span class="amp">Your Own</span></h1>
-        <p class="byline">Is it like your brain? Six plain questions about the machines that talk: how they learn, why some are free to download, and how to run one on your laptop.</p>
+        <p class="byline">Is it like your brain? That, and five more plain questions about the machines that talk. Why would somebody give away one that cost $100&nbsp;million to make? And how do you run it on your own laptop?</p>
       </div>
     </div>
   </header>
@@ -1516,6 +1525,7 @@
           <p>One warm-up fact before chapter one. A language model does exactly one thing: it predicts the next chunk of text. Here is one caught in the act.</p>
 
           <figure class="fig mfig" id="fig-next-word">
+      <div class="figbox">
       <p class="fig-take">This is the whole trick</p>
       <div class="fig-body">
       <div class="fig-next-word" role="img" aria-label="A language model predicting the next word of the sentence 'The cat sat on the', with 'mat' at 61 percent, 'floor' at 18 percent, 'couch' at 9 percent, and 'moon' at 1 percent. Bars are drawn on a scale from 0 to 100 percent.">
@@ -1528,6 +1538,7 @@
             <div class="scale"><span></span><div class="ticks"><span style="left:0%">0%</span><span style="left:25%">25%</span><span style="left:50%">50%</span><span style="left:75%">75%</span><span style="left:100%">100%</span></div></div>
             </div>
           </div>
+      </div>
       </div>
       </figure>
 
@@ -1563,6 +1574,7 @@
           <p>One correction to the demo above: the machine does not work in whole words. Before a model can read anything, text gets chopped into <strong>tokens</strong>: small chunks that are usually a word, part of a word, or a punctuation mark. Each token has an ID number, because computers work with numbers. The full list of tokens a model knows is called its vocabulary, usually 50,000 to 250,000 of them.</p>
 
           <figure class="fig mfig fig-tokens" id="fig-tokens">
+      <div class="figbox">
       <div class="fig-body">
           <svg class="wide" viewBox="0 0 660 204" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The sentence 'Language models are surprisingly simple' split into six token chunks: Language, models, are, surprising, ly and simple. A dot marks a leading space. Each chunk maps to an ID number: 14680, 4211, 527, 21955, 306 and 3538. The word surprisingly is cut after 'surprising'.">
           <defs><marker id="fig-tokens-arrowhead-wide" viewBox="0 0 7 6" refX="6" refY="3" markerWidth="7" markerHeight="6" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah" d="M0 .2L7 3L0 5.8L1.9 3Z"/></marker></defs>
@@ -1669,6 +1681,7 @@
           <text class="nt" x="345" y="308.5" text-anchor="end">token IDs: what the model actually sees</text>
           </svg>
           </div>
+      </div>
       <figcaption><span class="fig-no">Figure 1.</span> Notice "surprisingly" became two tokens. Rare words get split; common ones stay whole. The dot marks a leading space.</figcaption>
           </figure>
 
@@ -1777,6 +1790,7 @@
           <p>Past that one idea, the two stop resembling each other. Put them side by side and the differences are bigger than the similarity.</p>
 
           <figure class="fig mfig fig-brain-model" id="fig-brain-model">
+      <div class="figbox">
       <div class="fig-body">
           <svg class="lw" viewBox="0 0 660 366" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The one shared idea: in your brain, links between neurons grow stronger or weaker as you learn. In a model, each link between two units has a strength, stored as one number called a weight, shown on the tag 0.42 that hangs from the wire. Everything else differs. Size: 86 billion neurons and trillions of links, against billions to trillions of weights. Energy: the brain runs and learns on 20 watts, a dim bulb, while training a model uses as much power as a small town. Senses: the brain sees, hears, touches and moves, while the model reads and writes tokens.">
           <text class="gt" x="0" y="13">The one shared idea</text>
@@ -1838,6 +1852,7 @@
           <text class="bl ik1" text-anchor="middle"><tspan x="237" y="431.4">reads and writes</tspan><tspan x="237" y="446.4">tokens</tspan></text>
           </svg>
             </div>
+      </div>
       <figcaption><span class="fig-no">Figure 2.</span> One shared idea, connections that change strength. After that, almost nothing in common. Pictures and sound count as tokens too: they get chopped into chunks the same way. What the machine never gets is a body in the world.</figcaption>
           </figure>
 
@@ -1850,6 +1865,7 @@
           <p>Before we watch a model learn, here is the most common misunderstanding about AI. Your brain updates itself constantly. You will remember something from today for years, without trying. A language model works on a completely different schedule: there is a <strong>training phase</strong>, when the dials move, and after it ends they are locked. Every conversation the model has afterward runs on the same frozen numbers.</p>
 
           <figure class="fig mfig fig-loop-door" id="fig-loop-door">
+      <div class="figbox">
       <div class="fig-body">
           <svg class="wide" viewBox="0 0 660 282" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Comparison. Top lane, your brain: a box 'experience something' leads to a box 'brain rewires itself', and a dashed arrow leads back to the first box, round and round, every day, your whole life. Bottom lane, a language model: a box 'training phase, the dials move' leads to a box 'inference, for years, the dials are locked'. A padlock sits beside that arrow. A faint dashed return path from inference back to training is cut by a bar. The note reads: a one-way door, after training ends, nothing the model reads changes it.">
           <defs><marker id="fig-loop-door-arrowhead-wide" viewBox="0 0 7 6" refX="6" refY="3" markerWidth="7" markerHeight="6" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah" d="M0 .2L7 3L0 5.8L1.9 3Z"/></marker></defs>
@@ -1906,6 +1922,7 @@
           <text class="nt" text-anchor="start"><tspan x="0" y="370.8">a one-way door: after training ends,</tspan><tspan x="0" y="385.8">nothing the model reads changes it</tspan></text>
           </svg>
           </div>
+      </div>
       <figcaption><span class="fig-no">Figure 3.</span> You learn in a loop. A model learns once, then gets frozen and shipped. Inference is the industry word for the second box: using a model, as opposed to training one.</figcaption>
           </figure>
 
@@ -1936,6 +1953,7 @@
           <p>How does it know which way to turn billions of dials? Because the whole thing is arithmetic. The error can be traced back through the math, dial by dial, and each one gets told which way it should have leaned.</p>
 
           <figure class="fig mfig fig-pretrain-loop" id="fig-pretrain-loop">
+      <div class="figbox">
       <div class="fig-body">
           <svg class="wide" viewBox="0 0 660 148" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The pre-training loop in four steps. Trillions of words of text feed step one, guess the next token. Step two compares the guess with the real token. Step three nudges all the weights slightly. A dashed return path leads from step three back to step one, labelled repeat, trillions of times.">
           <defs><marker id="fig-pretrain-loop-arrowhead-wide" viewBox="0 0 7 6" refX="6" refY="3" markerWidth="7" markerHeight="6" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah" d="M0 .2L7 3L0 5.8L1.9 3Z"/></marker></defs>
@@ -1986,6 +2004,7 @@
           <text class="nt" text-anchor="start"><tspan x="212.5" y="209.3">repeat, trillions</tspan><tspan x="212.5" y="223.3">of times</tspan></text>
           </svg>
           </div>
+      </div>
       <figcaption><span class="fig-no">Figure 4.</span> One tiny nudge teaches almost nothing. Trillions of them teach grammar, facts, and style.</figcaption>
           </figure>
 
@@ -1994,6 +2013,7 @@
           <p>Something remarkable happens along the way. The only way to keep getting better at guessing the next word is to pick up what the words are <em>about</em>. Predicting the end of "the capital of France is" requires knowing it is Paris. Predicting the next line of a Python program requires learning Python. Nobody programs these facts in. They get soaked up because knowing them makes the guesses better. Researchers track progress with one number: how wrong the guesses are, on average. They call it the loss, and they watch it fall.</p>
 
           <figure class="fig mfig fig-loss-curve" id="fig-loss-curve">
+      <div class="figbox">
       <div class="fig-body">
           <div class="wide">
           <svg class="" viewBox="0 0 659 254" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="A loss curve that falls steeply at first and then slowly over training time. Three samples sit on it: 'xk fjor mmp ai' near the start, 'the cat eat the food yes' early on, and 'the cat, now fed, curled up by the fire' late in training.">
@@ -2040,6 +2060,7 @@
           </svg>
           </div>
           </div>
+      </div>
       <figcaption><span class="fig-no">Figure 5.</span> That falling line is all pre-training is. Gibberish becomes grammar, grammar becomes knowledge.</figcaption>
           </figure>
 
@@ -2054,6 +2075,7 @@
           <p>Post-training turns the continuer into an assistant. Watch one question travel through the stages. The question: <span class="mono">A train leaves at 3:40 pm and the ride takes 85 minutes. When does it arrive?</span></p>
 
           <figure class="fig mfig fig-stages" id="fig-stages" role="group" aria-label="One question answered after each training stage. After pre-training the reply keeps the text going like a workbook page. After supervised fine-tuning the reply is a confident wrong answer. After reinforcement learning the reply works step by step and reaches the right answer.">
+      <div class="figbox">
       <div class="fig-body">
           <div class="g">
           <div class="q"><div class="lab">The question</div><p class="ask">“A train leaves at 3:40 pm and the ride takes 85 minutes. When does it arrive?”</p></div>
@@ -2065,6 +2087,7 @@
           <div class="card k2 last"><svg class="ra" viewBox="0 0 16 8" aria-hidden="true"><defs><marker id="fig-stages-right-arrow-3" viewBox="0 0 7 6" refX="6" refY="3" markerWidth="7" markerHeight="6" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah" d="M0 .2L7 3L0 5.8L1.9 3Z"/></marker></defs><path class="flow" d="M2.8 4h10.2" marker-end="url(#fig-stages-right-arrow-3)"/><circle class="jd" cx="2.8" cy="4" r="2.5"/></svg><div class="top"><h4><span class="nm" aria-hidden="true">3 · </span>After reinforcement learning</h4></div><p class="out">“85 minutes is 1 hour 25 minutes. 3:40 + 1:00 = 4:40, then + 0:25 = <span class="good">5:05 pm</span>.”</p><p class="note">It works step by step and lands on the right answer, because right answers were rewarded.</p></div>
           </div>
           </div>
+      </div>
       </figure>
 
           <p>First, people show it what a good answer looks like. The industry calls that <strong>supervised fine-tuning</strong>, or SFT. They write out thousands of example conversations showing the ideal behavior: a question, then a helpful, honest, well-organized answer. It trains on these the same way it trained on internet text, and it picks up the shape of an assistant's reply. Tone, structure, "here's how I can help." What SFT cannot easily teach is judgment, because you cannot write an example for every situation.</p>
@@ -2079,6 +2102,7 @@
           <p>The model writes two answers to the same question. A person picks the better one. Do this tens of thousands of times and you can train a second model, called a <strong>reward model</strong>, that learns to predict which answers people prefer. Now the main model can practice against the reward model millions of times, far more than humans could ever judge directly. OpenAI's 2022 work on this is what turned GPT-3 into ChatGPT, and it is a big reason the chatbots you use feel polite and clear.</p>
 
           <figure class="fig mfig fig-human-feedback" id="fig-human-feedback">
+      <div class="figbox">
       <div class="fig-body">
           <div class="wide">
           <svg viewBox="0 0 659 210" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The RLHF loop: the model writes answers A and B, a human picks the better one, those choices train a reward model, and the reward model scores the main model's practice answers. Good scores nudge the main model's weights.">
@@ -2119,6 +2143,7 @@
           </svg>
           </div>
           </div>
+      </div>
       <figcaption><span class="fig-no">Figure 6.</span> Humans judge thousands of answers. The reward model then judges millions on their behalf.</figcaption>
           </figure>
 
@@ -2139,6 +2164,7 @@
           <p>Here is the newest idea, and it is behind the "reasoning" models that appeared around 2024 and 2025. For some questions, taste does not matter because the answer can be <em>checked</em>. A math problem has one correct number. Code either passes its tests or fails. So: give it a hard problem, let it try many long step-by-step solutions, check automatically which ones reach the right answer, and reward those. This is called reinforcement learning with verifiable rewards. It has one hard limit. It only works where an answer can be checked by machine, which rules out most of what people actually ask: write this email, is this argument fair, explain this to my mother.</p>
 
           <figure class="fig mfig fig-checkable" id="fig-checkable">
+      <div class="figbox">
       <div class="fig-body">
           <div class="wide">
           <svg viewBox="0 0 659 199" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="One problem with a known answer is tried four times. An automatic checker compares each final answer with the key, 5:05. Attempts 2 and 3 earn the reward; attempts 1 and 4 are wrong.">
@@ -2217,6 +2243,7 @@
           </svg>
           </div>
           </div>
+      </div>
       <figcaption><span class="fig-no">Figure 7.</span> No human in the loop at all. The answer key is the coach.</figcaption>
           </figure>
 
@@ -2233,6 +2260,7 @@
           <p>Put the phases together and the whole recipe fits in one picture: read everything, study good examples, then practice against a scorer.</p>
 
           <figure class="fig mfig fig-pipeline" id="fig-pipeline">
+      <div class="figbox">
       <div class="fig-body">
             <svg viewBox="0 0 680 214" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The full training pipeline: pre-training produces a base model that continues text, supervised fine-tuning produces an assistant that answers, reinforcement learning produces a polished model with judgment and reasoning">
               <defs><marker id="fa" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto-start-reverse"><path d="M2 1L8 5L2 9" fill="none" stroke="#6A677D" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></marker></defs>
@@ -2286,6 +2314,7 @@
             <text text-anchor="middle" font-size="12" style="fill:var(--accent)"><tspan x="157" y="416">the finished product:</tspan><tspan x="157" y="432">one file of billions of tuned weights</tspan></text>
             </svg>
             </div>
+      </div>
       <figcaption><span class="fig-no">Figure 8.</span> Three stages, one output: the weights. Keep your eye on them, because the next chapter is about what happens when a lab hands them over.</figcaption>
           </figure>
 
@@ -2306,6 +2335,7 @@
           <p>A release contains four things needed to run the model.</p>
 
           <figure class="fig mfig fig-release" id="fig-release">
+      <div class="figbox">
       <div class="fig-body">
             <p class="gt">one open weights release</p>
             <ul class="parts">
@@ -2332,6 +2362,7 @@
               </li>
             </ul>
             </div>
+      </div>
       <figcaption><span class="fig-no">Figure 9.</span> Weights alone would be a locked safe. The other three parts are the combination.</figcaption>
           </figure>
 
@@ -2351,7 +2382,14 @@
     <h3 class="shoulder">But why give it away?</h3>
     <div class="col">
       <p>There are business reasons to release a model for free, and there is a precedent in open-source software. In the 1990s and 2000s, volunteers and companies together built free software like Linux out in the open. Today it runs most of the internet and every Android phone. The AI labs releasing open weights are betting on the same effect.</p>
-      <p>The bet has four parts. A free model gets used by millions of developers, who find its flaws, build tools around it, and make the next version better. No company could hire a workforce that size. It makes the lab's model the one that startups and universities build on, which pays off later in influence and in paid services. It attracts researchers, who want their work in the world rather than locked in a vault. And some labs simply believe powerful technology gets safer when many people can inspect it, not just a few. Most open releases come with a license letting anyone use them, even to build a business, and that license file sits right next to the weights in the package. Read it: a few licenses put conditions on very large companies.</p>
+      <p>The bet has four parts.</p>
+      <ol class="takeaways">
+        <li>A free model gets used by millions of developers, who find its flaws, build tools around it, and make the next version better. No company could hire a workforce that size.</li>
+        <li>The lab's model becomes the one that startups and universities build on, which pays off later in influence and in paid services.</li>
+        <li>Open releases attract researchers, who want their work in the world rather than locked in a vault.</li>
+        <li>Some labs simply believe powerful technology gets safer when many people can inspect it, not just a few.</li>
+      </ol>
+      <p>Most open releases come with a license letting anyone use them, even to build a business, and that license file sits right next to the weights in the package. Read it: a few licenses put conditions on very large companies.</p>
       <p>Meta gives Llama away to make its own products stronger, and to stop a rival from owning the model everyone builds on. OpenAI and Anthropic sell access to fund the enormous cost of the next model. Both strategies are succeeding at the same time, which is why you can download some of the world's best models for free while others sit behind a subscription. Either way, a downloaded file of weights just sits there until software brings it to life. That software is the next chapter.</p>
 
     </div>
@@ -2375,6 +2413,7 @@
           <p>No single company controls this software. The pieces came from universities, lone programmers, and chip companies, and all of it is free to use, even commercially. Running a model on your own computer, instead of sending your words to a company's servers, is called running it locally. The whole pipeline, from a lab's release to a model running on a laptop, looks like this.</p>
 
           <figure class="fig mfig fig-engines" id="fig-engines">
+      <div class="figbox">
       <div class="fig-body">
             <div class="flow">
               <div class="box main">
@@ -2413,6 +2452,7 @@
               </div>
             </div>
             </div>
+      </div>
       <figcaption><span class="fig-no">Figure 10.</span> Free to use, top to bottom. The labs contribute code to the engines before each release so everything works on day one.</figcaption>
           </figure>
 
@@ -2435,6 +2475,7 @@
           <p>The closed labs took a different road entirely. Their designs are secret, so the public engines could not run them even if someone had the weights. The scale is staggering too: OpenAI reported 900 million people using ChatGPT every week in early 2026. At that size it pays to build custom software tuned to their exact chips. So OpenAI, Anthropic, and Google each build their own private software for running their models, and the only things that ever leave the building are the answers. For a user, that is the whole practical difference. An open model you can download, keep, and run with the machine unplugged from the internet. A closed one you can only visit, which means the words you send it leave your computer.</p>
 
           <figure class="fig mfig fig-paths" id="fig-paths">
+      <div class="figbox">
       <div class="fig-body">
             <div class="fork">
               <span class="pill">same training recipe</span>
@@ -2466,6 +2507,7 @@
               </div>
             </div>
             </div>
+      </div>
       <figcaption><span class="fig-no">Figure 11.</span> Both paths start with the same training recipe from chapter two. They split at the release decision.</figcaption>
           </figure>
 
@@ -2487,6 +2529,7 @@
           <p>Start with the names, because they get thrown around loosely. <strong>Artificial intelligence</strong> is the broad goal of getting computers to do things that would count as intelligent if a person did them. <strong>Machine learning</strong> is one approach to that goal: instead of a programmer writing the rules by hand, the computer works them out from examples. <strong>Deep learning</strong> is the kind of machine learning that took over the field around 2012, using neural networks with many layers of those adjustable dials. Language models sit in that innermost box, next to some very different cousins.</p>
 
           <figure class="fig mfig fig-family" id="fig-family">
+      <div class="figbox">
       <div class="fig-body">
             <div class="ring ai">
               <p class="gt">artificial intelligence</p>
@@ -2516,6 +2559,7 @@
               </div>
             </div>
             </div>
+      </div>
       <figcaption><span class="fig-no">Figure 12.</span> Same family, same kind of dials. What differs is the practice task in each box.</figcaption>
           </figure>
 
@@ -2538,6 +2582,7 @@
           <p>DeepMind's <strong>AlphaFold</strong> attacked it with deep learning. Feed in the chain of beads, predict the folded shape, compare against the roughly 170,000 structures biologists had already worked out in labs, and nudge the dials. By 2020 it was predicting shapes for most proteins about as accurately as the lab methods, and the puzzle was largely considered solved. DeepMind then released predicted structures for over 200 million proteins, nearly every one known to science, free for any researcher on Earth. Work that would have taken years now takes minutes.</p>
 
           <figure class="fig mfig fig-alphafold" id="fig-alphafold">
+      <div class="figbox">
       <div class="fig-body">
             <svg class="wide" viewBox="0 0 660 256" role="img" aria-label="AlphaFold: a chain of beads in shades of grey, the amino acids, goes into the AlphaFold model. It predicts the folded shape, a ribbon of helices and a sheet, and each bead sits at the matching spot on it. The answer key, 170,000 shapes solved in labs, feeds back into AlphaFold so its guess can be compared with a known answer.">
           <defs><marker id="fig-alphafold-arrowhead-wide" viewBox="0 0 7 6" refX="5" refY="3" markerWidth="7" markerHeight="6" markerUnits="userSpaceOnUse" orient="auto-start-reverse"><path class="ah" d="M0 0L7 3L0 6L2 3Z"/></marker></defs>
@@ -2567,6 +2612,7 @@
           <path class="flow dash" d="M309 386H324a8 8 0 0 0 8-8V134a8 8 0 0 0-8-8H250" marker-end="url(#fig-alphafold-arrowhead-narrow)"/><circle class="joint" cx="309" cy="386" r="2.5"/>
             </svg>
             </div>
+      </div>
       <figcaption><span class="fig-no">Figure 13.</span> Same recipe as chapter two, different subject. Guess, compare against known answers, nudge the dials.</figcaption>
           </figure>
 
