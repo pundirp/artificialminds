@@ -1358,13 +1358,12 @@
   }
 
   /* the RL school pictures (round 21): the sign hangs in the margin column beside the paragraph that names RL,
-     as the toolcase and the laptop do; each scoring method has its picture as a figure across the whole sheet
-     on wide screens, as the diagrams were */
+     as the toolcase and the laptop do; each scoring method has its picture as a figure in the text lane,
+     at the width of the text on every screen */
   figure.rl-pic{margin:var(--s3) 0}
   figure.rl-pic img{display:block;width:100%;height:auto}
   figure.rl-pic figcaption{margin:.6rem 0 0;text-wrap:pretty}
   @media (min-width:1001px){
-    .section .col > figure.rl-pic{margin-left:calc(-1 * (var(--margin-col) + var(--gutter)));width:calc(100% + var(--margin-col) + var(--gutter))}
     .col figure.side-pic.rl-sign{margin-top:-.3rem}
   }
   @media (max-width:1000px){
