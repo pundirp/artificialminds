@@ -1,17 +1,12 @@
 {
-  "generated": "2026-11-07T06:07:36Z",
+  "generated": "2026-11-08T06:12:10Z",
   "totals": {
-    "views_all": 125,
-    "visitors_all": 125,
+    "views_all": 130,
+    "visitors_all": 130,
     "views_30d": 102,
     "visitors_30d": 102
   },
   "daily": [
-    {
-      "day": "2026-08-10",
-      "views": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-11",
       "views": 0,
@@ -454,6 +449,11 @@
     },
     {
       "day": "2026-11-07",
+      "views": 5,
+      "visitors": 5
+    },
+    {
+      "day": "2026-11-08",
       "views": 0,
       "visitors": 0
     }
@@ -471,8 +471,8 @@
     },
     {
       "month": "2026-11",
-      "views": 39,
-      "visitors": 39
+      "views": 44,
+      "visitors": 44
     }
   ],
   "projects": [
@@ -489,24 +489,24 @@
       "name": "Can Artificial Minds Feel? Search Me.",
       "views_all": 18,
       "visitors_all": 18,
-      "views_30d": 16,
-      "visitors_30d": 16
+      "views_30d": 14,
+      "visitors_30d": 14
     },
     {
       "id": "why-so-much-data",
       "name": "Who Learns Faster, a Toddler or a Chatbot?",
       "views_all": 5,
       "visitors_all": 5,
-      "views_30d": 5,
-      "visitors_30d": 5
+      "views_30d": 4,
+      "visitors_30d": 4
     },
     {
       "id": "did-ai-write-this",
       "name": "A Likely Story",
-      "views_all": 9,
-      "visitors_all": 9,
-      "views_30d": 8,
-      "visitors_30d": 8
+      "views_all": 10,
+      "visitors_all": 10,
+      "views_30d": 9,
+      "visitors_30d": 9
     },
     {
       "id": "artificial-mind-of-your-own",
@@ -519,10 +519,10 @@
     {
       "id": "A-Salon-of-Witnesses",
       "name": "A Salon of Witnesses",
-      "views_all": 8,
-      "visitors_all": 8,
-      "views_30d": 8,
-      "visitors_30d": 8
+      "views_all": 10,
+      "visitors_all": 10,
+      "views_30d": 10,
+      "visitors_30d": 10
     },
     {
       "id": "AI-future-canon",
@@ -543,8 +543,8 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 43,
-      "visitors_all": 43,
+      "views_all": 45,
+      "visitors_all": 45,
       "views_30d": 34,
       "visitors_30d": 34
     }
@@ -552,8 +552,8 @@
   "pages": [
     {
       "path": "/",
-      "views_all": 43,
-      "visitors_all": 43
+      "views_all": 45,
+      "visitors_all": 45
     },
     {
       "path": "/AI-future-canon/ai-future-canon.html",
@@ -582,13 +582,18 @@
     },
     {
       "path": "/A-Salon-of-Witnesses/who-killed-aldous-finch.html",
-      "views_all": 6,
-      "visitors_all": 6
+      "views_all": 7,
+      "visitors_all": 7
     },
     {
       "path": "/feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html",
       "views_all": 4,
       "visitors_all": 4
+    },
+    {
+      "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
+      "views_all": 3,
+      "visitors_all": 3
     },
     {
       "path": "/artificial-mind-of-your-own/a-talking-machine-of-your-own.html",
@@ -604,11 +609,6 @@
       "path": "/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html",
       "views_all": 3,
       "visitors_all": 3
-    },
-    {
-      "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
-      "views_all": 2,
-      "visitors_all": 2
     },
     {
       "path": "/can-artificial-minds-feel/c01-mirror-search.html",
@@ -646,7 +646,7 @@
       "visitors_all": 1
     },
     {
-      "path": "/site-map/site-map.html",
+      "path": "/did-ai-write-this/a-likely-story.html",
       "views_all": 1,
       "visitors_all": 1
     }
@@ -654,22 +654,26 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 87
+      "visitors": 90
     },
     {
       "name": "United Kingdom",
       "visitors": 9
     },
     {
-      "name": "France",
-      "visitors": 3
-    },
-    {
       "name": "Canada",
       "visitors": 2
     },
     {
+      "name": "France",
+      "visitors": 2
+    },
+    {
       "name": "Argentina",
+      "visitors": 1
+    },
+    {
+      "name": "India",
       "visitors": 1
     },
     {
@@ -684,11 +688,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 87
+      "visitors": 85
     },
     {
       "name": "Safari",
-      "visitors": 15
+      "visitors": 20
     },
     {
       "name": "Firefox",
@@ -698,7 +702,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 69
+      "visitors": 71
     },
     {
       "name": "Windows",
@@ -706,7 +710,7 @@
     },
     {
       "name": "iOS",
-      "visitors": 6
+      "visitors": 7
     },
     {
       "name": "Android",
@@ -720,15 +724,15 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 57
+      "visitors": 60
     },
     {
       "name": "Large screen",
-      "visitors": 34
+      "visitors": 33
     },
     {
       "name": "Phone",
-      "visitors": 8
+      "visitors": 9
     },
     {
       "name": "Tablet",
@@ -742,19 +746,19 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 60
-    },
-    {
-      "name": "pundirp.github.io",
-      "visitors": 10
+      "visitors": 61
     },
     {
       "name": "pundirp.github.io/artificialminds/index.html",
       "visitors": 10
     },
     {
+      "name": "pundirp.github.io",
+      "visitors": 8
+    },
+    {
       "name": "pundirp.github.io/artificialminds",
-      "visitors": 5
+      "visitors": 6
     },
     {
       "name": "Google",
@@ -762,10 +766,6 @@
     },
     {
       "name": "chatgpt.com",
-      "visitors": 3
-    },
-    {
-      "name": "pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html",
       "visitors": 3
     },
     {
@@ -781,7 +781,19 @@
       "visitors": 1
     },
     {
+      "name": "pundirp.github.io/artificialminds/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
+      "visitors": 1
+    },
+    {
+      "name": "pundirp.github.io/artificialminds/A-Salon-of-Witnesses/who-killed-aldous-finch.html",
+      "visitors": 1
+    },
+    {
       "name": "pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html",
+      "visitors": 1
+    },
+    {
+      "name": "pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html",
       "visitors": 1
     },
     {
