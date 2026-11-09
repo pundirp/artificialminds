@@ -149,16 +149,48 @@
     vertical-align:.28em;
     margin-right:.55em;
   }
-  .readout{
-    min-height:1.2rem;
-    margin:.9rem 0 0;
-    font-family:var(--sans);
-    font-size:.66rem;
-    letter-spacing:.14em;
-    text-transform:uppercase;
+  .hint{
+    margin:1.6rem 0 0;
+    font-size:.92rem;
     color:var(--dim);
+  }
+  /* the day's numbers, shown beside the point under the pointer */
+  .chart.timeline{position:relative;margin-top:.8rem}
+  .chart.timeline svg{touch-action:pan-y}
+  .chart.timeline svg:focus{outline:none}
+  .chart.timeline svg:focus-visible{outline:1px solid var(--faint);outline-offset:4px}
+  .tip{
+    position:absolute;
+    left:0;top:0;
+    pointer-events:none;
+    background:#17171f;
+    border:1px solid #34343d;
+    border-radius:3px;
+    padding:.55rem .75rem .6rem;
+    white-space:nowrap;
+    box-shadow:0 6px 18px rgba(0,0,0,.45);
+    opacity:0;
+    transition:opacity .12s ease;
     font-variant-numeric:tabular-nums;
   }
+  .tip.on{opacity:1}
+  .tip .d{
+    display:block;
+    font-family:var(--sans);
+    font-size:.6rem;
+    letter-spacing:.18em;
+    text-transform:uppercase;
+    color:var(--dim);
+    margin-bottom:.35rem;
+  }
+  .tip .row{display:block;font-size:.98rem;line-height:1.35;color:var(--ink)}
+  .tip .row i{
+    display:inline-block;
+    width:10px;height:2px;
+    vertical-align:.3em;
+    margin-right:.5em;
+  }
+  .tip .row b{font-weight:400}
   .nodata{
     margin:1.2rem 0 0;
     color:var(--dim);
@@ -217,8 +249,8 @@
       <div class="stat quiet"><span class="n" id="t-views-30">0</span><span class="c">Views, last 30 days</span></div>
       <div class="stat quiet"><span class="n" id="t-visitors-30">0</span><span class="c">Visitors, last 30 days</span></div>
     </div>
-    <div class="chart" id="c-time"></div>
-    <p class="readout" id="r-time"></p>
+    <p class="hint" id="h-time" hidden>Hover over the chart, or tap it, to see the numbers for any day.</p>
+    <div class="chart timeline" id="c-time"></div>
     <div class="legend" id="l-time" hidden>
       <span><i style="background:#d9a05a"></i>Views</span>
       <span><i style="background:#9a958a"></i>Visitors</span>
@@ -341,9 +373,9 @@
   /* ---------- chart one: visits over time ---------- */
 
   function drawTimeline(){
-    var host = $("c-time"), legend = $("l-time"), readout = $("r-time");
+    var host = $("c-time"), legend = $("l-time"), hint = $("h-time");
     var rows = data && isList(data.daily) ? data.daily : null;
-    if(!rows){ legend.hidden = true; readout.textContent = ""; nodata(host); return; }
+    if(!rows){ legend.hidden = true; hint.hidden = true; nodata(host); return; }
 
     var W = widthOf(host);
     var narrow = W < 520;
@@ -416,53 +448,106 @@
     svg.appendChild(el("path", { d: dVis, fill: "none", stroke: DIM, "stroke-width": 1,
       "stroke-linejoin": "round", "stroke-linecap": "round", "stroke-opacity": ".8" }));
 
-    /* a quiet readout: hover or drag to read one day */
-    var mark = el("line", { x1: 0, y1: pad.t, x2: 0, y2: base, stroke: DIM, "stroke-width": 1, "stroke-opacity": ".55", opacity: "0" });
-    var dot1 = el("circle", { cx: 0, cy: 0, r: 2.6, fill: AMBER, opacity: "0" });
-    var dot2 = el("circle", { cx: 0, cy: 0, r: 2.2, fill: DIM, opacity: "0" });
-    svg.appendChild(mark); svg.appendChild(dot1); svg.appendChild(dot2);
+    /* hover, drag or tap to read one day: a guide line, two dots, and the
+       numbers in a small box beside them */
+    var mark = el("line", { x1: 0, y1: pad.t, x2: 0, y2: base, stroke: DIM, "stroke-width": 1, "stroke-opacity": ".45", opacity: "0" });
+    var dot1 = el("circle", { cx: 0, cy: 0, r: 4, fill: AMBER, stroke: "#0d0d12", "stroke-width": 2, opacity: "0" });
+    var dot2 = el("circle", { cx: 0, cy: 0, r: 3.4, fill: DIM, stroke: "#0d0d12", "stroke-width": 2, opacity: "0" });
+    svg.appendChild(mark); svg.appendChild(dot2); svg.appendChild(dot1);
 
-    var last = rows[rows.length - 1];
-    function idle(){
-      readout.textContent = "Latest day, " + label(last.day) + ": " +
-        unit(last.views, "view") + ", " + unit(last.visitors, "visitor");
-    }
     function label(day){
       var s = String(day || "");
       var mi = parseInt(s.slice(5, 7), 10) - 1;
       if(!(mi >= 0 && mi < 12)) return s;
       return MONTHS[mi] + " " + parseInt(s.slice(8, 10), 10) + ", " + s.slice(0, 4);
     }
-    idle();
+
+    var tip = document.createElement("div");
+    tip.className = "tip";
+    tip.setAttribute("aria-hidden", "true");
+    var tipDay = document.createElement("span"); tipDay.className = "d";
+    var tipViews = document.createElement("span"); tipViews.className = "row";
+    var tipVis = document.createElement("span"); tipVis.className = "row";
+    tip.appendChild(tipDay); tip.appendChild(tipViews); tip.appendChild(tipVis);
+
+    function row(node, color, n, word){
+      node.innerHTML = "";
+      var sw = document.createElement("i"); sw.style.background = color;
+      var b = document.createElement("b"); b.textContent = fmt(n);
+      node.appendChild(sw); node.appendChild(b);
+      node.appendChild(document.createTextNode(" " + word + (n === 1 ? "" : "s")));
+    }
 
     var hit = el("rect", { x: pad.l, y: pad.t, width: plotW, height: plotH, fill: "transparent" });
     hit.style.cursor = "crosshair";
     svg.appendChild(hit);
+    svg.setAttribute("tabindex", "0");
 
-    function at(evt){
-      var box = svg.getBoundingClientRect();
-      var cx = (evt.clientX - box.left) * (W / (box.width || W));
-      var idx = stepX > 0 ? Math.round((cx - pad.l) / stepX) : 0;
+    var cur = -1;
+    function show(idx){
       if(idx < 0) idx = 0;
       if(idx > rows.length - 1) idx = rows.length - 1;
-      var r = rows[idx];
-      mark.setAttribute("x1", px(idx)); mark.setAttribute("x2", px(idx)); mark.setAttribute("opacity", "1");
-      dot1.setAttribute("cx", px(idx)); dot1.setAttribute("cy", py(r.views)); dot1.setAttribute("opacity", "1");
-      dot2.setAttribute("cx", px(idx)); dot2.setAttribute("cy", py(r.visitors)); dot2.setAttribute("opacity", "1");
-      readout.textContent = label(r.day) + ": " + unit(r.views, "view") + ", " + unit(r.visitors, "visitor");
+      cur = idx;
+      var r = rows[idx], x = px(idx), yv = py(r.views), ys = py(r.visitors);
+      mark.setAttribute("x1", x); mark.setAttribute("x2", x); mark.setAttribute("opacity", "1");
+      dot1.setAttribute("cx", x); dot1.setAttribute("cy", yv); dot1.setAttribute("opacity", "1");
+      dot2.setAttribute("cx", x); dot2.setAttribute("cy", ys); dot2.setAttribute("opacity", "1");
+
+      tipDay.textContent = label(r.day);
+      row(tipViews, AMBER, num(r.views), "view");
+      row(tipVis, DIM, num(r.visitors), "visitor");
+      tip.classList.add("on");
+
+      /* place the box to the right of the point, or to the left near the
+         right edge, centred on the higher dot and kept inside the chart */
+      var scale = (svg.getBoundingClientRect().width || W) / W;
+      var sx = x * scale, sy = Math.min(yv, ys) * scale;
+      var tw = tip.offsetWidth, th = tip.offsetHeight, gap = 14;
+      var boxW = host.clientWidth || W * scale, boxH = H * scale;
+      var left = sx + gap;
+      if(left + tw > boxW) left = sx - gap - tw;
+      if(left < 0) left = 0;
+      var topY = sy - th / 2;
+      if(topY < 0) topY = 0;
+      if(topY + th > boxH) topY = boxH - th;
+      tip.style.left = left + "px";
+      tip.style.top = topY + "px";
     }
-    function off(){
+    function hide(){
+      cur = -1;
       mark.setAttribute("opacity", "0");
       dot1.setAttribute("opacity", "0");
       dot2.setAttribute("opacity", "0");
-      idle();
+      tip.classList.remove("on");
+    }
+    function at(evt){
+      var box = svg.getBoundingClientRect();
+      var cx = (evt.clientX - box.left) * (W / (box.width || W));
+      show(stepX > 0 ? Math.round((cx - pad.l) / stepX) : 0);
     }
     svg.addEventListener("pointermove", at);
-    svg.addEventListener("pointerleave", off);
     svg.addEventListener("pointerdown", at);
+    /* a finger lifting off counts as leaving, so a tap keeps its box until
+       the next tap somewhere else */
+    svg.addEventListener("pointerleave", function(evt){ if(evt.pointerType !== "touch") hide(); });
+    document.addEventListener("pointerdown", function(evt){ if(!svg.contains(evt.target)) hide(); });
+    svg.addEventListener("blur", hide);
+    svg.addEventListener("keydown", function(evt){
+      var k = evt.key;
+      if(k === "ArrowLeft" || k === "ArrowRight" || k === "Home" || k === "End"){
+        evt.preventDefault();
+        var start = cur < 0 ? rows.length - 1 : cur;
+        if(k === "ArrowLeft") show(cur < 0 ? start : start - 1);
+        else if(k === "ArrowRight") show(cur < 0 ? start : start + 1);
+        else if(k === "Home") show(0);
+        else show(rows.length - 1);
+      } else if(k === "Escape"){ hide(); }
+    });
 
     host.appendChild(svg);
+    host.appendChild(tip);
     legend.hidden = false;
+    hint.hidden = false;
   }
 
   /* ---------- horizontal bars, used by every other section ---------- */
