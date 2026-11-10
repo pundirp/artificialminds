@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-10T07:26:30Z",
+  "generated": "2026-11-10T19:49:03Z",
   "totals": {
-    "visitors_all": 135,
-    "visitors_30d": 104,
-    "views_all": 167,
-    "visits_all": 74,
-    "views_30d": 130,
-    "visits_30d": 53
+    "visitors_all": 136,
+    "visitors_30d": 105,
+    "views_all": 168,
+    "visits_all": 75,
+    "views_30d": 131,
+    "visits_30d": 54
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-10",
-      "views": 1,
-      "visits": 1,
-      "visitors": 1
+      "views": 2,
+      "visits": 2,
+      "visitors": 2
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 65,
-      "visits": 22,
-      "visitors": 49
+      "views": 66,
+      "visits": 23,
+      "visitors": 50
     }
   ],
   "projects": [
@@ -638,17 +638,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 58,
-      "visitors_all": 46,
-      "views_30d": 44,
-      "visitors_30d": 33
+      "views_all": 59,
+      "visitors_all": 47,
+      "views_30d": 45,
+      "visitors_30d": 34
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 58,
-      "visitors_all": 46
+      "views_all": 59,
+      "visitors_all": 47
     },
     {
       "path": "/AI-future-canon/ai-future-canon.html",
@@ -749,7 +749,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 87
+      "visitors": 88
     },
     {
       "name": "United Kingdom",
@@ -787,7 +787,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 83
+      "visitors": 84
     },
     {
       "name": "Safari",
@@ -805,7 +805,7 @@
     },
     {
       "name": "Windows",
-      "visitors": 27
+      "visitors": 28
     },
     {
       "name": "iOS",
@@ -819,7 +819,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 61
+      "visitors": 62
     },
     {
       "name": "Large screen",
@@ -849,7 +849,7 @@
     },
     {
       "name": "pundirp.github.io",
-      "visitors": 8
+      "visitors": 9
     },
     {
       "name": "Google",
