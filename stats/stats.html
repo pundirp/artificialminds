@@ -244,16 +244,16 @@
   <section id="s-time">
     <h2>Visits over time</h2>
     <div class="stats" id="time-stats" hidden>
-      <div class="stat"><span class="n" id="t-views-all">0</span><span class="c">Views, all time</span></div>
-      <div class="stat"><span class="n" id="t-visitors-all">0</span><span class="c">Visitors, all time</span></div>
-      <div class="stat quiet"><span class="n" id="t-views-30">0</span><span class="c">Views, last 30 days</span></div>
-      <div class="stat quiet"><span class="n" id="t-visitors-30">0</span><span class="c">Visitors, last 30 days</span></div>
+      <div class="stat"><span class="n" id="t-views-all">0</span><span class="c">Page views, all time</span></div>
+      <div class="stat"><span class="n" id="t-visitors-all">0</span><span class="c">Visits, all time</span></div>
+      <div class="stat quiet"><span class="n" id="t-views-30">0</span><span class="c">Page views, last 30 days</span></div>
+      <div class="stat quiet"><span class="n" id="t-visitors-30">0</span><span class="c">Visits, last 30 days</span></div>
     </div>
-    <p class="hint" id="h-time" hidden>Hover over the chart, or tap it, to see the numbers for any day.</p>
+    <p class="hint" id="h-time" hidden>Hover over the chart, or tap it, to see the page views and visits for any day.</p>
     <div class="chart timeline" id="c-time"></div>
     <div class="legend" id="l-time" hidden>
-      <span><i style="background:#d9a05a"></i>Views</span>
-      <span><i style="background:#9a958a"></i>Visitors</span>
+      <span><i style="background:#d9a05a"></i>Page views</span>
+      <span><i style="background:#9a958a"></i>Visits</span>
     </div>
   </section>
 
@@ -372,6 +372,9 @@
 
   /* ---------- chart one: visits over time ---------- */
 
+  /* visits when the data file has them, the older visitor count when it does not */
+  function visitsOf(r){ return r.visits != null ? num(r.visits) : num(r.visitors); }
+
   function drawTimeline(){
     var host = $("c-time"), legend = $("l-time"), hint = $("h-time");
     var rows = data && isList(data.daily) ? data.daily : null;
@@ -387,7 +390,7 @@
 
     var top = 0, i;
     for(i = 0; i < rows.length; i++){
-      top = Math.max(top, num(rows[i].views), num(rows[i].visitors));
+      top = Math.max(top, num(rows[i].views), visitsOf(rows[i]));
     }
     var ymax = niceMax(top);
     var stepX = rows.length > 1 ? plotW / (rows.length - 1) : 0;
@@ -399,7 +402,7 @@
       viewBox: "0 0 " + W + " " + H,
       width: W, height: H,
       role: "img",
-      "aria-label": "Daily views and visitors over the last " + rows.length + " days."
+      "aria-label": "Daily page views and visits over the last " + rows.length + " days."
     });
 
     /* the ceiling, dashed, and the floor, solid: two references, no grid of them */
@@ -433,12 +436,12 @@
       svg.appendChild(text(x, base + 15, MONTHS[mIdx].toUpperCase(), { size: 9 }));
     }
 
-    /* views as a filled band, visitors as a line over it */
+    /* page views as a filled band, visits as a line over it */
     var dArea = "", dLine = "", dVis = "";
     for(i = 0; i < rows.length; i++){
       var x1 = px(i);
       dLine += (i ? "L" : "M") + x1.toFixed(2) + "," + py(rows[i].views).toFixed(2);
-      dVis  += (i ? "L" : "M") + x1.toFixed(2) + "," + py(rows[i].visitors).toFixed(2);
+      dVis  += (i ? "L" : "M") + x1.toFixed(2) + "," + py(visitsOf(rows[i])).toFixed(2);
     }
     dArea = "M" + px(0).toFixed(2) + "," + base + " " + dLine.replace(/^M/, "L") + " L" + px(rows.length - 1).toFixed(2) + "," + base + " Z";
 
@@ -488,14 +491,14 @@
       if(idx < 0) idx = 0;
       if(idx > rows.length - 1) idx = rows.length - 1;
       cur = idx;
-      var r = rows[idx], x = px(idx), yv = py(r.views), ys = py(r.visitors);
+      var r = rows[idx], x = px(idx), yv = py(r.views), ys = py(visitsOf(r));
       mark.setAttribute("x1", x); mark.setAttribute("x2", x); mark.setAttribute("opacity", "1");
       dot1.setAttribute("cx", x); dot1.setAttribute("cy", yv); dot1.setAttribute("opacity", "1");
       dot2.setAttribute("cx", x); dot2.setAttribute("cy", ys); dot2.setAttribute("opacity", "1");
 
       tipDay.textContent = label(r.day);
-      row(tipViews, AMBER, num(r.views), "view");
-      row(tipVis, DIM, num(r.visitors), "visitor");
+      row(tipViews, AMBER, num(r.views), "page view");
+      row(tipVis, DIM, visitsOf(r), "visit");
       tip.classList.add("on");
 
       /* place the box to the right of the point, or to the left near the
@@ -613,9 +616,9 @@
     var box = $("time-stats");
     if(!t){ box.hidden = true; return; }
     $("t-views-all").textContent = fmt(t.views_all);
-    $("t-visitors-all").textContent = fmt(t.visitors_all);
+    $("t-visitors-all").textContent = fmt(t.visits_all != null ? t.visits_all : t.visitors_all);
     $("t-views-30").textContent = fmt(t.views_30d);
-    $("t-visitors-30").textContent = fmt(t.visitors_30d);
+    $("t-visitors-30").textContent = fmt(t.visits_30d != null ? t.visits_30d : t.visitors_30d);
     box.hidden = false;
   }
 

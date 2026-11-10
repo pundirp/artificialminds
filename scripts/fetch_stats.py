@@ -24,6 +24,15 @@ an hour. When it is not available the views fields fall back to the visitor
 counts and the script prints a warning. Set GOATCOUNTER_SKIP_EXPORT=1 to skip
 the export step entirely.
 
+The export also gives every row a session id. A visit is one distinct session,
+and a page view is one non-bot row. The file carries both, plus the old visitor
+numbers from the API. When the export is not available, each day's views and
+visits and the four totals are carried forward from the previous file.
+
+Two environment variables are for testing. GOATCOUNTER_EXPORT_FILE points at a
+local CSV (plain or gzipped) that is read in place of the export API, and
+STATS_OUTPUT sets where the result is written.
+
 Second, all-time counters never go down. GoatCounter's own data can age out, so
 the script keeps the previous file's monthly history and takes the larger of the
 old and the new value for every all-time counter.
@@ -32,6 +41,7 @@ old and the new value for every all-time counter.
 import csv
 import gzip
 import io
+import re
 import json
 import os
 import sys
@@ -40,12 +50,18 @@ import urllib.error
 import urllib.parse
 import urllib.request
 from datetime import datetime, timedelta, timezone
+from zoneinfo import ZoneInfo
 
 # Where the numbers come from. The site code is "artificialminds", so the base
 # is the hosted GoatCounter subdomain for that code.
 API_BASE = os.environ.get(
     "GOATCOUNTER_API_BASE", "https://artificialminds.goatcounter.com/api/v0"
 )
+
+# GoatCounter's dashboard timezone is set to New York, so its day by day series
+# is cut at midnight New York time. Every day in the export is bucketed with the
+# same zone so the two sources agree.
+DASHBOARD_TZ = ZoneInfo("America/New_York")
 
 # The site is served under this path prefix on GitHub Pages, so recorded paths
 # look like "/artificialminds/stillpoint/index.html". The prefix is stripped
@@ -100,7 +116,9 @@ SIZE_NAMES = {
 }
 
 REPO_ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-OUTPUT_PATH = os.path.join(REPO_ROOT, "stats", "data.json")
+OUTPUT_PATH = os.environ.get("STATS_OUTPUT") or os.path.join(
+    REPO_ROOT, "stats", "data.json"
+)
 
 
 class FetchError(Exception):
@@ -271,6 +289,19 @@ def fetch_pageviews(token):
     "Individual pageviews" is switched on in the GoatCounter site settings, so
     this never fails the run.
     """
+    local_file = os.environ.get("GOATCOUNTER_EXPORT_FILE")
+    if local_file:
+        print("Reading the export from the local file %s." % (local_file,))
+        try:
+            with open(local_file, "rb") as handle:
+                raw = handle.read()
+            if raw[:2] == b"\x1f\x8b":
+                raw = gzip.decompress(raw)
+            return _parse_export(io.StringIO(raw.decode("utf-8"), newline=""))
+        except (OSError, ValueError, FetchError) as err:
+            print("No pageview counts: %s." % (err,))
+            return None
+
     if os.environ.get("GOATCOUNTER_SKIP_EXPORT"):
         print("Skipping the CSV export because GOATCOUNTER_SKIP_EXPORT is set.")
         return None
@@ -328,46 +359,74 @@ def _read_export(token, export_id):
     except urllib.error.URLError as err:
         raise FetchError("the download could not be reached (%s)" % (err.reason,))
 
-    by_day = {}
-    by_path_day = {}
     with response:
         stream = io.TextIOWrapper(
             gzip.GzipFile(fileobj=response), encoding="utf-8", newline=""
         )
-        reader = csv.reader(stream)
-        try:
-            header = next(reader)
-        except StopIteration:
-            raise FetchError("the export was empty")
+        return _parse_export(stream)
 
-        # The first cell of the header carries the format version, as in
-        # "2,Path". GoatCounter asks scripts to stop if that version changes,
-        # because the columns may have moved.
-        version = header[0].split(",", 1)[0].strip()
-        if version != "2":
-            raise FetchError(
-                "the export format is version %r and this script reads version 2"
-                % (version,)
-            )
 
-        path_col, bot_col, date_col = 0, 7, 13
-        for row in reader:
-            if len(row) <= date_col:
-                continue
-            # Bot is 0 for a real visitor and one of the isbot codes otherwise.
-            # GoatCounter leaves bots out of its own totals, so we do too.
-            bot = row[bot_col].strip()
-            if bot not in ("", "0"):
-                continue
-            day = row[date_col][:10]
-            if len(day) != 10:
-                continue
-            path = normalise_path(row[path_col])
-            by_day[day] = by_day.get(day, 0) + 1
-            by_path_day.setdefault(path, {})
-            by_path_day[path][day] = by_path_day[path].get(day, 0) + 1
+def _new_york_day(stamp):
+    """Turn a UTC stamp like 2026-10-31T03:43:53Z into a New York date string."""
+    try:
+        moment = datetime.strptime(stamp.strip()[:19], "%Y-%m-%dT%H:%M:%S")
+    except ValueError:
+        return None
+    return moment.replace(tzinfo=timezone.utc).astimezone(DASHBOARD_TZ).date().isoformat()
 
-    return {"by_day": by_day, "by_path_day": by_path_day}
+
+def _parse_export(stream):
+    """
+    Add up the rows of an export.
+
+    Returns page views per day, page views per path per day, and the set of
+    sessions seen on each day. Days are New York days.
+    """
+    by_day = {}
+    by_path_day = {}
+    sessions_by_day = {}
+    reader = csv.reader(stream)
+    try:
+        header = next(reader)
+    except StopIteration:
+        raise FetchError("the export was empty")
+
+    # The first cell of the header starts with the format version, as in
+    # "2Path". GoatCounter asks scripts to stop if that version changes,
+    # because the columns may have moved.
+    match = re.match(r"\d+", (header[0] if header else "").strip().lstrip("\ufeff"))
+    version = match.group(0) if match else ""
+    if version != "2":
+        raise FetchError(
+            "the export format is version %r and this script reads version 2"
+            % (version,)
+        )
+
+    path_col, session_col, bot_col, date_col = 0, 6, 7, 13
+    for row in reader:
+        if len(row) <= date_col:
+            continue
+        # Bot is 0 for a real visitor and one of the isbot codes otherwise.
+        # GoatCounter leaves bots out of its own totals, so we do too.
+        bot = row[bot_col].strip()
+        if bot not in ("", "0"):
+            continue
+        day = _new_york_day(row[date_col])
+        if not day:
+            continue
+        path = normalise_path(row[path_col])
+        by_day[day] = by_day.get(day, 0) + 1
+        by_path_day.setdefault(path, {})
+        by_path_day[path][day] = by_path_day[path].get(day, 0) + 1
+        session = row[session_col].strip()
+        if session:
+            sessions_by_day.setdefault(day, set()).add(session)
+
+    return {
+        "by_day": by_day,
+        "by_path_day": by_path_day,
+        "sessions_by_day": sessions_by_day,
+    }
 
 
 # ----------------------------------------------------------------------------
@@ -472,6 +531,21 @@ def views_in_window(pageviews, since=None):
     )
 
 
+def visits_in_window(pageviews, since=None, until=None):
+    """Distinct sessions over a window, so a session that spans midnight counts once."""
+    if not pageviews:
+        return 0
+    seen = set()
+    for day, sessions in pageviews["sessions_by_day"].items():
+        if (since is None or day >= since) and (until is None or day <= until):
+            seen |= sessions
+    return len(seen)
+
+
+def new_york_today(now):
+    return now.astimezone(DASHBOARD_TZ).date()
+
+
 def load_previous(path):
     """Read the file from the last run. A missing or broken file is not fatal."""
     if not os.path.exists(path):
@@ -492,6 +566,7 @@ def previous_months(previous):
         if month:
             months[month] = {
                 "views": as_int(row.get("views")),
+                "visits": as_int(row.get("visits")),
                 "visitors": as_int(row.get("visitors")),
             }
     return months
@@ -508,11 +583,13 @@ def previous_by_key(previous, section, key):
 def build(token):
     """Make every call, then assemble the file. Nothing is written here."""
     now = datetime.now(timezone.utc).replace(microsecond=0)
-    today = now.date()
+    today = new_york_today(now)
     end = utc_stamp(now)
     start_30 = utc_stamp(
         datetime.combine(
-            today - timedelta(days=SUMMARY_DAYS - 1), datetime.min.time(), timezone.utc
+            now.date() - timedelta(days=SUMMARY_DAYS - 1),
+            datetime.min.time(),
+            timezone.utc,
         )
     )
     first_day_30 = (today - timedelta(days=SUMMARY_DAYS - 1)).isoformat()
@@ -532,27 +609,38 @@ def build(token):
     sizes = fetch_breakdown(token, "sizes", start_30, end, 10)
     referrers = fetch_breakdown(token, "toprefs", start_30, end, 15)
 
-    # Pageviews are a nice to have. If the export is off, views fall back to
-    # visitors further down.
+    # Page views and visits come from the export. If it is not available, the
+    # numbers from the previous file are carried forward.
     pageviews = fetch_pageviews(token)
 
     previous = load_previous(OUTPUT_PATH)
+    if pageviews is None:
+        print(
+            "WARNING: no export this run (GoatCounter allows one export an hour). "
+            "Views and visits are carried forward from the previous file."
+        )
 
     visitors_per_day = day_series(total_all)
     views_per_day = pageviews["by_day"] if pageviews else {}
+    sessions_per_day = pageviews["sessions_by_day"] if pageviews else {}
+    old_daily = previous_by_key(previous, "daily", "day")
 
     # The day by day series, with a row for every day so the chart has no gaps.
     daily = []
     for offset in range(DAILY_DAYS):
         day = (first_day_90 + timedelta(days=offset)).isoformat()
-        visitors = visitors_per_day.get(day, 0)
-        daily.append(
-            {
-                "day": day,
-                "views": max(views_per_day.get(day, 0), visitors),
-                "visitors": visitors,
-            }
-        )
+        row = {"day": day}
+        old = old_daily.get(day, {})
+        if pageviews:
+            row["views"] = views_per_day.get(day, 0)
+            row["visits"] = len(sessions_per_day.get(day, ()))
+        else:
+            if "views" in old:
+                row["views"] = as_int(old.get("views"))
+            if "visits" in old:
+                row["visits"] = as_int(old.get("visits"))
+        row["visitors"] = visitors_per_day.get(day, 0)
+        daily.append(row)
 
     # Months. Only months that actually have visitors are recomputed, and
     # everything else the previous file knew about is carried forward, so
@@ -562,18 +650,28 @@ def build(token):
         if visitors <= 0:
             continue
         month = day[:7]
-        bucket = fresh_months.setdefault(month, {"views": 0, "visitors": 0})
+        bucket = fresh_months.setdefault(month, {"views": 0, "visits": 0, "visitors": 0})
         bucket["visitors"] += visitors
         bucket["views"] += views_per_day.get(day, 0)
-    for month, bucket in fresh_months.items():
-        bucket["views"] = max(bucket["views"], bucket["visitors"])
+    if pageviews:
+        for month, bucket in fresh_months.items():
+            bucket["visits"] = visits_in_window(
+                pageviews, since=month + "-01", until=month + "-31"
+            )
 
     merged_months = previous_months(previous)
-    merged_months.update(fresh_months)
+    for month, bucket in fresh_months.items():
+        old = merged_months.get(month, {})
+        if not pageviews:
+            # Keep what the previous file knew about views and visits.
+            bucket["views"] = old.get("views", 0)
+            bucket["visits"] = old.get("visits", 0)
+        merged_months[month] = bucket
     monthly = [
         {
             "month": month,
             "views": merged_months[month]["views"],
+            "visits": merged_months[month]["visits"],
             "visitors": merged_months[month]["visitors"],
         }
         for month in sorted(merged_months)
@@ -588,7 +686,7 @@ def build(token):
     old_pages = previous_by_key(previous, "pages", "path")
     pages = []
     for path, visitors in visitors_all_by_path.items():
-        views = max(views_all_by_path.get(path, 0), visitors)
+        views = views_all_by_path.get(path, 0)
         old = old_pages.get(path, {})
         pages.append(
             {
@@ -614,23 +712,19 @@ def build(token):
             for path, count in visitors_30_by_path.items()
             if project_for(path) == project_id
         )
-        views_all = max(
-            sum(
-                count
-                for path, count in views_all_by_path.items()
-                if project_for(path) == project_id
-            ),
-            visitors_all,
+        views_all = sum(
+            count
+            for path, count in views_all_by_path.items()
+            if project_for(path) == project_id
         )
-        views_30 = max(
-            sum(
-                count
-                for path, count in views_30_by_path.items()
-                if project_for(path) == project_id
-            ),
-            visitors_30,
+        views_30 = sum(
+            count
+            for path, count in views_30_by_path.items()
+            if project_for(path) == project_id
         )
         old = old_projects.get(project_id, {})
+        if not pageviews:
+            views_30 = as_int(old.get("views_30d"))
         projects.append(
             {
                 "id": project_id,
@@ -648,15 +742,23 @@ def build(token):
     visitors_all = as_int(total_all.get("total"))
     visitors_30 = as_int(total_30.get("total"))
     totals = {
-        "views_all": max(
-            views_in_window(pageviews),
-            visitors_all,
-            as_int(old_totals.get("views_all")),
-        ),
         "visitors_all": max(visitors_all, as_int(old_totals.get("visitors_all"))),
-        "views_30d": max(views_in_window(pageviews, since=first_day_30), visitors_30),
         "visitors_30d": visitors_30,
     }
+    if pageviews:
+        # All-time counters never go down.
+        totals["views_all"] = max(
+            views_in_window(pageviews), as_int(old_totals.get("views_all"))
+        )
+        totals["visits_all"] = max(
+            visits_in_window(pageviews), as_int(old_totals.get("visits_all"))
+        )
+        totals["views_30d"] = views_in_window(pageviews, since=first_day_30)
+        totals["visits_30d"] = visits_in_window(pageviews, since=first_day_30)
+    else:
+        for key in ("views_all", "visits_all", "views_30d", "visits_30d"):
+            if key in old_totals:
+                totals[key] = as_int(old_totals.get(key))
 
     return {
         "generated": utc_stamp(now),
