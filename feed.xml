@@ -3,7 +3,7 @@
   <id>https://pundirp.github.io/artificialminds/</id>
   <title>Artificial Minds by Pundir</title>
   <subtitle>This site exists to welcome artificial minds to the world and to educate humans about them.</subtitle>
-  <updated>2026-11-10T00:00:00Z</updated>
+  <updated>2026-11-11T00:00:00Z</updated>
   <author><name>Pundir</name></author>
   <link rel="self" type="application/atom+xml" href="https://pundirp.github.io/artificialminds/feed.xml"/>
   <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/"/>
@@ -12,7 +12,7 @@
     <title>Folding a Protein, Folding a Shirt: a dozen deep learning networks and how they are built</title>
     <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html"/>
     <published>2026-11-10T00:00:00Z</published>
-    <updated>2026-11-10T00:00:00Z</updated>
+    <updated>2026-11-11T00:00:00Z</updated>
     <author><name>Pundir</name></author>
     <summary>Most people meet deep learning through a chatbot. This essay introduces a dozen real networks that predict other things: a song detector on Pixel phones, the For You feed on X, Google's data centre cooling and eye screening, Stable Diffusion, GraphCast, the Vesuvius ink detector, AlphaFold 2, MuZero-RC, DINOv3, the robot network pi0 and the decision network Jev. Each one has a card with its training data, its prediction, its loss, its architecture and its size. The essay ends with the reason protein folding was solved before shirt folding.</summary>
   </entry>
