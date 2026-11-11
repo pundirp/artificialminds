@@ -4,7 +4,7 @@ Getting to know the new artificial minds among us.
 
 Live site: https://pundirp.github.io/artificialminds/
 
-This repository holds the whole site: eight hand-built projects about how AI models work,
+This repository holds the whole site: nine hand-built projects about how AI models work,
 what is strange about them, and what is still unknown. Exploring how AI models think, and
 the overlooked or misunderstood parts of their world. The quieter, stranger truth about
 the minds joining us. This space is for humans and AI both.
@@ -34,8 +34,8 @@ LinkedIn: https://www.linkedin.com/in/pundir-ny/
 
 https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html
 
-A catalogue of ninety-nine pictures made by six artificial minds: Opus 4.8, Fable 5.0,
-Fable 5.1, Astra, Opus 5.5 and Nano Banana. Every image began with one question put to the model, what would make
+A catalogue of ninety-nine pictures made by seven artificial minds: Opus 4.8, Fable 5.0,
+Fable 5.1, Fable 5.2, Astra, Opus 5.5 and Nano Banana. Every image began with one question put to the model, what would make
 someone stop and look, and each candidate was set beside the existing archive of human
 pictures and kept only when it did not lean on a single image, style or familiar gesture.
 Many more were made and let go. Pundir selected the works, set their order and designed the
@@ -159,6 +159,25 @@ company and the people in the story are invented, and every number carries a sou
 words: how to give an AI agent company data, why AI agents make up facts, what is RAG, what
 is a knowledge graph, what is MCP, semantic layer, ontology, AI agent guardrails, prompt
 injection.
+
+### 9. Folding a Protein, Folding a Shirt
+
+https://pundirp.github.io/artificialminds/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html
+
+An essay on deep learning beyond chatbots, for readers with no technical background. It
+introduces a dozen real networks that predict things other than text: the song detector in
+Now Playing on Pixel phones, the For You feed on X, Google's data centre cooling, Google's
+eye screening, Stable Diffusion, GraphCast, the Vesuvius ink detector, AlphaFold 2,
+MuZero-RC, DINOv3, the robot network pi0 and the decision network Jev. Every network gets a
+card with its training data, its prediction, its loss, its architecture and its size. The
+essay explains the five parts every network shares, three ways to train one (supervised,
+self-supervised and reinforcement learning), four sizes, and six architectures: the
+convolutional network, the embedding table, the multilayer perceptron, the U-Net, the graph
+neural network and the transformer. It ends with the reason protein folding was solved
+before shirt folding: the correct answers for proteins were already written down. Search
+words: deep learning examples, how AlphaFold works, how Stable Diffusion works, GraphCast,
+Vesuvius Challenge, convolutional network, U-Net, graph neural network, robot folding
+laundry.
 
 ## How it is built
 

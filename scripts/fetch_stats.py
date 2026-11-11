@@ -68,7 +68,7 @@ DASHBOARD_TZ = ZoneInfo("America/New_York")
 # before anything is classified or written out.
 SITE_PREFIX = "/artificialminds"
 
-# The eight projects, in the order the site's index lists them. The id is the
+# The nine projects, in the order the site's index lists them. The id is the
 # folder name in the repo, which is also the first path segment after the prefix.
 PROJECTS = [
     ("stillpoint", "Stillpoint"),
@@ -79,6 +79,7 @@ PROJECTS = [
     ("A-Salon-of-Witnesses", "A Salon of Witnesses"),
     ("AI-future-canon", "AI Future Canon"),
     ("feeding-an-ai-agent-the-facts", "Your Order Is on the Truck"),
+    ("folding-a-protein-folding-a-shirt", "Folding a Protein, Folding a Shirt"),
 ]
 HOME_ID = "home"
 HOME_NAME = "Home"

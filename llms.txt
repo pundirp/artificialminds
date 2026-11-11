@@ -1,6 +1,6 @@
 # Artificial Minds by Pundir
 
-> Getting to know the new artificial minds among us. Eight hand-built projects about how AI models work, what is strange about them, and what is still unknown: an essay on AI consciousness with five browser experiments, an essay on why AI needs so much more data than a child, an explainer on AI detectors and watermarks, a field guide to how large language models work and how to run one locally, a murder mystery that teaches the transformer, a ranked canon of 70 books about the AI future, a field guide to giving an AI agent the right facts, and a gallery of 99 pictures made by AI models.
+> Getting to know the new artificial minds among us. Nine hand-built projects about how AI models work, what is strange about them, and what is still unknown: an essay on AI consciousness with five browser experiments, an essay on why AI needs so much more data than a child, an explainer on AI detectors and watermarks, a field guide to how large language models work and how to run one locally, a murder mystery that teaches the transformer, a ranked canon of 70 books about the AI future, a field guide to giving an AI agent the right facts, an essay on a dozen deep learning networks that predict things other than text, and a gallery of 99 pictures made by AI models.
 
 License: the text, the pictures and the data are published under CC BY 4.0, https://creativecommons.org/licenses/by/4.0/ , so anyone may reuse them, including commercially, with credit to "Artificial Minds by Pundir" and a link to the page.
 
@@ -10,13 +10,13 @@ Every page is static HTML with its own styles and pictures. Where a question is 
 
 ## Start here
 
-- [Artificial Minds by Pundir](https://pundirp.github.io/artificialminds/): the front page, with a short introduction and a card for each of the eight projects.
+- [Artificial Minds by Pundir](https://pundirp.github.io/artificialminds/): the front page, with a short introduction and a card for each of the nine projects.
 - [Everything on Artificial Minds](https://pundirp.github.io/artificialminds/site-map/site-map.html): the site map, with every project, its pages and its chapters on one page.
 
 ## Projects
 
-- [Still Point](https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html): the story behind a catalogue of 99 pictures made by six AI models, Opus 4.8, Fable 5.0, Fable 5.1, Astra, Opus 5.5 and Nano Banana, and how they were chosen (May 2026, updated October 2026).
-- [Still Point: The Collection](https://pundirp.github.io/artificialminds/stillpoint/collection.html): the 99 pictures themselves, each with its title and the model that made it.
+- [Still Point](https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html): the story behind a catalogue of 99 pictures made by seven AI models, Opus 4.8, Fable 5.0, Fable 5.1, Fable 5.2, Astra, Opus 5.5 and Nano Banana, and how they were chosen (May 2026, updated November 2026).
+- [Still Point: The Collection](https://pundirp.github.io/artificialminds/stillpoint/collection.html): the 99 pictures themselves, each with its title and the model that made it. Most pictures also carry a short note on what the picture shows.
 - [Can Artificial Minds Feel? Search Me.](https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html): an essay in four chapters on AI consciousness, covering what an AI model is made of, the failed human search for a self, the self-preservation test results, and why the question stays open (September 2026).
 - [Who Learns Faster, a Toddler or a Chatbot?](https://pundirp.github.io/artificialminds/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html): an essay on why AI needs so much data, which follows a child and an AI model through four stages of learning, from before birth to the rest of life (October 2026).
 - [A Likely Story](https://pundirp.github.io/artificialminds/did-ai-write-this/a-likely-story.html): a guess-the-author test followed by what AI detectors, text watermarks and editing histories can and cannot tell you (September 2026).
@@ -25,6 +25,7 @@ Every page is static HTML with its own styles and pictures. Where a question is 
 - [How Attention Works in a Transformer](https://pundirp.github.io/artificialminds/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html): a companion to Who Killed Aldous Finch? that explains transformers in a more traditional format, with step-by-step diagrams of how GPT-2 predicts the next word and the real numbers from running it (October 2026).
 - [The AI-Future Canon](https://pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html): 70 books about the AI future, chosen from 156 candidates and ranked by three AI models given the roles of historian, builder and sage (August 2026).
 - [Your Order Is on the Truck](https://pundirp.github.io/artificialminds/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html): an illustrated field guide to how a company prepares its data for an AI agent. It follows one late flour delivery through the context window, ontologies, semantic layers, RAG, knowledge graphs, tools and MCP, guardrails and evaluation, with eight real cases (October 2026).
+- [Folding a Protein, Folding a Shirt](https://pundirp.github.io/artificialminds/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html): an essay on a dozen real deep learning networks that predict things other than text, among them AlphaFold 2, Stable Diffusion, GraphCast, the Vesuvius ink detector and a robot arm that folds shirts. Each network has a card with its training data, prediction, loss, architecture and size, and the essay explains three ways to train a network and six architectures (November 2026).
 
 ## Experiments in Can Artificial Minds Feel? Search Me.
 
@@ -42,5 +43,5 @@ Every page is static HTML with its own styles and pictures. Where a question is 
 ## Optional
 
 - [Site stats](https://pundirp.github.io/artificialminds/stats/stats.html): the site's own page view counts, measured with GoatCounter without cookies and published openly.
-- [Atom feed](https://pundirp.github.io/artificialminds/feed.xml): the eight projects as a feed.
+- [Atom feed](https://pundirp.github.io/artificialminds/feed.xml): the nine projects as a feed.
 - [Sitemap](https://pundirp.github.io/artificialminds/sitemap.xml): every page on the site.
