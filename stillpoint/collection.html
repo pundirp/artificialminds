@@ -88,13 +88,15 @@
     display:flex;gap:11px;align-items:baseline}
   figcaption .no{font-family:var(--serif);font-style:normal;font-size:.82rem;font-variant-numeric:lining-nums tabular-nums;
     letter-spacing:.06em;color:var(--rubric);flex:none;padding-top:2px}
-  .foot{font-family:var(--serif);font-variant:small-caps;font-size:1rem;line-height:1.35;letter-spacing:.06em;
-    color:var(--soft);text-align:center;padding:6px 24px 44px}
-  .home{font-family:var(--serif);font-variant:small-caps;font-size:1rem;line-height:1.35;letter-spacing:.06em;
-    color:var(--soft);text-align:center;padding:0 24px 52px;margin:0}
-  .home a{color:inherit;text-decoration:none;transition:color .3s}
-  .home a:hover{color:var(--ink)}
-  .home a:focus-visible{outline:1px solid var(--faint);outline-offset:5px}
+  .foot{font-family:var(--serif);font-size:1rem;line-height:1.35;letter-spacing:.02em;
+    color:var(--ink-soft);text-align:center;padding:6px 24px 10px}
+  .foot a{color:inherit;text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px;text-decoration-color:var(--faint);transition:color .3s}
+  .foot a:hover{color:var(--ink)}
+  .foot a:focus-visible{outline:1px solid var(--faint);outline-offset:5px}
+  .home{font-family:var(--serif);font-size:1rem;line-height:1.35;letter-spacing:.02em;
+    color:var(--ink-soft);text-align:center;padding:0 24px 52px;margin:0}
+  .home a{color:inherit;text-decoration:none}
+  .home a:hover,.home a:focus-visible{color:var(--ink-soft);text-decoration:underline;text-decoration-color:var(--ink-soft);text-decoration-thickness:1px;text-underline-offset:.15em}
 
   @media(min-width:1480px){ .gallery{column-count:3} }
   @media(min-width:760px) and (max-width:1479px){ .gallery{column-count:2} }
@@ -481,9 +483,9 @@
     <div class="gallery" id="gallery"></div>
   </div>
 
-  <footer class="foot">High-resolution images available on request</footer>
+  <footer class="foot">Free to use under <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener license">CC BY 4.0</a>. High-resolution files <a href="https://www.linkedin.com/in/pundir-ny/" target="_blank" rel="noopener" aria-label="Ask Pundir on LinkedIn for high-resolution files">on request</a>.</footer>
 
-  <p class="home"><a href="../index.html">&larr;&nbsp; Artificial Minds, the main site</a></p>
+  <p class="home endlink"><a href="../index.html">&larr;&nbsp; Artificial Minds, the main site</a></p>
 
   <div id="box" role="dialog" aria-modal="true" tabindex="-1" aria-label="A picture from Still Point">
     <button id="x" type="button" aria-label="Close the picture and go back to the full collection">
