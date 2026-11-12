@@ -464,6 +464,10 @@ footer p.gap{margin-top:.9rem}
 @media (max-width:460px){ .grid{grid-template-columns:1fr} }
 /* phones: a tighter gap in the shelf head keeps the title column at 140px or more beside the bigger cover */
 @media (max-width:430px){ .shelf-head{gap:.5rem} }
+/* site-consistency round 45: one end link on every page, underlined on hover and focus */
+p.endlink.endlink.endlink{font-family:var(--serif);font-size:.82rem;color:var(--ink)}
+p.endlink.endlink.endlink a{color:inherit;text-decoration:none;border-bottom:0}
+p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{color:var(--ink);text-decoration:underline;text-decoration-color:var(--ink);text-decoration-thickness:1px;text-underline-offset:.15em;border-bottom:0}
 </style>
 </head>
 <body>
@@ -1896,7 +1900,7 @@ footer p.gap{margin-top:.9rem}
 </details>
 
 <footer>
-  <p class="home-link"><a href="../index.html"><span class="ar" aria-hidden="true">&larr;</span>&nbsp;Artificial Minds main page</a></p>
+  <p class="home-link endlink"><a href="../index.html">&larr;&nbsp; Artificial Minds, the main site</a></p>
   <p>My personal reading list lives on <a href="https://www.goodreads.com/pundir" target="_blank" rel="noopener">Goodreads</a>. Always glad to hear what you could not put down.</p>
   <p class="gap">Review quotes are copied word for word from the named sources. Scores reflect what had actually happened in the world as of July 2026. Book links go to Amazon. As an Amazon Associate, I earn from qualifying purchases.</p>
 </footer>

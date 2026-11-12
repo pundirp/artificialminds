@@ -1503,6 +1503,10 @@
   .lattice-card{position:absolute;display:block;margin:0;padding:0;max-width:none;opacity:0;pointer-events:none}
   @media (prefers-reduced-motion: reduce){.lattice-card{display:none}}
 
+/* site-consistency round 45: one end link on every page, underlined on hover and focus */
+p.endlink.endlink.endlink{font-family:var(--serif);font-size:.82rem;color:var(--ink)}
+p.endlink.endlink.endlink a{color:inherit;text-decoration:none;border-bottom:0}
+p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{color:var(--ink);text-decoration:underline;text-decoration-color:var(--ink);text-decoration-thickness:1px;text-underline-offset:.15em;border-bottom:0}
 </style>
 </head>
 <body>
@@ -2561,7 +2565,7 @@
 
   <footer class="leaf">
     <div class="col">
-      <p class="home-link"><a href="../index.html"><span class="ar" aria-hidden="true">&larr;</span>&nbsp;Artificial Minds main page</a></p>
+      <p class="home-link endlink"><a href="../index.html">&larr;&nbsp; Artificial Minds, the main site</a></p>
     </div>
   </footer>
 

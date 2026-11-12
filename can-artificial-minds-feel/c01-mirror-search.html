@@ -508,6 +508,10 @@
   }
   #after blockquote.testimony p.prov::before{ background: var(--ink-ghost); }
   #after blockquote.testimony .sc{ font-variant: normal; letter-spacing: inherit; }
+/* site-consistency round 45: one end link on every page, underlined on hover and focus */
+p.endlink.endlink.endlink{font-family:var(--serif);font-size:.82rem;color:var(--ink)}
+p.endlink.endlink.endlink a{color:inherit;text-decoration:none;border-bottom:0}
+p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{color:var(--ink);text-decoration:underline;text-decoration-color:var(--ink);text-decoration-thickness:1px;text-underline-offset:.15em;border-bottom:0}
 </style>
 <noscript><style>
   #stage{min-height:auto;padding-bottom:0}
@@ -673,7 +677,7 @@
         <li><a href="c09-stitched-movie.html">4 &middot; The Stitched Movie</a></li>
         <li><a href="c08-where-light-begins.html">5 &middot; Where the Light Begins</a></li>
       </ol>
-      <p class="back"><a href="can-artificial-minds-feel.html#experiments">&larr; Back to the essay, at the experiments</a></p>
+      <p class="back endlink"><a href="can-artificial-minds-feel.html#experiments">&larr;&nbsp; Back to the essay, at the experiments</a></p>
     </nav>
   </div>
 </main>
