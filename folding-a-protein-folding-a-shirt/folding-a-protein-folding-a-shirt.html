@@ -231,15 +231,25 @@ a.toc-t{display:block;line-height:1.3}
 .toc-sub{margin:.3rem 0 0;line-height:1.5;color:var(--ink-faint);max-width:var(--measure)}
 .toc-sub a{color:var(--ink-soft)}
 p.toc-more{margin:.8rem 0 0;line-height:1.5}
-ol.netgrid{list-style:none;margin:1.3rem 0 .5rem;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:1.9rem 1.5rem}
-a.gcard{display:flex;flex-direction:column;height:100%;text-decoration:none;color:var(--ink)}
-a.gcard .g-art{display:block;position:relative;aspect-ratio:4 / 3;width:100%}
-a.gcard .g-art img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:center bottom;display:block}
-a.gcard .g-txt{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.6rem;align-items:start;padding:.65rem 0 0}
+/* Round 66: each of the twelve is a small copy of its network card, in grey: a white sheet with a thin line,
+   the drawing on a pale grey panel, the number and the name on white. The sheet lifts when the pointer is over it. */
+ol.netgrid{list-style:none;margin:1.3rem 0 .5rem;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.9rem .8rem}
+a.gcard{display:flex;flex-direction:column;height:100%;box-sizing:border-box;text-decoration:none;color:var(--ink);
+  background:var(--paper);border:1px solid var(--card-line2);border-radius:13px;padding:.4rem}
+a.gcard .g-art{display:block;position:relative;aspect-ratio:4 / 3;width:100%;background:var(--card-grey);border-radius:8px}
+a.gcard .g-art img{position:absolute;inset:.6rem .6rem .5rem;width:calc(100% - 1.2rem);height:calc(100% - 1.1rem);object-fit:contain;object-position:center bottom;display:block}
+a.gcard .g-txt{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.6rem;align-items:start;padding:.6rem .45rem .5rem}
+@media (hover:hover){
+  a.gcard:hover{border-color:#bdbcb8;box-shadow:0 1px 2px rgba(0,0,0,.05),0 8px 20px rgba(0,0,0,.10)}
+}
+@media (hover:hover) and (prefers-reduced-motion:no-preference){
+  a.gcard{transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
+  a.gcard:hover{transform:translateY(-3px)}
+}
 a.gcard .g-num{line-height:1;color:var(--ink);font-variant-numeric:lining-nums;grid-row:1 / span 2}
 a.gcard .g-title{line-height:1.22}
 a.gcard .g-prod{line-height:1.35;color:var(--ink-faint);margin-top:.2rem}
-a.gcard:hover .g-title,a.gcard:focus-visible .g-title{text-decoration:underline;text-decoration-color:var(--ink-faint);text-underline-offset:.2em}
+a.gcard:focus-visible .g-title{text-decoration:underline;text-decoration-color:var(--ink-faint);text-underline-offset:.2em}
 a.gcard:focus-visible{outline:2px solid var(--ink);outline-offset:3px}
 /* a network section: text at the left, the drawing and the card at the right. The card stays in view while the text scrolls. */
 section.chapter.net{grid-template-columns:minmax(0,1fr) var(--side);row-gap:0}
@@ -450,11 +460,11 @@ ol.refs a{color:var(--ink-faint)}
 }
 @media (max-width:560px){
   .runhead{flex-direction:column;align-items:flex-start;gap:.15rem}
-  ol.netgrid{grid-template-columns:minmax(0,1fr);gap:0;margin-top:.7rem}
-  ol.netgrid li:last-child a.gcard{border-bottom:0}
-  a.gcard{flex-direction:row;align-items:center;gap:.9rem;padding:.55rem 0;border-bottom:1px solid var(--hairline)}
-  a.gcard .g-art{flex:0 0 5.2rem;width:5.2rem;aspect-ratio:4 / 3}
-  a.gcard .g-txt{padding:0;flex:1}
+  ol.netgrid{grid-template-columns:minmax(0,1fr);gap:.4rem;margin-top:.7rem}
+  a.gcard{flex-direction:row;align-items:center;gap:.8rem;padding:.35rem;border-radius:11px}
+  a.gcard .g-art{flex:0 0 5.6rem;width:5.6rem;aspect-ratio:4 / 3;border-radius:7px}
+  a.gcard .g-art img{inset:.35rem;width:calc(100% - .7rem);height:calc(100% - .7rem);object-position:center}
+  a.gcard .g-txt{padding:0 .3rem 0 0;flex:1}
   aside.card26 .card-gs{display:flex}
   aside.card26 dl{grid-template-columns:4.9rem minmax(0,1fr);row-gap:.3rem}
   aside.card26 dd{margin-bottom:0}
