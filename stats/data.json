@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-12T07:19:53Z",
+  "generated": "2026-11-12T20:01:17Z",
   "totals": {
-    "visitors_all": 146,
-    "visitors_30d": 114,
-    "views_all": 179,
-    "visits_all": 83,
-    "views_30d": 140,
-    "visits_30d": 60
+    "visitors_all": 149,
+    "visitors_30d": 117,
+    "views_all": 182,
+    "visits_all": 84,
+    "views_30d": 143,
+    "visits_30d": 61
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-12",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
+      "views": 3,
+      "visits": 1,
+      "visitors": 3
     }
   ],
   "monthly": [
@@ -565,27 +565,27 @@
     },
     {
       "month": "2026-11",
-      "views": 77,
-      "visits": 31,
-      "visitors": 60
+      "views": 80,
+      "visits": 32,
+      "visitors": 63
     }
   ],
   "projects": [
     {
       "id": "stillpoint",
       "name": "Stillpoint",
-      "views_all": 25,
-      "visitors_all": 21,
-      "views_30d": 13,
-      "visitors_30d": 11
+      "views_all": 27,
+      "visitors_all": 23,
+      "views_30d": 15,
+      "visitors_30d": 13
     },
     {
       "id": "can-artificial-minds-feel",
       "name": "Can Artificial Minds Feel? Search Me.",
-      "views_all": 24,
-      "visitors_all": 18,
-      "views_30d": 18,
-      "visitors_30d": 14
+      "views_all": 25,
+      "visitors_all": 19,
+      "views_30d": 19,
+      "visitors_30d": 15
     },
     {
       "id": "why-so-much-data",
@@ -665,8 +665,13 @@
     },
     {
       "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
+      "views_all": 15,
+      "visitors_all": 10
+    },
+    {
+      "path": "/stillpoint/stillpoint.html",
       "views_all": 14,
-      "visitors_all": 9
+      "visitors_all": 13
     },
     {
       "path": "/did-ai-write-this/did-ai-write-this.html",
@@ -674,14 +679,9 @@
       "visitors_all": 9
     },
     {
-      "path": "/stillpoint/stillpoint.html",
-      "views_all": 13,
-      "visitors_all": 12
-    },
-    {
       "path": "/stillpoint/collection.html",
-      "views_all": 12,
-      "visitors_all": 9
+      "views_all": 13,
+      "visitors_all": 10
     },
     {
       "path": "/A-Salon-of-Witnesses/who-killed-aldous-finch.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 95
+      "visitors": 98
     },
     {
       "name": "United Kingdom",
@@ -791,7 +791,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 89
+      "visitors": 92
     },
     {
       "name": "Safari",
@@ -805,7 +805,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 71
+      "visitors": 74
     },
     {
       "name": "Windows",
@@ -823,7 +823,7 @@
     },
     {
       "name": "Large screen",
-      "visitors": 34
+      "visitors": 37
     },
     {
       "name": "Phone",
@@ -841,7 +841,7 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 67
+      "visitors": 70
     },
     {
       "name": "pundirp.github.io/artificialminds/index.html",
