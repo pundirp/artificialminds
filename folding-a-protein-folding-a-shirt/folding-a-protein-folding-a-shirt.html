@@ -231,16 +231,16 @@ a.toc-t{display:block;line-height:1.3}
 .toc-sub{margin:.3rem 0 0;line-height:1.5;color:var(--ink-faint);max-width:var(--measure)}
 .toc-sub a{color:var(--ink-soft)}
 p.toc-more{margin:.8rem 0 0;line-height:1.5}
-/* Round 66: each of the twelve is a small copy of its network card, in grey: a white sheet with a thin line,
-   the drawing on a pale grey panel, the number and the name on white. The sheet lifts when the pointer is over it. */
+/* Rounds 66 and 67: each of the twelve is a small copy of its network card: a white sheet with a thin line,
+   the drawing on a pale pink panel, the number and the name on white. The sheet lifts when the pointer is over it. */
 ol.netgrid{list-style:none;margin:1.3rem 0 .5rem;padding:0;display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:.9rem .8rem}
 a.gcard{display:flex;flex-direction:column;height:100%;box-sizing:border-box;text-decoration:none;color:var(--ink);
-  background:var(--paper);border:1px solid var(--card-line2);border-radius:13px;padding:.4rem}
-a.gcard .g-art{display:block;position:relative;aspect-ratio:4 / 3;width:100%;background:var(--card-grey);border-radius:8px}
+  background:var(--paper);border:1px solid var(--card-line);border-radius:13px;padding:.4rem}
+a.gcard .g-art{display:block;position:relative;aspect-ratio:4 / 3;width:100%;background:var(--card-pink);border-radius:8px}
 a.gcard .g-art img{position:absolute;inset:.6rem .6rem .5rem;width:calc(100% - 1.2rem);height:calc(100% - 1.1rem);object-fit:contain;object-position:center bottom;display:block}
 a.gcard .g-txt{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.6rem;align-items:start;padding:.6rem .45rem .5rem}
 @media (hover:hover){
-  a.gcard:hover{border-color:#bdbcb8;box-shadow:0 1px 2px rgba(0,0,0,.05),0 8px 20px rgba(0,0,0,.10)}
+  a.gcard:hover{border-color:#c2b6b1;box-shadow:0 1px 2px rgba(60,30,24,.05),0 8px 20px rgba(60,30,24,.11)}
 }
 @media (hover:hover) and (prefers-reduced-motion:no-preference){
   a.gcard{transition:transform .16s ease,box-shadow .16s ease,border-color .16s ease}
