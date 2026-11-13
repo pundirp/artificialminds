@@ -106,6 +106,57 @@
     .home{order:4;margin-top:2.6em;text-align:center}
   }
 
+
+  /* Range p: phones held sideways, 560 to 940 wide and under 480 tall. At 900 to 940 wide the
+     three columns made the text 14.5px and pushed the door below the fold, so these widths take
+     the one-column phone layout. The door is held to about half the window height so the door
+     and its label fit on one screen. */
+  @media (min-width:900px) and (max-width:940px) and (max-height:479px){
+    body{padding:clamp(34px,6vh,56px) 24px 36px}
+    .leaf{grid-template-columns:1fr;max-width:34em;gap:0;font-size:17px}
+    .title{display:contents}
+    .title > div:first-child{order:1}
+    h1{font-size:clamp(52px,16vw,88px)}
+    .kick{white-space:normal}
+    .home a{white-space:normal}
+    .text{order:2;margin-top:2em;padding-top:2em;border-top:1px solid var(--line)}
+    .text p{text-align:left}
+    .way{order:3;justify-content:center;margin-top:2.6em}
+    .home{order:4;margin-top:2.6em;text-align:center}
+  }
+  @media (min-width:560px) and (max-width:940px) and (max-height:479px){
+    .enter a.door img{height:min(240px,52vh)}
+  }
+  /* Tablets and small laptop windows, 760 to 1199 px wide (agent t). */
+  @media (min-width:900px) and (max-width:1099px){
+    .text p{text-align:left}
+  }
+  @media (min-width:760px) and (max-width:1199px) and (min-height:1000px) and (orientation:portrait){
+    body{padding:clamp(34px,6vh,56px) 32px 36px}
+    .leaf{grid-template-columns:minmax(0,1fr) auto;max-width:36em;column-gap:32px;row-gap:0;
+      font-size:clamp(17px,1.75vw,18px)}
+    .title{display:contents}
+    .title > div:first-child{grid-column:1;grid-row:1}
+    h1{font-size:clamp(88px,9.4vw,100px)}
+    .way{grid-column:2;grid-row:1;align-items:flex-end;justify-content:center;margin:0}
+    .enter a.door img{height:240px}
+    .text{grid-column:1 / -1;grid-row:2;margin-top:2em;padding-top:2em;border-top:1px solid var(--line)}
+    .text p{text-align:left}
+    .home{grid-column:1 / -1;grid-row:3;margin-top:2.6em;text-align:center}
+  }
+
+  /* range d: desktop windows 1200 px wide and more that are very tall (over 1150) or very wide (over 2000) */
+  @media(min-width:1200px) and (min-height:1151px){
+    /* lift the block a little above the centre on very tall windows, growing smoothly from zero at 1150 */
+    body{padding-bottom:calc(clamp(24px,5vh,64px) + (100vh - 1150px) * .25)}
+  }
+  @media(min-width:1200px) and (min-width:2001px){
+    /* let the whole block grow gently with the screen, matching the base sizes exactly at 2000 */
+    .leaf{max-width:max(1320px,75.4em);column-gap:max(64px,3.66em);
+      font-size:clamp(14.5px,min(calc(17.5px + (100vw - 2000px) * .0045),2.3vh),26px)}
+    h1{font-size:max(56px,min(8em,14.5vh))}
+    .enter a.door img{height:clamp(190px,min(25.14em,44vh),660px)}
+  }
 </style>
 </head>
 <body>
