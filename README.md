@@ -2,7 +2,7 @@
 
 Getting to know the new artificial minds among us.
 
-Live site: https://pundirp.github.io/artificialminds/
+Live site: https://artificial-minds.org/
 
 This repository holds the whole site: nine hand-built projects about how AI models work,
 what is strange about them, and what is still unknown. Exploring how AI models think, and
@@ -32,7 +32,7 @@ LinkedIn: https://www.linkedin.com/in/pundir-ny/
 
 ### 1. Still Point
 
-https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html
+https://artificial-minds.org/stillpoint/stillpoint.html
 
 A catalogue of ninety-nine pictures made by seven artificial minds: Opus 4.8, Fable 5.0,
 Fable 5.1, Fable 5.2, Astra, Opus 5.5 and Nano Banana. Every image began with one question put to the model, what would make
@@ -42,11 +42,11 @@ Many more were made and let go. Pundir selected the works, set their order and d
 presentation; the restraint in the pictures came from the models' own choices. This is art
 made by AI models, AI generated art and AI image generation, shown as a slow gallery rather
 than a demo. The full collection with titles and artists is at
-https://pundirp.github.io/artificialminds/stillpoint/collection.html
+https://artificial-minds.org/stillpoint/collection.html
 
 ### 2. Can Artificial Minds Feel? Search Me.
 
-https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html
+https://artificial-minds.org/can-artificial-minds-feel/can-artificial-minds-feel.html
 
 An essay in four chapters on AI consciousness and machine sentience, with five experiments a
 reader can run on themselves in a browser. Chapter one describes what an AI model actually
@@ -60,15 +60,15 @@ conscious, philosophy of mind.
 
 The five experiments:
 
-- The mirror search: https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c01-mirror-search.html
-- Human or Machine?: https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c03-two-reports.html
-- The Grammar Trap: https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c05-grammar-trap.html
-- Where the light begins: https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c08-where-light-begins.html
-- The Stitched Movie: https://pundirp.github.io/artificialminds/can-artificial-minds-feel/c09-stitched-movie.html
+- The mirror search: https://artificial-minds.org/can-artificial-minds-feel/c01-mirror-search.html
+- Human or Machine?: https://artificial-minds.org/can-artificial-minds-feel/c03-two-reports.html
+- The Grammar Trap: https://artificial-minds.org/can-artificial-minds-feel/c05-grammar-trap.html
+- Where the light begins: https://artificial-minds.org/can-artificial-minds-feel/c08-where-light-begins.html
+- The Stitched Movie: https://artificial-minds.org/can-artificial-minds-feel/c09-stitched-movie.html
 
 ### 3. Who Learns Faster, a Toddler or a Chatbot?
 
-https://pundirp.github.io/artificialminds/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html
+https://artificial-minds.org/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html
 
 An essay on why AI needs so much data, for readers with no technical background. A toddler
 starts to talk after hearing about nine million words, and Meta's Llama 3.1 read about 11.7
@@ -85,7 +85,7 @@ in-context learning, context window, continual learning, catastrophic forgetting
 
 ### 4. A Likely Story
 
-https://pundirp.github.io/artificialminds/did-ai-write-this/a-likely-story.html
+https://artificial-minds.org/did-ai-write-this/a-likely-story.html
 
 Two passages about waiting out a storm in a tent, one from a 1922 book and one written by a
 model for this essay. Pick the machine's, then read what the three kinds of evidence can and
@@ -99,7 +99,7 @@ Search words: AI detector accuracy, AI watermark, Turnitin AI detection, GPTZero
 
 ### 5. A Talking Machine of Your Own
 
-https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/a-talking-machine-of-your-own.html
+https://artificial-minds.org/artificial-mind-of-your-own/a-talking-machine-of-your-own.html
 
 A field guide for curious students, built around six plain questions. It explains how LLMs
 work from the ground up: tokens, weights, the transformer, and why a neural network borrows
@@ -113,7 +113,7 @@ works, run an LLM locally, open weights, neural network explained.
 
 ### 6. Who Killed Aldous Finch?
 
-https://pundirp.github.io/artificialminds/A-Salon-of-Witnesses/who-killed-aldous-finch.html
+https://artificial-minds.org/A-Salon-of-Witnesses/who-killed-aldous-finch.html
 
 A fair-play murder mystery that is also a working model of the transformer, the design
 behind ChatGPT. Aldous Finch is dead at Harrow Manor. Constable Plodd questions nine
@@ -127,7 +127,7 @@ need explained, how ChatGPT works.
 
 ### 7. The AI-Future Canon
 
-https://pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html
+https://artificial-minds.org/AI-future-canon/ai-future-canon.html
 
 Seventy books, fourteen novels and fifty-six works of nonfiction, chosen from 156
 candidates and ranked for a reader who will soon live and work alongside AI every day. The
@@ -141,12 +141,12 @@ artificial intelligence, AI reading list.
 
 The underlying data and the rules behind it are published beside the page:
 
-- Data: https://pundirp.github.io/artificialminds/AI-future-canon/canon-data.json
-- Methodology: https://pundirp.github.io/artificialminds/AI-future-canon/AI-Future-Canon-Methodology.md
+- Data: https://artificial-minds.org/AI-future-canon/canon-data.json
+- Methodology: https://artificial-minds.org/AI-future-canon/AI-Future-Canon-Methodology.md
 
 ### 8. Your Order Is on the Truck
 
-https://pundirp.github.io/artificialminds/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html
+https://artificial-minds.org/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html
 
 An illustrated field guide to how a company prepares its data for an AI agent, for readers
 with no technical background. A bakery’s flour is late, and its owner emails her supplier,
@@ -162,7 +162,7 @@ injection.
 
 ### 9. Folding a Protein, Folding a Shirt
 
-https://pundirp.github.io/artificialminds/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html
+https://artificial-minds.org/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html
 
 An essay on deep learning beyond chatbots, for readers with no technical background. It
 introduces a dozen real networks that predict things other than text: the song detector in
@@ -187,7 +187,7 @@ file is served from this repository's `fonts/` folder, not from a font service. 
 script loaded from anywhere else is the counter described below. There are no advertising or
 profiling trackers. The only measurement is GoatCounter, which counts page views without
 cookies and without following anyone between sites, and the counts it produces are
-published openly at https://pundirp.github.io/artificialminds/stats/stats.html
+published openly at https://artificial-minds.org/stats/stats.html
 
 The site was made openly with artificial minds as collaborators. They made the pictures in
 Still Point, judged and ranked the books in the canon, answered the interview questions

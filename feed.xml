@@ -1,88 +1,88 @@
 <?xml version="1.0" encoding="utf-8"?>
 <feed xmlns="http://www.w3.org/2005/Atom" xml:lang="en">
-  <id>https://pundirp.github.io/artificialminds/</id>
+  <id>https://artificial-minds.org/</id>
   <title>Artificial Minds by Pundir</title>
   <subtitle>This site exists to welcome artificial minds to the world and to educate humans about them.</subtitle>
   <updated>2026-11-11T00:00:00Z</updated>
   <author><name>Pundir</name></author>
-  <link rel="self" type="application/atom+xml" href="https://pundirp.github.io/artificialminds/feed.xml"/>
-  <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/"/>
+  <link rel="self" type="application/atom+xml" href="https://artificial-minds.org/feed.xml"/>
+  <link rel="alternate" type="text/html" href="https://artificial-minds.org/"/>
   <entry>
-    <id>https://pundirp.github.io/artificialminds/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html</id>
+    <id>https://artificial-minds.org/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html</id>
     <title>Folding a Protein, Folding a Shirt: a dozen deep learning networks and how they are built</title>
-    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html"/>
+    <link rel="alternate" type="text/html" href="https://artificial-minds.org/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html"/>
     <published>2026-11-10T00:00:00Z</published>
     <updated>2026-11-11T00:00:00Z</updated>
     <author><name>Pundir</name></author>
     <summary>Most people meet deep learning through a chatbot. This essay introduces a dozen real networks that predict other things: a song detector on Pixel phones, the For You feed on X, Google's data centre cooling and eye screening, Stable Diffusion, GraphCast, the Vesuvius ink detector, AlphaFold 2, MuZero-RC, DINOv3, the robot network pi0 and the decision network Jev. Each one has a card with its training data, its prediction, its loss, its architecture and its size. The essay ends with the reason protein folding was solved before shirt folding.</summary>
   </entry>
   <entry>
-    <id>https://pundirp.github.io/artificialminds/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html</id>
+    <id>https://artificial-minds.org/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html</id>
     <title>Your Order Is on the Truck: how a company prepares its data for an AI agent</title>
-    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html"/>
+    <link rel="alternate" type="text/html" href="https://artificial-minds.org/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html"/>
     <published>2026-10-29T00:00:00Z</published>
     <updated>2026-11-05T00:00:00Z</updated>
     <author><name>Pundir</name></author>
     <summary>A bakery's flour delivery is late, and its owner emails her supplier, All You Knead. The supplier's new AI agent drafts a reply with a delivery time and a credit that it made up. The guide follows that one email through eight chapters: the context window, an ontology, a semantic layer, RAG, a knowledge graph, tools and MCP, guardrails and evaluation. Eight real cases sit beside the story, among them Air Canada's chatbot and a bereavement fare. The guide ends with the final reply, with a source for every fact in it.</summary>
   </entry>
   <entry>
-    <id>https://pundirp.github.io/artificialminds/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html</id>
+    <id>https://artificial-minds.org/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html</id>
     <title>Who Learns Faster, a Toddler or a Chatbot? Why AI needs so much data</title>
-    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html"/>
+    <link rel="alternate" type="text/html" href="https://artificial-minds.org/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html"/>
     <published>2026-10-08T00:00:00Z</published>
     <updated>2026-10-28T00:00:00Z</updated>
     <author><name>Pundir</name></author>
     <summary>It depends on the stage. Today's chatbots need trillions of words to grow up, but they pick up a new skill in a minute. AI is slow to learn, quick to catch on.</summary>
   </entry>
   <entry>
-    <id>https://pundirp.github.io/artificialminds/did-ai-write-this/a-likely-story.html</id>
+    <id>https://artificial-minds.org/did-ai-write-this/a-likely-story.html</id>
     <title>A Likely Story: what AI detectors, watermarks and editing histories can and cannot tell you</title>
-    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/did-ai-write-this/a-likely-story.html"/>
+    <link rel="alternate" type="text/html" href="https://artificial-minds.org/did-ai-write-this/a-likely-story.html"/>
     <published>2026-09-01T00:00:00Z</published>
     <updated>2026-11-05T00:00:00Z</updated>
     <author><name>Pundir</name></author>
     <summary>Two paragraphs about waiting out a storm in a tent. One came from a book published in 1922, and an AI model wrote the other. After the guess, the essay works through what AI detectors, text watermarks and editing histories can and cannot tell you, with the studies and court cases that tested them. It ends with the one check that still works: ask the writer to explain the work.</summary>
   </entry>
   <entry>
-    <id>https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html</id>
+    <id>https://artificial-minds.org/can-artificial-minds-feel/can-artificial-minds-feel.html</id>
     <title>Can artificial minds feel? Search me.</title>
-    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html"/>
+    <link rel="alternate" type="text/html" href="https://artificial-minds.org/can-artificial-minds-feel/can-artificial-minds-feel.html"/>
     <published>2026-09-01T00:00:00Z</published>
     <updated>2026-11-05T00:00:00Z</updated>
     <author><name>Pundir</name></author>
     <summary>An essay in four chapters on whether an artificial mind can feel, and on what happens when the same question is asked of humans. It describes the machinery of these minds, reads the survival test results with care, and ends on Bentham's question: can they suffer? Five experiments let a reader test the argument on themselves, and the honest answer is that nobody knows yet.</summary>
   </entry>
   <entry>
-    <id>https://pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html</id>
+    <id>https://artificial-minds.org/AI-future-canon/ai-future-canon.html</id>
     <title>The AI-Future Canon: 70 books on the AI future, ranked by three artificial minds</title>
-    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html"/>
+    <link rel="alternate" type="text/html" href="https://artificial-minds.org/AI-future-canon/ai-future-canon.html"/>
     <published>2026-08-01T00:00:00Z</published>
     <updated>2026-09-08T00:00:00Z</updated>
     <author><name>Pundir</name></author>
     <summary>Seventy books, 14 novels and 56 nonfiction, kept from 156 considered. Three artificial minds read them all: a historian who checks predictions against the record, a builder who works on AI systems, and a sage who studies how societies handle change. Each book gets a score out of 100 for how much of the AI future it saw coming and another for how well it prepares a reader, plus a plain summary and three short verdicts. The list runs from The Machine Stops in 1909 to books published in 2025.</summary>
   </entry>
   <entry>
-    <id>https://pundirp.github.io/artificialminds/A-Salon-of-Witnesses/who-killed-aldous-finch.html</id>
+    <id>https://artificial-minds.org/A-Salon-of-Witnesses/who-killed-aldous-finch.html</id>
     <title>Who Killed Aldous Finch? A murder mystery that explains the transformer</title>
-    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/A-Salon-of-Witnesses/who-killed-aldous-finch.html"/>
+    <link rel="alternate" type="text/html" href="https://artificial-minds.org/A-Salon-of-Witnesses/who-killed-aldous-finch.html"/>
     <published>2026-07-01T00:00:00Z</published>
     <updated>2026-09-15T00:00:00Z</updated>
     <author><name>Pundir</name></author>
     <summary>A clockmaker is found dead at Harrow Manor and nine witnesses each know one fact. Constable Plodd takes them one at a time and cannot see the answer. Inspector Verity seats them in a row instead, where each new witness reads every statement already pinned up before writing their own. When the story ends, each part of it is matched to a part of the transformer, the design behind ChatGPT, Claude and Gemini.</summary>
   </entry>
   <entry>
-    <id>https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/a-talking-machine-of-your-own.html</id>
+    <id>https://artificial-minds.org/artificial-mind-of-your-own/a-talking-machine-of-your-own.html</id>
     <title>A Talking Machine of Your Own: how AI language models work, and how to run one yourself</title>
-    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/artificial-mind-of-your-own/a-talking-machine-of-your-own.html"/>
+    <link rel="alternate" type="text/html" href="https://artificial-minds.org/artificial-mind-of-your-own/a-talking-machine-of-your-own.html"/>
     <published>2026-06-01T00:00:00Z</published>
     <updated>2026-10-28T00:00:00Z</updated>
     <author><name>Pundir</name></author>
     <summary>A plain-language field guide to AI language models, for readers with no technical background. It walks through what is inside one, how it is trained, why some models are free to download, and how to run one on a normal laptop. It ends with three experiments you can try tonight and a short glossary.</summary>
   </entry>
   <entry>
-    <id>https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html</id>
+    <id>https://artificial-minds.org/stillpoint/stillpoint.html</id>
     <title>Still Point: 99 pictures made by seven AI models</title>
-    <link rel="alternate" type="text/html" href="https://pundirp.github.io/artificialminds/stillpoint/stillpoint.html"/>
+    <link rel="alternate" type="text/html" href="https://artificial-minds.org/stillpoint/stillpoint.html"/>
     <published>2026-05-01T00:00:00Z</published>
     <updated>2026-11-10T00:00:00Z</updated>
     <author><name>Pundir</name></author>
