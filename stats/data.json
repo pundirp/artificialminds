@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-14T06:35:29Z",
+  "generated": "2026-11-14T18:13:10Z",
   "totals": {
-    "visitors_all": 170,
-    "visitors_30d": 136,
-    "views_all": 221,
-    "visits_all": 92,
-    "views_30d": 181,
-    "visits_30d": 68
+    "visitors_all": 179,
+    "visitors_30d": 145,
+    "views_all": 232,
+    "visits_all": 101,
+    "views_30d": 192,
+    "visits_30d": 77
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-14",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
+      "views": 11,
+      "visits": 9,
+      "visitors": 9
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 119,
-      "visits": 40,
-      "visitors": 84
+      "views": 130,
+      "visits": 49,
+      "visitors": 93
     }
   ],
   "projects": [
@@ -646,17 +646,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 81,
-      "visitors_all": 57,
-      "views_30d": 67,
-      "visitors_30d": 44
+      "views_all": 92,
+      "visitors_all": 66,
+      "views_30d": 78,
+      "visitors_30d": 53
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 81,
-      "visitors_all": 57
+      "views_all": 92,
+      "visitors_all": 66
     },
     {
       "path": "/stillpoint/stillpoint.html",
@@ -757,19 +757,19 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 115
+      "visitors": 120
     },
     {
       "name": "United Kingdom",
-      "visitors": 9
+      "visitors": 10
+    },
+    {
+      "name": "Canada",
+      "visitors": 4
     },
     {
       "name": "India",
       "visitors": 4
-    },
-    {
-      "name": "Canada",
-      "visitors": 3
     },
     {
       "name": "Argentina",
@@ -788,7 +788,15 @@
       "visitors": 1
     },
     {
+      "name": "Netherlands",
+      "visitors": 1
+    },
+    {
       "name": "Philippines",
+      "visitors": 1
+    },
+    {
+      "name": "Poland",
       "visitors": 1
     },
     {
@@ -799,11 +807,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 105
+      "visitors": 111
     },
     {
       "name": "Safari",
-      "visitors": 30
+      "visitors": 33
     },
     {
       "name": "Firefox",
@@ -813,25 +821,25 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 92
+      "visitors": 93
     },
     {
       "name": "Windows",
-      "visitors": 33
+      "visitors": 35
     },
     {
       "name": "iOS",
-      "visitors": 10
+      "visitors": 13
     },
     {
       "name": "Linux",
-      "visitors": 2
+      "visitors": 5
     }
   ],
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 73
+      "visitors": 76
     },
     {
       "name": "Large screen",
@@ -839,11 +847,11 @@
     },
     {
       "name": "Phone",
-      "visitors": 10
+      "visitors": 14
     },
     {
       "name": "Tablet",
-      "visitors": 6
+      "visitors": 8
     },
     {
       "name": "Unknown",
@@ -853,7 +861,7 @@
   "referrers": [
     {
       "name": "Unknown",
-      "visitors": 77
+      "visitors": 86
     },
     {
       "name": "pundirp.github.io",
