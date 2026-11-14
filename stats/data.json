@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-14T18:13:10Z",
+  "generated": "2026-11-14T22:30:56Z",
   "totals": {
-    "visitors_all": 179,
-    "visitors_30d": 145,
-    "views_all": 232,
-    "visits_all": 101,
-    "views_30d": 192,
-    "visits_30d": 77
+    "visitors_all": 180,
+    "visitors_30d": 146,
+    "views_all": 233,
+    "visits_all": 102,
+    "views_30d": 193,
+    "visits_30d": 78
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-14",
-      "views": 11,
-      "visits": 9,
-      "visitors": 9
+      "views": 12,
+      "visits": 10,
+      "visitors": 10
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 130,
-      "visits": 49,
-      "visitors": 93
+      "views": 131,
+      "visits": 50,
+      "visitors": 94
     }
   ],
   "projects": [
@@ -614,10 +614,10 @@
     {
       "id": "A-Salon-of-Witnesses",
       "name": "A Salon of Witnesses",
-      "views_all": 13,
-      "visitors_all": 13,
-      "views_30d": 13,
-      "visitors_30d": 13
+      "views_all": 14,
+      "visitors_all": 14,
+      "views_30d": 14,
+      "visitors_30d": 14
     },
     {
       "id": "AI-future-canon",
@@ -694,13 +694,13 @@
       "visitors_all": 5
     },
     {
-      "path": "/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html",
+      "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
       "views_all": 5,
-      "visitors_all": 4
+      "visitors_all": 5
     },
     {
-      "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
-      "views_all": 4,
+      "path": "/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html",
+      "views_all": 5,
       "visitors_all": 4
     },
     {
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 120
+      "visitors": 121
     },
     {
       "name": "United Kingdom",
@@ -807,7 +807,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 111
+      "visitors": 112
     },
     {
       "name": "Safari",
@@ -821,7 +821,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 93
+      "visitors": 94
     },
     {
       "name": "Windows",
@@ -843,7 +843,7 @@
     },
     {
       "name": "Large screen",
-      "visitors": 48
+      "visitors": 49
     },
     {
       "name": "Phone",
@@ -860,22 +860,6 @@
   ],
   "referrers": [
     {
-      "name": "Unknown",
-      "visitors": 86
-    },
-    {
-      "name": "pundirp.github.io",
-      "visitors": 11
-    },
-    {
-      "name": "pundirp.github.io/artificialminds/index.html",
-      "visitors": 11
-    },
-    {
-      "name": "pundirp.github.io/artificialminds",
-      "visitors": 7
-    },
-    {
       "name": "Google",
       "visitors": 5
     },
@@ -884,36 +868,34 @@
       "visitors": 3
     },
     {
-      "name": "pundirp.github.io/artificialminds/stillpoint/stillpoint.html",
-      "visitors": 2
-    },
-    {
       "name": "teams.public.onecdn.static.microsoft",
       "visitors": 2
     },
     {
       "name": "github.com/pundirp/artificialminds/deployments/github-pages",
       "visitors": 1
-    },
-    {
-      "name": "pundirp.github.io/artificialminds/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
-      "visitors": 1
-    },
-    {
-      "name": "pundirp.github.io/artificialminds/A-Salon-of-Witnesses/who-killed-aldous-finch.html",
-      "visitors": 1
-    },
-    {
-      "name": "pundirp.github.io/artificialminds/AI-future-canon/ai-future-canon.html",
-      "visitors": 1
-    },
-    {
-      "name": "pundirp.github.io/artificialminds/can-artificial-minds-feel/can-artificial-minds-feel.html",
-      "visitors": 1
-    },
-    {
-      "name": "pundirp.github.io/artificialminds/stillpoint/collection.html",
-      "visitors": 1
     }
-  ]
+  ],
+  "sources": {
+    "rows": [
+      {
+        "name": "Google",
+        "visits": 5
+      },
+      {
+        "name": "chatgpt.com",
+        "visits": 3
+      },
+      {
+        "name": "teams.public.onecdn.static.microsoft",
+        "visits": 2
+      },
+      {
+        "name": "github.com",
+        "visits": 1
+      }
+    ],
+    "no_source": 67,
+    "visits": 78
+  }
 }
