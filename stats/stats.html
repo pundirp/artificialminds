@@ -697,20 +697,40 @@
 
   function drawReferrers(){
     var host = $("c-referrers"), point = $("p-referrers");
-    var rows = data && isList(data.referrers) ? data.referrers.slice() : null;
+    var src = data && data.sources && typeof data.sources === "object" ? data.sources : null;
+    var word = src ? "visit" : "visitor";
+    var rows = src ? (isList(src.rows) ? src.rows.slice() : [])
+                   : (data && isList(data.referrers) ? data.referrers.slice() : null);
     if(!rows){ point.textContent = ""; nodata(host); return; }
 
-    rows.sort(function(a,b){ return num(b.visitors) - num(a.visitors); });
-    point.innerHTML = "";
-    point.appendChild(document.createTextNode("The largest single source is " + String(rows[0].name) + ": "));
-    var b = document.createElement("b");
-    b.textContent = unit(rows[0].visitors, "visitor");
-    point.appendChild(b);
-    point.appendChild(document.createTextNode(". Anyone arriving with no referrer is not counted here."));
+    function count(r){ return num(src ? r.visits : r.visitors); }
+    /* older data files list the site's own pages and a no-referrer row */
+    rows = rows.filter(function(r){
+      var name = String(r.name == null ? "" : r.name).toLowerCase();
+      return name !== "unknown" && name.indexOf("pundirp.github.io") !== 0 &&
+             name.indexOf("artificial-minds.org") !== 0;
+    });
+    rows.sort(function(a,b){ return count(b) - count(a); });
 
+    point.innerHTML = "";
+    if(rows.length){
+      point.appendChild(document.createTextNode(String(rows[0].name) + " sent more than any other outside source: "));
+      var b = document.createElement("b");
+      b.textContent = unit(count(rows[0]), word);
+      point.appendChild(b);
+      point.appendChild(document.createTextNode(" in the last 30 days."));
+    } else {
+      point.appendChild(document.createTextNode("No outside source sent a " + word + " in the last 30 days."));
+    }
+    if(src && num(src.no_source) > 0){
+      point.appendChild(document.createTextNode(" Another " + unit(num(src.no_source), "visit") +
+        " arrived with no source recorded. That happens when a reader types the address, or opens a link from an email or a chat app."));
+    }
+
+    if(!rows.length){ clear(host); return; }
     bars(host, rows.slice(0, 10).map(function(r){
-      return { label: r.name, value: num(r.visitors) };
-    }), { labelW: 210, aria: "Visitors by referrer, last 30 days." });
+      return { label: r.name, value: count(r) };
+    }), { labelW: 210, aria: (src ? "Visits" : "Visitors") + " by outside source, last 30 days." });
   }
 
   function drawUpdated(){

@@ -68,6 +68,11 @@ DASHBOARD_TZ = ZoneInfo("America/New_York")
 # before anything is classified or written out.
 SITE_PREFIX = "/artificialminds"
 
+# The site's own addresses, old and new. A referrer on one of these hosts is a
+# reader moving from one page of the site to the next, so it is left out of the
+# list of sources.
+OWN_HOSTS = ("pundirp.github.io", "artificial-minds.org", "www.artificial-minds.org")
+
 # The nine projects, in the order the site's index lists them. The id is the
 # folder name in the repo, which is also the first path segment after the prefix.
 PROJECTS = [
@@ -386,6 +391,7 @@ def _parse_export(stream):
     by_day = {}
     by_path_day = {}
     sessions_by_day = {}
+    first_by_session = {}
     reader = csv.reader(stream)
     try:
         header = next(reader)
@@ -404,6 +410,7 @@ def _parse_export(stream):
         )
 
     path_col, session_col, bot_col, date_col = 0, 6, 7, 13
+    referrer_col = 8
     for row in reader:
         if len(row) <= date_col:
             continue
@@ -422,11 +429,19 @@ def _parse_export(stream):
         session = row[session_col].strip()
         if session:
             sessions_by_day.setdefault(day, set()).add(session)
+            # The source of a visit is the referrer of its earliest page view.
+            stamp = row[date_col].strip()
+            first = first_by_session.get(session)
+            if first is None or stamp < first[0]:
+                first_by_session[session] = (stamp, row[referrer_col].strip())
 
     return {
         "by_day": by_day,
         "by_path_day": by_path_day,
         "sessions_by_day": sessions_by_day,
+        "referrer_by_session": {
+            session: first[1] for session, first in first_by_session.items()
+        },
     }
 
 
@@ -541,6 +556,66 @@ def visits_in_window(pageviews, since=None, until=None):
         if (since is None or day >= since) and (until is None or day <= until):
             seen |= sessions
     return len(seen)
+
+
+def source_name(referrer):
+    """
+    The name of the outside source behind a referrer, or "" when there is none.
+
+    GoatCounter stores a web address without its scheme, and stores a name such
+    as Google for the sources it recognises. A web address is cut down to its
+    host, so every page of one outside site lands in one row. The site's own
+    hosts give "".
+    """
+    text = (referrer or "").strip()
+    if not text:
+        return ""
+    text = re.sub(r"^[a-z][a-z0-9+.-]*://", "", text, flags=re.I)
+    host = text.split("/", 1)[0].split("?", 1)[0].strip().lower()
+    if host.startswith("www."):
+        host = host[4:]
+    if host in OWN_HOSTS or "www." + host in OWN_HOSTS:
+        return ""
+    # A recognised name has no dot and may hold spaces. Keep it as written.
+    if "." not in host:
+        return text
+    return host
+
+
+def sources_in_window(pageviews, since=None, limit=15):
+    """
+    Visits per outside source over a window, counted the way the tiles count.
+
+    Returns the rows, the number of visits that arrived with no outside source,
+    and the number of visits in the window.
+    """
+    seen = set()
+    for day, sessions in pageviews["sessions_by_day"].items():
+        if since is None or day >= since:
+            seen |= sessions
+    referrers = pageviews.get("referrer_by_session", {})
+    counts = {}
+    no_source = 0
+    for session in seen:
+        name = source_name(referrers.get(session, ""))
+        if name:
+            counts[name] = counts.get(name, 0) + 1
+        else:
+            no_source += 1
+    rows = [{"name": name, "visits": count} for name, count in counts.items()]
+    rows.sort(key=lambda row: (-row["visits"], row["name"].lower()))
+    return rows[:limit], no_source, len(seen)
+
+
+def outside_referrers(rows):
+    """Drop the site's own pages and the no-referrer row from the API's list."""
+    kept = []
+    for row in rows:
+        name = row.get("name") or ""
+        if name == "Unknown" or not source_name(name):
+            continue
+        kept.append(row)
+    return kept
 
 
 def new_york_today(now):
@@ -761,7 +836,21 @@ def build(token):
             if key in old_totals:
                 totals[key] = as_int(old_totals.get(key))
 
-    return {
+    # Where visits came from, in visits, from the export. With no export this
+    # run, the previous file's list is carried forward.
+    if pageviews:
+        source_rows, no_source, window_visits = sources_in_window(
+            pageviews, since=first_day_30
+        )
+        sources = {
+            "rows": source_rows,
+            "no_source": no_source,
+            "visits": window_visits,
+        }
+    else:
+        sources = previous.get("sources")
+
+    result = {
         "generated": utc_stamp(now),
         "totals": totals,
         "daily": daily,
@@ -772,8 +861,11 @@ def build(token):
         "browsers": named_counts(browsers, 20),
         "systems": named_counts(systems, 20),
         "sizes": named_counts(sizes, 10, names=SIZE_NAMES),
-        "referrers": named_counts(referrers, 15),
+        "referrers": outside_referrers(named_counts(referrers, 15)),
     }
+    if sources:
+        result["sources"] = sources
+    return result
 
 
 def named_counts(stats, limit, names=None):
