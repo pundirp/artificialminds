@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-14T22:30:56Z",
+  "generated": "2026-11-15T06:43:30Z",
   "totals": {
-    "visitors_all": 180,
-    "visitors_30d": 146,
-    "views_all": 233,
-    "visits_all": 102,
-    "views_30d": 193,
-    "visits_30d": 78
+    "visitors_all": 184,
+    "visitors_30d": 149,
+    "views_all": 238,
+    "visits_all": 106,
+    "views_30d": 197,
+    "visits_30d": 81
   },
   "daily": [
-    {
-      "day": "2026-08-17",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-18",
       "views": 0,
@@ -545,9 +539,15 @@
     },
     {
       "day": "2026-11-14",
-      "views": 12,
-      "visits": 10,
-      "visitors": 10
+      "views": 16,
+      "visits": 13,
+      "visitors": 13
+    },
+    {
+      "day": "2026-11-15",
+      "views": 1,
+      "visits": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 131,
-      "visits": 50,
-      "visitors": 94
+      "views": 136,
+      "visits": 54,
+      "visitors": 98
     }
   ],
   "projects": [
@@ -646,17 +646,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 92,
-      "visitors_all": 66,
-      "views_30d": 78,
-      "visitors_30d": 53
+      "views_all": 97,
+      "visitors_all": 70,
+      "views_30d": 82,
+      "visitors_30d": 56
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 92,
-      "visitors_all": 66
+      "views_all": 97,
+      "visitors_all": 70
     },
     {
       "path": "/stillpoint/stillpoint.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 121
+      "visitors": 124
     },
     {
       "name": "United Kingdom",
@@ -807,11 +807,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 112
+      "visitors": 116
     },
     {
       "name": "Safari",
-      "visitors": 33
+      "visitors": 32
     },
     {
       "name": "Firefox",
@@ -825,11 +825,11 @@
     },
     {
       "name": "Windows",
-      "visitors": 35
+      "visitors": 39
     },
     {
       "name": "iOS",
-      "visitors": 13
+      "visitors": 12
     },
     {
       "name": "Linux",
@@ -839,7 +839,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 76
+      "visitors": 78
     },
     {
       "name": "Large screen",
@@ -847,11 +847,11 @@
     },
     {
       "name": "Phone",
-      "visitors": 14
+      "visitors": 13
     },
     {
       "name": "Tablet",
-      "visitors": 8
+      "visitors": 10
     },
     {
       "name": "Unknown",
@@ -870,6 +870,10 @@
     {
       "name": "teams.public.onecdn.static.microsoft",
       "visitors": 2
+    },
+    {
+      "name": "bing.com",
+      "visitors": 1
     },
     {
       "name": "github.com/pundirp/artificialminds/deployments/github-pages",
@@ -891,11 +895,15 @@
         "visits": 2
       },
       {
+        "name": "bing.com",
+        "visits": 1
+      },
+      {
         "name": "github.com",
         "visits": 1
       }
     ],
-    "no_source": 67,
-    "visits": 78
+    "no_source": 69,
+    "visits": 81
   }
 }
