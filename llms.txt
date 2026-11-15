@@ -12,6 +12,7 @@ Every page is static HTML with its own styles and pictures. Where a question is 
 
 - [Artificial Minds by Pundir](https://artificial-minds.org/): the front page, with a short introduction and a card for each of the nine projects.
 - [Everything on Artificial Minds](https://artificial-minds.org/site-map/site-map.html): the site map, with every project, its pages and its chapters on one page.
+- [About Pundir](https://artificial-minds.org/about/about.html): the author and editor, with a form for sending him a message or a correction.
 
 ## Projects
 
