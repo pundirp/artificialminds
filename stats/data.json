@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-15T06:43:30Z",
+  "generated": "2026-11-15T18:55:28Z",
   "totals": {
-    "visitors_all": 184,
-    "visitors_30d": 149,
-    "views_all": 238,
-    "visits_all": 106,
-    "views_30d": 197,
-    "visits_30d": 81
+    "visitors_all": 189,
+    "visitors_30d": 154,
+    "views_all": 243,
+    "visits_all": 111,
+    "views_30d": 202,
+    "visits_30d": 86
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-15",
-      "views": 1,
-      "visits": 1,
-      "visitors": 1
+      "views": 6,
+      "visits": 6,
+      "visitors": 6
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 136,
-      "visits": 54,
-      "visitors": 98
+      "views": 141,
+      "visits": 59,
+      "visitors": 103
     }
   ],
   "projects": [
@@ -646,17 +646,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 97,
-      "visitors_all": 70,
-      "views_30d": 82,
-      "visitors_30d": 56
+      "views_all": 102,
+      "visitors_all": 75,
+      "views_30d": 87,
+      "visitors_30d": 61
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 97,
-      "visitors_all": 70
+      "views_all": 102,
+      "visitors_all": 75
     },
     {
       "path": "/stillpoint/stillpoint.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 124
+      "visitors": 128
     },
     {
       "name": "United Kingdom",
@@ -765,7 +765,7 @@
     },
     {
       "name": "Canada",
-      "visitors": 4
+      "visitors": 5
     },
     {
       "name": "India",
@@ -807,7 +807,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 116
+      "visitors": 121
     },
     {
       "name": "Safari",
@@ -825,7 +825,7 @@
     },
     {
       "name": "Windows",
-      "visitors": 39
+      "visitors": 43
     },
     {
       "name": "iOS",
@@ -833,25 +833,25 @@
     },
     {
       "name": "Linux",
-      "visitors": 5
+      "visitors": 6
     }
   ],
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 78
+      "visitors": 79
     },
     {
       "name": "Large screen",
       "visitors": 49
     },
     {
-      "name": "Phone",
-      "visitors": 13
+      "name": "Tablet",
+      "visitors": 14
     },
     {
-      "name": "Tablet",
-      "visitors": 10
+      "name": "Phone",
+      "visitors": 13
     },
     {
       "name": "Unknown",
@@ -903,7 +903,7 @@
         "visits": 1
       }
     ],
-    "no_source": 69,
-    "visits": 81
+    "no_source": 74,
+    "visits": 86
   }
 }
