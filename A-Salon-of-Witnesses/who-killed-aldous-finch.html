@@ -82,16 +82,18 @@
 
   /* the lamp in the lit window: the home page's lamp, stop for stop.
      Halo, pane glow and the light on the snow, each as centre, middle
-     and edge. */
-  --lamp-halo:rgba(239,233,221,.42);
-  --lamp-halo-mid:rgba(217,160,90,.22);
-  --lamp-halo-out:rgba(217,160,90,0);
-  --lamp-core:rgba(255,248,235,.92);
-  --lamp-core-mid:rgba(239,233,221,.55);
-  --lamp-core-out:rgba(239,233,221,0);
-  --lamp-cast:rgba(239,233,221,.3);
-  --lamp-cast-mid:rgba(217,160,90,.14);
-  --lamp-cast-out:rgba(217,160,90,0);
+     and edge. Since 15 November 2026 the stops are the red #c3261c on
+     white paper: 10 percent (249 233 232), 5 percent (252 244 243) and
+     60 percent (219 125 119). */
+  --lamp-halo:rgba(249,233,232,.42);
+  --lamp-halo-mid:rgba(219,125,119,.22);
+  --lamp-halo-out:rgba(219,125,119,0);
+  --lamp-core:rgba(252,244,243,.92);
+  --lamp-core-mid:rgba(249,233,232,.55);
+  --lamp-core-out:rgba(249,233,232,0);
+  --lamp-cast:rgba(249,233,232,.3);
+  --lamp-cast-mid:rgba(219,125,119,.14);
+  --lamp-cast-out:rgba(219,125,119,0);
 
   --serif:var(--family-house-text, "Iowan Old Style", "Palatino Linotype", Palatino, Georgia, serif);
   --sans:var(--family-house-label, -apple-system, BlinkMacSystemFont, "Segoe UI", "Helvetica Neue", Helvetica, Arial, sans-serif);
@@ -201,7 +203,7 @@ a:focus-visible{outline:2px solid var(--ink);outline-offset:2px}
    scaled onto the lit one, so it shows dark glass and light bars. It
    fades in as the lamp fades out, on the same count. It covers the glass
    and eight pixels of the drawing round it,
-   from 57.535% across and 71.835% down. The margin hides the yellow that
+   from 57.535% across and 71.835% down. The margin hides the pink that
    the smaller copies of the drawing blur past the glass, and the
    rounding of the pane's edge to whole screen pixels. */
 .pane{

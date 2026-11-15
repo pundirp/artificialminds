@@ -402,18 +402,20 @@ p.has-thumb { display: flow-root; }
 .fig .t2-sum svg.sv-one { max-width: 20rem; margin: 0 auto; }
 .gm-move { stroke: var(--ink-soft); stroke-width: 1.2; stroke-dasharray: 2 3; }
 .gm-head-m { fill: var(--ink-soft); }
-#reading + .leaf p, #advanced + .leaf p, #sources + .leaf p { font-size: .72rem; line-height: 1.45; }
-/* Appendix D: each note has a question for a heading, and the model's scratch work is set off from the text. */
-#advanced + .leaf p.adv-q { font-size: .8rem; font-weight: 600; color: var(--ink); margin: 1.5rem 0 .4rem; }
-#advanced + .leaf p.adv-work { margin: 0 0 1rem 1.1rem; padding-left: .8rem; border-left: 1px solid var(--ink-faint); font-style: italic; }
+#reading + .leaf p, #advanced + .leaf p, .adv-note .col p, #sources + .leaf p { font-size: .72rem; line-height: 1.45; }
+/* Appendix D: each note is a row under a hairline. Its question sits in the side column in grey small capitals. */
+.adv-note { margin-top: 1.6rem; padding-top: .9rem; border-top: 1px solid var(--rule); }
+.adv-note p.adv-q { grid-column: 1; margin: 0; text-align: right; font-variant: small-caps; letter-spacing: .06em; font-size: .82rem; line-height: 1.45; color: var(--ink-soft); }
+.adv-note .adv-n { display: block; }
+.adv-note .col::after { content: ""; display: block; clear: both; }
+@media (max-width: 1000px) { .adv-note p.adv-q { text-align: left; margin: 0 0 .5rem; } }
+.adv-note p.adv-work { margin: 0 0 1rem 1.1rem; padding-left: .8rem; border-left: 1px solid var(--ink-faint); font-style: italic; }
 /* Appendix D: one small picture under each question. */
-#advanced + .leaf p.adv-fig { margin: .7rem 0 .9rem; }
-#advanced + .leaf p.adv-fig img { display: block; max-width: 100%; height: auto; }
-/* From 1001 px up the picture sits in the side column, level with the note's first paragraph. */
-@media (min-width: 1001px) {
-  #advanced + .leaf p.adv-fig { float: left; clear: left; width: var(--margin-col); margin: .25rem 0 0 calc(-1 * (var(--margin-col) + var(--gutter))); }
-  #advanced + .leaf p.adv-fig img { margin-left: auto; }
-  #advanced + .leaf p.adv-q { clear: both; }
+.adv-note p.adv-fig { margin: .7rem 0 .9rem; }
+.adv-note p.adv-fig img { display: block; max-width: 100%; height: auto; }
+/* From 561 px up the picture sits to the right of its note and the text wraps around it. On a phone it stays above the text. */
+@media (min-width: 561px) {
+  .adv-note p.adv-fig { float: right; clear: right; margin: .3rem 0 .6rem 1.4rem; }
 }
 /* Appendix D lists its sources as Who Learns Faster, a Toddler or a Chatbot? does: numbered, .45rem apart, each entry a full citation ending in its address. The type is this appendix's small type. */
 ol.refs { margin: 0 0 1rem; padding: 0 0 0 1.8rem; font-size: .72rem; line-height: 1.45; }
@@ -1037,30 +1039,42 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
 </div>
 <div class="leaf"><div class="col">
   <p>For the curious reader, this appendix covers a few advanced topics about transformers that we left out of the basic introduction above.</p>
+</div></div>
 
-  <p class="adv-q">1.&nbsp;How does a reply end?</p>
+<div class="leaf adv-note">
+  <p class="adv-q"><span class="adv-n">1.</span> How does a reply end?</p>
+  <div class="col">
   <p class="adv-fig"><img src="img/appendix-d-1-reply-ends.webp" width="189" height="37" alt="A row of four tokens, Once, upon, a, time, followed by one darker token with no word in it." loading="lazy" decoding="async"></p>
   <p>A chatbot&rsquo;s reply is hundreds of tokens long, and the model guesses them one at a time. Type &ldquo;tell me a story&rdquo; and the model guesses &ldquo;Once&rdquo;. The software adds &ldquo;Once&rdquo; to the text and runs the model again, and the next guess is &ldquo;upon&rdquo;.</p>
   <p>Researchers call this loop <strong>autoregressive</strong> generation. The word comes from statistics. A regression predicts one number from other numbers. An autoregression predicts the next value in a series from the earlier values of the same series, and &ldquo;auto&rdquo; is Greek for &ldquo;self&rdquo;. A forecaster who predicts tomorrow&rsquo;s temperature from the last seven days is running one. A chatbot does the same with text. It predicts the next token from the tokens so far, and each token it produces joins the series.</p>
   <p>Nothing in the model stops this loop. Every run gives a probability to every token in the vocabulary, for as long as the software keeps running it. So the builders put one special token in the vocabulary to mark an ending. <span class="nb">GPT-2</span> has 50,257 tokens, and the last one is the <strong>end-of-text token</strong>, written &lt;|endoftext|&gt;. In training it sat between documents, so the model learned to give it a high probability at the places where a text is finished. When that token is picked, the software stops the loop and hides the token from you.</p>
   <p>The software also stops the loop in two other cases. First, it sets a maximum number of new tokens, because every token costs time and money. A reply that reaches the maximum gets cut off in mid-sentence. Second, a programmer can give it a <strong>stop sequence</strong>, a piece of text such as &ldquo;User:&rdquo;. The software stops when that text appears, so the model does not go on to write your side of the conversation.</p>
+</div></div>
 
-  <p class="adv-q">2.&nbsp;What does a chatbot do when it &ldquo;reasons&rdquo;?</p>
+<div class="leaf adv-note">
+  <p class="adv-q"><span class="adv-n">2.</span> What does a chatbot do when it &ldquo;reasons&rdquo;?</p>
+  <div class="col">
   <p class="adv-fig"><img src="img/appendix-d-2-reasoning.webp" width="166" height="139" alt="Four small boxes of scratch work, each with an arrow to one box that holds the answer, 40,000." loading="lazy" decoding="async"></p>
   <p>A transformer does the same amount of work for every token. In <span class="nb">GPT-2</span> small that is 12 layers, for an easy guess and a hard one alike. Some questions take more steps than 12 layers can do. Ask how many balloons fit in a Boeing 747. The answer needs the size of the cabin, the size of a balloon, a division and a correction for the gaps.</p>
   <p>Around 2022, researchers found that a model answers such questions more accurately when it writes out its steps first. They called this <strong>chain of thought</strong>. Labs then trained models to write the steps without being asked, and those are today&rsquo;s <strong>reasoning models</strong>. Before the answer appears, a reasoning model writes scratch work, one token at a time, with the same autoregressive loop:</p>
   <p class="adv-work">The cabin holds about 900 cubic metres. A party balloon 30&nbsp;cm across holds about 14 litres. That gives about 64,000 balloons. Round balloons leave gaps, so about 40,000.</p>
   <p>Then it writes the answer you see. The tokens of the scratch work are called <strong>reasoning tokens</strong>. The app hides them or folds them under a &ldquo;thinking&rdquo; label.</p>
   <p>The scratch work helps because of attention. Each reasoning token goes into the KV cache like any other token. When the model guesses the final number, its Q can find &ldquo;900 cubic metres&rdquo; and &ldquo;14 litres&rdquo; in the cache. Each guess along the way is an easy one. Reasoning takes time, because a model may write thousands of tokens before the first word of its answer. It also costs money. Companies that charge by the token usually bill for reasoning tokens too, even when the app hides them from you.</p>
+</div></div>
 
-  <p class="adv-q">3.&nbsp;Can a model think for longer without writing more tokens?</p>
+<div class="leaf adv-note">
+  <p class="adv-q"><span class="adv-n">3.</span> Can a model think for longer without writing more tokens?</p>
+  <div class="col">
   <p class="adv-fig"><img src="img/appendix-d-3-looped.webp" width="142" height="176" alt="A stack of six layers with an arrow that loops from the top back to the bottom, marked times 4." loading="lazy" decoding="async"></p>
   <p>Reasoning tokens have two drawbacks. Each token needs a full run of the model. The model also has to put every step into words. The residual stream holds 768 numbers, and a token is one pick from the vocabulary, so a token carries far less than the residual stream does. Researchers wanted to let a model do more steps before it picks a token, and to do that without making the model bigger.</p>
   <p>Their answer is to use the layers more than once. In <span class="nb">GPT-2</span> small, each of the 12 layers has its own matrices, and the residual stream passes through each layer once. A <strong>looped transformer</strong> sends the residual stream through the same layers several times. Six layers used four times do the work of 24 layers with the parameters of six. In some designs the number of passes changes with the question, so a hard question gets more passes.</p>
   <p>A looped transformer still writes one token at a time. It does more work on each token before the token comes out. Researchers call this work <strong>latent reasoning</strong>, because it stays in the residual stream. People can read reasoning tokens and check how a model reached its answer. Nobody can read latent reasoning that way. One model can use both kinds of reasoning.</p>
   <p>Looped transformers are also called <strong>recurrent depth</strong>. In September 2026, The Information reported that <a href="https://openai.com/index/gpt-6-astra/" target="_blank" rel="noopener">OpenAI&rsquo;s <span class="nb">GPT-6</span> Astra</a> uses recurrent depth. As we write in November 2026, OpenAI has not confirmed the report.</p>
+</div></div>
 
-  <p class="adv-q">4.&nbsp;Can attention get cheaper for long texts?</p>
+<div class="leaf adv-note">
+  <p class="adv-q"><span class="adv-n">4.</span> Can attention get cheaper for long texts?</p>
+  <div class="col">
   <p class="adv-fig"><img src="img/appendix-d-4-linear-attention.webp" width="182" height="85" alt="Six tokens, each joined to one wide bar, and one arrow from the bar to the next token." loading="lazy" decoding="async"></p>
   <p>In <a href="#attention">section 2.2</a>, each new token&rsquo;s Q was compared with every K in the KV cache. A text twice as long needs four times as many comparisons. <span class="nb">GPT-2</span> small reads up to 1,024 tokens. Chatbots in 2026 read hundreds of thousands of tokens, and attention is a large part of what that costs.</p>
   <p>The function that turns a head&rsquo;s scores into shares is called <strong>softmax</strong>. It raises the number <i>e</i> to the power of each score and divides by the total. That stretches the gaps between scores, so one strong match can take nearly the whole share. Softmax is also the reason the head has to visit every earlier token one by one.</p>
