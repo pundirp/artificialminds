@@ -82,10 +82,9 @@
   --veil:rgba(255,255,255,.88);
   --dialog-shadow:0 12px 32px rgba(17,17,17,.1);
 
-  /* the pale yellow inside the lit lamp shade of the hero drawing, red green
-     blue. It is the fisherman's bulb yellow (255 208 20, A Salon of Witnesses)
-     at 30 percent on white paper. */
-  --bulb-glass:255 241 185;
+  /* the pink inside the lit lamp shade of the hero drawing, red green blue.
+     It is the page's red (195 38 28, #c3261c) at 30 percent on white paper. */
+  --bulb-glass:237 190 187;
 
 
   /* type: the house family, written as CLAUDE.md asks, fallbacks inside var() */
@@ -147,9 +146,9 @@ h1{font-weight:400;font-size:27px;line-height:1.2;letter-spacing:-.01em;margin:0
 .hero{margin:var(--s2) 0 var(--s1)}
 .hero img{display:block;width:100%;height:auto}
 /* the hero drawing moves a little (canon books, round 11): her crossed foot
-   swings about the ankle, and the white inside the lamp shade turns yellow and
+   swings about the ankle, and the white inside the lamp shade turns pink and
    back. The script lays three pictures the size of the drawing on it (the
-   patch, the foot and the cuff) and the lamp: a small box of pale yellow
+   patch, the foot and the cuff) and the lamp: a small box of pale pink
    under a white cover that is clear over the opening. The lamp is multiplied
    onto the drawing, so the white cover changes nothing and the pencil rim stays
    dark. Only its opacity changes: 0 to 1 in 2 s and back, ease-in-out, with no
@@ -1937,11 +1936,11 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
 
 <script>
 /* The hero drawing moves a little (canon books, round 11). Her crossed foot
-   swings about the ankle, and the white inside the lamp shade turns yellow and
+   swings about the ankle, and the white inside the lamp shade turns pink and
    back. The foot is three pictures laid on the drawing: the patch (the paper
    and the chair behind the foot, drawn back in), the foot, which turns about
    the ankle, and the cuff, which the sock slides under. The lamp is a small
-   yellow box under a white cover that is clear over the opening; the
+   pink box under a white cover that is clear over the opening; the
    stylesheet multiplies the two onto the drawing and runs their opacity. All
    four pictures are cut for each file the hero serves (768, 1024, 1536 and
    1774 wide, matched to the AVIF files), and the script takes the set that
@@ -1966,7 +1965,7 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
        to toe up, and back down. Each step eases in and out. */
     keys: [[0, 2.4], [0.12, 2.4], [0.56, -3.0], [1, 2.4]]
   };
-  var LAMP = [920, 394, 104, 36];          // the yellow box under the lamp's cover: left, top, width, height
+  var LAMP = [920, 394, 104, 36];          // the pink box under the lamp's cover: left, top, width, height
   var FILE = /ai-future-canon-reader-(768|1024|1536|1774)\.(avif|webp)/;
 
   /* a cubic-bezier easing as a function of x, and a value over keyframes
@@ -2022,8 +2021,8 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
     });
     pics.foot.style.transformOrigin = pct((FOOT.pivot[0] - x0) / cw * 100) + ' ' + pct((FOOT.pivot[1] - y0) / ch * 100);
   }
-  /* the lamp: the yellow box goes in only once its cover has loaded, so no
-     yellow ever shows uncovered */
+  /* the lamp: the pink box goes in only once its cover has loaded, so no
+     pink ever shows uncovered */
   var lamp = document.createElement('span');
   lamp.className = moving ? 'reader-lamp' : 'reader-lamp reader-lamp-still';
   var glass = document.createElement('i');

@@ -519,10 +519,9 @@ html.rm .sitemap-label{transition:none}
   --phone-halo-35: rgba(255, 255, 255, 0.35);
   --phone-halo-85: rgba(255, 255, 255, 0.85);
 
-  /* card 7: the pale yellow inside the lit lamp shade, red green blue. It is
-     the fisherman's bulb yellow (255 208 20, A Salon of Witnesses) at 30
-     percent on white paper. */
-  --bulb-glass: 255 241 185;
+  /* card 7: the pink inside the lit lamp shade, red green blue. It is the
+     white paper red (195 38 28, #c3261c) at 30 percent on white paper. */
+  --bulb-glass: 237 190 187;
 
   /* card 2: the typing bubble over the phone. A soft white fill with no outline,
      dots in the page's --red, #c3261c, so a reader sees that the artificial
@@ -1038,9 +1037,9 @@ html.rm .sitemap-label{transition:none}
 /* card 7: the reader's foot and the lamp (canon books, round 11). Three
    pictures the size of the drawing lie on it: the patch, the foot and the cuff.
    The script turns the foot about the ankle. The lamp is a small box of pale
-   yellow under a white cover that is clear over the white inside the
+   pink under a white cover that is clear over the white inside the
    shade. The group is multiplied onto the drawing, so the white cover changes
-   nothing and only the opening turns yellow, while the pencil rim stays dark.
+   nothing and only the opening turns pink, while the pencil rim stays dark.
    Only the group's opacity changes: 0 to 1 in 2 s and back, ease-in-out, with
    no pause, as on the fisherman's bulb. With reduced motion the lamp stays lit
    and still. Without mix-blend-mode the lamp is off and stays white. */
@@ -2518,11 +2517,11 @@ html.rm .sitemap-label{transition:none}
   /* ---------- card 7: the reader's foot and the lamp ---------- */
 
   /* Canon books, round 11. Her crossed foot swings about the ankle, and the
-     white inside the lamp shade turns yellow and back. The foot is three
+     white inside the lamp shade turns pink and back. The foot is three
      pictures laid on the drawing: the patch (the paper and the chair behind the
      foot, drawn back in), the foot, which turns about the ankle, and the cuff,
      which the sock slides under. At rest the three show the drawing exactly as
-     it is. The lamp is a small yellow box under a white cover that is clear
+     it is. The lamp is a small pink box under a white cover that is clear
      over the opening; the stylesheet multiplies the two onto the drawing and
      runs their opacity. All four pictures are cut for each file the card serves
      (700, 1400 and full), and the builder takes the set that matches the file
@@ -2538,7 +2537,7 @@ html.rm .sitemap-label{transition:none}
        to toe up, and back down. Each step eases in and out. */
     keys: [[0, 2.4], [0.12, 2.4], [0.56, -3.0], [1, 2.4]]
   };
-  var READER_LAMP = [920, 394, 104, 36];            // the yellow box under the lamp's cover: left, top, width, height
+  var READER_LAMP = [920, 394, 104, 36];            // the pink box under the lamp's cover: left, top, width, height
 
   function readerAngle(t) {
     var u = (t % READER_FOOT.period) / READER_FOOT.period;
@@ -2567,8 +2566,8 @@ html.rm .sitemap-label{transition:none}
       pics.foot.style.transformOrigin = pct((READER_FOOT.pivot[0] - x0) / cw * 100) + ' ' + pct((READER_FOOT.pivot[1] - y0) / ch * 100);
     }
 
-    /* the lamp: the yellow box goes in only once its cover has loaded, so no
-       yellow ever shows uncovered */
+    /* the lamp: the pink box goes in only once its cover has loaded, so no
+       pink ever shows uncovered */
     var lamp = el('span', moving ? 'cardfx-reader-lamp' : 'cardfx-reader-lamp cardfx-reader-lamp-still');
     var glass = el('i', 'cardfx-reader-lamp-glass');
     glass.style.left = pct((READER_LAMP[0] - x0) / cw * 100);
