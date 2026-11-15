@@ -42,7 +42,7 @@
 /* type.css: the Artificial Minds type roles (29 October 2026)
 
    fonts.css picks the three faces. This file sets everything else about type:
-   six sizes, two weights, one small-caps treatment, and the roles built from them.
+   seven sizes, two weights, one small-caps treatment, and the roles built from them.
    Each page carries an exact copy of this file in its own <style> block, between
    the lines "type.css begin" and "type.css end", so the page keeps every size if a
    file fails to load. typecheck.py fails a page whose copy differs from this file.
@@ -53,7 +53,8 @@
    follow the text around them. Adding a role is Pundir's decision, made here. */
 
 :root{
-  /* Six sizes. All are rem, so a phone scales them with the root. */
+  /* Seven sizes. All are rem, so a phone scales them with the root. */
+  --t-display: 2.65rem; /* 50.4px, 45.1px */
   --t-title: 2.35rem;   /* 44.7px on a laptop, 40px on a phone */
   --t-head:  1.5rem;    /* 28.5px, 25.5px */
   --t-lead:  1.12rem;   /* 21.3px, 19px */
@@ -62,6 +63,7 @@
   --t-fine:  .7rem;     /* 13.3px, 11.9px */
   /* The phone figures are for a 390px screen, root 17px. */
 
+  --lh-display: 1.05;
   --lh-title: 1.1;
   --lh-head:  1.25;
   --lh-lead:  1.55;
@@ -90,6 +92,7 @@
 body{font-family:var(--serif);font-size:var(--t-body);font-weight:var(--w-regular)}
 
 /* Reading text: the text face (--serif). */
+.t-display{font:var(--w-regular) var(--t-display)/var(--lh-display) var(--serif)}
 .t-title{font:var(--w-regular) var(--t-title)/var(--lh-title) var(--serif)}
 .t-head {font:var(--w-regular) var(--t-head)/var(--lh-head) var(--serif)}
 .t-lead {font:var(--w-regular) var(--t-lead)/var(--lh-lead) var(--serif)}

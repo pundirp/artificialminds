@@ -11,7 +11,7 @@
 /* type.css: the Artificial Minds type roles (29 October 2026)
 
    fonts.css picks the three faces. This file sets everything else about type:
-   six sizes, two weights, one small-caps treatment, and the roles built from them.
+   seven sizes, two weights, one small-caps treatment, and the roles built from them.
    Each page carries an exact copy of this file in its own <style> block, between
    the lines "type.css begin" and "type.css end", so the page keeps every size if a
    file fails to load. typecheck.py fails a page whose copy differs from this file.
@@ -22,7 +22,8 @@
    follow the text around them. Adding a role is Pundir's decision, made here. */
 
 :root{
-  /* Six sizes. All are rem, so a phone scales them with the root. */
+  /* Seven sizes. All are rem, so a phone scales them with the root. */
+  --t-display: 2.65rem; /* 50.4px, 45.1px */
   --t-title: 2.35rem;   /* 44.7px on a laptop, 40px on a phone */
   --t-head:  1.5rem;    /* 28.5px, 25.5px */
   --t-lead:  1.12rem;   /* 21.3px, 19px */
@@ -31,6 +32,7 @@
   --t-fine:  .7rem;     /* 13.3px, 11.9px */
   /* The phone figures are for a 390px screen, root 17px. */
 
+  --lh-display: 1.05;
   --lh-title: 1.1;
   --lh-head:  1.25;
   --lh-lead:  1.55;
@@ -59,6 +61,7 @@
 body{font-family:var(--serif);font-size:var(--t-body);font-weight:var(--w-regular)}
 
 /* Reading text: the text face (--serif). */
+.t-display{font:var(--w-regular) var(--t-display)/var(--lh-display) var(--serif)}
 .t-title{font:var(--w-regular) var(--t-title)/var(--lh-title) var(--serif)}
 .t-head {font:var(--w-regular) var(--t-head)/var(--lh-head) var(--serif)}
 .t-lead {font:var(--w-regular) var(--t-lead)/var(--lh-lead) var(--serif)}
@@ -119,18 +122,20 @@ ol{margin:.4rem 0 0;padding-left:1.3rem} li{margin:.35rem 0}
 </style></head><body><main>
 <p class="t-label"><a href="../index.html" style="color:inherit">&larr;&nbsp; Artificial Minds</a></p>
 <h1 class="t-title">Type roles</h1>
-<p class="t-lead lead">The type roles for every page on the site, from 29 October 2026. Six sizes, two weights and one small-caps treatment make up eleven roles. Your Order Is on the Truck is the first page on them.</p>
+<p class="t-lead lead">The type roles for every page on the site, from 29 October 2026. Seven sizes, two weights and one small-caps treatment make up twelve roles. Your Order Is on the Truck is the first page on them.</p>
 
 <p class="t-body"><span class="t-code">fonts.css</span> holds the three faces, and <span class="t-code">type.css</span> holds the sizes. A page links <span class="t-code">fonts.css</span> and carries an exact copy of <span class="t-code">type.css</span> in its own style block. Its own CSS uses the role classes below and sets no size of its own.</p>
 
-<h2 class="t-head">Six sizes</h2>
+<h2 class="t-head">Seven sizes</h2>
+<div class="row"><p class="t-small k"><span class="t-code">--t-display</span><br>2.65rem, 50.4px on a laptop, 45.1px on a phone</p><p style="font:var(--w-regular) var(--t-display)/1.1 var(--serif)">The bakery’s flour is late.</p></div>
 <div class="row"><p class="t-small k"><span class="t-code">--t-title</span><br>2.35rem, 44.7px on a laptop, 40px on a phone</p><p style="font:var(--w-regular) var(--t-title)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
 <div class="row"><p class="t-small k"><span class="t-code">--t-head</span><br>1.5rem, 28.5px on a laptop, 25.5px on a phone</p><p style="font:var(--w-regular) var(--t-head)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
 <div class="row"><p class="t-small k"><span class="t-code">--t-lead</span><br>1.12rem, 21.3px on a laptop, 19px on a phone</p><p style="font:var(--w-regular) var(--t-lead)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
 <div class="row"><p class="t-small k"><span class="t-code">--t-body</span><br>1rem, 19px on a laptop, 17px on a phone</p><p style="font:var(--w-regular) var(--t-body)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
 <div class="row"><p class="t-small k"><span class="t-code">--t-small</span><br>.82rem, 15.6px on a laptop, 13.9px on a phone</p><p style="font:var(--w-regular) var(--t-small)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
 <div class="row"><p class="t-small k"><span class="t-code">--t-fine</span><br>.7rem, 13.3px on a laptop, 11.9px on a phone</p><p style="font:var(--w-regular) var(--t-fine)/1.25 var(--serif)">The bakery’s flour is late again.</p></div>
-<h2 class="t-head">Eleven roles</h2>
+<h2 class="t-head">Twelve roles</h2>
+<div class="role"><p class="t-small name"><span class="t-code">.t-display</span></p><p class="t-display">Folding a Protein,<br>Folding a Shirt</p><p class="t-small use">A large essay title beside a drawing, in the two-column header. Where the header stacks, the title uses .t-title.</p></div>
 <div class="role"><p class="t-small name"><span class="t-code">.t-title</span></p><p class="t-title">Your Order Is on the Truck</p><p class="t-small use">The article title.</p></div>
 <div class="role"><p class="t-small name"><span class="t-code">.t-head</span></p><p class="t-head">Two places a model’s facts sit</p><p class="t-small use">Chapter headings.</p></div>
 <div class="role"><p class="t-small name"><span class="t-code">.t-lead</span></p><p class="t-lead">A bakery’s flour is late again! Follow All You Knead, the bakery’s supplier.</p><p class="t-small use">The standfirst, contents entries and appendix headings.</p></div>

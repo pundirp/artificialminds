@@ -65,13 +65,14 @@ changes.
 
 ## Type roles: type.css
 
-`fonts.css` holds the faces. `type.css` holds everything else about type: six
-sizes, two weights, one letter-spacing for small capitals, and eleven roles
-built from them (29 October 2026). `type_preview.html` shows every role at its
+`fonts.css` holds the faces. `type.css` holds everything else about type: seven
+sizes, two weights, one letter-spacing for small capitals, and twelve roles
+built from them (29 October 2026, with the display size added on 15 November 2026). `type_preview.html` shows every role at its
 real size.
 
 | Token | rem | Laptop | Phone (390px) | Used for |
 | --- | --- | --- | --- | --- |
+| `--t-display` | 2.65 | 50.4px | 45.1px | a large essay title beside a drawing, in the two-column header only |
 | `--t-title` | 2.35 | 44.7px | 40px | the title |
 | `--t-head` | 1.5 | 28.5px | 25.5px | chapter headings, big numbers |
 | `--t-lead` | 1.12 | 21.3px | 19px | the standfirst, contents entries |
@@ -118,7 +119,7 @@ Adding a size or a role is Pundir's decision, made once, in `type.css`.
   size in bytes, the exact URL it came from, and any note about it.
 - `fonts_preview.html`. A page that shows the families on the same sample text,
   so you can look and compare.
-- `type.css`. The type roles: six sizes, two weights and the role classes. Each
+- `type.css`. The type roles: seven sizes, two weights and the role classes. Each
   page carries an exact copy of it.
 - `type_preview.html`. A page that shows every type role at its real size.
 

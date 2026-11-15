@@ -53,7 +53,7 @@
 /* type.css: the Artificial Minds type roles (29 October 2026)
 
    fonts.css picks the three faces. This file sets everything else about type:
-   six sizes, two weights, one small-caps treatment, and the roles built from them.
+   seven sizes, two weights, one small-caps treatment, and the roles built from them.
    Each page carries an exact copy of this file in its own <style> block, between
    the lines "type.css begin" and "type.css end", so the page keeps every size if a
    file fails to load. typecheck.py fails a page whose copy differs from this file.
@@ -64,7 +64,8 @@
    follow the text around them. Adding a role is Pundir's decision, made here. */
 
 :root{
-  /* Six sizes. All are rem, so a phone scales them with the root. */
+  /* Seven sizes. All are rem, so a phone scales them with the root. */
+  --t-display: 2.65rem; /* 50.4px, 45.1px */
   --t-title: 2.35rem;   /* 44.7px on a laptop, 40px on a phone */
   --t-head:  1.5rem;    /* 28.5px, 25.5px */
   --t-lead:  1.12rem;   /* 21.3px, 19px */
@@ -73,6 +74,7 @@
   --t-fine:  .7rem;     /* 13.3px, 11.9px */
   /* The phone figures are for a 390px screen, root 17px. */
 
+  --lh-display: 1.05;
   --lh-title: 1.1;
   --lh-head:  1.25;
   --lh-lead:  1.55;
@@ -101,6 +103,7 @@
 body{font-family:var(--serif);font-size:var(--t-body);font-weight:var(--w-regular)}
 
 /* Reading text: the text face (--serif). */
+.t-display{font:var(--w-regular) var(--t-display)/var(--lh-display) var(--serif)}
 .t-title{font:var(--w-regular) var(--t-title)/var(--lh-title) var(--serif)}
 .t-head {font:var(--w-regular) var(--t-head)/var(--lh-head) var(--serif)}
 .t-lead {font:var(--w-regular) var(--t-lead)/var(--lh-lead) var(--serif)}
@@ -143,7 +146,7 @@ blockquote{font:inherit;font-style:normal}   /* a quote keeps the size and style
    Every font setting on this page sits in this block or in the type.css copy above it. The values come from type.css. */
 h1,h2,h3,h4,th{font-weight:var(--w-regular)}
 h1,.chapter.plain h2,.chapter.appx h2,ol.toc .toc-n{font-size:var(--t-title)}
-.byline,section.appx .col h3.appx-h,a.toc-t{font-size:var(--t-lead)}
+section.appx .col h3.appx-h,a.toc-t{font-size:var(--t-lead)}
 .chapter h2,a.gcard .g-num,ul.archlist .ar-no{font-family:var(--serif);font-size:var(--t-head)}
 .col p.drop::first-letter{font-size:var(--t-drop)}
 /* labels: serif small capitals at the small size */
@@ -177,14 +180,21 @@ a:hover{text-decoration-color:var(--ink)}
 .runhead{display:flex;justify-content:space-between;align-items:baseline;gap:1rem;padding:1em 0 .55em;border-bottom:1px solid var(--rule);line-height:1.35;color:var(--ink-faint)}
 .runhead .home{color:var(--ink-soft);text-decoration:none;white-space:nowrap}
 .runhead .home:hover{color:var(--ink)}
-.hero{margin:var(--s4) 0 var(--s3)}
-.hero-img{margin:0 auto;padding:0;max-width:min(23rem,100%)}
+.hero-img{position:relative;margin:0;padding:0}
 .hero-img img{display:block;width:100%;height:auto}
-.hero-img{position:relative}
 .hero-img canvas{position:absolute;inset:0;width:100%;height:100%;visibility:hidden;pointer-events:none}
-.hero-text{max-width:calc(var(--measure) + 4rem)}
-h1{line-height:1.08;margin:0 0 .7rem;text-wrap:balance}
-.byline{color:var(--ink-soft);line-height:1.55;margin:0}
+.hero h1{margin:0;line-height:var(--lh-title)}
+.deck{color:var(--ink-faint);line-height:1.5;margin:0;text-wrap:pretty}
+.hero-d{display:grid;grid-template-columns:minmax(0,1fr) 25rem;column-gap:1rem;align-items:center;margin:var(--s3) 0 var(--s3)}
+.hero-d h1{grid-column:1;grid-row:1;text-wrap:balance;font-size:var(--t-display);line-height:var(--lh-display)}
+.hero-d h1 span{white-space:nowrap}
+.hero-d .hero-img{grid-column:2;grid-row:1}
+.hero-d .deck{grid-column:1 / -1;grid-row:2;margin:1.2rem 0 0;padding:1.2rem calc(var(--sheet) - var(--margin-col) - var(--gutter) - var(--measure)) 0 calc(var(--margin-col) + var(--gutter));border-top:1px solid var(--rule)}
+@media (max-width:1000px){.hero-d{display:flex;flex-direction:column;align-items:stretch;margin:var(--s2) 0 var(--s3)}
+ .hero-d h1{font-size:var(--t-title);line-height:var(--lh-title)}
+ .hero-d h1 span{white-space:normal}
+ .hero-d .hero-img{order:-1;width:min(100%,24rem);margin:0 auto 1.1rem}
+ .hero-d .deck{margin:1.2rem 0 0;padding:1rem 0 0}}
 .leaf{display:grid;grid-template-columns:var(--margin-col) minmax(0,var(--measure));column-gap:var(--gutter)}
 .leaf>.col{grid-column:2;min-width:0}
 .intro{margin-top:var(--s4)}
@@ -424,7 +434,6 @@ ol.refs a{color:var(--ink-faint)}
 .has-thumb.beside{display:flex;align-items:center;gap:1.2rem;margin:0 0 1.3rem}
 .has-thumb.beside a.thumb{float:none;flex:0 0 14rem;width:auto;margin:0}
 .has-thumb.beside p{margin:0}
-.byline{text-wrap:pretty}
 @media (max-width:1000px){
   .sheet{max-width:calc(var(--measure) + 32px)}
   .leaf{grid-template-columns:minmax(0,1fr)}
@@ -537,11 +546,10 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
   <div class="runhead">
     <a class="home" href="../index.html">&larr;&nbsp; Artificial Minds</a>
   </div>
-  <div class="hero"><figure class="hero-img"><img src="folding-art/00-hero-740.webp" srcset="folding-art/00-hero-740.webp 740w, folding-art/00-hero-1258.webp 1258w" sizes="(min-width:761px) 437px, calc(100vw - 32px)" width="1258" height="1162" alt="A pen drawing of a robot arm and a white shirt. The arm holds one cuff in its gripper. The rest of the shirt is wrapped around the arm and tied in a knot at its elbow." fetchpriority="high" decoding="async"></figure></div>
+  <div class="hero hero-d"><h1 id="top"><span>Folding a Protein,</span> <span>Folding a Shirt</span></h1>
+    <figure class="hero-img"><img src="folding-art/00-hero-740.webp" srcset="folding-art/00-hero-740.webp 740w, folding-art/00-hero-1258.webp 1258w" sizes="(min-width:1001px) 25rem, (min-width:761px) 24rem, calc(100vw - 32px)" width="1258" height="1162" alt="A pen drawing of a robot arm and a white shirt. The arm holds one cuff in its gripper. The rest of the shirt is wrapped around the arm and tied in a knot at its elbow." fetchpriority="high" decoding="async"></figure>
+    <p class="deck sc">Deep learning’s most famous win is a folded protein. Its most stubborn chore is a folded shirt. In between, it names songs, forecasts weather and reads a scroll burnt in 79&nbsp;AD. Look inside a dozen real deep learning networks and see how each one is built.</p></div>
 </header>
-
-<div class="hero-text"><h1 id="top">Folding a Protein, Folding a Shirt</h1>
-<p class="byline">Deep learning’s most famous win is a folded protein. Its most stubborn chore is a folded shirt. In between, it names songs, forecasts weather and reads a scroll burnt in 79 AD. Look inside a dozen real deep learning networks and see how each one is built.</p></div>
 <svg class="figdefs" width="0" height="0" aria-hidden="true" focusable="false"><defs>
 <linearGradient id="fg-pan" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#fdfdfc"/><stop offset="1" stop-color="#f1f1ef"/></linearGradient>
 <linearGradient id="fg-bar" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#f1f1ef"/><stop offset="1" stop-color="#dddddb"/></linearGradient>
