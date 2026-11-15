@@ -163,7 +163,8 @@ main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:v
 .field label{display:block;color:var(--ink-faint)}
 .field .opt{color:var(--ink-ghost)}
 .field input,.field textarea,.field select{display:block;width:100%;margin-top:.2rem;padding:.5rem .65rem;border:1px solid var(--frame);border-radius:2px;background:var(--paper);color:var(--ink)}
-.field textarea{min-height:9rem;resize:vertical}
+.field textarea{min-height:15rem;resize:vertical}
+.field textarea.grows{resize:none;overflow:hidden}
 .field select{appearance:none;-webkit-appearance:none;padding-right:2rem;background-image:linear-gradient(45deg,transparent 50%,var(--ink-faint) 50%),linear-gradient(135deg,var(--ink-faint) 50%,transparent 50%);background-position:calc(100% - 1.05rem) 55%,calc(100% - .75rem) 55%;background-size:.3rem .3rem;background-repeat:no-repeat;text-overflow:ellipsis}
 /* The phone number: the country first, then its calling code beside the number. */
 .num{display:flex;margin-top:.4rem}
@@ -571,6 +572,16 @@ footer{margin-top:var(--s4);padding-top:var(--s2);border-top:1px solid var(--rul
   });
   email.addEventListener('blur', function(){ if (email.value) checkEmail(); });
   phone.addEventListener('blur', checkPhone);
+
+  /* The message box grows with the text, so it never needs a scrollbar. */
+  function grow(){
+    message.style.height = 'auto';
+    message.style.height = (message.scrollHeight + 2) + 'px';
+  }
+  message.classList.add('grows');
+  message.addEventListener('input', grow);
+  window.addEventListener('resize', grow);
+  grow();
 
   function fail(text){
     var p = document.getElementById('e-form');
