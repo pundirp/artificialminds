@@ -137,6 +137,7 @@ h1 br{display:none}
 .fx-link{display:block;flex:none}
 html.js .col.is-open .fx-link,html.js .col.is-open .fx-link *{cursor:pointer}
 .fx-img{display:block;width:100%;height:100%}
+.fx-shake{position:absolute;left:0;top:0;width:100%;height:100%;visibility:hidden;pointer-events:none}
 .crop{display:block;position:relative;overflow:hidden;overflow:clip;aspect-ratio:var(--ar);width:min(100%, calc(var(--ch, 100%) * var(--ar)));margin-inline:auto}
 .fxp{position:absolute;max-width:none;width:calc(10000% / var(--bw));left:calc(var(--bl) / var(--bw) * -100%);top:calc(var(--bt) / var(--bh) * -100%)}
 .fxp .fx{width:100%}
@@ -375,8 +376,8 @@ html.js .col.is-open .c-num{color:var(--red)}
   /* the sixth Stillpoint picture is clear in cardfx.css (it waits offstage); it shows while the slice shows, and a sliver hides it like every other unit */
   html.js .fx[data-card="1"] .fx-tile[data-posed]:nth-child(6){opacity:1}
   html.js .col.is-sliver .fx[data-card="1"] .fx-tile:nth-child(6){opacity:0}
-  html.js .fxu img{transform-origin:0 0;transition:scale .5s var(--change), translate .5s var(--change), filter .5s var(--change), outline-color .3s var(--change) .4s}
-  html.js .col.is-open .fxu img{transition:scale .7s var(--change), translate .7s var(--change), filter .5s var(--change), outline-color .2s var(--change)}
+  html.js .fxu :is(img,canvas){transform-origin:0 0;transition:scale .5s var(--change), translate .5s var(--change), filter .5s var(--change), outline-color .3s var(--change) .4s}
+  html.js .col.is-open .fxu :is(img,canvas){transition:scale .7s var(--change), translate .7s var(--change), filter .5s var(--change), outline-color .2s var(--change)}
 }
 
 /* ------------------------------------------------------------------
@@ -395,7 +396,7 @@ html.js .c-open,html.js .c-open *{cursor:pointer}
   /* every picture of the column eases out to its full cover about the centre of its window. Scale and
      translate are set apart from the pose (transform) and the mask, so the window never changes. Script
      gives each unit its --hs, --htx and --hty. In Stillpoint all six slices move together. */
-  html:not(.rm) .page:not([data-open]) .col:is(:hover,.kbf) .fxu img{
+  html:not(.rm) .page:not([data-open]) .col:is(:hover,.kbf) .fxu :is(img,canvas){
     scale:var(--hs, 1);
     translate:var(--htx, 0px) var(--hty, 0px);
   }
@@ -1319,7 +1320,7 @@ html.rm .sitemap-label{transition:none}
         </button>
         <div class="panel" id="p-9">
           <div class="entry">
-            <!-- the hero of the essay: a robot arm that has tied itself up in the shirt it was folding. The card has no motion. -->
+            <!-- the hero of the essay: a robot arm that has tied itself up in the shirt it was folding. The arm shakes every few seconds while the card is open (script at the end of the page). -->
             <span class="art"><a class="fx-link" href="folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="9" style="--far:1.075"><img class="fx-img" src="img/home/26-folding-arm-shirt-full.webp" srcset="img/home/26-folding-arm-shirt-700.webp 700w, img/home/26-folding-arm-shirt-full.webp 1290w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(1.3 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1290" height="1200" alt="A pencil drawing of a robot arm and a white shirt. The arm holds one cuff in its gripper. The rest of the shirt is wrapped around the arm and tied in a knot at its elbow." loading="eager" decoding="sync"></span></a></span>
             <div class="words">
               <p class="title"><a href="folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html"><span class="num">9</span><span class="tt">Folding a Protein, Folding a Shirt</span></a></p>
@@ -3574,6 +3575,222 @@ html.rm .sitemap-label{transition:none}
   }
 })();
 
+</script>
+<script>
+/* Card 9 shake. While the card is open, the robot arm in its drawing shudders every few seconds and the cuff swings.
+   The still drawing stays in the page the whole time. A canvas sits in the .fx window, in the same place as the
+   drawing and with the same transforms, and is visible only while it moves. The motion is the one on the essay page.
+   If anything is missing or fails, nothing happens and the still drawing is all a reader sees. */
+(function () {
+  "use strict";
+  try {
+    var mq = window.matchMedia && window.matchMedia("(prefers-reduced-motion: reduce)");
+    var root = document.documentElement;
+    if (!mq || mq.matches || root.classList.contains("rm")) { return; }
+    var col = document.getElementById("col-9");
+    var fx = col && col.querySelector(".fx");
+    var hero = fx && fx.querySelector("img.fx-img");
+    if (!hero) { return; }
+
+    // Motion settings. Angles are in degrees, times in seconds.
+    var A = 0.3, F = 10, TAU = 0.3;          // arm: size, speed, how fast it dies away
+    var S = 2, FS = 2.2, TAUS = 0.9, LAG = 0.08; // cuff swing
+    var PAUSE = 1000, FIRST = 1000;          // milliseconds
+    var W = 1290, H = 1200;                  // the size all the maths is done in
+    var C1 = [1141.12, 739.93], P = [183.24, 523.02]; // arm joint and the pinch point of the cuff
+    var D2R = Math.PI / 180;
+
+    var canvas = null, gl = null, uTheta = null, uPhi = null, uRes = null, src = null, curW = 0;
+    var ready = false, dead = false, go = false, started = false, onScreen = false, tabVisible = !document.hidden;
+    var raf = 0, timer = 0, t0 = 0;
+
+    function angles(t) {
+      var th = A * Math.exp(-t / TAU) * Math.sin(2 * Math.PI * F * t);
+      var ph = 0;
+      if (t > LAG) { ph = S * Math.exp(-(t - LAG) / TAUS) * Math.sin(2 * Math.PI * FS * (t - LAG)); }
+      return [th, ph];
+    }
+    // The shake is over when both envelopes are under 0.05 degrees, too small to see.
+    function finished(t) {
+      var e1 = A * Math.exp(-t / TAU);
+      var e2 = S * Math.exp(-Math.max(0, t - LAG) / TAUS);
+      return t > LAG && e1 < 0.05 && e2 < 0.05;
+    }
+
+    var VS = "attribute vec2 a;void main(){gl_Position=vec4(a,0.0,1.0);}";
+    var FS_SRC = [
+      "precision highp float;",
+      "uniform sampler2D img;uniform sampler2D wt;",
+      "uniform vec2 res;uniform vec2 size;uniform vec2 c1;uniform vec2 pp;",
+      "uniform float theta;uniform float phi;",
+      "vec2 rot(vec2 q,float a){float c=cos(a),s=sin(a);return vec2(c*q.x-s*q.y,s*q.x+c*q.y);}",
+      "void main(){",
+      "  vec2 uv=vec2(gl_FragCoord.x,res.y-gl_FragCoord.y)/res;",
+      "  vec2 p=uv*size;",
+      "  vec3 w=texture2D(wt,uv).rgb;",
+      "  vec2 q1=p-c1;vec2 q2=p-pp;",
+      "  vec2 d=w.r*(rot(q1,theta)-q1)+w.b*(rot(q2,phi)-q2);",
+      "  gl_FragColor=vec4(texture2D(img,(p-d)/size).rgb,1.0);",
+      "}"
+    ].join("\n");
+
+    function shader(type, src) {
+      var s = gl.createShader(type);
+      gl.shaderSource(s, src); gl.compileShader(s);
+      if (!gl.getShaderParameter(s, gl.COMPILE_STATUS)) { throw new Error("shader"); }
+      return s;
+    }
+    function texture(unit, image) {
+      gl.activeTexture(gl.TEXTURE0 + unit);
+      gl.bindTexture(gl.TEXTURE_2D, gl.createTexture());
+      gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+      gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, false);
+      gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, image);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+      gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+    }
+    // On a small screen the picture is shown well under its own size. The canvas then gets the picture scaled
+    // down by the browser, so its still frame matches the drawing it covers.
+    function fit() {
+      var nw = src.naturalWidth, nh = src.naturalHeight;
+      var tw = Math.round(hero.clientWidth * (window.devicePixelRatio || 1));
+      if (!tw || tw >= nw * 0.8) { tw = nw; }
+      if (tw === curW) { return; }
+      var th = Math.round(nh * tw / nw), tex = src;
+      if (tw < nw) {
+        tex = document.createElement("canvas");
+        tex.width = tw; tex.height = th;
+        var cx = tex.getContext("2d");
+        cx.imageSmoothingEnabled = true; cx.imageSmoothingQuality = "high";
+        cx.drawImage(src, 0, 0, tw, th);
+      }
+      canvas.width = tw; canvas.height = th;
+      gl.viewport(0, 0, tw, th);
+      gl.uniform2f(uRes, tw, th);
+      texture(0, tex);
+      curW = tw;
+    }
+    function draw(thDeg, phDeg) {
+      gl.uniform1f(uTheta, thDeg * D2R); gl.uniform1f(uPhi, phDeg * D2R);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+    }
+
+    function hide() { if (canvas) { canvas.style.visibility = "hidden"; } }
+    function stop() {
+      if (raf) { cancelAnimationFrame(raf); raf = 0; }
+      if (timer) { clearTimeout(timer); timer = 0; }
+      hide();
+    }
+    function isOpen() { return col.classList.contains("is-open"); }
+    function enabled() { return ready && !dead && onScreen && tabVisible && isOpen() && !mq.matches; }
+
+    function frame(now) {
+      raf = 0;
+      if (!enabled()) { stop(); return; }
+      var t = (now - t0) / 1000;
+      if (t < 0) { t = 0; }
+      if (finished(t)) { hide(); schedule(PAUSE); return; }
+      var a = angles(t);
+      draw(a[0], a[1]);
+      raf = requestAnimationFrame(frame);
+    }
+    function shake() {
+      timer = 0;
+      if (!enabled()) { return; }
+      fit();
+      draw(0, 0);
+      canvas.style.visibility = "visible";
+      t0 = performance.now();
+      raf = requestAnimationFrame(frame);
+    }
+    function schedule(ms) {
+      if (timer) { clearTimeout(timer); }
+      timer = enabled() ? setTimeout(shake, ms) : 0;
+    }
+    // Called when the card opens or closes, the drawing scrolls into or out of view, or the tab is hidden or shown.
+    function update() {
+      if (dead) { return; }
+      if (go && !started && isOpen() && !mq.matches) { started = true; setup(); }
+      if (!enabled()) { stop(); }
+      else if (!raf && !timer) { schedule(FIRST); }
+    }
+
+    function setup() {
+      var url = hero.currentSrc || hero.src;
+      var img = new Image(), wimg = new Image(), left = 2;
+      function loaded() {
+        left -= 1;
+        if (left > 0) { return; }
+        try {
+          if (!img.naturalWidth || !wimg.naturalWidth) { dead = true; return; }
+          src = img;
+          canvas = document.createElement("canvas");
+          canvas.className = "fx-shake";
+          canvas.setAttribute("aria-hidden", "true");
+          canvas.width = img.naturalWidth; canvas.height = img.naturalHeight;
+          gl = canvas.getContext("webgl", { preserveDrawingBuffer: true, antialias: false, alpha: false, premultipliedAlpha: false });
+          if (!gl) { canvas = null; dead = true; return; }
+          var pr = gl.createProgram();
+          gl.attachShader(pr, shader(gl.VERTEX_SHADER, VS));
+          gl.attachShader(pr, shader(gl.FRAGMENT_SHADER, FS_SRC));
+          gl.linkProgram(pr);
+          if (!gl.getProgramParameter(pr, gl.LINK_STATUS)) { throw new Error("link"); }
+          gl.useProgram(pr);
+          gl.bindBuffer(gl.ARRAY_BUFFER, gl.createBuffer());
+          gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([-1, -1, 1, -1, -1, 1, 1, 1]), gl.STATIC_DRAW);
+          var loc = gl.getAttribLocation(pr, "a");
+          gl.enableVertexAttribArray(loc);
+          gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
+          texture(0, img); texture(1, wimg);
+          gl.uniform1i(gl.getUniformLocation(pr, "img"), 0);
+          gl.uniform1i(gl.getUniformLocation(pr, "wt"), 1);
+          uRes = gl.getUniformLocation(pr, "res");
+          gl.uniform2f(uRes, canvas.width, canvas.height);
+          curW = canvas.width;
+          gl.uniform2f(gl.getUniformLocation(pr, "size"), W, H);
+          gl.uniform2f(gl.getUniformLocation(pr, "c1"), C1[0], C1[1]);
+          gl.uniform2f(gl.getUniformLocation(pr, "pp"), P[0], P[1]);
+          uTheta = gl.getUniformLocation(pr, "theta"); uPhi = gl.getUniformLocation(pr, "phi");
+          gl.viewport(0, 0, canvas.width, canvas.height);
+          canvas.addEventListener("webglcontextlost", function (e) {
+            e.preventDefault(); dead = true; stop();
+          });
+          fx.appendChild(canvas);
+          ready = true;
+          update();
+        } catch (e) { dead = true; stop(); }
+      }
+      img.onload = loaded; wimg.onload = loaded;
+      img.onerror = function () { dead = true; }; wimg.onerror = function () { dead = true; };
+      img.src = url; wimg.src = "img/home/26-folding-arm-shirt-weights.webp";
+    }
+
+    function start() {
+      try {
+        go = true;
+        if ("IntersectionObserver" in window) {
+          new IntersectionObserver(function (entries) {
+            onScreen = entries[entries.length - 1].isIntersecting; update();
+          }).observe(fx);
+        } else { onScreen = true; }
+        if ("MutationObserver" in window) {
+          new MutationObserver(update).observe(col, { attributes: true, attributeFilter: ["class"] });
+        }
+        document.addEventListener("visibilitychange", function () {
+          tabVisible = !document.hidden; update();
+        });
+        update();
+      } catch (e) { dead = true; stop(); }
+    }
+
+    // Wait until the page has loaded, then a little longer, so the first paint never waits on this.
+    function later() { setTimeout(start, 400); }
+    if (document.readyState === "complete") { later(); }
+    else { window.addEventListener("load", later); }
+  } catch (e) { /* the still drawing stays */ }
+})();
 </script>
 <script data-goatcounter="https://artificialminds.goatcounter.com/count" async src="//gc.zgo.at/count.js"></script>
 </body>
