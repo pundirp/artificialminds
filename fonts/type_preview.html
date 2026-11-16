@@ -119,7 +119,11 @@ th,td{text-align:left;padding:.45rem .5rem .45rem 0;border-bottom:1px solid var(
 td.n,th.n{text-align:right}
 ol{margin:.4rem 0 0;padding-left:1.3rem} li{margin:.35rem 0}
 @media (max-width:560px){.row{grid-template-columns:minmax(0,1fr)}}
-</style></head><body><main>
+</style><!-- focus ring guard begin. The focus ring belongs to a reader on the keyboard. After a click, a browser draws the ring as soon as any key goes down, Shift or the screenshot keys included. While the html element has data-ptr, the ring stays hidden. Tab takes data-ptr off, and so does an arrow, Home or End key that the page itself uses to move the focus. A pointer puts it back. Without JavaScript nothing changes. The same block is on every page. -->
+<style>html[data-ptr] :focus-visible:not(input,textarea,select,[contenteditable]){outline:none!important}</style>
+<script>(function(){var r=document.documentElement,nav={ArrowUp:1,ArrowDown:1,ArrowLeft:1,ArrowRight:1,Home:1,End:1};function ptr(){r.setAttribute('data-ptr','')}ptr();addEventListener('pointerdown',ptr,true);addEventListener('keydown',function(e){if(e.metaKey||e.ctrlKey||e.altKey)return;if(e.key==='Tab'||(nav[e.key]&&e.defaultPrevented))r.removeAttribute('data-ptr')});})();</script>
+<!-- focus ring guard end -->
+</head><body><main>
 <p class="t-label"><a href="../index.html" style="color:inherit">&larr;&nbsp; Artificial Minds</a></p>
 <h1 class="t-title">Type roles</h1>
 <p class="t-lead lead">The type roles for every page on the site, from 29 October 2026. Seven sizes, two weights and one small-caps treatment make up twelve roles. Your Order Is on the Truck is the first page on them.</p>

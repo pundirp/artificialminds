@@ -612,6 +612,10 @@ p.endlink.endlink.endlink{font-family:var(--serif);font-size:.82rem;color:var(--
 p.endlink.endlink.endlink a{color:inherit;text-decoration:none;border-bottom:0}
 p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{color:var(--ink);text-decoration:underline;text-decoration-color:var(--ink);text-decoration-thickness:1px;text-underline-offset:.15em;border-bottom:0}
 </style>
+<!-- focus ring guard begin. The focus ring belongs to a reader on the keyboard. After a click, a browser draws the ring as soon as any key goes down, Shift or the screenshot keys included. While the html element has data-ptr, the ring stays hidden. Tab takes data-ptr off, and so does an arrow, Home or End key that the page itself uses to move the focus. A pointer puts it back. Without JavaScript nothing changes. The same block is on every page. -->
+<style>html[data-ptr] :focus-visible:not(input,textarea,select,[contenteditable]){outline:none!important}</style>
+<script>(function(){var r=document.documentElement,nav={ArrowUp:1,ArrowDown:1,ArrowLeft:1,ArrowRight:1,Home:1,End:1};function ptr(){r.setAttribute('data-ptr','')}ptr();addEventListener('pointerdown',ptr,true);addEventListener('keydown',function(e){if(e.metaKey||e.ctrlKey||e.altKey)return;if(e.key==='Tab'||(nav[e.key]&&e.defaultPrevented))r.removeAttribute('data-ptr')});})();</script>
+<!-- focus ring guard end -->
 </head>
 <body>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">

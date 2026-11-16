@@ -116,7 +116,7 @@ h1 br{display:none}
 }
 .title a{display:grid;grid-template-columns:auto minmax(0,1fr);column-gap:.9rem;align-items:baseline;color:var(--ink);cursor:pointer}
 .title .tt{transition:color .25s var(--change)}
-.title a:hover .tt,.title a:focus-visible .tt{color:var(--red)}
+.title a:hover .tt,html:not([data-ptr]) .title a:focus-visible .tt{color:var(--red)}
 .num{font-size:1.4rem;line-height:1;color:var(--red);font-variant-numeric:lining-nums tabular-nums}
 /* the blurb takes the size and colour of the bylines in the title column; the date is the same serif at that size */
 .blurb{font-size:.95rem;line-height:1.6;color:var(--ink-soft);max-width:30rem;text-wrap:pretty}
@@ -446,7 +446,7 @@ html .signature a.sitemap-link{color:var(--ink);padding:5px 4px;margin:0 -4px -5
   .sitemap-link img{height:26px}
 }
 .sitemap-label{display:inline-block;margin-right:.5em;font-family:var(--serif);font-size:1rem;font-variant:small-caps;letter-spacing:.06em;opacity:0;transition:opacity .15s ease}
-.sitemap-link:focus-visible .sitemap-label{opacity:1}
+html:not([data-ptr]) .sitemap-link:focus-visible .sitemap-label{opacity:1}
 @media (hover:hover){.sitemap-link:hover .sitemap-label{opacity:1}}
 @media (hover:none),(pointer:coarse),(max-width:760px){.sitemap-label{opacity:1;transition:none}}
 @media (prefers-reduced-motion:reduce){.sitemap-label{transition:none}}
@@ -1108,6 +1108,10 @@ html.rm .sitemap-label{transition:none}
 <!-- cardfx:css-end -->
 <script>(function(d){d.classList.add("js");try{if(matchMedia("(prefers-reduced-motion: reduce)").matches)d.classList.add("rm")}catch(e){}})(document.documentElement)
 </script>
+<!-- focus ring guard begin. The focus ring belongs to a reader on the keyboard. After a click, a browser draws the ring as soon as any key goes down, Shift or the screenshot keys included. While the html element has data-ptr, the ring stays hidden. Tab takes data-ptr off, and so does an arrow, Home or End key that the page itself uses to move the focus. A pointer puts it back. Without JavaScript nothing changes. The same block is on every page. -->
+<style>html[data-ptr] :focus-visible:not(input,textarea,select,[contenteditable]){outline:none!important}</style>
+<script>(function(){var r=document.documentElement,nav={ArrowUp:1,ArrowDown:1,ArrowLeft:1,ArrowRight:1,Home:1,End:1};function ptr(){r.setAttribute('data-ptr','')}ptr();addEventListener('pointerdown',ptr,true);addEventListener('keydown',function(e){if(e.metaKey||e.ctrlKey||e.altKey)return;if(e.key==='Tab'||(nav[e.key]&&e.defaultPrevented))r.removeAttribute('data-ptr')});})();</script>
+<!-- focus ring guard end -->
 </head>
 <body>
 <main class="page">
@@ -1324,7 +1328,7 @@ html.rm .sitemap-label{transition:none}
             <span class="art"><a class="fx-link" href="folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="9" style="--far:1.075"><img class="fx-img" src="img/home/26-folding-arm-shirt-full.webp" srcset="img/home/26-folding-arm-shirt-700.webp 700w, img/home/26-folding-arm-shirt-full.webp 1290w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(1.3 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1290" height="1200" alt="A pencil drawing of a robot arm and a white shirt. The arm holds one cuff in its gripper. The rest of the shirt is wrapped around the arm and tied in a knot at its elbow." loading="eager" decoding="sync"></span></a></span>
             <div class="words">
               <p class="title"><a href="folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html"><span class="num">9</span><span class="tt">Folding a Protein, Folding a Shirt</span></a></p>
-              <p class="blurb">Deep learning’s most famous win is a folded protein. Its most stubborn chore is a folded shirt. In between, it names songs, forecasts weather and reads a scroll burnt in 79 AD. Look inside a dozen real deep learning networks and see how each one is built.</p>
+              <p class="blurb">Deep learning’s most famous win is a folded protein. Its most stubborn chore is a folded shirt. Look inside a dozen real deep learning networks and see how each one is built.</p>
               <div class="meta"><time class="when" datetime="2026-11">November 2026</time></div>
             </div>
           </div>
@@ -3480,7 +3484,7 @@ html.rm .sitemap-label{transition:none}
   function syncKb() {
     cols.forEach(function (c) {
       var b = btnOf(c), on = false;
-      try { on = document.activeElement === b && !b.classList.contains('no-ring') && b.matches(':focus-visible'); } catch (err) { on = false; }
+      try { on = document.activeElement === b && !b.classList.contains('no-ring') && b.matches(':focus-visible') && !document.documentElement.hasAttribute('data-ptr'); } catch (err) { on = false; }
       c.classList.toggle('kbf', on);
     });
   }

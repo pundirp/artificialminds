@@ -191,12 +191,12 @@ h1{font-weight:400;font-size:27px;line-height:1.2;letter-spacing:-.01em;margin:0
 .card[hidden]{display:none}
 .open-hint{display:block;margin-top:.7rem;font-size:.82rem;color:var(--ink);opacity:0;transition:opacity .18s ease}
 /* the thin border turns ink on hover and keyboard focus: the cue that the card opens */
-[role="button"].card:focus-visible{border-color:var(--ink)}
-[role="button"].card:focus-visible .open-hint{opacity:1}
+html:not([data-ptr]) [role="button"].card:focus-visible{border-color:var(--ink)}
+html:not([data-ptr]) [role="button"].card:focus-visible .open-hint{opacity:1}
 .book-title{font-weight:400;font-size:1.12rem;line-height:1.25;
   text-decoration:underline;text-decoration-color:transparent;text-decoration-thickness:1px;text-underline-offset:.15em;
   transition:text-decoration-color .18s ease}
-[role="button"].card:focus-visible .book-title{text-decoration-color:var(--ink)}
+html:not([data-ptr]) [role="button"].card:focus-visible .book-title{text-decoration-color:var(--ink)}
 @media (hover:hover){
   [role="button"].card:hover{border-color:var(--ink)}
   [role="button"].card:hover .open-hint{opacity:1}
@@ -360,9 +360,9 @@ footer p.gap{margin-top:.9rem}
   opacity:0;transition:opacity .08s linear .2s}
 /* opening takes a little longer than falling shut; the pages show at once
    and, on the way back, wait until the cover has closed over them */
-.card:focus-visible :is(.shelf-cover,.mini-cover){transform:translateY(-2px);box-shadow:var(--book-shadow);transition-duration:.32s;transition-timing-function:cubic-bezier(.3,.7,.3,1)}
-.card:focus-visible :is(.shelf-cover,.mini-cover) img{transform:rotateY(-26deg);transition:transform .32s cubic-bezier(.3,.7,.3,1)}
-.card:focus-visible :is(.shelf-cover,.mini-cover)::before{opacity:1;transition:opacity .06s linear}
+html:not([data-ptr]) .card:focus-visible :is(.shelf-cover,.mini-cover){transform:translateY(-2px);box-shadow:var(--book-shadow);transition-duration:.32s;transition-timing-function:cubic-bezier(.3,.7,.3,1)}
+html:not([data-ptr]) .card:focus-visible :is(.shelf-cover,.mini-cover) img{transform:rotateY(-26deg);transition:transform .32s cubic-bezier(.3,.7,.3,1)}
+html:not([data-ptr]) .card:focus-visible :is(.shelf-cover,.mini-cover)::before{opacity:1;transition:opacity .06s linear}
 @media (hover:hover){
   .card:hover :is(.shelf-cover,.mini-cover){transform:translateY(-2px);box-shadow:var(--book-shadow);transition-duration:.32s;transition-timing-function:cubic-bezier(.3,.7,.3,1)}
   .card:hover :is(.shelf-cover,.mini-cover) img{transform:rotateY(-26deg);transition:transform .32s cubic-bezier(.3,.7,.3,1)}
@@ -429,8 +429,8 @@ footer p.gap{margin-top:.9rem}
   /* nothing swings: the cover stays shut and in colour, the book takes its
      shadow, and the detail card opens on a still, closed cover */
   .shelf-cover,.mini-cover,.shelf-cover img,.mini-cover img{transition:none}
-  .card:focus-visible :is(.shelf-cover,.mini-cover),.card:focus-visible :is(.shelf-cover,.mini-cover) img{transform:none}
-  .card:focus-visible :is(.shelf-cover,.mini-cover)::before{opacity:0}
+  html:not([data-ptr]) .card:focus-visible :is(.shelf-cover,.mini-cover),html:not([data-ptr]) .card:focus-visible :is(.shelf-cover,.mini-cover) img{transform:none}
+  html:not([data-ptr]) .card:focus-visible :is(.shelf-cover,.mini-cover)::before{opacity:0}
   .card:hover :is(.shelf-cover,.mini-cover),.card:hover :is(.shelf-cover,.mini-cover) img{transform:none}
   .card:hover :is(.shelf-cover,.mini-cover)::before{opacity:0}
   .modal.open .modal-dialog,.modal.open .modal-book img,.modal.open .modal-book::before,
@@ -468,6 +468,10 @@ p.endlink.endlink.endlink{font-family:var(--serif);font-size:.82rem;color:var(--
 p.endlink.endlink.endlink a{color:inherit;text-decoration:none;border-bottom:0}
 p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{color:var(--ink);text-decoration:underline;text-decoration-color:var(--ink);text-decoration-thickness:1px;text-underline-offset:.15em;border-bottom:0}
 </style>
+<!-- focus ring guard begin. The focus ring belongs to a reader on the keyboard. After a click, a browser draws the ring as soon as any key goes down, Shift or the screenshot keys included. While the html element has data-ptr, the ring stays hidden. Tab takes data-ptr off, and so does an arrow, Home or End key that the page itself uses to move the focus. A pointer puts it back. Without JavaScript nothing changes. The same block is on every page. -->
+<style>html[data-ptr] :focus-visible:not(input,textarea,select,[contenteditable]){outline:none!important}</style>
+<script>(function(){var r=document.documentElement,nav={ArrowUp:1,ArrowDown:1,ArrowLeft:1,ArrowRight:1,Home:1,End:1};function ptr(){r.setAttribute('data-ptr','')}ptr();addEventListener('pointerdown',ptr,true);addEventListener('keydown',function(e){if(e.metaKey||e.ctrlKey||e.altKey)return;if(e.key==='Tab'||(nav[e.key]&&e.defaultPrevented))r.removeAttribute('data-ptr')});})();</script>
+<!-- focus ring guard end -->
 </head>
 <body>
 <div class="sheet">
