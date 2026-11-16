@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-15T18:55:28Z",
+  "generated": "2026-11-16T06:41:32Z",
   "totals": {
-    "visitors_all": 189,
-    "visitors_30d": 154,
-    "views_all": 243,
-    "visits_all": 111,
-    "views_30d": 202,
-    "visits_30d": 86
+    "visitors_all": 201,
+    "visitors_30d": 165,
+    "views_all": 262,
+    "visits_all": 121,
+    "views_30d": 220,
+    "visits_30d": 95
   },
   "daily": [
-    {
-      "day": "2026-08-18",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-19",
       "views": 0,
@@ -545,9 +539,15 @@
     },
     {
       "day": "2026-11-15",
-      "views": 6,
-      "visits": 6,
-      "visitors": 6
+      "views": 22,
+      "visits": 14,
+      "visitors": 16
+    },
+    {
+      "day": "2026-11-16",
+      "views": 3,
+      "visits": 2,
+      "visitors": 2
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 141,
-      "visits": 59,
-      "visitors": 103
+      "views": 160,
+      "visits": 69,
+      "visitors": 115
     }
   ],
   "projects": [
@@ -598,10 +598,10 @@
     {
       "id": "did-ai-write-this",
       "name": "A Likely Story",
-      "views_all": 17,
-      "visitors_all": 13,
-      "views_30d": 15,
-      "visitors_30d": 11
+      "views_all": 19,
+      "visitors_all": 15,
+      "views_30d": 17,
+      "visitors_30d": 13
     },
     {
       "id": "artificial-mind-of-your-own",
@@ -646,17 +646,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 102,
-      "visitors_all": 75,
-      "views_30d": 87,
-      "visitors_30d": 61
+      "views_all": 114,
+      "visitors_all": 83,
+      "views_30d": 98,
+      "visitors_30d": 68
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 102,
-      "visitors_all": 75
+      "views_all": 114,
+      "visitors_all": 83
     },
     {
       "path": "/stillpoint/stillpoint.html",
@@ -694,18 +694,23 @@
       "visitors_all": 5
     },
     {
+      "path": "/did-ai-write-this/a-likely-story.html",
+      "views_all": 6,
+      "visitors_all": 6
+    },
+    {
       "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
       "views_all": 5,
       "visitors_all": 5
     },
     {
-      "path": "/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html",
+      "path": "/about/about.html",
       "views_all": 5,
-      "visitors_all": 4
+      "visitors_all": 2
     },
     {
-      "path": "/did-ai-write-this/a-likely-story.html",
-      "views_all": 4,
+      "path": "/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html",
+      "views_all": 5,
       "visitors_all": 4
     },
     {
@@ -747,17 +752,12 @@
       "path": "/artificial-mind-of-your-own/an-artificial-mind-of-your-own.html",
       "views_all": 1,
       "visitors_all": 1
-    },
-    {
-      "path": "/can-artificial-minds-feel/c03-two-reports.html",
-      "views_all": 1,
-      "visitors_all": 1
     }
   ],
   "countries": [
     {
       "name": "United States",
-      "visitors": 128
+      "visitors": 136
     },
     {
       "name": "United Kingdom",
@@ -765,11 +765,15 @@
     },
     {
       "name": "Canada",
-      "visitors": 5
+      "visitors": 6
     },
     {
       "name": "India",
       "visitors": 4
+    },
+    {
+      "name": "Netherlands",
+      "visitors": 2
     },
     {
       "name": "Argentina",
@@ -788,7 +792,7 @@
       "visitors": 1
     },
     {
-      "name": "Netherlands",
+      "name": "Pakistan",
       "visitors": 1
     },
     {
@@ -807,11 +811,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 121
+      "visitors": 129
     },
     {
       "name": "Safari",
-      "visitors": 32
+      "visitors": 35
     },
     {
       "name": "Firefox",
@@ -821,37 +825,37 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 94
+      "visitors": 96
     },
     {
       "name": "Windows",
-      "visitors": 43
+      "visitors": 45
     },
     {
       "name": "iOS",
-      "visitors": 12
+      "visitors": 15
     },
     {
       "name": "Linux",
-      "visitors": 6
+      "visitors": 10
     }
   ],
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 79
+      "visitors": 83
     },
     {
       "name": "Large screen",
-      "visitors": 49
-    },
-    {
-      "name": "Tablet",
-      "visitors": 14
+      "visitors": 51
     },
     {
       "name": "Phone",
-      "visitors": 13
+      "visitors": 16
+    },
+    {
+      "name": "Tablet",
+      "visitors": 16
     },
     {
       "name": "Unknown",
@@ -861,7 +865,7 @@
   "referrers": [
     {
       "name": "Google",
-      "visitors": 5
+      "visitors": 6
     },
     {
       "name": "chatgpt.com",
@@ -884,7 +888,7 @@
     "rows": [
       {
         "name": "Google",
-        "visits": 5
+        "visits": 6
       },
       {
         "name": "chatgpt.com",
@@ -903,7 +907,7 @@
         "visits": 1
       }
     ],
-    "no_source": 74,
-    "visits": 86
+    "no_source": 82,
+    "visits": 95
   }
 }
