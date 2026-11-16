@@ -68,6 +68,8 @@ a:hover{text-decoration-color:var(--ink)}
 .hero-text{max-width:calc(var(--measure) + 4rem)}
 h1{line-height:1.1;margin:0 0 .7rem;text-wrap:balance}
 .byline{color:var(--ink-soft);line-height:1.55;margin:0}
+.byline > span{display:block}
+.byline > span + span{margin-top:.45em}
 @media (max-width:560px){.hero-art{gap:.9rem;max-width:none}
 .runhead{flex-direction:column;align-items:flex-start;gap:.15rem}}
 /* the sheet grid */
@@ -1315,7 +1317,7 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
 </header>
 
 <div class="hero-text"><h1>Your Order Is on the Truck</h1>
-<p class="byline">A bakery’s flour is late again! Its supplier, <span class="biz">All You Knead</span>, has a new AI agent answering customers. The agent writes back about a truck it made up. What does it take to give an agent the right facts for a real job?</p></div>
+<p class="byline"><span>A bakery’s flour is late again! Its supplier, <span class="biz">All You Knead</span>, has a new AI agent answering customers.</span> <span>The agent writes back about a truck it made up. What does it take to give an agent the right facts for a real job?</span></p></div>
 
 <section class="section leaf ruled" id="preface">
   <h3 class="shoulder">Madeleine’s email</h3>
