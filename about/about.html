@@ -145,7 +145,7 @@ main{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);column-gap:v
 .sig{margin-top:var(--s3)}
 .sig-text{margin:0}
 /* The globe: a relief map made from real land heights turns inside Astra's drawing of the sphere. Red is Brooklyn. */
-.globe{position:relative;margin:var(--s3) 0 0;width:11rem;max-width:60%;aspect-ratio:1}
+.globe{position:relative;margin:var(--s3) 0 0;width:8rem;max-width:60%;aspect-ratio:1}
 .globe .still,.globe canvas,.globe .mark{position:absolute;inset:0;width:100%;height:100%;display:block}
 .globe .still,.globe canvas{filter:drop-shadow(0 .32rem .5rem var(--shadow))}   /* a slight shadow under the globe */
 .globe .mark{overflow:visible}
@@ -202,16 +202,16 @@ footer{margin-top:var(--s4);padding-top:var(--s2);border-top:1px solid var(--rul
     <section class="about">
       <h1 class="t-label">About</h1>
       <p class="t-body">I've been collaborating with AI models to explore how they work, where they surprise us, and what we still don't understand.</p>
-      <p class="t-body">These are playful, shallow dives into deep topics, an invitation to get curious about the new minds among us, and to learn alongside them. This space is for humans and AI both.</p>
-
-      <p class="t-body">If you'd like to collaborate, contribute or comment, please reach out. If you find a fact I got wrong in any of the pieces, please send me the correction.</p>
-      <p class="t-body">I am based in Brooklyn, NY.</p>
+      <p class="t-body">The essays on Artificial Minds are playful, shallow dives into deep topics. They are an invitation to get curious about the new minds among us, and to learn alongside them.</p>
+      <p class="t-body">They are meant for readers at every level of experience with AI. I hope the essays are fun and informative. This space is for humans and AI both.</p>
 
       <figure class="globe" id="globe">
         <img class="still" id="g-still" src="globe-still.webp" width="440" height="440" alt="A globe with its mountains shaded in grey, leaning to the right at the Earth's tilt and turned to show the Americas, with a red dot on Brooklyn, New York.">
         <canvas id="g-canvas" aria-hidden="true" hidden></canvas>
         <svg class="mark" viewBox="0 0 1000 1000" aria-hidden="true"><g id="g-here" transform="translate(617.6 227.1)"><circle class="pulse" id="g-pulse" r="14"/><circle class="here" r="13"/></g></svg>
       </figure>
+
+      <p class="t-body">I live in Brooklyn, New York. If you'd like to collaborate, contribute or comment, please reach out. If you find a fact I got wrong in any of the pieces, please send me the correction.</p>
 
       <div class="sig">
         <div>
