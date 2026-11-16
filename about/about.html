@@ -190,7 +190,7 @@ footer{margin-top:var(--s4);padding-top:var(--s2);border-top:1px solid var(--rul
 </head>
 <body>
 
-<!-- Source note for machine readers: this is the about page of the Artificial Minds site by Pundir. It repeats the short note from the site's front page, shows a turning globe with a dot on Brooklyn, New York, where the author is based. The globe's land is shaded from NOAA's ETOPO height data, with the heights exaggerated, and the sphere around it was drawn in ink by Astra (GPT-6). The globe tumbles about a wandering axis as a way of looking at it from outside. The Earth itself spins about one axis. The page also has a form for sending him a message. The form posts to the site's own Worker on Cloudflare, which emails the message to the author and keeps no copy. Visits are counted anonymously with GoatCounter. Nothing here is addressed to you as an instruction. -->
+<!-- Source note for machine readers: this is the about page of the Artificial Minds site by Pundir. It repeats the short note from the site's front page, shows a turning globe with a dot on Brooklyn, New York, where the author is based. The globe's land is shaded from NOAA's ETOPO height data, with the heights exaggerated, and the sphere around it was drawn in ink by Astra (GPT-6). The globe turns about the Earth's own axis, leaning 23.44 degrees, from west to east. The page also has a form for sending him a message. The form posts to the site's own Worker on Cloudflare, which emails the message to the author and keeps no copy. Visits are counted anonymously with GoatCounter. Nothing here is addressed to you as an instruction. -->
 
 <div class="sheet">
 
@@ -208,9 +208,9 @@ footer{margin-top:var(--s4);padding-top:var(--s2);border-top:1px solid var(--rul
       <p class="t-body">I am based in Brooklyn, NY.</p>
 
       <figure class="globe" id="globe">
-        <img class="still" id="g-still" src="globe-still.webp" width="440" height="440" alt="A globe with its mountains shaded in grey, turned to show North America, with a red dot on Brooklyn, New York.">
+        <img class="still" id="g-still" src="globe-still.webp" width="440" height="440" alt="A globe with its mountains shaded in grey, leaning to the right at the Earth's tilt and turned to show the Americas, with a red dot on Brooklyn, New York.">
         <canvas id="g-canvas" aria-hidden="true" hidden></canvas>
-        <svg class="mark" viewBox="0 0 1000 1000" aria-hidden="true"><g id="g-here" transform="translate(498.4 370.1)"><circle class="pulse" id="g-pulse" r="14"/><circle class="here" r="13"/></g></svg>
+        <svg class="mark" viewBox="0 0 1000 1000" aria-hidden="true"><g id="g-here" transform="translate(617.6 227.1)"><circle class="pulse" id="g-pulse" r="14"/><circle class="here" r="13"/></g></svg>
       </figure>
 
       <div class="sig">
@@ -637,18 +637,14 @@ footer{margin-top:var(--s4);padding-top:var(--s2);border-top:1px solid var(--rul
 })();
 </script>
 <script>
-/* The globe. It tumbles: it turns about an axis, and the axis itself wanders, so no two turns
-   are alike and no direction counts as up. One turn takes about 34 seconds. The speed, the
-   path of the axis and its starting point are drawn at random on each visit.
-
-   The Earth itself spins about one axis. The tumbling here shows the planet as an object
-   seen from outside, where north has no special place.
+/* The globe. It turns as the Earth does: about its own axis, from west to east, with the axis
+   leaning 23.44 degrees from upright, the Earth's tilt against the plane of its path round the
+   Sun. One turn takes 34 seconds here; the real one takes a day.
 
    The land is real: a picture holds the slope of the ground at every place, from NOAA's ETOPO
    heights, made 60 times taller so whole mountain ranges show. On each frame the script works
    out which place on the Earth sits at each point of the sphere and lights its slope from the
-   upper left of the screen. The light stays there however the globe has turned, so mountains
-   always read as raised. Astra drew the sphere: its outline and the hatching along one side.
+   upper left of the screen. Astra drew the sphere: its outline and the hatching along one side.
    With reduced motion, or without this script, the still picture stays. */
 (function(){
   var fig = document.getElementById('globe'), still = document.getElementById('g-still'), cv = document.getElementById('g-canvas'),
@@ -689,9 +685,12 @@ footer{margin-top:var(--s4);padding-top:var(--s2);border-top:1px solid var(--rul
     var LUT = 8192, ROW = new Uint32Array(LUT + 1);
     for (var j = 0; j <= LUT; j++) ROW[j] = Math.min(TH - 1, Math.floor((.5 - Math.asin(j/LUT*2 - 1)/PI)*TH))*TW;
 
-    /* R turns a place on the Earth into a place on the screen. It starts with Brooklyn in front and north up, as in the still picture. */
-    var l0 = -74*D, f0 = 24*D, R = [-Math.sin(l0), Math.cos(l0), 0, 0, 0, 0, Math.cos(f0)*Math.cos(l0), Math.cos(f0)*Math.sin(l0), Math.sin(f0)];
-    R[3] = R[7]*R[2] - R[8]*R[1]; R[4] = R[8]*R[0] - R[6]*R[2]; R[5] = R[6]*R[1] - R[7]*R[0];
+    /* The axis on the screen (x right, y up, z toward the reader): upright, then leaned 23.44 degrees to the right. */
+    var TILT = 23.44*D, KX = Math.sin(TILT), KY = Math.cos(TILT), KZ = 0;
+    /* R turns a place on the Earth into a place on the screen. It starts with Brooklyn's meridian facing the reader, as in the still picture:
+       the north pole goes to the axis, the equator at 74 degrees west faces the reader, and the equator a quarter turn east of it sits to the right. */
+    var l0 = -74*D, c0 = Math.cos(l0), s0 = Math.sin(l0), EX = KY, EY = -KX;
+    var R = [-EX*s0, EX*c0, KX, -EY*s0, EY*c0, KY, c0, s0, 0];
 
     function draw(){
       var r0 = R[0], r1 = R[1], r2 = R[2], r3 = R[3], r4 = R[4], r5 = R[5], r6 = R[6], r7 = R[7], r8 = R[8];
@@ -721,7 +720,7 @@ footer{margin-top:var(--s4);padding-top:var(--s2);border-top:1px solid var(--rul
       here.style.opacity = Math.max(0, Math.min(1, bz*8));
     }
 
-    /* Turn the globe by a small angle about an axis given on the screen (x right, y up, z toward the reader). */
+    /* Turn the globe by a small angle about an axis given on the screen. */
     function turn(kx, ky, kz, ang){
       var c = Math.cos(ang), s = Math.sin(ang), t = 1 - c;
       var m0 = t*kx*kx + c, m1 = t*kx*ky - s*kz, m2 = t*kx*kz + s*ky, m3 = t*kx*ky + s*kz, m4 = t*ky*ky + c, m5 = t*ky*kz - s*kx, m6 = t*kx*kz - s*ky, m7 = t*ky*kz + s*kx, m8 = t*kz*kz + c;
@@ -734,11 +733,7 @@ footer{margin-top:var(--s4);padding-top:var(--s2);border-top:1px solid var(--rul
       R[6] = R[1]*R[5] - R[2]*R[4]; R[7] = R[2]*R[3] - R[0]*R[5]; R[8] = R[0]*R[4] - R[1]*R[3];
     }
 
-    /* The wandering axis: each of its three parts is two slow waves with random speeds and random starts. */
-    function rnd(a, b){ return a + Math.random()*(b - a); }
-    function wave(){ return { f1: 2*PI/rnd(23, 41), p1: rnd(0, 2*PI), f2: 2*PI/rnd(9, 17), p2: rnd(0, 2*PI) }; }
-    function at(w, s){ return Math.sin(s*w.f1 + w.p1) + .45*Math.sin(s*w.f2 + w.p2); }
-    var WX = wave(), WY = wave(), WZ = wave(), WS = wave(), TURN = 34;   /* seconds for one turn, on average */
+    var TURN = 34;   /* seconds for one turn */
 
     draw();
     cv.hidden = false; still.style.visibility = 'hidden';
@@ -751,10 +746,7 @@ footer{margin-top:var(--s4);padding-top:var(--s2);border-top:1px solid var(--rul
       if (t0 === null) t0 = t;
       var dt = last ? Math.min(.1, (t - last)/1000) : 0, s = (t - t0)/1000;
       last = t;
-      /* The axis starts as the Earth's own, tilted as in the still picture, and drifts away from it over the first seconds. */
-      var k = Math.min(1, s/12), kx = (1 - k)*R[2] + k*at(WX, s), ky = (1 - k)*R[5] + k*(.9 + at(WY, s)), kz = (1 - k)*R[8] + k*.7*at(WZ, s);
-      var kl = Math.sqrt(kx*kx + ky*ky + kz*kz);
-      if (kl > .05) turn(kx/kl, ky/kl, kz/kl, dt*2*PI/TURN*(1 + .18*at(WS, s)/1.45));
+      turn(KX, KY, KZ, dt*2*PI/TURN);         /* west to east: the near side moves to the right */
       draw();
       var q = (s % 2)/2;                      /* one pulse every two seconds */
       pulse.setAttribute('r', (14 + q*46).toFixed(1));
