@@ -120,6 +120,9 @@ h1 br{display:none}
 .num{font-size:1.4rem;line-height:1;color:var(--red);font-variant-numeric:lining-nums tabular-nums}
 /* the blurb takes the size and colour of the bylines in the title column; the date is the same serif at that size */
 .blurb{font-size:.95rem;line-height:1.6;color:var(--ink-soft);max-width:30rem;text-wrap:pretty}
+/* a blurb in two parts, as the deck of its essay is: the second part sits a little lower */
+.blurb .part{display:block}
+.blurb .part + .part{margin-top:.45em}
 /* a business's name in small capitals on one line, as the article Your Order Is on the Truck sets it (round 28) */
 .biz{white-space:nowrap;font-variant:small-caps;letter-spacing:.06em}
 .meta{
@@ -1306,7 +1309,7 @@ html.rm .sitemap-label{transition:none}
             <span class="art"><a class="fx-link" href="feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="8" style="--far:1.3428"><img class="fx-img" src="img/home/25-truck-drawing-full.webp" srcset="img/home/25-truck-drawing-700.webp 700w, img/home/25-truck-drawing-full.webp 1371w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(2.1 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1371" height="1021" alt="A baker in an apron stands in her bakery’s doorway with her arms folded and smiles at a delivery van at the curb. The van is a flat wooden cutout, propped up from behind with braces." loading="eager" decoding="sync"></span></a></span>
             <div class="words">
               <p class="title"><a href="feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html"><span class="num">8</span><span class="tt">Your Order Is on the Truck</span></a></p>
-              <p class="blurb">A bakery’s flour is late again! Its supplier, <span class="biz">All You Knead</span>, has a new AI agent answering customers. The agent writes back about a truck it made up. What does it take to give an agent the right facts for a real job?</p>
+              <p class="blurb"><span class="part">A bakery’s flour is late again! Its supplier, <span class="biz">All You Knead</span>, has a new AI agent answering customers.</span> <span class="part">The agent writes back about a truck it made up. What does it take to give an agent the right facts for a real job?</span></p>
               <div class="meta"><time class="when" datetime="2026-10">October 2026</time></div>
             </div>
           </div>
@@ -1328,7 +1331,7 @@ html.rm .sitemap-label{transition:none}
             <span class="art"><a class="fx-link" href="folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html" tabindex="-1" aria-hidden="true"><span class="fx" data-card="9" style="--far:1.075"><img class="fx-img" src="img/home/26-folding-arm-shirt-full.webp" srcset="img/home/26-folding-arm-shirt-700.webp 700w, img/home/26-folding-arm-shirt-full.webp 1290w" sizes="(min-width:1280px) max(calc(0.7 * min(100vw - 128px, 1800px) - 420px), calc(1.3 * (100vh - 400px))), (min-width:600px) 38rem, calc(100vw - 2.8rem)" width="1290" height="1200" alt="A pencil drawing of a robot arm and a white shirt. The arm holds one cuff in its gripper. The rest of the shirt is wrapped around the arm and tied in a knot at its elbow." loading="eager" decoding="sync"></span></a></span>
             <div class="words">
               <p class="title"><a href="folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html"><span class="num">9</span><span class="tt">Folding a Protein, Folding a Shirt</span></a></p>
-              <p class="blurb">Deep learning’s most famous win is a folded protein. Its most stubborn chore is a folded shirt. Look inside a dozen real deep learning networks and see how each one is built.</p>
+              <p class="blurb"><span class="part">Deep learning’s most famous win is a folded protein. Its most stubborn chore is a folded shirt.</span> <span class="part">Look inside a dozen real deep learning networks and see how each one is built.</span></p>
               <div class="meta"><time class="when" datetime="2026-11">November 2026</time></div>
             </div>
           </div>
