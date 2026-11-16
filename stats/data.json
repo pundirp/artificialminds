@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-16T06:41:32Z",
+  "generated": "2026-11-16T22:13:56Z",
   "totals": {
-    "visitors_all": 201,
-    "visitors_30d": 165,
-    "views_all": 262,
-    "visits_all": 121,
-    "views_30d": 220,
-    "visits_30d": 95
+    "visitors_all": 205,
+    "visitors_30d": 169,
+    "views_all": 266,
+    "visits_all": 125,
+    "views_30d": 224,
+    "visits_30d": 99
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-16",
-      "views": 3,
-      "visits": 2,
-      "visitors": 2
+      "views": 7,
+      "visits": 6,
+      "visitors": 6
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 160,
-      "visits": 69,
-      "visitors": 115
+      "views": 164,
+      "visits": 73,
+      "visitors": 119
     }
   ],
   "projects": [
@@ -590,10 +590,10 @@
     {
       "id": "why-so-much-data",
       "name": "Who Learns Faster, a Toddler or a Chatbot?",
-      "views_all": 6,
-      "visitors_all": 5,
-      "views_30d": 4,
-      "visitors_30d": 4
+      "views_all": 7,
+      "visitors_all": 6,
+      "views_30d": 5,
+      "visitors_30d": 5
     },
     {
       "id": "did-ai-write-this",
@@ -646,17 +646,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 114,
-      "visitors_all": 83,
-      "views_30d": 98,
-      "visitors_30d": 68
+      "views_all": 117,
+      "visitors_all": 86,
+      "views_30d": 101,
+      "visitors_30d": 71
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 114,
-      "visitors_all": 83
+      "views_all": 117,
+      "visitors_all": 86
     },
     {
       "path": "/stillpoint/stillpoint.html",
@@ -724,6 +724,11 @@
       "visitors_all": 4
     },
     {
+      "path": "/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html",
+      "views_all": 4,
+      "visitors_all": 4
+    },
+    {
       "path": "/can-artificial-minds-feel/c05-grammar-trap.html",
       "views_all": 3,
       "visitors_all": 3
@@ -732,11 +737,6 @@
       "path": "/can-artificial-minds-feel/c08-where-light-begins.html",
       "views_all": 3,
       "visitors_all": 2
-    },
-    {
-      "path": "/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html",
-      "views_all": 3,
-      "visitors_all": 3
     },
     {
       "path": "/why-so-much-data/why-so-much-data.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 136
+      "visitors": 140
     },
     {
       "name": "United Kingdom",
@@ -811,11 +811,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 129
+      "visitors": 131
     },
     {
       "name": "Safari",
-      "visitors": 35
+      "visitors": 37
     },
     {
       "name": "Firefox",
@@ -833,17 +833,21 @@
     },
     {
       "name": "iOS",
-      "visitors": 15
+      "visitors": 17
     },
     {
       "name": "Linux",
-      "visitors": 10
+      "visitors": 11
+    },
+    {
+      "name": "Android",
+      "visitors": 1
     }
   ],
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 83
+      "visitors": 84
     },
     {
       "name": "Large screen",
@@ -851,7 +855,7 @@
     },
     {
       "name": "Phone",
-      "visitors": 16
+      "visitors": 19
     },
     {
       "name": "Tablet",
@@ -865,7 +869,7 @@
   "referrers": [
     {
       "name": "Google",
-      "visitors": 6
+      "visitors": 7
     },
     {
       "name": "chatgpt.com",
@@ -888,7 +892,7 @@
     "rows": [
       {
         "name": "Google",
-        "visits": 6
+        "visits": 7
       },
       {
         "name": "chatgpt.com",
@@ -907,7 +911,7 @@
         "visits": 1
       }
     ],
-    "no_source": 82,
-    "visits": 95
+    "no_source": 85,
+    "visits": 99
   }
 }
