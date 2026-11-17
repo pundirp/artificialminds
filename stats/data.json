@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-17T08:01:35Z",
+  "generated": "2026-11-17T21:00:08Z",
   "totals": {
-    "visitors_all": 216,
-    "visitors_30d": 179,
-    "views_all": 277,
-    "visits_all": 132,
-    "views_30d": 234,
-    "visits_30d": 105
+    "visitors_all": 230,
+    "visitors_30d": 193,
+    "views_all": 294,
+    "visits_all": 136,
+    "views_30d": 251,
+    "visits_30d": 109
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-17",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
+      "views": 17,
+      "visits": 4,
+      "visitors": 14
     }
   ],
   "monthly": [
@@ -565,113 +565,113 @@
     },
     {
       "month": "2026-11",
-      "views": 175,
-      "visits": 80,
-      "visitors": 130
+      "views": 192,
+      "visits": 84,
+      "visitors": 144
     }
   ],
   "projects": [
     {
       "id": "stillpoint",
       "name": "Stillpoint",
-      "views_all": 39,
-      "visitors_all": 29,
-      "views_30d": 27,
-      "visitors_30d": 19
+      "views_all": 40,
+      "visitors_all": 30,
+      "views_30d": 28,
+      "visitors_30d": 20
     },
     {
       "id": "can-artificial-minds-feel",
       "name": "Can Artificial Minds Feel? Search Me.",
-      "views_all": 28,
-      "visitors_all": 22,
-      "views_30d": 22,
-      "visitors_30d": 18
+      "views_all": 30,
+      "visitors_all": 23,
+      "views_30d": 24,
+      "visitors_30d": 19
     },
     {
       "id": "why-so-much-data",
       "name": "Who Learns Faster, a Toddler or a Chatbot?",
-      "views_all": 8,
-      "visitors_all": 7,
-      "views_30d": 6,
-      "visitors_30d": 6
+      "views_all": 9,
+      "visitors_all": 8,
+      "views_30d": 7,
+      "visitors_30d": 7
     },
     {
       "id": "did-ai-write-this",
       "name": "A Likely Story",
-      "views_all": 19,
-      "visitors_all": 15,
-      "views_30d": 17,
-      "visitors_30d": 13
+      "views_all": 20,
+      "visitors_all": 16,
+      "views_30d": 18,
+      "visitors_30d": 14
     },
     {
       "id": "artificial-mind-of-your-own",
       "name": "A Talking Machine of Your Own",
-      "views_all": 7,
-      "visitors_all": 6,
-      "views_30d": 7,
-      "visitors_30d": 6
+      "views_all": 8,
+      "visitors_all": 7,
+      "views_30d": 8,
+      "visitors_30d": 7
     },
     {
       "id": "A-Salon-of-Witnesses",
       "name": "A Salon of Witnesses",
-      "views_all": 16,
-      "visitors_all": 16,
-      "views_30d": 16,
-      "visitors_30d": 16
+      "views_all": 19,
+      "visitors_all": 18,
+      "views_30d": 19,
+      "visitors_30d": 18
     },
     {
       "id": "AI-future-canon",
       "name": "AI Future Canon",
-      "views_all": 17,
-      "visitors_all": 13,
-      "views_30d": 13,
-      "visitors_30d": 9
+      "views_all": 20,
+      "visitors_all": 16,
+      "views_30d": 16,
+      "visitors_30d": 12
     },
     {
       "id": "feeding-an-ai-agent-the-facts",
       "name": "Your Order Is on the Truck",
-      "views_all": 8,
-      "visitors_all": 8,
-      "views_30d": 8,
-      "visitors_30d": 8
+      "views_all": 9,
+      "visitors_all": 9,
+      "views_30d": 9,
+      "visitors_30d": 9
     },
     {
       "id": "folding-a-protein-folding-a-shirt",
       "name": "Folding a Protein, Folding a Shirt",
-      "views_all": 6,
-      "visitors_all": 5,
-      "views_30d": 6,
-      "visitors_30d": 5
+      "views_all": 8,
+      "visitors_all": 6,
+      "views_30d": 8,
+      "visitors_30d": 6
     },
     {
       "id": "home",
       "name": "Home",
-      "views_all": 123,
-      "visitors_all": 92,
-      "views_30d": 106,
-      "visitors_30d": 76
+      "views_all": 125,
+      "visitors_all": 94,
+      "views_30d": 108,
+      "visitors_30d": 78
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 123,
-      "visitors_all": 92
+      "views_all": 125,
+      "visitors_all": 94
     },
     {
       "path": "/stillpoint/stillpoint.html",
-      "views_all": 22,
-      "visitors_all": 17
-    },
-    {
-      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
-      "views_all": 18,
-      "visitors_all": 13
+      "views_all": 23,
+      "visitors_all": 18
     },
     {
       "path": "/AI-future-canon/ai-future-canon.html",
-      "views_all": 17,
-      "visitors_all": 13
+      "views_all": 20,
+      "visitors_all": 16
+    },
+    {
+      "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
+      "views_all": 20,
+      "visitors_all": 14
     },
     {
       "path": "/stillpoint/collection.html",
@@ -685,28 +685,33 @@
     },
     {
       "path": "/A-Salon-of-Witnesses/who-killed-aldous-finch.html",
-      "views_all": 10,
-      "visitors_all": 10
+      "views_all": 11,
+      "visitors_all": 11
     },
     {
       "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
-      "views_all": 6,
+      "views_all": 8,
+      "visitors_all": 7
+    },
+    {
+      "path": "/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html",
+      "views_all": 8,
       "visitors_all": 6
     },
     {
       "path": "/artificial-mind-of-your-own/a-talking-machine-of-your-own.html",
-      "views_all": 6,
-      "visitors_all": 5
-    },
-    {
-      "path": "/did-ai-write-this/a-likely-story.html",
-      "views_all": 6,
+      "views_all": 7,
       "visitors_all": 6
     },
     {
-      "path": "/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html",
+      "path": "/did-ai-write-this/a-likely-story.html",
+      "views_all": 7,
+      "visitors_all": 7
+    },
+    {
+      "path": "/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html",
       "views_all": 6,
-      "visitors_all": 5
+      "visitors_all": 6
     },
     {
       "path": "/about/about.html",
@@ -714,17 +719,12 @@
       "visitors_all": 2
     },
     {
-      "path": "/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html",
+      "path": "/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html",
       "views_all": 5,
       "visitors_all": 5
     },
     {
       "path": "/feeding-an-ai-agent-the-facts/feeding-an-ai-agent-the-facts.html",
-      "views_all": 4,
-      "visitors_all": 4
-    },
-    {
-      "path": "/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html",
       "views_all": 4,
       "visitors_all": 4
     },
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 150
+      "visitors": 162
     },
     {
       "name": "United Kingdom",
@@ -765,7 +765,7 @@
     },
     {
       "name": "Canada",
-      "visitors": 5
+      "visitors": 6
     },
     {
       "name": "India",
@@ -773,6 +773,10 @@
     },
     {
       "name": "Netherlands",
+      "visitors": 2
+    },
+    {
+      "name": "Switzerland",
       "visitors": 2
     },
     {
@@ -802,20 +806,16 @@
     {
       "name": "Poland",
       "visitors": 1
-    },
-    {
-      "name": "Switzerland",
-      "visitors": 1
     }
   ],
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 135
+      "visitors": 148
     },
     {
       "name": "Safari",
-      "visitors": 43
+      "visitors": 44
     },
     {
       "name": "Firefox",
@@ -825,7 +825,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 96
+      "visitors": 109
     },
     {
       "name": "Windows",
@@ -837,7 +837,7 @@
     },
     {
       "name": "Linux",
-      "visitors": 11
+      "visitors": 12
     },
     {
       "name": "Android",
@@ -847,11 +847,11 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 87
+      "visitors": 89
     },
     {
       "name": "Large screen",
-      "visitors": 51
+      "visitors": 62
     },
     {
       "name": "Phone",
@@ -859,7 +859,7 @@
     },
     {
       "name": "Tablet",
-      "visitors": 17
+      "visitors": 18
     },
     {
       "name": "Unknown",
@@ -869,7 +869,7 @@
   "referrers": [
     {
       "name": "Google",
-      "visitors": 7
+      "visitors": 9
     },
     {
       "name": "chatgpt.com",
@@ -892,7 +892,7 @@
     "rows": [
       {
         "name": "Google",
-        "visits": 7
+        "visits": 9
       },
       {
         "name": "chatgpt.com",
@@ -911,7 +911,7 @@
         "visits": 1
       }
     ],
-    "no_source": 91,
-    "visits": 105
+    "no_source": 93,
+    "visits": 109
   }
 }
