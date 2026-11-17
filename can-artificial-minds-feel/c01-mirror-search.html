@@ -40,18 +40,18 @@
 <style>
   :root{
     /* three inks on one paper: black, red, and the paper itself */
-    --paper:#efece1;
-    --tint:#e8e2d2;
-    --ink:#1b1813;
-    --ink-soft:#4a453c;
-    --ink-faint:#665e4e;
-    --ink-ghost:#a29a88;
-    --rule:#d5cdba;
+    --paper:#ffffff;
+    --tint:#f2f2f2;
+    --ink:#111111;
+    --ink-soft:#3a3a3a;
+    --ink-faint:#666666;
+    --ink-ghost:#a8a8a8;
+    --rule:#dadada;
     --rubric:#8c2a1a;
     --note-paper: #ffffff;   /* the paper under each quote frame is opaque white, whatever the ground */
     --note-shadow: rgba(17, 17, 17, .18);   /* the small shadow under each quote frame */
     /* barely printed: a blind stamp on the paper, for the advance control at rest */
-    --blind:#e2dccc;
+    --blind:#eeeeee;
 
     /* the block: one measure, book margins */
     --measure:34rem;
@@ -528,7 +528,7 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
 <style>
 /* site-menu begin */
 
-.site-menu,.menu-open{--m-paper:var(--paper);--m-ink:var(--ink);--m-soft:var(--ink-soft);--m-faint:var(--ink-faint);--m-rule:var(--rule);--m-padx:1rem;--menu-hover-filter:contrast(1.4) brightness(.7);--menu-current-band:color-mix(in srgb, var(--m-ink) 5%, var(--m-paper));--menu-current-num-weight:var(--w-bold, 600);--menu-current-pic-filter:contrast(1.8) brightness(.5)}
+.site-menu,.menu-open{--m-paper:var(--paper);--m-ink:var(--ink);--m-soft:var(--ink-soft);--m-faint:var(--ink-faint);--m-rule:var(--rule);--m-padx:1rem;--menu-current-band:color-mix(in srgb, var(--m-ink) 5%, var(--m-paper));--menu-current-num-weight:var(--w-bold, 600)}
 .menu-open{appearance:none;-webkit-appearance:none;background:none;border:0;border-radius:0;box-shadow:none;margin:0;padding:0;color:var(--m-faint);cursor:pointer;display:flex;align-items:center;justify-content:flex-end;box-sizing:border-box;width:44px;height:40px;min-width:0;min-height:0;max-width:none;line-height:1;text-decoration:none;-webkit-tap-highlight-color:transparent;outline:none}
 .menu-open.menu-fallback{display:none}
 .menu-open .dots{display:flex;gap:4px;align-items:center}
@@ -537,25 +537,23 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
 .menu-open:focus,.menu-open:active{outline:none;box-shadow:none;background:none}
 .menu-open:focus-visible{color:var(--m-ink);outline:none}
 .menu-open:focus-visible .dots{padding-bottom:3px;margin-bottom:-4px;border-bottom:1px solid var(--m-faint)}
-.site-menu{font-family:var(--serif);font-size:1rem;line-height:1.35;position:absolute;inset:auto;margin:0;width:22rem;max-width:calc(100% - 32px);max-height:calc(100dvh - 7rem);overflow-y:auto;overscroll-behavior:contain;padding:.35rem var(--m-padx) 0;background:var(--m-paper);color:var(--m-soft);border:1px solid var(--m-rule);border-radius:0;box-shadow:0 8px 24px color-mix(in srgb,var(--m-ink) 8%,transparent);text-align:left}
+.site-menu{font-family:var(--serif);font-size:1rem;line-height:1.35;position:absolute;inset:auto;margin:0;width:22rem;max-width:calc(100% - 32px);max-height:calc(100dvh - 7rem);overflow-y:auto;overscroll-behavior:contain;padding:.35rem var(--m-padx) 0;background:var(--m-paper);color:var(--m-ink);border:1px solid var(--m-rule);border-radius:0;box-shadow:0 8px 24px color-mix(in srgb,var(--m-ink) 8%,transparent);text-align:left}
 .site-menu .m-cue{display:block;position:sticky;bottom:0;height:22px;margin-top:-22px;background:linear-gradient(to bottom,transparent,var(--m-paper));pointer-events:none;opacity:0}
 @supports (animation-timeline:scroll()){:root .site-menu .m-cue{animation:site-menu-cue linear both !important;animation-timeline:scroll(nearest) !important}}
 @keyframes site-menu-cue{0%,85%{opacity:1}100%{opacity:0}}
 .site-menu ul{list-style:none;margin:0;padding:0}
 .site-menu li{margin:0;padding:0}
-.site-menu a{display:flex;gap:.7rem;align-items:center;min-height:calc(40px + .6rem);padding:.3rem 0;color:var(--m-soft);text-decoration:none;border:0;background:none;line-height:1.3}
-.site-menu .m-n{flex:0 0 1.6rem;color:var(--m-faint)}
-.site-menu .m-img{flex:0 0 56px;width:56px;height:40px;display:block}
-.site-menu .m-img img{display:block;width:56px;height:40px;object-fit:contain;border:0;background:none}
+.site-menu a{display:flex;gap:.7rem;align-items:center;min-height:57px;box-sizing:border-box;padding:0;color:var(--m-ink);text-decoration:none;border:0;background:none;line-height:1.3}
+.site-menu .m-n{flex:0 0 1.6rem;color:var(--m-ink)}
+.site-menu .m-img{flex:0 0 80px;width:80px;height:57px;display:block}
+.site-menu .m-img img{display:block;width:80px;height:57px;object-fit:contain;border:0;background:none}
 .site-menu .m-t{min-width:0;text-wrap:balance;text-decoration-line:none;text-decoration-thickness:1px;text-underline-offset:.18em}
 .site-menu .m-sub{display:block}
 .site-menu a:hover .m-t,.site-menu a:focus-visible .m-t{text-decoration-line:underline}
-.site-menu a:hover .m-img img,.site-menu a:focus-visible .m-img img{filter:var(--menu-hover-filter)}
 .site-menu a:focus-visible{outline:none}
 .site-menu a[aria-current="page"]{pointer-events:none;cursor:default;margin-inline:calc(-1 * var(--m-padx));padding-inline:var(--m-padx);background:var(--menu-current-band)}
 .site-menu a[aria-current="page"] .m-n{color:var(--m-ink);font-weight:var(--menu-current-num-weight)}
 .site-menu a[aria-current="page"] .m-t{color:var(--m-ink);text-decoration-line:none}
-.site-menu a[aria-current="page"] .m-img img{filter:var(--menu-current-pic-filter)}
 .site-menu a[aria-current="page"]:focus-visible{outline:1px solid var(--m-faint);outline-offset:-1px}
 .site-menu .m-end{margin-top:.4rem;padding-top:.4rem;padding-bottom:22px;border-top:1px solid var(--m-rule)}
 .site-menu .m-home,.site-menu .m-end a{min-height:2.4rem}
@@ -563,7 +561,7 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
 .topnav{position:relative}
 .menu-open{position:absolute;right:var(--pad);top:0;width:44px;height:40px;z-index:3}
 .site-menu{top:71px;right:max(var(--pad), calc((100% - var(--sheet)) / 2 + var(--pad)))}
-@media (max-width:560px){.site-menu{left:var(--pad);right:var(--pad);width:auto;max-width:none}.site-menu a{min-height:calc(40px + .8rem)}}
+@media (max-width:560px){.site-menu{left:var(--pad);right:var(--pad);width:auto;max-width:none}}
 @media (max-width:329.98px){.menu-open{top:21px;height:40px}.site-menu{top:78px}}
 @media (min-width:330px) and (max-width:439.98px){.menu-open{top:23px;height:40px}.site-menu{top:67px}}
 @media (min-width:440px) and (max-width:769.98px){.menu-open{top:24px;height:40px}.site-menu{top:68px}}
@@ -572,10 +570,10 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
 @media (max-width:384px){.topnav{padding-right:calc(52px + var(--pad))}}
 @media (max-width:419px){
  .site-menu{--m-padx:.8rem;padding:.25rem var(--m-padx) 0}
- .site-menu a{gap:.6rem;min-height:calc(30px + .5rem);padding:.15rem 0}
+ .site-menu a{gap:.6rem;min-height:47px;padding:0}
  .site-menu .m-n{flex-basis:1.4rem}
- .site-menu .m-img{flex-basis:42px;width:42px;height:30px}
- .site-menu .m-img img{width:42px;height:30px}
+ .site-menu .m-img{flex-basis:64px;width:64px;height:46px}
+ .site-menu .m-img img{width:64px;height:46px}
  .site-menu .m-home,.site-menu .m-end a{min-height:2rem}
  .site-menu .m-end{margin-top:.25rem;padding-top:.25rem}
 }
@@ -586,7 +584,6 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
 }
 @media (forced-colors:active){
  .menu-open .dots i{background:CanvasText;forced-color-adjust:none}
- .site-menu{--menu-current-pic-filter:none}
  .site-menu a[aria-current="page"]{border-left:4px solid Highlight;padding-left:calc(var(--m-padx) - 4px)}
 }
 @media print{.menu-open,.site-menu{display:none !important}}
@@ -988,16 +985,16 @@ p.endlink.endlink.endlink a:hover,p.endlink.endlink.endlink a:focus-visible{colo
 <nav id="site-menu" class="site-menu" popover aria-label="Site">
 <ul>
 <li><a class="m-home" href="../index.html"><span class="m-n"></span><span class="m-img"></span><span class="m-t">Home</span></a></li>
-<li><a href="../stillpoint/stillpoint.html"><span class="m-n">1</span><span class="m-img"><img src="../img/menu/p1.webp" width="56" height="40" alt="" loading="lazy" decoding="async"></span><span class="m-t">Stillpoint Gallery</span></a></li>
-<li><a href="can-artificial-minds-feel.html" aria-current="page"><span class="m-n">2</span><span class="m-img"><img src="../img/menu/p2.webp" width="56" height="40" alt="" loading="lazy" decoding="async"></span><span class="m-t">Can Artificial Minds Feel? Search Me.</span></a></li>
-<li><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html"><span class="m-n">3</span><span class="m-img"><img src="../img/menu/p3.webp" width="56" height="40" alt="" loading="lazy" decoding="async"></span><span class="m-t">Who Learns Faster, a Toddler or a Chatbot?</span></a></li>
-<li><a href="../did-ai-write-this/a-likely-story.html"><span class="m-n">4</span><span class="m-img"><img src="../img/menu/p4.webp" width="56" height="40" alt="" loading="lazy" decoding="async"></span><span class="m-t">A Likely Story</span></a></li>
-<li><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html"><span class="m-n">5</span><span class="m-img"><img src="../img/menu/p5.webp" width="56" height="40" alt="" loading="lazy" decoding="async"></span><span class="m-t">A Talking Machine of Your Own</span></a></li>
-<li><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html"><span class="m-n">6a</span><span class="m-img"><img src="../img/menu/p6a.webp" width="56" height="40" alt="" loading="lazy" decoding="async"></span><span class="m-t">Who Killed Aldous Finch?<span class="m-sub"> A Transformer Explainer</span></span></a></li>
-<li><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html"><span class="m-n">6b</span><span class="m-img"><img src="../img/menu/p6b.webp" width="56" height="40" alt="" loading="lazy" decoding="async"></span><span class="m-t">How Attention Works in a Transformer</span></a></li>
-<li><a href="../AI-future-canon/ai-future-canon.html"><span class="m-n">7</span><span class="m-img"><img src="../img/menu/p7.webp" width="56" height="40" alt="" loading="lazy" decoding="async"></span><span class="m-t">The AI-Future Canon</span></a></li>
-<li><a href="../feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html"><span class="m-n">8</span><span class="m-img"><img src="../img/menu/p8.webp" width="56" height="40" alt="" loading="lazy" decoding="async"></span><span class="m-t">Your Order Is on the Truck</span></a></li>
-<li><a href="../folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html"><span class="m-n">9</span><span class="m-img"><img src="../img/menu/p9.webp" width="56" height="40" alt="" loading="lazy" decoding="async"></span><span class="m-t">Folding a Protein, Folding a Shirt</span></a></li>
+<li><a href="../stillpoint/stillpoint.html"><span class="m-n">1</span><span class="m-img"><img src="../img/menu/p1.webp" width="80" height="57" alt="" loading="lazy" decoding="async"></span><span class="m-t">Stillpoint Gallery</span></a></li>
+<li><a href="can-artificial-minds-feel.html" aria-current="page"><span class="m-n">2</span><span class="m-img"><img src="../img/menu/p2.webp" width="80" height="57" alt="" loading="lazy" decoding="async"></span><span class="m-t">Can Artificial Minds Feel? Search Me.</span></a></li>
+<li><a href="../why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html"><span class="m-n">3</span><span class="m-img"><img src="../img/menu/p3.webp" width="80" height="57" alt="" loading="lazy" decoding="async"></span><span class="m-t">Who Learns Faster, a Toddler or a Chatbot?</span></a></li>
+<li><a href="../did-ai-write-this/a-likely-story.html"><span class="m-n">4</span><span class="m-img"><img src="../img/menu/p4.webp" width="80" height="57" alt="" loading="lazy" decoding="async"></span><span class="m-t">A Likely Story</span></a></li>
+<li><a href="../artificial-mind-of-your-own/a-talking-machine-of-your-own.html"><span class="m-n">5</span><span class="m-img"><img src="../img/menu/p5.webp" width="80" height="57" alt="" loading="lazy" decoding="async"></span><span class="m-t">A Talking Machine of Your Own</span></a></li>
+<li><a href="../A-Salon-of-Witnesses/who-killed-aldous-finch.html"><span class="m-n">6a</span><span class="m-img"><img src="../img/menu/p6a.webp" width="80" height="57" alt="" loading="lazy" decoding="async"></span><span class="m-t">Who Killed Aldous Finch?<span class="m-sub"> A Transformer Explainer</span></span></a></li>
+<li><a href="../A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html"><span class="m-n">6b</span><span class="m-img"><img src="../img/menu/p6b.webp" width="80" height="57" alt="" loading="lazy" decoding="async"></span><span class="m-t">How Attention Works in a Transformer</span></a></li>
+<li><a href="../AI-future-canon/ai-future-canon.html"><span class="m-n">7</span><span class="m-img"><img src="../img/menu/p7.webp" width="80" height="57" alt="" loading="lazy" decoding="async"></span><span class="m-t">The AI-Future Canon</span></a></li>
+<li><a href="../feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html"><span class="m-n">8</span><span class="m-img"><img src="../img/menu/p8.webp" width="80" height="57" alt="" loading="lazy" decoding="async"></span><span class="m-t">Your Order Is on the Truck</span></a></li>
+<li><a href="../folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html"><span class="m-n">9</span><span class="m-img"><img src="../img/menu/p9.webp" width="80" height="57" alt="" loading="lazy" decoding="async"></span><span class="m-t">Folding a Protein, Folding a Shirt</span></a></li>
 </ul>
 <ul class="m-end">
 <li><a class="m-plain" href="../about/about.html"><span class="m-n"></span><span class="m-img"></span><span class="m-t">About</span></a></li>
