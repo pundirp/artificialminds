@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-18T07:37:54Z",
+  "generated": "2026-11-18T20:38:20Z",
   "totals": {
-    "visitors_all": 250,
-    "visitors_30d": 212,
-    "views_all": 322,
-    "visits_all": 144,
-    "views_30d": 278,
-    "visits_30d": 116
+    "visitors_all": 258,
+    "visitors_30d": 220,
+    "views_all": 333,
+    "visits_all": 149,
+    "views_30d": 289,
+    "visits_30d": 121
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-18",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
+      "views": 11,
+      "visits": 5,
+      "visitors": 8
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 220,
-      "visits": 92,
-      "visitors": 164
+      "views": 231,
+      "visits": 97,
+      "visitors": 172
     }
   ],
   "projects": [
@@ -582,10 +582,10 @@
     {
       "id": "can-artificial-minds-feel",
       "name": "Can Artificial Minds Feel? Search Me.",
-      "views_all": 33,
-      "visitors_all": 24,
-      "views_30d": 27,
-      "visitors_30d": 20
+      "views_all": 34,
+      "visitors_all": 25,
+      "views_30d": 28,
+      "visitors_30d": 21
     },
     {
       "id": "why-so-much-data",
@@ -598,18 +598,18 @@
     {
       "id": "did-ai-write-this",
       "name": "A Likely Story",
-      "views_all": 20,
-      "visitors_all": 16,
-      "views_30d": 18,
-      "visitors_30d": 14
+      "views_all": 21,
+      "visitors_all": 17,
+      "views_30d": 19,
+      "visitors_30d": 15
     },
     {
       "id": "artificial-mind-of-your-own",
       "name": "A Talking Machine of Your Own",
-      "views_all": 10,
-      "visitors_all": 9,
-      "views_30d": 10,
-      "visitors_30d": 9
+      "views_all": 12,
+      "visitors_all": 10,
+      "views_30d": 12,
+      "visitors_30d": 10
     },
     {
       "id": "A-Salon-of-Witnesses",
@@ -638,25 +638,25 @@
     {
       "id": "folding-a-protein-folding-a-shirt",
       "name": "Folding a Protein, Folding a Shirt",
-      "views_all": 12,
-      "visitors_all": 9,
-      "views_30d": 12,
-      "visitors_30d": 9
+      "views_all": 14,
+      "visitors_all": 11,
+      "views_30d": 14,
+      "visitors_30d": 11
     },
     {
       "id": "home",
       "name": "Home",
-      "views_all": 134,
-      "visitors_all": 99,
-      "views_30d": 116,
-      "visitors_30d": 82
+      "views_all": 139,
+      "visitors_all": 102,
+      "views_30d": 121,
+      "visitors_30d": 85
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 134,
-      "visitors_all": 99
+      "views_all": 139,
+      "visitors_all": 102
     },
     {
       "path": "/stillpoint/stillpoint.html",
@@ -665,8 +665,8 @@
     },
     {
       "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
-      "views_all": 23,
-      "visitors_all": 15
+      "views_all": 24,
+      "visitors_all": 16
     },
     {
       "path": "/AI-future-canon/ai-future-canon.html",
@@ -679,6 +679,11 @@
       "visitors_all": 13
     },
     {
+      "path": "/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html",
+      "views_all": 14,
+      "visitors_all": 11
+    },
+    {
       "path": "/did-ai-write-this/did-ai-write-this.html",
       "views_all": 13,
       "visitors_all": 9
@@ -689,8 +694,8 @@
       "visitors_all": 12
     },
     {
-      "path": "/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html",
-      "views_all": 12,
+      "path": "/artificial-mind-of-your-own/a-talking-machine-of-your-own.html",
+      "views_all": 11,
       "visitors_all": 9
     },
     {
@@ -699,14 +704,9 @@
       "visitors_all": 9
     },
     {
-      "path": "/artificial-mind-of-your-own/a-talking-machine-of-your-own.html",
-      "views_all": 9,
-      "visitors_all": 8
-    },
-    {
       "path": "/did-ai-write-this/a-likely-story.html",
-      "views_all": 7,
-      "visitors_all": 7
+      "views_all": 8,
+      "visitors_all": 8
     },
     {
       "path": "/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html",
@@ -757,11 +757,11 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 181
+      "visitors": 188
     },
     {
       "name": "United Kingdom",
-      "visitors": 10
+      "visitors": 11
     },
     {
       "name": "Canada",
@@ -811,11 +811,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 152
+      "visitors": 155
     },
     {
       "name": "Safari",
-      "visitors": 59
+      "visitors": 64
     },
     {
       "name": "Firefox",
@@ -825,15 +825,15 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 111
+      "visitors": 112
     },
     {
       "name": "Windows",
-      "visitors": 50
+      "visitors": 52
     },
     {
       "name": "iOS",
-      "visitors": 39
+      "visitors": 44
     },
     {
       "name": "Linux",
@@ -847,7 +847,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 92
+      "visitors": 94
     },
     {
       "name": "Large screen",
@@ -855,11 +855,11 @@
     },
     {
       "name": "Phone",
-      "visitors": 41
+      "visitors": 46
     },
     {
       "name": "Tablet",
-      "visitors": 18
+      "visitors": 19
     },
     {
       "name": "Unknown",
@@ -873,7 +873,7 @@
     },
     {
       "name": "chatgpt.com",
-      "visitors": 3
+      "visitors": 4
     },
     {
       "name": "teams.public.onecdn.static.microsoft",
@@ -896,7 +896,7 @@
       },
       {
         "name": "chatgpt.com",
-        "visits": 3
+        "visits": 4
       },
       {
         "name": "teams.public.onecdn.static.microsoft",
@@ -911,7 +911,7 @@
         "visits": 1
       }
     ],
-    "no_source": 99,
-    "visits": 116
+    "no_source": 103,
+    "visits": 121
   }
 }
