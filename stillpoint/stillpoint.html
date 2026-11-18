@@ -205,7 +205,8 @@
 
 .menu-open.m-free{position:absolute;top:12px;right:clamp(28px,5vw,96px);align-items:flex-start;padding-top:12.5px;z-index:3}
 .site-menu{top:56px;right:clamp(28px,5vw,96px);max-height:calc(100dvh - 4rem)}
-@media (max-width:560px){.menu-open.m-free{top:6px;right:24px;align-items:center;padding-top:0}.site-menu{left:24px;right:24px;width:auto;max-width:none;top:50px}}@media (max-width:419px){
+@media (max-width:560px){.menu-open.m-free{top:6px;right:24px;align-items:center;padding-top:0}.site-menu{left:24px;right:24px;width:auto;max-width:none;top:50px}}@media (min-width:740px){.menu-open:not(.menu-fallback),.site-menu{position:fixed}}
+@media (max-width:419px){
  .site-menu{--m-padx:.8rem;padding:.25rem var(--m-padx) 0}
  .site-menu a{gap:.6rem;min-height:47px;padding:0}
  .site-menu .m-n{flex-basis:1.4rem}
