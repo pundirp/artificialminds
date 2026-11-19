@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-18T20:38:20Z",
+  "generated": "2026-11-19T07:33:34Z",
   "totals": {
-    "visitors_all": 258,
-    "visitors_30d": 220,
-    "views_all": 333,
-    "visits_all": 149,
-    "views_30d": 289,
-    "visits_30d": 121
+    "visitors_all": 267,
+    "visitors_30d": 228,
+    "views_all": 342,
+    "visits_all": 158,
+    "views_30d": 297,
+    "visits_30d": 129
   },
   "daily": [
-    {
-      "day": "2026-08-21",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-22",
       "views": 0,
@@ -545,9 +539,15 @@
     },
     {
       "day": "2026-11-18",
-      "views": 11,
-      "visits": 5,
-      "visitors": 8
+      "views": 20,
+      "visits": 14,
+      "visitors": 17
+    },
+    {
+      "day": "2026-11-19",
+      "views": 0,
+      "visits": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 231,
-      "visits": 97,
-      "visitors": 172
+      "views": 240,
+      "visits": 106,
+      "visitors": 181
     }
   ],
   "projects": [
@@ -624,8 +624,8 @@
       "name": "AI Future Canon",
       "views_all": 22,
       "visitors_all": 18,
-      "views_30d": 18,
-      "visitors_30d": 14
+      "views_30d": 17,
+      "visitors_30d": 13
     },
     {
       "id": "feeding-an-ai-agent-the-facts",
@@ -638,25 +638,25 @@
     {
       "id": "folding-a-protein-folding-a-shirt",
       "name": "Folding a Protein, Folding a Shirt",
-      "views_all": 14,
-      "visitors_all": 11,
-      "views_30d": 14,
-      "visitors_30d": 11
+      "views_all": 15,
+      "visitors_all": 12,
+      "views_30d": 15,
+      "visitors_30d": 12
     },
     {
       "id": "home",
       "name": "Home",
-      "views_all": 139,
-      "visitors_all": 102,
-      "views_30d": 121,
-      "visitors_30d": 85
+      "views_all": 147,
+      "visitors_all": 110,
+      "views_30d": 129,
+      "visitors_30d": 93
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 139,
-      "visitors_all": 102
+      "views_all": 147,
+      "visitors_all": 110
     },
     {
       "path": "/stillpoint/stillpoint.html",
@@ -680,8 +680,8 @@
     },
     {
       "path": "/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html",
-      "views_all": 14,
-      "visitors_all": 11
+      "views_all": 15,
+      "visitors_all": 12
     },
     {
       "path": "/did-ai-write-this/did-ai-write-this.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 188
+      "visitors": 190
     },
     {
       "name": "United Kingdom",
@@ -765,7 +765,7 @@
     },
     {
       "name": "Canada",
-      "visitors": 6
+      "visitors": 7
     },
     {
       "name": "India",
@@ -773,7 +773,7 @@
     },
     {
       "name": "Netherlands",
-      "visitors": 2
+      "visitors": 4
     },
     {
       "name": "Switzerland",
@@ -788,7 +788,19 @@
       "visitors": 1
     },
     {
+      "name": "Finland",
+      "visitors": 1
+    },
+    {
       "name": "Germany",
+      "visitors": 1
+    },
+    {
+      "name": "Israel",
+      "visitors": 1
+    },
+    {
+      "name": "Italy",
       "visitors": 1
     },
     {
@@ -811,11 +823,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 155
+      "visitors": 161
     },
     {
       "name": "Safari",
-      "visitors": 64
+      "visitors": 66
     },
     {
       "name": "Firefox",
@@ -825,19 +837,19 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 112
+      "visitors": 111
     },
     {
       "name": "Windows",
-      "visitors": 52
+      "visitors": 57
     },
     {
       "name": "iOS",
-      "visitors": 44
+      "visitors": 46
     },
     {
       "name": "Linux",
-      "visitors": 12
+      "visitors": 14
     },
     {
       "name": "Android",
@@ -847,19 +859,19 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 94
+      "visitors": 100
     },
     {
       "name": "Large screen",
-      "visitors": 62
+      "visitors": 61
     },
     {
       "name": "Phone",
-      "visitors": 46
+      "visitors": 48
     },
     {
       "name": "Tablet",
-      "visitors": 19
+      "visitors": 20
     },
     {
       "name": "Unknown",
@@ -869,7 +881,7 @@
   "referrers": [
     {
       "name": "Google",
-      "visitors": 10
+      "visitors": 9
     },
     {
       "name": "chatgpt.com",
@@ -892,7 +904,7 @@
     "rows": [
       {
         "name": "Google",
-        "visits": 10
+        "visits": 9
       },
       {
         "name": "chatgpt.com",
@@ -911,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 103,
-    "visits": 121
+    "no_source": 112,
+    "visits": 129
   }
 }
