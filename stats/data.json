@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-19T07:33:34Z",
+  "generated": "2026-11-19T20:43:58Z",
   "totals": {
-    "visitors_all": 267,
-    "visitors_30d": 228,
-    "views_all": 342,
-    "visits_all": 158,
-    "views_30d": 297,
-    "visits_30d": 129
+    "visitors_all": 270,
+    "visitors_30d": 231,
+    "views_all": 345,
+    "visits_all": 161,
+    "views_30d": 300,
+    "visits_30d": 132
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-19",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
+      "views": 3,
+      "visits": 3,
+      "visitors": 3
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 240,
-      "visits": 106,
-      "visitors": 181
+      "views": 243,
+      "visits": 109,
+      "visitors": 184
     }
   ],
   "projects": [
@@ -598,10 +598,10 @@
     {
       "id": "did-ai-write-this",
       "name": "A Likely Story",
-      "views_all": 21,
-      "visitors_all": 17,
-      "views_30d": 19,
-      "visitors_30d": 15
+      "views_all": 22,
+      "visitors_all": 18,
+      "views_30d": 20,
+      "visitors_30d": 16
     },
     {
       "id": "artificial-mind-of-your-own",
@@ -646,17 +646,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 147,
-      "visitors_all": 110,
-      "views_30d": 129,
-      "visitors_30d": 93
+      "views_all": 149,
+      "visitors_all": 112,
+      "views_30d": 131,
+      "visitors_30d": 95
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 147,
-      "visitors_all": 110
+      "views_all": 149,
+      "visitors_all": 112
     },
     {
       "path": "/stillpoint/stillpoint.html",
@@ -705,8 +705,8 @@
     },
     {
       "path": "/did-ai-write-this/a-likely-story.html",
-      "views_all": 8,
-      "visitors_all": 8
+      "views_all": 9,
+      "visitors_all": 9
     },
     {
       "path": "/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 190
+      "visitors": 192
     },
     {
       "name": "United Kingdom",
@@ -765,7 +765,7 @@
     },
     {
       "name": "Canada",
-      "visitors": 7
+      "visitors": 8
     },
     {
       "name": "India",
@@ -823,7 +823,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 161
+      "visitors": 164
     },
     {
       "name": "Safari",
@@ -837,11 +837,11 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 111
+      "visitors": 112
     },
     {
       "name": "Windows",
-      "visitors": 57
+      "visitors": 58
     },
     {
       "name": "iOS",
@@ -849,7 +849,7 @@
     },
     {
       "name": "Linux",
-      "visitors": 14
+      "visitors": 15
     },
     {
       "name": "Android",
@@ -859,7 +859,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 100
+      "visitors": 102
     },
     {
       "name": "Large screen",
@@ -871,7 +871,7 @@
     },
     {
       "name": "Tablet",
-      "visitors": 20
+      "visitors": 21
     },
     {
       "name": "Unknown",
@@ -881,7 +881,7 @@
   "referrers": [
     {
       "name": "Google",
-      "visitors": 9
+      "visitors": 10
     },
     {
       "name": "chatgpt.com",
@@ -904,7 +904,7 @@
     "rows": [
       {
         "name": "Google",
-        "visits": 9
+        "visits": 10
       },
       {
         "name": "chatgpt.com",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 112,
-    "visits": 129
+    "no_source": 114,
+    "visits": 132
   }
 }
