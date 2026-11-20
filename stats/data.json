@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-19T20:43:58Z",
+  "generated": "2026-11-20T07:25:20Z",
   "totals": {
-    "visitors_all": 270,
-    "visitors_30d": 231,
-    "views_all": 345,
-    "visits_all": 161,
-    "views_30d": 300,
-    "visits_30d": 132
+    "visitors_all": 271,
+    "visitors_30d": 230,
+    "views_all": 346,
+    "visits_all": 162,
+    "views_30d": 299,
+    "visits_30d": 131
   },
   "daily": [
-    {
-      "day": "2026-08-22",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-23",
       "views": 0,
@@ -548,6 +542,12 @@
       "views": 3,
       "visits": 3,
       "visitors": 3
+    },
+    {
+      "day": "2026-11-20",
+      "views": 1,
+      "visits": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 243,
-      "visits": 109,
-      "visitors": 184
+      "views": 244,
+      "visits": 110,
+      "visitors": 185
     }
   ],
   "projects": [
@@ -646,17 +646,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 149,
-      "visitors_all": 112,
-      "views_30d": 131,
-      "visitors_30d": 95
+      "views_all": 150,
+      "visitors_all": 113,
+      "views_30d": 130,
+      "visitors_30d": 94
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 149,
-      "visitors_all": 112
+      "views_all": 150,
+      "visitors_all": 113
     },
     {
       "path": "/stillpoint/stillpoint.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 192
+      "visitors": 191
     },
     {
       "name": "United Kingdom",
@@ -773,7 +773,7 @@
     },
     {
       "name": "Netherlands",
-      "visitors": 4
+      "visitors": 5
     },
     {
       "name": "Switzerland",
@@ -823,7 +823,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 164
+      "visitors": 165
     },
     {
       "name": "Safari",
@@ -831,13 +831,13 @@
     },
     {
       "name": "Firefox",
-      "visitors": 2
+      "visitors": 1
     }
   ],
   "systems": [
     {
       "name": "macOS",
-      "visitors": 112
+      "visitors": 111
     },
     {
       "name": "Windows",
@@ -849,7 +849,7 @@
     },
     {
       "name": "Linux",
-      "visitors": 15
+      "visitors": 16
     },
     {
       "name": "Android",
@@ -859,11 +859,11 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 102
+      "visitors": 103
     },
     {
       "name": "Large screen",
-      "visitors": 61
+      "visitors": 60
     },
     {
       "name": "Phone",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 114,
-    "visits": 132
+    "no_source": 113,
+    "visits": 131
   }
 }
