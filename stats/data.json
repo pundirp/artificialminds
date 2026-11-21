@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-21T07:18:37Z",
+  "generated": "2026-11-21T19:23:42Z",
   "totals": {
-    "visitors_all": 278,
-    "visitors_30d": 234,
-    "views_all": 353,
-    "visits_all": 169,
-    "views_30d": 303,
-    "visits_30d": 135
+    "visitors_all": 281,
+    "visitors_30d": 237,
+    "views_all": 356,
+    "visits_all": 172,
+    "views_30d": 306,
+    "visits_30d": 138
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-21",
-      "views": 2,
-      "visits": 2,
-      "visitors": 2
+      "views": 5,
+      "visits": 5,
+      "visitors": 5
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 251,
-      "visits": 117,
-      "visitors": 192
+      "views": 254,
+      "visits": 120,
+      "visitors": 195
     }
   ],
   "projects": [
@@ -646,17 +646,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 154,
-      "visitors_all": 117,
-      "views_30d": 132,
-      "visitors_30d": 96
+      "views_all": 157,
+      "visitors_all": 120,
+      "views_30d": 135,
+      "visitors_30d": 99
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 154,
-      "visitors_all": 117
+      "views_all": 157,
+      "visitors_all": 120
     },
     {
       "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 196
+      "visitors": 198
     },
     {
       "name": "United Kingdom",
@@ -765,7 +765,7 @@
     },
     {
       "name": "Canada",
-      "visitors": 8
+      "visitors": 9
     },
     {
       "name": "India",
@@ -823,7 +823,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 170
+      "visitors": 173
     },
     {
       "name": "Safari",
@@ -841,7 +841,7 @@
     },
     {
       "name": "Windows",
-      "visitors": 60
+      "visitors": 61
     },
     {
       "name": "iOS",
@@ -849,7 +849,7 @@
     },
     {
       "name": "Linux",
-      "visitors": 19
+      "visitors": 21
     },
     {
       "name": "Android",
@@ -859,7 +859,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 106
+      "visitors": 108
     },
     {
       "name": "Large screen",
@@ -871,7 +871,7 @@
     },
     {
       "name": "Tablet",
-      "visitors": 23
+      "visitors": 24
     },
     {
       "name": "Unknown",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 116,
-    "visits": 135
+    "no_source": 119,
+    "visits": 138
   }
 }
