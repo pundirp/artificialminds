@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-20T20:28:03Z",
+  "generated": "2026-11-21T07:18:37Z",
   "totals": {
-    "visitors_all": 275,
+    "visitors_all": 278,
     "visitors_30d": 234,
-    "views_all": 350,
-    "visits_all": 166,
+    "views_all": 353,
+    "visits_all": 169,
     "views_30d": 303,
     "visits_30d": 135
   },
   "daily": [
-    {
-      "day": "2026-08-23",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-24",
       "views": 0,
@@ -545,9 +539,15 @@
     },
     {
       "day": "2026-11-20",
-      "views": 5,
-      "visits": 5,
-      "visitors": 5
+      "views": 6,
+      "visits": 6,
+      "visitors": 6
+    },
+    {
+      "day": "2026-11-21",
+      "views": 2,
+      "visits": 2,
+      "visitors": 2
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 248,
-      "visits": 114,
-      "visitors": 189
+      "views": 251,
+      "visits": 117,
+      "visitors": 192
     }
   ],
   "projects": [
@@ -616,8 +616,8 @@
       "name": "A Salon of Witnesses",
       "views_all": 22,
       "visitors_all": 21,
-      "views_30d": 22,
-      "visitors_30d": 21
+      "views_30d": 21,
+      "visitors_30d": 20
     },
     {
       "id": "AI-future-canon",
@@ -646,8 +646,8 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 152,
-      "visitors_all": 115,
+      "views_all": 154,
+      "visitors_all": 117,
       "views_30d": 132,
       "visitors_30d": 96
     }
@@ -655,8 +655,8 @@
   "pages": [
     {
       "path": "/",
-      "views_all": 152,
-      "visitors_all": 115
+      "views_all": 154,
+      "visitors_all": 117
     },
     {
       "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
@@ -710,8 +710,8 @@
     },
     {
       "path": "/about/about.html",
-      "views_all": 6,
-      "visitors_all": 3
+      "views_all": 7,
+      "visitors_all": 4
     },
     {
       "path": "/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 194
+      "visitors": 196
     },
     {
       "name": "United Kingdom",
@@ -812,10 +812,6 @@
       "visitors": 1
     },
     {
-      "name": "Philippines",
-      "visitors": 1
-    },
-    {
       "name": "Poland",
       "visitors": 1
     },
@@ -827,7 +823,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 169
+      "visitors": 170
     },
     {
       "name": "Safari",
@@ -841,11 +837,11 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 112
+      "visitors": 111
     },
     {
       "name": "Windows",
-      "visitors": 59
+      "visitors": 60
     },
     {
       "name": "iOS",
@@ -853,7 +849,7 @@
     },
     {
       "name": "Linux",
-      "visitors": 18
+      "visitors": 19
     },
     {
       "name": "Android",
@@ -863,11 +859,11 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 105
+      "visitors": 106
     },
     {
       "name": "Large screen",
-      "visitors": 61
+      "visitors": 60
     },
     {
       "name": "Phone",
@@ -875,7 +871,7 @@
     },
     {
       "name": "Tablet",
-      "visitors": 22
+      "visitors": 23
     },
     {
       "name": "Unknown",
