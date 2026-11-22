@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-22T06:59:15Z",
+  "generated": "2026-11-22T19:46:33Z",
   "totals": {
-    "visitors_all": 285,
-    "visitors_30d": 240,
-    "views_all": 360,
-    "visits_all": 174,
-    "views_30d": 309,
-    "visits_30d": 139
+    "visitors_all": 286,
+    "visitors_30d": 241,
+    "views_all": 361,
+    "visits_all": 175,
+    "views_30d": 310,
+    "visits_30d": 140
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-22",
-      "views": 1,
-      "visits": 1,
-      "visitors": 1
+      "views": 2,
+      "visits": 2,
+      "visitors": 2
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 258,
-      "visits": 122,
-      "visitors": 199
+      "views": 259,
+      "visits": 123,
+      "visitors": 200
     }
   ],
   "projects": [
@@ -598,10 +598,10 @@
     {
       "id": "did-ai-write-this",
       "name": "A Likely Story",
-      "views_all": 22,
-      "visitors_all": 18,
-      "views_30d": 20,
-      "visitors_30d": 16
+      "views_all": 23,
+      "visitors_all": 19,
+      "views_30d": 21,
+      "visitors_30d": 17
     },
     {
       "id": "artificial-mind-of-your-own",
@@ -705,8 +705,8 @@
     },
     {
       "path": "/did-ai-write-this/a-likely-story.html",
-      "views_all": 9,
-      "visitors_all": 9
+      "views_all": 10,
+      "visitors_all": 10
     },
     {
       "path": "/about/about.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 199
+      "visitors": 200
     },
     {
       "name": "United Kingdom",
@@ -827,7 +827,7 @@
     },
     {
       "name": "Safari",
-      "visitors": 66
+      "visitors": 67
     },
     {
       "name": "Firefox",
@@ -837,7 +837,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 112
+      "visitors": 113
     },
     {
       "name": "Windows",
@@ -859,7 +859,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 108
+      "visitors": 109
     },
     {
       "name": "Large screen",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 120,
-    "visits": 139
+    "no_source": 121,
+    "visits": 140
   }
 }
