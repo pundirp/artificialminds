@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-21T19:23:42Z",
+  "generated": "2026-11-22T06:59:15Z",
   "totals": {
-    "visitors_all": 281,
-    "visitors_30d": 237,
-    "views_all": 356,
-    "visits_all": 172,
-    "views_30d": 306,
-    "visits_30d": 138
+    "visitors_all": 285,
+    "visitors_30d": 240,
+    "views_all": 360,
+    "visits_all": 174,
+    "views_30d": 309,
+    "visits_30d": 139
   },
   "daily": [
-    {
-      "day": "2026-08-24",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-25",
       "views": 0,
@@ -545,9 +539,15 @@
     },
     {
       "day": "2026-11-21",
-      "views": 5,
-      "visits": 5,
-      "visitors": 5
+      "views": 8,
+      "visits": 6,
+      "visitors": 8
+    },
+    {
+      "day": "2026-11-22",
+      "views": 1,
+      "visits": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
@@ -565,19 +565,19 @@
     },
     {
       "month": "2026-11",
-      "views": 254,
-      "visits": 120,
-      "visitors": 195
+      "views": 258,
+      "visits": 122,
+      "visitors": 199
     }
   ],
   "projects": [
     {
       "id": "stillpoint",
       "name": "Stillpoint",
-      "views_all": 43,
-      "visitors_all": 32,
-      "views_30d": 31,
-      "visitors_30d": 22
+      "views_all": 44,
+      "visitors_all": 33,
+      "views_30d": 32,
+      "visitors_30d": 23
     },
     {
       "id": "can-artificial-minds-feel",
@@ -630,24 +630,24 @@
     {
       "id": "feeding-an-ai-agent-the-facts",
       "name": "Your Order Is on the Truck",
-      "views_all": 10,
-      "visitors_all": 10,
-      "views_30d": 10,
-      "visitors_30d": 10
+      "views_all": 11,
+      "visitors_all": 11,
+      "views_30d": 11,
+      "visitors_30d": 11
     },
     {
       "id": "folding-a-protein-folding-a-shirt",
       "name": "Folding a Protein, Folding a Shirt",
-      "views_all": 15,
-      "visitors_all": 12,
-      "views_30d": 15,
-      "visitors_30d": 12
+      "views_all": 16,
+      "visitors_all": 13,
+      "views_30d": 16,
+      "visitors_30d": 13
     },
     {
       "id": "home",
       "name": "Home",
-      "views_all": 157,
-      "visitors_all": 120,
+      "views_all": 158,
+      "visitors_all": 121,
       "views_30d": 135,
       "visitors_30d": 99
     }
@@ -655,8 +655,8 @@
   "pages": [
     {
       "path": "/",
-      "views_all": 157,
-      "visitors_all": 120
+      "views_all": 158,
+      "visitors_all": 121
     },
     {
       "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
@@ -675,13 +675,13 @@
     },
     {
       "path": "/stillpoint/collection.html",
-      "views_all": 18,
-      "visitors_all": 13
+      "views_all": 19,
+      "visitors_all": 14
     },
     {
       "path": "/folding-a-protein-folding-a-shirt/folding-a-protein-folding-a-shirt.html",
-      "views_all": 15,
-      "visitors_all": 12
+      "views_all": 16,
+      "visitors_all": 13
     },
     {
       "path": "/did-ai-write-this/did-ai-write-this.html",
@@ -715,8 +715,8 @@
     },
     {
       "path": "/feeding-an-ai-agent-the-facts/your-order-is-on-the-truck.html",
-      "views_all": 6,
-      "visitors_all": 6
+      "views_all": 7,
+      "visitors_all": 7
     },
     {
       "path": "/why-so-much-data/who-learns-faster-a-toddler-or-a-chatbot.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 198
+      "visitors": 199
     },
     {
       "name": "United Kingdom",
@@ -823,7 +823,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 173
+      "visitors": 174
     },
     {
       "name": "Safari",
@@ -837,11 +837,11 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 111
+      "visitors": 112
     },
     {
       "name": "Windows",
-      "visitors": 61
+      "visitors": 60
     },
     {
       "name": "iOS",
@@ -849,7 +849,7 @@
     },
     {
       "name": "Linux",
-      "visitors": 21
+      "visitors": 22
     },
     {
       "name": "Android",
@@ -863,7 +863,7 @@
     },
     {
       "name": "Large screen",
-      "visitors": 60
+      "visitors": 62
     },
     {
       "name": "Phone",
@@ -871,7 +871,7 @@
     },
     {
       "name": "Tablet",
-      "visitors": 24
+      "visitors": 23
     },
     {
       "name": "Unknown",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 119,
-    "visits": 138
+    "no_source": 120,
+    "visits": 139
   }
 }
