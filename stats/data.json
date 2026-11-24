@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-24T10:00:18Z",
+  "generated": "2026-11-24T22:31:58Z",
   "totals": {
-    "visitors_all": 287,
-    "visitors_30d": 239,
-    "views_all": 362,
-    "visits_all": 176,
-    "views_30d": 306,
-    "visits_30d": 139
+    "visitors_all": 288,
+    "visitors_30d": 240,
+    "views_all": 363,
+    "visits_all": 177,
+    "views_30d": 307,
+    "visits_30d": 140
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-24",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
+      "views": 1,
+      "visits": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 260,
-      "visits": 124,
-      "visitors": 201
+      "views": 261,
+      "visits": 125,
+      "visitors": 202
     }
   ],
   "projects": [
@@ -614,10 +614,10 @@
     {
       "id": "A-Salon-of-Witnesses",
       "name": "A Salon of Witnesses",
-      "views_all": 22,
-      "visitors_all": 21,
-      "views_30d": 21,
-      "visitors_30d": 20
+      "views_all": 23,
+      "visitors_all": 22,
+      "views_30d": 22,
+      "visitors_30d": 21
     },
     {
       "id": "AI-future-canon",
@@ -694,13 +694,13 @@
       "visitors_all": 12
     },
     {
-      "path": "/artificial-mind-of-your-own/a-talking-machine-of-your-own.html",
+      "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
       "views_all": 11,
-      "visitors_all": 9
+      "visitors_all": 10
     },
     {
-      "path": "/A-Salon-of-Witnesses/how-attention-works-in-a-transformer.html",
-      "views_all": 10,
+      "path": "/artificial-mind-of-your-own/a-talking-machine-of-your-own.html",
+      "views_all": 11,
       "visitors_all": 9
     },
     {
@@ -761,7 +761,7 @@
     },
     {
       "name": "United Kingdom",
-      "visitors": 11
+      "visitors": 12
     },
     {
       "name": "Canada",
@@ -823,7 +823,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 174
+      "visitors": 175
     },
     {
       "name": "Safari",
@@ -849,7 +849,7 @@
     },
     {
       "name": "Linux",
-      "visitors": 23
+      "visitors": 24
     },
     {
       "name": "Android",
@@ -859,7 +859,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 109
+      "visitors": 110
     },
     {
       "name": "Large screen",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 120,
-    "visits": 139
+    "no_source": 121,
+    "visits": 140
   }
 }
