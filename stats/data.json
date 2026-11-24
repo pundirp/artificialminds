@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-23T07:48:55Z",
+  "generated": "2026-11-24T10:00:18Z",
   "totals": {
     "visitors_all": 287,
-    "visitors_30d": 241,
+    "visitors_30d": 239,
     "views_all": 362,
     "visits_all": 176,
-    "views_30d": 310,
-    "visits_30d": 140
+    "views_30d": 306,
+    "visits_30d": 139
   },
   "daily": [
-    {
-      "day": "2026-08-26",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-27",
       "views": 0,
@@ -548,6 +542,12 @@
       "views": 0,
       "visits": 0,
       "visitors": 0
+    },
+    {
+      "day": "2026-11-24",
+      "views": 0,
+      "visits": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -576,8 +576,8 @@
       "name": "Stillpoint",
       "views_all": 44,
       "visitors_all": 33,
-      "views_30d": 32,
-      "visitors_30d": 23
+      "views_30d": 28,
+      "visitors_30d": 21
     },
     {
       "id": "can-artificial-minds-feel",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 200
+      "visitors": 199
     },
     {
       "name": "United Kingdom",
@@ -827,7 +827,7 @@
     },
     {
       "name": "Safari",
-      "visitors": 67
+      "visitors": 66
     },
     {
       "name": "Firefox",
@@ -845,7 +845,7 @@
     },
     {
       "name": "iOS",
-      "visitors": 46
+      "visitors": 45
     },
     {
       "name": "Linux",
@@ -867,7 +867,7 @@
     },
     {
       "name": "Phone",
-      "visitors": 48
+      "visitors": 47
     },
     {
       "name": "Tablet",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 121,
-    "visits": 140
+    "no_source": 120,
+    "visits": 139
   }
 }
