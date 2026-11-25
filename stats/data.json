@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-24T22:31:58Z",
+  "generated": "2026-11-25T08:44:31Z",
   "totals": {
     "visitors_all": 288,
-    "visitors_30d": 240,
+    "visitors_30d": 238,
     "views_all": 363,
     "visits_all": 177,
-    "views_30d": 307,
-    "visits_30d": 140
+    "views_30d": 305,
+    "visits_30d": 138
   },
   "daily": [
-    {
-      "day": "2026-08-27",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-28",
       "views": 0,
@@ -548,6 +542,12 @@
       "views": 1,
       "visits": 1,
       "visitors": 1
+    },
+    {
+      "day": "2026-11-25",
+      "views": 0,
+      "visits": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -616,8 +616,8 @@
       "name": "A Salon of Witnesses",
       "views_all": 23,
       "visitors_all": 22,
-      "views_30d": 22,
-      "visitors_30d": 21
+      "views_30d": 21,
+      "visitors_30d": 20
     },
     {
       "id": "AI-future-canon",
@@ -648,8 +648,8 @@
       "name": "Home",
       "views_all": 159,
       "visitors_all": 122,
-      "views_30d": 135,
-      "visitors_30d": 99
+      "views_30d": 134,
+      "visitors_30d": 98
     }
   ],
   "pages": [
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 199
+      "visitors": 197
     },
     {
       "name": "United Kingdom",
@@ -823,7 +823,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 175
+      "visitors": 173
     },
     {
       "name": "Safari",
@@ -837,7 +837,7 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 113
+      "visitors": 111
     },
     {
       "name": "Windows",
@@ -863,7 +863,7 @@
     },
     {
       "name": "Large screen",
-      "visitors": 62
+      "visitors": 60
     },
     {
       "name": "Phone",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 121,
-    "visits": 140
+    "no_source": 119,
+    "visits": 138
   }
 }
