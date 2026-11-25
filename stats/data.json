@@ -1,12 +1,12 @@
 {
-  "generated": "2026-11-25T08:44:31Z",
+  "generated": "2026-11-25T21:46:46Z",
   "totals": {
-    "visitors_all": 288,
-    "visitors_30d": 238,
-    "views_all": 363,
-    "visits_all": 177,
-    "views_30d": 305,
-    "visits_30d": 138
+    "visitors_all": 289,
+    "visitors_30d": 239,
+    "views_all": 364,
+    "visits_all": 178,
+    "views_30d": 306,
+    "visits_30d": 139
   },
   "daily": [
     {
@@ -545,9 +545,9 @@
     },
     {
       "day": "2026-11-25",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
+      "views": 1,
+      "visits": 1,
+      "visitors": 1
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 261,
-      "visits": 125,
-      "visitors": 202
+      "views": 262,
+      "visits": 126,
+      "visitors": 203
     }
   ],
   "projects": [
@@ -646,17 +646,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 159,
-      "visitors_all": 122,
-      "views_30d": 134,
-      "visitors_30d": 98
+      "views_all": 160,
+      "visitors_all": 123,
+      "views_30d": 135,
+      "visitors_30d": 99
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 159,
-      "visitors_all": 122
+      "views_all": 160,
+      "visitors_all": 123
     },
     {
       "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 197
+      "visitors": 198
     },
     {
       "name": "United Kingdom",
@@ -827,7 +827,7 @@
     },
     {
       "name": "Safari",
-      "visitors": 66
+      "visitors": 67
     },
     {
       "name": "Firefox",
@@ -845,7 +845,7 @@
     },
     {
       "name": "iOS",
-      "visitors": 45
+      "visitors": 46
     },
     {
       "name": "Linux",
@@ -867,7 +867,7 @@
     },
     {
       "name": "Phone",
-      "visitors": 47
+      "visitors": 48
     },
     {
       "name": "Tablet",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 119,
-    "visits": 138
+    "no_source": 120,
+    "visits": 139
   }
 }
