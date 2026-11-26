@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-25T21:46:46Z",
+  "generated": "2026-11-26T08:30:09Z",
   "totals": {
-    "visitors_all": 289,
-    "visitors_30d": 239,
-    "views_all": 364,
-    "visits_all": 178,
-    "views_30d": 306,
-    "visits_30d": 139
+    "visitors_all": 290,
+    "visitors_30d": 234,
+    "views_all": 365,
+    "visits_all": 179,
+    "views_30d": 299,
+    "visits_30d": 133
   },
   "daily": [
-    {
-      "day": "2026-08-28",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-29",
       "views": 0,
@@ -545,9 +539,15 @@
     },
     {
       "day": "2026-11-25",
-      "views": 1,
-      "visits": 1,
-      "visitors": 1
+      "views": 2,
+      "visits": 2,
+      "visitors": 2
+    },
+    {
+      "day": "2026-11-26",
+      "views": 0,
+      "visits": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -565,9 +565,9 @@
     },
     {
       "month": "2026-11",
-      "views": 262,
-      "visits": 126,
-      "visitors": 203
+      "views": 263,
+      "visits": 127,
+      "visitors": 204
     }
   ],
   "projects": [
@@ -592,8 +592,8 @@
       "name": "Who Learns Faster, a Toddler or a Chatbot?",
       "views_all": 9,
       "visitors_all": 8,
-      "views_30d": 7,
-      "visitors_30d": 7
+      "views_30d": 6,
+      "visitors_30d": 6
     },
     {
       "id": "did-ai-write-this",
@@ -646,17 +646,17 @@
     {
       "id": "home",
       "name": "Home",
-      "views_all": 160,
-      "visitors_all": 123,
-      "views_30d": 135,
-      "visitors_30d": 99
+      "views_all": 161,
+      "visitors_all": 124,
+      "views_30d": 129,
+      "visitors_30d": 95
     }
   ],
   "pages": [
     {
       "path": "/",
-      "views_all": 160,
-      "visitors_all": 123
+      "views_all": 161,
+      "visitors_all": 124
     },
     {
       "path": "/can-artificial-minds-feel/can-artificial-minds-feel.html",
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 198
+      "visitors": 197
     },
     {
       "name": "United Kingdom",
@@ -823,7 +823,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 173
+      "visitors": 172
     },
     {
       "name": "Safari",
@@ -841,7 +841,7 @@
     },
     {
       "name": "Windows",
-      "visitors": 59
+      "visitors": 58
     },
     {
       "name": "iOS",
@@ -859,7 +859,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 110
+      "visitors": 109
     },
     {
       "name": "Large screen",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 120,
-    "visits": 139
+    "no_source": 114,
+    "visits": 133
   }
 }
