@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-26T08:30:09Z",
+  "generated": "2026-11-27T08:43:49Z",
   "totals": {
     "visitors_all": 290,
-    "visitors_30d": 234,
+    "visitors_30d": 230,
     "views_all": 365,
     "visits_all": 179,
-    "views_30d": 299,
-    "visits_30d": 133
+    "views_30d": 294,
+    "visits_30d": 131
   },
   "daily": [
-    {
-      "day": "2026-08-29",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-30",
       "views": 0,
@@ -548,6 +542,12 @@
       "views": 0,
       "visits": 0,
       "visitors": 0
+    },
+    {
+      "day": "2026-11-27",
+      "views": 0,
+      "visits": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -600,16 +600,16 @@
       "name": "A Likely Story",
       "views_all": 23,
       "visitors_all": 19,
-      "views_30d": 21,
-      "visitors_30d": 17
+      "views_30d": 17,
+      "visitors_30d": 16
     },
     {
       "id": "artificial-mind-of-your-own",
       "name": "A Talking Machine of Your Own",
       "views_all": 12,
       "visitors_all": 10,
-      "views_30d": 12,
-      "visitors_30d": 10
+      "views_30d": 11,
+      "visitors_30d": 9
     },
     {
       "id": "A-Salon-of-Witnesses",
@@ -649,7 +649,7 @@
       "views_all": 161,
       "visitors_all": 124,
       "views_30d": 129,
-      "visitors_30d": 95
+      "visitors_30d": 93
     }
   ],
   "pages": [
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 197
+      "visitors": 191
     },
     {
       "name": "United Kingdom",
@@ -823,7 +823,7 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 172
+      "visitors": 166
     },
     {
       "name": "Safari",
@@ -837,11 +837,11 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 111
+      "visitors": 107
     },
     {
       "name": "Windows",
-      "visitors": 58
+      "visitors": 56
     },
     {
       "name": "iOS",
@@ -859,7 +859,7 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 109
+      "visitors": 103
     },
     {
       "name": "Large screen",
@@ -885,7 +885,7 @@
     },
     {
       "name": "chatgpt.com",
-      "visitors": 4
+      "visitors": 3
     },
     {
       "name": "teams.public.onecdn.static.microsoft",
@@ -908,7 +908,7 @@
       },
       {
         "name": "chatgpt.com",
-        "visits": 4
+        "visits": 3
       },
       {
         "name": "teams.public.onecdn.static.microsoft",
@@ -923,7 +923,7 @@
         "visits": 1
       }
     ],
-    "no_source": 114,
-    "visits": 133
+    "no_source": 113,
+    "visits": 131
   }
 }
