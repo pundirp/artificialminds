@@ -1,20 +1,14 @@
 {
-  "generated": "2026-11-27T08:43:49Z",
+  "generated": "2026-11-28T07:57:41Z",
   "totals": {
     "visitors_all": 290,
-    "visitors_30d": 230,
+    "visitors_30d": 223,
     "views_all": 365,
     "visits_all": 179,
-    "views_30d": 294,
-    "visits_30d": 131
+    "views_30d": 282,
+    "visits_30d": 129
   },
   "daily": [
-    {
-      "day": "2026-08-30",
-      "views": 0,
-      "visits": 0,
-      "visitors": 0
-    },
     {
       "day": "2026-08-31",
       "views": 0,
@@ -548,6 +542,12 @@
       "views": 0,
       "visits": 0,
       "visitors": 0
+    },
+    {
+      "day": "2026-11-28",
+      "views": 0,
+      "visits": 0,
+      "visitors": 0
     }
   ],
   "monthly": [
@@ -576,15 +576,15 @@
       "name": "Stillpoint",
       "views_all": 44,
       "visitors_all": 33,
-      "views_30d": 28,
-      "visitors_30d": 21
+      "views_30d": 26,
+      "visitors_30d": 19
     },
     {
       "id": "can-artificial-minds-feel",
       "name": "Can Artificial Minds Feel? Search Me.",
       "views_all": 35,
       "visitors_all": 26,
-      "views_30d": 29,
+      "views_30d": 28,
       "visitors_30d": 22
     },
     {
@@ -600,32 +600,32 @@
       "name": "A Likely Story",
       "views_all": 23,
       "visitors_all": 19,
-      "views_30d": 17,
-      "visitors_30d": 16
+      "views_30d": 16,
+      "visitors_30d": 15
     },
     {
       "id": "artificial-mind-of-your-own",
       "name": "A Talking Machine of Your Own",
       "views_all": 12,
       "visitors_all": 10,
-      "views_30d": 11,
-      "visitors_30d": 9
+      "views_30d": 10,
+      "visitors_30d": 8
     },
     {
       "id": "A-Salon-of-Witnesses",
       "name": "A Salon of Witnesses",
       "views_all": 23,
       "visitors_all": 22,
-      "views_30d": 21,
-      "visitors_30d": 20
+      "views_30d": 20,
+      "visitors_30d": 19
     },
     {
       "id": "AI-future-canon",
       "name": "AI Future Canon",
       "views_all": 22,
       "visitors_all": 18,
-      "views_30d": 17,
-      "visitors_30d": 13
+      "views_30d": 16,
+      "visitors_30d": 12
     },
     {
       "id": "feeding-an-ai-agent-the-facts",
@@ -648,8 +648,8 @@
       "name": "Home",
       "views_all": 161,
       "visitors_all": 124,
-      "views_30d": 129,
-      "visitors_30d": 93
+      "views_30d": 124,
+      "visitors_30d": 92
     }
   ],
   "pages": [
@@ -757,7 +757,7 @@
   "countries": [
     {
       "name": "United States",
-      "visitors": 191
+      "visitors": 189
     },
     {
       "name": "United Kingdom",
@@ -765,7 +765,7 @@
     },
     {
       "name": "Canada",
-      "visitors": 9
+      "visitors": 8
     },
     {
       "name": "India",
@@ -804,10 +804,6 @@
       "visitors": 1
     },
     {
-      "name": "Kazakhstan",
-      "visitors": 1
-    },
-    {
       "name": "Pakistan",
       "visitors": 1
     },
@@ -823,11 +819,11 @@
   "browsers": [
     {
       "name": "Chrome",
-      "visitors": 166
+      "visitors": 163
     },
     {
       "name": "Safari",
-      "visitors": 67
+      "visitors": 66
     },
     {
       "name": "Firefox",
@@ -837,15 +833,15 @@
   "systems": [
     {
       "name": "macOS",
-      "visitors": 107
+      "visitors": 106
     },
     {
       "name": "Windows",
-      "visitors": 56
+      "visitors": 54
     },
     {
       "name": "iOS",
-      "visitors": 46
+      "visitors": 45
     },
     {
       "name": "Linux",
@@ -859,19 +855,19 @@
   "sizes": [
     {
       "name": "Desktop",
-      "visitors": 103
+      "visitors": 102
     },
     {
       "name": "Large screen",
-      "visitors": 60
+      "visitors": 59
     },
     {
       "name": "Phone",
-      "visitors": 48
+      "visitors": 47
     },
     {
       "name": "Tablet",
-      "visitors": 23
+      "visitors": 22
     },
     {
       "name": "Unknown",
@@ -923,7 +919,7 @@
         "visits": 1
       }
     ],
-    "no_source": 113,
-    "visits": 131
+    "no_source": 111,
+    "visits": 129
   }
 }
